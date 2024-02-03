@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Definition_API
+ * @namespace Schema_Definition_API
  * @description HTTP
  */
 
