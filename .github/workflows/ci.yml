@@ -29,8 +29,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           architecture: ${{ matrix.architecture }}
       - name: Install Dependencies
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false
         run: |
-          yarn --refresh-lockfile
+          yarn
       - name: Lint
         run: |
           yarn lint
