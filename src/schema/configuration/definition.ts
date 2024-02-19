@@ -6,12 +6,12 @@
 
 export type ListableValue<T> = T | T[];
 
-export type ImbricateConfiguration = {
+export type RawImbricateConfiguration = {
 
     readonly presets: ListableValue<string>;
 };
 
-export type ParsedImbricateConfiguration = {
+export type ImbricateConfiguration = {
 
     readonly presets: string[];
-} & ImbricateConfiguration;
+} & RawImbricateConfiguration;
