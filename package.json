@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "description": "The trustful mid point between applications",
   "bin": {
+    "i7e": "./bin/run.js",
     "imbricate": "./bin/run.js"
   },
   "scripts": {
