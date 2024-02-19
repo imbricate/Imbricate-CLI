@@ -12,8 +12,9 @@
     "coverage": "jest --coverage",
     "lint": "eslint src --ext .ts",
     "build": "tsc --project typescript/tsconfig.build.json",
-    "license": "sdb license && cp -r bin app/bin",
-    "release": "yarn lint && yarn test && yarn license && yarn build",
+    "license": "sdb license",
+    "replace-version": "ts-node scripts/replace-version.ts",
+    "release": "yarn lint && yarn test && yarn license && yarn build && yarn replace-version",
     "publish-dry-run": "yarn release && sdb --only publish-dry-run",
     "publish": "yarn release && sdb --only publish"
   },
