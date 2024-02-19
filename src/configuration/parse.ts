@@ -7,7 +7,7 @@
 import { ImbricateConfiguration } from "./definition";
 import { RawImbricateConfiguration } from "./raw-definition";
 
-export const parseImbricateConfiguration = (
+export const parseRawImbricateConfiguration = (
     configuration: RawImbricateConfiguration,
 ): ImbricateConfiguration => {
 

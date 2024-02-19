@@ -4,7 +4,7 @@
  * @description List
  */
 
-import { ImbricateConfiguration } from "../schema/configuration/definition";
+import { ImbricateConfiguration } from "../configuration/definition";
 
 export type ImbricateListConfig = {
 

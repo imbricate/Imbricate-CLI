@@ -17,8 +17,8 @@ export const addVerboseConfigurationExtension = (
         "[DEBUG] verbose configuration file information",
     );
 
-    // verboseConfigurationOption
-    //     .hideHelp();
+    verboseConfigurationOption
+        .hideHelp();
 
     program.addOption(verboseConfigurationOption);
     program.on("option:verbose-configuration", () => {
