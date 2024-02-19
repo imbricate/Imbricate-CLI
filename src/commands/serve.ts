@@ -1,24 +1,24 @@
 /**
  * @author WMXPY
  * @namespace Commands
- * @description List
+ * @description Serve
  */
 
 import { Command } from "commander";
 import { CommandCommonOptions } from "../definition/options";
 import { getDirectory } from "../util/get-directory";
 
-type ListCommandOptions = {
+type ServeCommandOptions = {
 
     // PLACEHOLDER
 } & CommandCommonOptions;
 
-export const listCommand = new Command("list");
-listCommand
-    .description("List all the APIs")
-    .action(async (options: ListCommandOptions): Promise<void> => {
+export const serveCommand = new Command("serve");
+serveCommand
+    .description("Start up the server")
+    .action(async (options: ServeCommandOptions): Promise<void> => {
 
         const directory: string = getDirectory(options);
 
-        console.log("List", directory);
+        console.log("Serve", directory);
     });

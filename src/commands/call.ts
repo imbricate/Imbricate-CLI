@@ -1,24 +1,25 @@
 /**
  * @author WMXPY
  * @namespace Commands
- * @description List
+ * @description Call
  */
 
 import { Command } from "commander";
 import { CommandCommonOptions } from "../definition/options";
 import { getDirectory } from "../util/get-directory";
 
-type ListCommandOptions = {
+type CallCommandOptions = {
 
     // PLACEHOLDER
 } & CommandCommonOptions;
 
-export const listCommand = new Command("list");
-listCommand
-    .description("List all the APIs")
-    .action(async (options: ListCommandOptions): Promise<void> => {
+export const callCommand = new Command("call");
+callCommand
+    .description("Call API")
+    .argument("<api-name>", "API name")
+    .action(async (apiName, options: CallCommandOptions): Promise<void> => {
 
         const directory: string = getDirectory(options);
 
-        console.log("List", directory);
+        console.log("Call", apiName, directory);
     });
