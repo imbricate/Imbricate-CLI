@@ -27,6 +27,6 @@ imbricateProgram.addCommand(createCallCommand(globalManager));
 imbricateProgram.addCommand(createListCommand(globalManager));
 imbricateProgram.addCommand(createServeCommand(globalManager));
 
-export const execute = (): void => {
+export const execute = async (): Promise<void> => {
     imbricateProgram.parse(process.argv);
 };
