@@ -15,6 +15,7 @@
     "license": "sdb license",
     "replace-version": "ts-node scripts/replace-version.ts",
     "release": "yarn lint && yarn test && yarn license && yarn build && yarn replace-version",
+    "link": "yarn release && cd app && npm link",
     "publish-dry-run": "yarn release && sdb --only publish-dry-run",
     "publish": "yarn release && sdb --only publish"
   },
