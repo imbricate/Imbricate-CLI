@@ -4,9 +4,12 @@
  * @description Parse
  */
 
-import { ImbricateConfiguration, RawImbricateConfiguration } from "./definition";
+import { ImbricateConfiguration } from "./definition";
+import { RawImbricateConfiguration } from "./raw-definition";
 
-export const parseImbricateConfiguration = (configuration: RawImbricateConfiguration): ImbricateConfiguration => {
+export const parseImbricateConfiguration = (
+    configuration: RawImbricateConfiguration,
+): ImbricateConfiguration => {
 
     return {
 
