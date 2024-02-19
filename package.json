@@ -3,12 +3,15 @@
   "packageManager": "yarn@4.1.0",
   "version": "0.0.1",
   "description": "The trustful mid point between applications",
+  "bin": {
+    "imbricate": "./bin/run.js"
+  },
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint src --ext .ts",
     "build": "tsc --project typescript/tsconfig.build.json",
-    "license": "sdb license",
+    "license": "sdb --raw-executable license && cp -r bin app/bin",
     "release": "yarn lint && yarn test && yarn license && yarn build",
     "publish-dry-run": "yarn release && sdb --only publish-dry-run",
     "publish": "yarn release && sdb --only publish"
