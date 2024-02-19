@@ -4,15 +4,15 @@
   "version": "0.0.1",
   "description": "The trustful mid point between applications",
   "bin": {
-    "i7e": "./bin/run.js",
-    "imbricate": "./bin/run.js"
+    "i7e": "cli",
+    "imbricate": "cli"
   },
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint src --ext .ts",
     "build": "tsc --project typescript/tsconfig.build.json",
-    "license": "sdb --raw-executable license && cp -r bin app/bin",
+    "license": "sdb license && cp -r bin app/bin",
     "release": "yarn lint && yarn test && yarn license && yarn build",
     "publish-dry-run": "yarn release && sdb --only publish-dry-run",
     "publish": "yarn release && sdb --only publish"
@@ -30,6 +30,9 @@
     "url": "https://github.com/Imbricate/Imbricate/issues"
   },
   "homepage": "https://imbricate.io",
+  "dependencies": {
+    "commander": "^12"
+  },
   "devDependencies": {
     "@babel/core": "^7",
     "@babel/preset-env": "^7",
