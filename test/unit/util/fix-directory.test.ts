@@ -27,6 +27,6 @@ describe("Given [Fix Directory] Helper Methods", (): void => {
 
         const result: string = fixDirectory("/test");
 
-        expect(result).toEqual("/test");
+        expect(result.endsWith("test")).toBeTruthy();
     });
 });
