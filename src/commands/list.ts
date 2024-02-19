@@ -5,20 +5,24 @@
  */
 
 import { Command } from "commander";
-import { CommandCommonOptions } from "../definition/options";
-import { getDirectory } from "../util/get-directory";
+import { GlobalManager } from "../util/global-manager";
 
 type ListCommandOptions = {
 
     // PLACEHOLDER
-} & CommandCommonOptions;
+};
 
-export const listCommand = new Command("list");
-listCommand
-    .description("List all the APIs")
-    .action(async (options: ListCommandOptions): Promise<void> => {
+export const createListCommand = (
+    globalManager: GlobalManager,
+): Command => {
 
-        const directory: string = getDirectory(options);
+    const listCommand = new Command("list");
+    listCommand
+        .description("List all the APIs")
+        .action(async (_options: ListCommandOptions): Promise<void> => {
 
-        console.log("List", directory);
-    });
+            console.log("List", globalManager.workingDirectory);
+        });
+
+    return listCommand;
+};

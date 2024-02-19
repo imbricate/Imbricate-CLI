@@ -5,21 +5,26 @@
  */
 
 import { Command } from "commander";
-import { CommandCommonOptions } from "../definition/options";
-import { getDirectory } from "../util/get-directory";
+import { GlobalManager } from "../util/global-manager";
 
 type CallCommandOptions = {
 
-    // PLACEHOLDER
-} & CommandCommonOptions;
+    readonly quiet?: boolean;
+};
 
-export const callCommand = new Command("call");
-callCommand
-    .description("Call API")
-    .argument("<api-name>", "API name")
-    .action(async (apiName, options: CallCommandOptions): Promise<void> => {
+export const createCallCommand = (
+    globalManager: GlobalManager,
+): Command => {
 
-        const directory: string = getDirectory(options);
+    const callCommand = new Command("call");
+    callCommand
+        .description("Call API")
+        .argument("<api-name>", "API name")
+        .option("-q, --quiet", "run in quiet mode")
+        .action(async (apiName, options: CallCommandOptions): Promise<void> => {
 
-        console.log("Call", apiName, directory);
-    });
+            console.log("Call", apiName, options, globalManager.workingDirectory);
+        });
+
+    return callCommand;
+};

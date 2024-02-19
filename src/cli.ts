@@ -4,24 +4,28 @@
  */
 
 import { Command } from "commander";
-import { callCommand } from "./commands/call";
-import { listCommand } from "./commands/list";
-import { serveCommand } from "./commands/serve";
-import { addVerboseConfigurationOption } from "./extensions/verbose-configuration";
+import { createCallCommand } from "./commands/call";
+import { createListCommand } from "./commands/list";
+import { createServeCommand } from "./commands/serve";
+import { addDirectoryExtension } from "./extensions/directory";
+import { addVerboseConfigurationExtension } from "./extensions/verbose-configuration";
+import { GlobalManager } from "./util/global-manager";
+
+const globalManager = GlobalManager.fromScratch();
 
 const imbricateProgram = new Command();
 
 imbricateProgram
     .version("<current-version>")
-    .option("-d, --directory <path>", "specify working directory")
     .name("imbricate")
     .description("Imbricate CLI");
 
-addVerboseConfigurationOption(imbricateProgram);
+addDirectoryExtension(imbricateProgram, globalManager);
+addVerboseConfigurationExtension(imbricateProgram, globalManager);
 
-imbricateProgram.addCommand(callCommand);
-imbricateProgram.addCommand(listCommand);
-imbricateProgram.addCommand(serveCommand);
+imbricateProgram.addCommand(createCallCommand(globalManager));
+imbricateProgram.addCommand(createListCommand(globalManager));
+imbricateProgram.addCommand(createServeCommand(globalManager));
 
 export const execute = (): void => {
     imbricateProgram.parse(process.argv);

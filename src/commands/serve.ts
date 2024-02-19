@@ -5,20 +5,24 @@
  */
 
 import { Command } from "commander";
-import { CommandCommonOptions } from "../definition/options";
-import { getDirectory } from "../util/get-directory";
+import { GlobalManager } from "../util/global-manager";
 
 type ServeCommandOptions = {
 
     // PLACEHOLDER
-} & CommandCommonOptions;
+};
 
-export const serveCommand = new Command("serve");
-serveCommand
-    .description("Start up the server")
-    .action(async (options: ServeCommandOptions): Promise<void> => {
+export const createServeCommand = (
+    globalManager: GlobalManager,
+): Command => {
 
-        const directory: string = getDirectory(options);
+    const serveCommand = new Command("serve");
+    serveCommand
+        .description("Start up the server")
+        .action(async (_options: ServeCommandOptions): Promise<void> => {
 
-        console.log("Serve", directory);
-    });
+            console.log("Serve", globalManager.workingDirectory);
+        });
+
+    return serveCommand;
+};
