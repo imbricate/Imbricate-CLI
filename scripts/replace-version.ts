@@ -4,26 +4,25 @@
  * @description Replace Version
  */
 
-import * as Fs from "fs";
+import { readTextFile, writeTextFile } from "@sudoo/io";
 
-const packagePath: string = "./package.json";
-const scriptPath: string = "./app/cli.js";
+(async () => {
 
-const packageFile: string = Fs
-    .readFileSync(packagePath)
-    .toString();
+    const packagePath: string = "./package.json";
+    const scriptPath: string = "./app/cli.js";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const packageObject: any = JSON.parse(packageFile);
+    const packageFile: string = await readTextFile(packagePath);
 
-const version: string = packageObject.version;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const packageObject: any = JSON.parse(packageFile);
 
-const scriptFile: string = Fs
-    .readFileSync(scriptPath)
-    .toString();
+    const version: string = packageObject.version;
 
-const replacedScript: string = scriptFile.replace("<current-version>", version);
+    const scriptFile: string = await readTextFile(scriptPath);
 
-console.log(`Replace version to: ${version}`);
+    const replacedScript: string = scriptFile.replace("<current-version>", version);
 
-Fs.writeFileSync(scriptPath, replacedScript);
+    console.log(`Replace version to: ${version}`);
+
+    await writeTextFile(scriptPath, replacedScript);
+})();

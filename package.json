@@ -13,7 +13,7 @@
     "lint": "eslint src --ext .ts",
     "build": "tsc --project typescript/tsconfig.build.json",
     "license": "sdb license",
-    "replace-version": "ts-node scripts/replace-version.ts",
+    "replace-version": "ts-node --project typescript/tsconfig.script.json scripts/replace-version.ts",
     "release": "yarn lint && yarn test && yarn license && yarn build && yarn replace-version",
     "link": "yarn release && cd app && npm link",
     "publish-dry-run": "yarn release && sdb --only publish-dry-run",
@@ -33,6 +33,7 @@
   },
   "homepage": "https://imbricate.io",
   "dependencies": {
+    "@sudoo/io": "^1.8.0",
     "commander": "^12"
   },
   "devDependencies": {

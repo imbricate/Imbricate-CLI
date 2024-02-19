@@ -1,21 +1,14 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "ESNext",
         "lib": [
             "esnext"
         ],
-        "outDir": "../app",
         "skipLibCheck": true,
         "strict": true,
         "esModuleInterop": true,
-        "module": "CommonJS",
+        "module": "NodeNext",
         "moduleResolution": "node",
         "isolatedModules": true
-    },
-    "include": [
-        "../src/**/*.ts",
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    }
 }
