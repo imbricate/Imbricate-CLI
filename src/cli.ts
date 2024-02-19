@@ -4,6 +4,7 @@
  */
 
 import { Command } from "commander";
+import { listCommand } from "./commands/list";
 
 const imbricateProgram = new Command();
 
@@ -12,12 +13,7 @@ imbricateProgram
     .name("imbricate")
     .description("Imbricate CLI");
 
-const listCommand = imbricateProgram.command("list");
-listCommand
-    .description("List all the APIs")
-    .action(() => {
-        console.log("List");
-    });
+imbricateProgram.addCommand(listCommand);
 
 export const execute = (): void => {
     imbricateProgram.parse(process.argv);
