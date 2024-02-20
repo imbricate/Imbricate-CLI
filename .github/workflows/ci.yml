@@ -42,6 +42,7 @@ jobs:
           yarn build
       - name: Test
         run: |
+          yarn preload-test-presets
           yarn coverage
       - name: Codecov
         uses: codecov/codecov-action@v4
