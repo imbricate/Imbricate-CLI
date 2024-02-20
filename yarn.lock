@@ -1875,7 +1875,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sudoo/io@npm:^1.8.0":
+"@sudoo/io@npm:^1":
   version: 1.8.0
   resolution: "@sudoo/io@npm:1.8.0"
   dependencies:
@@ -3451,7 +3451,7 @@ __metadata:
     "@babel/core": "npm:^7"
     "@babel/preset-env": "npm:^7"
     "@babel/preset-typescript": "npm:^7"
-    "@sudoo/io": "npm:^1.8.0"
+    "@sudoo/io": "npm:^1"
     "@types/jest": "npm:^29"
     "@typescript-eslint/eslint-plugin": "npm:^7"
     "@typescript-eslint/parser": "npm:^7"
