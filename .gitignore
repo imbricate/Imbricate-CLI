@@ -18,6 +18,3 @@ node_modules
 # Build
 app
 coverage
-
-# lock
-yarn.lock
