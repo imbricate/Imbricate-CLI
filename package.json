@@ -34,7 +34,7 @@
   },
   "homepage": "https://imbricate.io",
   "dependencies": {
-    "@sudoo/io": "^1.8.0",
+    "@sudoo/io": "^1",
     "commander": "^12"
   },
   "devDependencies": {
