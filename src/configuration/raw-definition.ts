@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Schema_Configuration
+ * @namespace Configuration
  * @description Raw Definition
  */
 
