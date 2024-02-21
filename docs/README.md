@@ -18,3 +18,17 @@ npm install imbricate --save
 ## Documentation
 
 Visit [imbricate.io](https://imbricate.io/).
+
+## Quick Start
+
+Host server with default configuration:
+
+```sh
+imbricate serve
+```
+
+Make call to server:
+
+```sh
+imbricate call <api-name>
+```
