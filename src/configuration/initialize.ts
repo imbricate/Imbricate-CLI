@@ -4,16 +4,13 @@
  * @description Initialize
  */
 
-import { RuleManager } from "../rule/manager";
-import { ImbricateConfiguration } from "./definition";
+import { IImbricateConfiguration } from "./definition";
 
 export const initializeConfiguration = async (
-    configuration: ImbricateConfiguration,
-): Promise<RuleManager> => {
-
-    const ruleManager = RuleManager.fromScratch();
+    configuration: IImbricateConfiguration,
+): Promise<void> => {
 
     configuration.presets;
 
-    return ruleManager;
+    return;
 };

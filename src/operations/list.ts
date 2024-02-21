@@ -4,11 +4,11 @@
  * @description List
  */
 
-import { ImbricateConfiguration } from "../configuration/definition";
+import { IImbricateConfiguration } from "../configuration/definition";
 
 export type ImbricateListConfig = {
 
-    readonly configuration: ImbricateConfiguration;
+    readonly configuration: IImbricateConfiguration;
 };
 
 export const imbricateList = async (

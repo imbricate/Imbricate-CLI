@@ -4,11 +4,11 @@
  * @description Call
  */
 
-import { ImbricateConfiguration } from "../configuration/definition";
+import { IImbricateConfiguration } from "../configuration/definition";
 
 export type ImbricateCallConfig = {
 
-    readonly configuration: ImbricateConfiguration;
+    readonly configuration: IImbricateConfiguration;
 };
 
 export const imbricateCall = async (

@@ -6,7 +6,7 @@
 
 export type ListableValue<T> = T | T[];
 
-export type RawImbricateConfiguration = {
+export interface IRawImbricateConfiguration {
 
     readonly presets: ListableValue<string>;
-};
+}

@@ -4,7 +4,7 @@
  * @description Definition
  */
 
-export type ImbricateConfiguration = {
+export interface IImbricateConfiguration {
 
     readonly presets: string[];
-};
+}

@@ -4,11 +4,11 @@
  * @description Serve
  */
 
-import { ImbricateConfiguration } from "../configuration/definition";
+import { IImbricateConfiguration } from "../configuration/definition";
 
 export type ImbricateServeConfig = {
 
-    readonly configuration: ImbricateConfiguration;
+    readonly configuration: IImbricateConfiguration;
 };
 
 export const imbricateServe = async (
