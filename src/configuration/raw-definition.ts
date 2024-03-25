@@ -4,9 +4,13 @@
  * @description Raw Definition
  */
 
+export interface IImbricateConfigurationOrigin {
+
+}
+
 export type ListableValue<T> = T | T[];
 
 export interface IRawImbricateConfiguration {
 
-    readonly presets: ListableValue<string>;
+    readonly origins: ListableValue<IImbricateConfigurationOrigin>;
 }

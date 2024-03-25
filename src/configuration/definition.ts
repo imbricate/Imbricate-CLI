@@ -4,7 +4,9 @@
  * @description Definition
  */
 
+import { IImbricateConfigurationOrigin } from "./raw-definition";
+
 export interface IImbricateConfiguration {
 
-    readonly presets: string[];
+    readonly origins: IImbricateConfigurationOrigin[];
 }

@@ -5,34 +5,34 @@
  * @override Unit Test
  */
 
-import { ImbricateConfiguration } from "../../../src";
+import { IImbricateConfiguration } from "../../../src";
 import { parseRawImbricateConfiguration } from "../../../src/configuration/parse";
 
 describe("Given [Parse] Configuration Helper Methods", (): void => {
 
     test("Should be able to parse presets from list to list", (): void => {
 
-        const parsed: ImbricateConfiguration = parseRawImbricateConfiguration(
+        const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
-                presets: ["test"],
+                origins: [{}],
             },
         );
 
         expect(parsed).toStrictEqual({
-            presets: ["test"],
+            presets: [{}],
         });
     });
 
     test("Should be able to parse presets from string to list", (): void => {
 
-        const parsed: ImbricateConfiguration = parseRawImbricateConfiguration(
+        const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
-                presets: "test",
+                origins: {},
             },
         );
 
         expect(parsed).toStrictEqual({
-            presets: ["test"],
+            presets: [{}],
         });
     });
 });

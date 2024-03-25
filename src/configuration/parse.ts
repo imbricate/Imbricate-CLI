@@ -13,8 +13,8 @@ export const parseRawImbricateConfiguration = (
 
     return {
 
-        presets: typeof configuration.presets === "string"
-            ? [configuration.presets]
-            : configuration.presets,
+        origins: Array.isArray(configuration.origins)
+            ? configuration.origins
+            : [configuration.origins],
     };
 };
