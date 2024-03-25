@@ -2,7 +2,7 @@
   "name": "imbricate",
   "packageManager": "yarn@4.1.0",
   "version": "0.0.1",
-  "description": "The trustful mid point between applications",
+  "description": "Yes to accountable notes, no to external hosting. Free, for everyone.",
   "bin": {
     "i7e": "cli",
     "imbricate": "cli"
