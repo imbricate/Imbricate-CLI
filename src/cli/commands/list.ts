@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace Commands
+ * @namespace CLI_Commands
  * @description List
  */
 
 import { Command } from "commander";
-import { GlobalManager } from "../util/global-manager";
+import { GlobalManager } from "../../util/global-manager";
 
 type ListCommandOptions = {
 

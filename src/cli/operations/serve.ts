@@ -1,10 +1,10 @@
 /**
  * @author WMXPY
- * @namespace Operations
+ * @namespace CLI_Operations
  * @description Serve
  */
 
-import { IImbricateConfiguration } from "../configuration/definition";
+import { IImbricateConfiguration } from "../../configuration/definition";
 
 export type ImbricateServeConfig = {
 

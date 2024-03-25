@@ -4,11 +4,11 @@
  */
 
 import { Command } from "commander";
-import { createCallCommand } from "./commands/call";
-import { createListCommand } from "./commands/list";
-import { createServeCommand } from "./commands/serve";
-import { addDirectoryExtension } from "./extensions/directory";
-import { addVerboseConfigurationExtension } from "./extensions/verbose-configuration";
+import { createCallCommand } from "./cli/commands/call";
+import { createListCommand } from "./cli/commands/list";
+import { createServeCommand } from "./cli/commands/serve";
+import { addDirectoryExtension } from "./cli/extensions/directory";
+import { addVerboseConfigurationExtension } from "./cli/extensions/verbose-configuration";
 import { GlobalManager } from "./util/global-manager";
 
 const globalManager = GlobalManager.fromScratch();

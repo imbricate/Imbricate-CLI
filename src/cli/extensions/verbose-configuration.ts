@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace Extensions
+ * @namespace CLI_Extensions
  * @description Verbose Configuration
  */
 
 import { Command, Option } from "commander";
-import { GlobalManager } from "../util/global-manager";
+import { GlobalManager } from "../../util/global-manager";
 
 export const addVerboseConfigurationExtension = (
     program: Command,
