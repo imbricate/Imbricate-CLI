@@ -4,11 +4,11 @@
  * @description Raw Definition
  */
 
+import { ListableValue } from "../definition/listable";
+
 export interface IImbricateConfigurationOrigin {
 
 }
-
-export type ListableValue<T> = T | T[];
 
 export interface IRawImbricateConfiguration {
 

@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
- * @namespace Util
- * @description Definition
+ * @namespace Definition
+ * @description Promise
  */
 
 export type PromiseOr<T> = T | Promise<T>;

@@ -4,12 +4,12 @@
  * @description Interface
  */
 
-import { PromiseOr } from "../util/definition";
-import { ImbricateOriginCollectionDigest } from "./collection/definition";
+import { PromiseOr } from "../definition/promise";
+import { IImbricateOriginCollection } from "./collection/interface";
 
 export interface IImbricateOrigin {
 
     createCollection(): PromiseOr<void>;
-    listCollections(): PromiseOr<ImbricateOriginCollectionDigest[]>;
+    listCollections(): PromiseOr<IImbricateOriginCollection[]>;
     removeCollection(): PromiseOr<void>;
 }
