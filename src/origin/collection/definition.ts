@@ -1,10 +1,10 @@
 /**
  * @author WMXPY
- * @namespace Origin_Database
+ * @namespace Origin_Collection
  * @description Definition
  */
 
-export type ImbricateOriginDatabaseDigest = {
+export type ImbricateOriginCollectionDigest = {
 
     readonly title: string;
     readonly description?: string;

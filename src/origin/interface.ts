@@ -5,11 +5,11 @@
  */
 
 import { PromiseOr } from "../util/definition";
-import { ImbricateOriginDatabaseDigest } from "./database/definition";
+import { ImbricateOriginCollectionDigest } from "./collection/definition";
 
 export interface IImbricateOrigin {
 
-    createDatabase(): PromiseOr<void>;
-    listDatabase(): PromiseOr<ImbricateOriginDatabaseDigest[]>;
-    removeDatabase(): PromiseOr<void>;
+    createCollection(): PromiseOr<void>;
+    listCollections(): PromiseOr<ImbricateOriginCollectionDigest[]>;
+    removeCollection(): PromiseOr<void>;
 }
