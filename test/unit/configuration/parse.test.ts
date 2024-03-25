@@ -10,7 +10,7 @@ import { parseRawImbricateConfiguration } from "../../../src/configuration/parse
 
 describe("Given [Parse] Configuration Helper Methods", (): void => {
 
-    test("Should be able to parse presets from list to list", (): void => {
+    test("Should be able to parse origins from list to list", (): void => {
 
         const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
@@ -19,11 +19,11 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
         );
 
         expect(parsed).toStrictEqual({
-            presets: [{}],
+            origins: [{}],
         });
     });
 
-    test("Should be able to parse presets from string to list", (): void => {
+    test("Should be able to parse origins from string to list", (): void => {
 
         const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
@@ -32,7 +32,7 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
         );
 
         expect(parsed).toStrictEqual({
-            presets: [{}],
+            origins: [{}],
         });
     });
 });
