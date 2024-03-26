@@ -22,11 +22,12 @@ export const execute = async (): Promise<void> => {
     const configurationManager: IConfigurationManager =
         await ConfigurationManager.fromHomeConfigurationPath();
 
-    await executeWithConfiguration(configurationManager);
+    await executeWithConfiguration(configurationManager, process.argv);
 };
 
 export const executeWithConfiguration = async (
     configurationManager: IConfigurationManager,
+    commands: string[],
 ): Promise<void> => {
 
     try {
@@ -63,7 +64,9 @@ export const executeWithConfiguration = async (
 
         debugLog("Origin Initialized");
 
-        imbricateProgram.parse(process.argv);
+        console.log(commands);
+
+        imbricateProgram.parse(commands);
     } catch (error) {
 
         if (isDebug()) {
