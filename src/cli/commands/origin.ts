@@ -6,7 +6,7 @@
 
 import { Command } from "commander";
 import { GlobalManager } from "../../util/global-manager";
-import { createOriginShowCommand } from "./origin/show";
+import { createOriginListCommand } from "./origin/list";
 
 export const createOriginCommand = (
     globalManager: GlobalManager,
@@ -15,7 +15,7 @@ export const createOriginCommand = (
     const callCommand = new Command("origin");
     callCommand
         .description("Origins Management")
-        .addCommand(createOriginShowCommand(globalManager));
+        .addCommand(createOriginListCommand(globalManager));
 
     return callCommand;
 };

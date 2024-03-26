@@ -1,10 +1,10 @@
 /**
  * @author WMXPY
- * @namespace Configuration
+ * @namespace CLI_Configuration
  * @description Raw Definition
  */
 
-import { ListableValue } from "../definition/listable";
+import { ListableValue } from "../../definition/listable";
 
 export interface IImbricateConfigurationOrigin {
 

@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Configuration
+ * @namespace CLI_Configuration
  * @description Parse
  */
 

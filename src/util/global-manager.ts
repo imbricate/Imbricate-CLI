@@ -4,7 +4,6 @@
  * @description Global Manager
  */
 
-import { FileSystemImbricateOrigin } from "../origin-implementation/file-system/origin";
 import { IImbricateOrigin } from "../origin/interface";
 
 export class GlobalManager {
@@ -14,32 +13,36 @@ export class GlobalManager {
         return new GlobalManager();
     }
 
-    private _origins: Map<IImbricateOrigin, boolean>;
+    private _origins: Map<string, IImbricateOrigin>;
 
     private _verboseConfiguration: boolean;
     private _workingDirectory: string;
 
     private constructor() {
 
-        this._origins = new Map<IImbricateOrigin, boolean>();
-        this._origins.set(FileSystemImbricateOrigin.withBasePath(process.cwd()), true);
+        this._origins = new Map<string, IImbricateOrigin>();
 
         this._verboseConfiguration = false;
         this._workingDirectory = process.cwd();
     }
 
-    public get origins(): Map<IImbricateOrigin, boolean> {
-        return this._origins;
-    }
-    public get activeOrigins(): IImbricateOrigin[] {
-
-        const result: IImbricateOrigin[] = [];
-        for (const [origin, active] of this._origins) {
-            if (active) {
-                result.push(origin);
-            }
+    public get origins(): Record<string, IImbricateOrigin> {
+        const result: Record<string, IImbricateOrigin> = {};
+        for (const [key, value] of this._origins) {
+            result[key] = value;
         }
         return result;
+    }
+    public get originList(): IImbricateOrigin[] {
+        const result: IImbricateOrigin[] = [
+            ...this._origins.values(),
+        ];
+        return result;
+    }
+    public putOrigin(originName: string, origin: IImbricateOrigin): this {
+
+        this._origins.set(originName, origin);
+        return this;
     }
 
     public get verboseConfiguration(): boolean {

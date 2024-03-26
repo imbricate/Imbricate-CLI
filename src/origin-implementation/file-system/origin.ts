@@ -11,10 +11,6 @@ import { joinCollectionMetaFilePath } from "./util/path-joiner";
 
 export class FileSystemImbricateOrigin implements IImbricateOrigin {
 
-    public get originName(): string {
-        return "FileSystem";
-    }
-
     public static withBasePath(basePath: string): FileSystemImbricateOrigin {
 
         return new FileSystemImbricateOrigin(basePath);
