@@ -5,7 +5,7 @@
  */
 
 import { Command } from "commander";
-import { ConfigurationManager } from "../../../configuration/configuration-manager";
+import { IConfigurationManager } from "../../../configuration/interface";
 import { CLIOriginInvalidOriginName } from "../../../error/origin/invalid-origin-name";
 import { GlobalManager } from "../../../global/global-manager";
 import { createConfiguredCommand } from "../../../util/command";
@@ -18,7 +18,7 @@ type OriginAddFileSystemCommandOptions = {
 
 export const createOriginAddFileSystemCommand = (
     _globalManager: GlobalManager,
-    configurationManager: ConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const fileSystem: Command = createConfiguredCommand("file-system");

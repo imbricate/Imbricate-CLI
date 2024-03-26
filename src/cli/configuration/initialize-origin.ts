@@ -9,7 +9,7 @@ import { MongoImbricateOrigin } from "../../origin-implementation/mongo/origin";
 import { IImbricateOrigin } from "../../origin/interface";
 import { GlobalManager } from "../global/global-manager";
 import { debugLog } from "../util/debug";
-import { ConfigurationManager } from "./configuration-manager";
+import { IConfigurationManager } from "./interface";
 import { IImbricateConfigurationOrigin } from "./raw-definition";
 
 const resolveOriginFromConfiguration = (originConfig: IImbricateConfigurationOrigin): IImbricateOrigin => {
@@ -27,7 +27,7 @@ const resolveOriginFromConfiguration = (originConfig: IImbricateConfigurationOri
 
 export const initializeOrigin = async (
     globalManager: GlobalManager,
-    configurationManager: ConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Promise<void> => {
 
     debugLog("Configuration Loaded", configurationManager.configurationPath);

@@ -8,6 +8,7 @@ import { createCollectionCommand } from "./cli/commands/collection";
 import { createOriginCommand } from "./cli/commands/origin";
 import { ConfigurationManager } from "./cli/configuration/configuration-manager";
 import { initializeOrigin } from "./cli/configuration/initialize-origin";
+import { IConfigurationManager } from "./cli/configuration/interface";
 import { CLIError } from "./cli/error/cli-error";
 import { CLIUnknownError } from "./cli/error/unknown";
 import { addDirectoryExtension } from "./cli/extensions/directory";
@@ -18,14 +19,14 @@ import { debugLog, isDebug } from "./cli/util/debug";
 
 export const execute = async (): Promise<void> => {
 
-    const configurationManager: ConfigurationManager =
+    const configurationManager: IConfigurationManager =
         await ConfigurationManager.fromHomeConfigurationPath();
 
     await executeWithConfiguration(configurationManager);
 };
 
 export const executeWithConfiguration = async (
-    configurationManager: ConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Promise<void> => {
 
     try {

@@ -5,7 +5,7 @@
  */
 
 import { Command } from "commander";
-import { ConfigurationManager } from "../../configuration/configuration-manager";
+import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
 import { createConfiguredCommand } from "../../util/command";
@@ -18,7 +18,7 @@ type OriginAddCommandOptions = {
 
 export const createOriginAddCommand = (
     globalManager: GlobalManager,
-    configurationManager: ConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const addCommand: Command = createConfiguredCommand("add");

@@ -5,14 +5,15 @@
  */
 
 import { writeTextFile } from "@sudoo/io";
+import { debugLog } from "../util/debug";
 import { fixHomeDirectory, resolveDirectory } from "../util/fix-directory";
+import { printInfo } from "../util/log";
 import { IImbricateConfiguration } from "./definition";
+import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
-import { debugLog } from "../util/debug";
-import { printInfo } from "../util/log";
 
-export class ConfigurationManager {
+export class ConfigurationManager implements IConfigurationManager {
 
     public static async fromHomeConfigurationPath(): Promise<ConfigurationManager> {
 
