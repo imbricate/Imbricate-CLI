@@ -4,21 +4,23 @@
  * @description Origin
  */
 
-import { PromiseOr } from "../../definition/promise";
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin } from "../../origin/interface";
 
 export class MongoImbricateOrigin implements IImbricateOrigin {
 
-    public createCollection(): PromiseOr<void> {
+    public async createCollection(): Promise<void> {
+
         throw new Error("Method not implemented.");
     }
 
-    public listCollections(): PromiseOr<IImbricateOriginCollection[]> {
+    public async listCollections(): Promise<IImbricateOriginCollection[]> {
+
         throw new Error("Method not implemented.");
     }
 
-    public removeCollection(): PromiseOr<void> {
+    public async removeCollection(): Promise<void> {
+
         throw new Error("Method not implemented.");
     }
 }
