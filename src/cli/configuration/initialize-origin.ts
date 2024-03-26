@@ -8,6 +8,7 @@ import { FileSystemImbricateOrigin } from "../../origin-implementation/file-syst
 import { MongoImbricateOrigin } from "../../origin-implementation/mongo/origin";
 import { IImbricateOrigin } from "../../origin/interface";
 import { GlobalManager } from "../global/global-manager";
+import { debugLog } from "../util/debug";
 import { ConfigurationManager } from "./configuration-manager";
 import { IImbricateConfigurationOrigin } from "./raw-definition";
 
@@ -28,6 +29,8 @@ export const initializeOrigin = async (globalManager: GlobalManager): Promise<vo
 
     const configurationManager: ConfigurationManager =
         await ConfigurationManager.fromHomeConfigurationPath();
+
+    debugLog("Configuration Loaded", configurationManager.configurationPath);
 
     configurationManager.origins.forEach((originConfig: IImbricateConfigurationOrigin) => {
 

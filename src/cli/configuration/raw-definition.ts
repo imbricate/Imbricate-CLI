@@ -19,3 +19,10 @@ export interface IRawImbricateConfiguration {
     readonly origins: ListableValue<IImbricateConfigurationOrigin>;
     readonly activeOrigin?: string | null;
 }
+
+export const getDefaultRawImbricateConfiguration = (): IRawImbricateConfiguration => {
+
+    return {
+        origins: [],
+    };
+};

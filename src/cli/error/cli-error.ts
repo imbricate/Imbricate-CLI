@@ -25,6 +25,11 @@ export class CLIError extends Error {
         Object.setPrototypeOf(this, CLIError.prototype);
     }
 
+    public get type(): string {
+
+        return this._type;
+    }
+
     public get message(): string {
 
         return this._message;

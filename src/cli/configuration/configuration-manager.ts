@@ -4,18 +4,21 @@
  * @description Configuration Manager
  */
 
-import { pathExists, readTextFile, writeTextFile } from "@sudoo/io";
-import { CLIConfigurationFileNotExistError } from "../error/configuration/configuration-file-not-exist";
+import { writeTextFile } from "@sudoo/io";
 import { fixHomeDirectory, resolveDirectory } from "../util/fix-directory";
 import { IImbricateConfiguration } from "./definition";
-import { parseRawImbricateConfiguration } from "./parse";
+import { readCLIConfiguration } from "./io";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
+import { debugLog } from "../util/debug";
 
 export class ConfigurationManager {
 
     public static async fromHomeConfigurationPath(): Promise<ConfigurationManager> {
 
         const configurationPath: string = fixHomeDirectory(".imbricate");
+
+        debugLog("Home Configuration Path", configurationPath);
+
         return await ConfigurationManager.fromConfigurationPath(configurationPath);
     }
 
@@ -23,22 +26,7 @@ export class ConfigurationManager {
         configurationPath: string,
     ): Promise<ConfigurationManager> {
 
-        const configurationFilePath: string = resolveDirectory(
-            configurationPath,
-            "imbricate.config.json",
-        );
-
-        const configExist = await pathExists(configurationFilePath);
-
-        if (!configExist) {
-            throw CLIConfigurationFileNotExistError
-                .withConfigurationPath(configurationFilePath);
-        }
-
-        const configurationText: string = await readTextFile(configurationFilePath);
-
-        const configuration: IRawImbricateConfiguration = JSON.parse(configurationText);
-        const parsedConfiguration: IImbricateConfiguration = parseRawImbricateConfiguration(configuration);
+        const parsedConfiguration: IImbricateConfiguration = await readCLIConfiguration(configurationPath);
 
         return new ConfigurationManager(
             configurationPath,
