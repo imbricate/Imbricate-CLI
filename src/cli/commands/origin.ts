@@ -7,6 +7,7 @@
 import { Command } from "commander";
 import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
+import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createOriginAddCommand } from "./origin/add";
 import { createOriginListCommand } from "./origin/list";
@@ -14,6 +15,7 @@ import { createOriginUseCommand } from "./origin/use";
 
 export const createOriginCommand = (
     globalManager: GlobalManager,
+    terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
 
@@ -23,7 +25,7 @@ export const createOriginCommand = (
         .description("manage imbricate origins");
 
     originCommand.addCommand(createOriginAddCommand(globalManager, configurationManager));
-    originCommand.addCommand(createOriginListCommand(globalManager));
+    originCommand.addCommand(createOriginListCommand(globalManager, terminalController));
     originCommand.addCommand(createOriginUseCommand(globalManager));
 
     return originCommand;

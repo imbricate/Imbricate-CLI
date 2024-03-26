@@ -6,11 +6,12 @@
 
 import { Command, Option } from "commander";
 import { GlobalManager } from "../global/global-manager";
-import { printInfo } from "../util/log";
+import { ITerminalController } from "../terminal/definition";
 
 export const addVerboseConfigurationExtension = (
     program: Command,
     globalManager: GlobalManager,
+    terminalController: ITerminalController,
 ): void => {
 
     const verboseConfigurationOption = new Option(
@@ -25,6 +26,6 @@ export const addVerboseConfigurationExtension = (
     program.on("option:verbose-configuration", () => {
 
         globalManager.setVerboseConfiguration(true);
-        printInfo("Verbose Configuration");
+        terminalController.printInfo("Verbose Configuration");
     });
 };

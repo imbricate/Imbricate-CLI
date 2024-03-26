@@ -5,9 +5,9 @@
  */
 
 import { writeTextFile } from "@sudoo/io";
+import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
 import { fixHomeDirectory, resolveDirectory } from "../util/fix-directory";
-import { printInfo } from "../util/log";
 import { IImbricateConfiguration } from "./definition";
 import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
@@ -15,17 +15,23 @@ import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw
 
 export class ConfigurationManager implements IConfigurationManager {
 
-    public static async fromHomeConfigurationPath(): Promise<ConfigurationManager> {
+    public static async fromHomeConfigurationPath(
+        terminalController: ITerminalController,
+    ): Promise<ConfigurationManager> {
 
         const configurationPath: string = fixHomeDirectory(".imbricate");
 
         debugLog("Home Configuration Path", configurationPath);
 
-        return await ConfigurationManager.fromConfigurationPath(configurationPath);
+        return await ConfigurationManager.fromConfigurationPath(
+            configurationPath,
+            terminalController,
+        );
     }
 
     public static async fromConfigurationPath(
         configurationPath: string,
+        terminalController: ITerminalController,
     ): Promise<ConfigurationManager> {
 
         const parsedConfiguration: IImbricateConfiguration = await readCLIConfiguration(configurationPath);
@@ -33,17 +39,20 @@ export class ConfigurationManager implements IConfigurationManager {
         return new ConfigurationManager(
             configurationPath,
             parsedConfiguration,
+            terminalController,
         );
     }
 
     public static fromConfiguration(
         configurationPath: string,
         configuration: IImbricateConfiguration,
+        terminalController: ITerminalController,
     ): ConfigurationManager {
 
         return new ConfigurationManager(
             configurationPath,
             configuration,
+            terminalController,
         );
     }
 
@@ -52,15 +61,20 @@ export class ConfigurationManager implements IConfigurationManager {
     private _origins: IImbricateConfigurationOrigin[];
     private _activeOrigin: string | null;
 
+    private readonly _terminalController: ITerminalController;
+
     private constructor(
         configurationPath: string,
         configuration: IImbricateConfiguration,
+        terminalController: ITerminalController,
     ) {
 
         this._configurationPath = configurationPath;
 
         this._origins = configuration.origins;
         this._activeOrigin = configuration.activeOrigin;
+
+        this._terminalController = terminalController;
     }
 
     public get configurationPath(): string {
@@ -103,7 +117,7 @@ export class ConfigurationManager implements IConfigurationManager {
             "imbricate.config.json",
         );
 
-        printInfo("Configuration Updated", configurationFilePath);
+        this._terminalController.printInfo("Configuration Updated", configurationFilePath);
 
         await writeTextFile(configurationFilePath, configurationText);
     }

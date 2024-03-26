@@ -15,17 +15,27 @@ import { addDirectoryExtension } from "./cli/extensions/directory";
 import { addVerboseConfigurationExtension } from "./cli/extensions/verbose-configuration";
 import { addWorkingDirectoryOriginExtension } from "./cli/extensions/working-directory-origin";
 import { GlobalManager } from "./cli/global/global-manager";
+import { ITerminalController } from "./cli/terminal/definition";
+import { TTYTerminalController } from "./cli/terminal/terminal";
 import { debugLog, isDebug } from "./cli/util/debug";
 
 export const execute = async (): Promise<void> => {
 
-    const configurationManager: IConfigurationManager =
-        await ConfigurationManager.fromHomeConfigurationPath();
+    const ttyTerminalController: ITerminalController =
+        await TTYTerminalController.create();
 
-    await executeWithConfiguration(configurationManager, process.argv);
+    const configurationManager: IConfigurationManager =
+        await ConfigurationManager.fromHomeConfigurationPath(ttyTerminalController);
+
+    await executeWithConfiguration(
+        ttyTerminalController,
+        configurationManager,
+        process.argv,
+    );
 };
 
 export const executeWithConfiguration = async (
+    terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
     commands: string[],
 ): Promise<void> => {
@@ -47,16 +57,27 @@ export const executeWithConfiguration = async (
             });
 
         addDirectoryExtension(imbricateProgram, globalManager);
-        addVerboseConfigurationExtension(imbricateProgram, globalManager);
-
-        addWorkingDirectoryOriginExtension(imbricateProgram, globalManager);
-
-        imbricateProgram.addCommand(
-            createCollectionCommand(globalManager, configurationManager),
+        addVerboseConfigurationExtension(
+            imbricateProgram,
+            globalManager,
+            terminalController,
         );
-        imbricateProgram.addCommand(
-            createOriginCommand(globalManager, configurationManager),
+
+        addWorkingDirectoryOriginExtension(
+            imbricateProgram,
+            globalManager,
+            terminalController,
         );
+
+        imbricateProgram.addCommand(createCollectionCommand(
+            globalManager,
+            configurationManager,
+        ));
+        imbricateProgram.addCommand(createOriginCommand(
+            globalManager,
+            terminalController,
+            configurationManager,
+        ));
 
         debugLog("Start Imbricate CLI");
 

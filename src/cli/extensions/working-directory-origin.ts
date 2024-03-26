@@ -7,11 +7,12 @@
 import { Command, Option } from "commander";
 import { FileSystemImbricateOrigin } from "../../origin-implementation/file-system/origin";
 import { GlobalManager } from "../global/global-manager";
-import { printInfo } from "../util/log";
+import { ITerminalController } from "../terminal/definition";
 
 export const addWorkingDirectoryOriginExtension = (
     program: Command,
     globalManager: GlobalManager,
+    terminalController: ITerminalController,
 ): void => {
 
     const workingDirectoryOrigin = new Option(
@@ -25,7 +26,7 @@ export const addWorkingDirectoryOriginExtension = (
         const fixedOriginName: string = originName ?? "working-directory";
 
         if (globalManager.verboseConfiguration) {
-            printInfo(`Using PWD origin with origin name: ${fixedOriginName}`);
+            terminalController.printInfo(`Using PWD origin with origin name: ${fixedOriginName}`);
         }
 
         globalManager.putOrigin(
