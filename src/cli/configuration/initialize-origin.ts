@@ -25,10 +25,10 @@ const resolveOriginFromConfiguration = (originConfig: IImbricateConfigurationOri
     throw new Error("Unknown origin type");
 };
 
-export const initializeOrigin = async (globalManager: GlobalManager): Promise<void> => {
-
-    const configurationManager: ConfigurationManager =
-        await ConfigurationManager.fromHomeConfigurationPath();
+export const initializeOrigin = async (
+    globalManager: GlobalManager,
+    configurationManager: ConfigurationManager,
+): Promise<void> => {
 
     debugLog("Configuration Loaded", configurationManager.configurationPath);
 

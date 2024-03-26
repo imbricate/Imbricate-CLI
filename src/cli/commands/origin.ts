@@ -5,6 +5,7 @@
  */
 
 import { Command } from "commander";
+import { ConfigurationManager } from "../configuration/configuration-manager";
 import { GlobalManager } from "../global/global-manager";
 import { createConfiguredCommand } from "../util/command";
 import { createOriginAddCommand } from "./origin/add";
@@ -13,6 +14,7 @@ import { createOriginUseCommand } from "./origin/use";
 
 export const createOriginCommand = (
     globalManager: GlobalManager,
+    configurationManager: ConfigurationManager,
 ): Command => {
 
     const originCommand: Command = createConfiguredCommand("origin");
@@ -20,7 +22,7 @@ export const createOriginCommand = (
     originCommand
         .description("manage imbricate origins");
 
-    originCommand.addCommand(createOriginAddCommand(globalManager));
+    originCommand.addCommand(createOriginAddCommand(globalManager, configurationManager));
     originCommand.addCommand(createOriginListCommand(globalManager));
     originCommand.addCommand(createOriginUseCommand(globalManager));
 

@@ -5,6 +5,7 @@
  */
 
 import { Command } from "commander";
+import { ConfigurationManager } from "../../configuration/configuration-manager";
 import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
 import { createConfiguredCommand } from "../../util/command";
@@ -17,6 +18,7 @@ type OriginAddCommandOptions = {
 
 export const createOriginAddCommand = (
     globalManager: GlobalManager,
+    configurationManager: ConfigurationManager,
 ): Command => {
 
     const addCommand: Command = createConfiguredCommand("add");
@@ -35,7 +37,9 @@ export const createOriginAddCommand = (
             return;
         });
 
-    addCommand.addCommand(createOriginAddFileSystemCommand(globalManager));
+    addCommand.addCommand(
+        createOriginAddFileSystemCommand(globalManager, configurationManager),
+    );
 
     return addCommand;
 };

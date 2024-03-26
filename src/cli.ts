@@ -6,6 +6,7 @@
 import { Command } from "commander";
 import { createCollectionCommand } from "./cli/commands/collection";
 import { createOriginCommand } from "./cli/commands/origin";
+import { ConfigurationManager } from "./cli/configuration/configuration-manager";
 import { initializeOrigin } from "./cli/configuration/initialize-origin";
 import { CLIError } from "./cli/error/cli-error";
 import { CLIUnknownError } from "./cli/error/unknown";
@@ -15,35 +16,38 @@ import { addWorkingDirectoryOriginExtension } from "./cli/extensions/working-dir
 import { GlobalManager } from "./cli/global/global-manager";
 import { debugLog, isDebug } from "./cli/util/debug";
 
-const globalManager = GlobalManager.fromScratch();
-
-const imbricateProgram = new Command();
-
-imbricateProgram
-    .version("<current-version>")
-    .name("imbricate")
-    .description("Imbricate CLI");
-
-imbricateProgram
-    .configureHelp({
-        showGlobalOptions: true,
-    });
-
-addDirectoryExtension(imbricateProgram, globalManager);
-addVerboseConfigurationExtension(imbricateProgram, globalManager);
-
-addWorkingDirectoryOriginExtension(imbricateProgram, globalManager);
-
-imbricateProgram.addCommand(createCollectionCommand(globalManager));
-imbricateProgram.addCommand(createOriginCommand(globalManager));
-
 export const execute = async (): Promise<void> => {
 
     try {
 
+        const globalManager = GlobalManager.fromScratch();
+
+        const configurationManager: ConfigurationManager =
+            await ConfigurationManager.fromHomeConfigurationPath();
+
+        const imbricateProgram = new Command();
+
+        imbricateProgram
+            .version("<current-version>")
+            .name("imbricate")
+            .description("Imbricate CLI");
+
+        imbricateProgram
+            .configureHelp({
+                showGlobalOptions: true,
+            });
+
+        addDirectoryExtension(imbricateProgram, globalManager);
+        addVerboseConfigurationExtension(imbricateProgram, globalManager);
+
+        addWorkingDirectoryOriginExtension(imbricateProgram, globalManager);
+
+        imbricateProgram.addCommand(createCollectionCommand(globalManager));
+        imbricateProgram.addCommand(createOriginCommand(globalManager, configurationManager));
+
         debugLog("Start Imbricate CLI");
 
-        await initializeOrigin(globalManager);
+        await initializeOrigin(globalManager, configurationManager);
 
         debugLog("Origin Initialized");
 

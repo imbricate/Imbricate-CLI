@@ -5,6 +5,7 @@
  */
 
 import { Command } from "commander";
+import { ConfigurationManager } from "../../../configuration/configuration-manager";
 import { GlobalManagerOriginResponse } from "../../../global/definition";
 import { GlobalManager } from "../../../global/global-manager";
 import { createConfiguredCommand } from "../../../util/command";
@@ -17,6 +18,7 @@ type OriginAddFileSystemCommandOptions = {
 
 export const createOriginAddFileSystemCommand = (
     globalManager: GlobalManager,
+    configurationManager: ConfigurationManager,
 ): Command => {
 
     const fileSystem: Command = createConfiguredCommand("file-system");
@@ -35,6 +37,14 @@ export const createOriginAddFileSystemCommand = (
             const origins: GlobalManagerOriginResponse[] = globalManager.origins;
 
             console.log(fixedBasePath, origins);
+
+            configurationManager.addOrigin({
+                type: "file-system",
+                originName: "file-system",
+                payloads: {
+                    basePath: fixedBasePath,
+                },
+            });
 
             return;
         });
