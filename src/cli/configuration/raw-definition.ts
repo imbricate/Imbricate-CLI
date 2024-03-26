@@ -8,6 +8,8 @@ import { ListableValue } from "../../definition/listable";
 
 export interface IImbricateConfigurationOrigin {
 
+    readonly type: string;
+    readonly payloads: Record<string, any>;
 }
 
 export interface IRawImbricateConfiguration {
