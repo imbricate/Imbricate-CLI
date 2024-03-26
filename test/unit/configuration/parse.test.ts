@@ -5,8 +5,8 @@
  * @override Unit Test
  */
 
-import { IImbricateConfiguration } from "../../../src";
-import { parseRawImbricateConfiguration } from "../../../src/configuration/parse";
+import { IImbricateConfiguration } from "../../../src/cli/configuration/definition";
+import { parseRawImbricateConfiguration } from "../../../src/cli/configuration/parse";
 
 describe("Given [Parse] Configuration Helper Methods", (): void => {
 
@@ -15,15 +15,32 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
         const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
                 origins: [{}],
+                activeOrigin: "test",
             },
         );
 
         expect(parsed).toStrictEqual({
             origins: [{}],
+            activeOrigin: "test",
         });
     });
 
     test("Should be able to parse origins from string to list", (): void => {
+
+        const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
+            {
+                origins: {},
+                activeOrigin: "test",
+            },
+        );
+
+        expect(parsed).toStrictEqual({
+            origins: [{}],
+            activeOrigin: "test",
+        });
+    });
+
+    test("Should be able to parse origins from undefined to list", (): void => {
 
         const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
@@ -33,6 +50,7 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
 
         expect(parsed).toStrictEqual({
             origins: [{}],
+            activeOrigin: null,
         });
     });
 });

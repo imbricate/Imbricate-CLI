@@ -6,6 +6,7 @@
 
 import { Command } from "commander";
 import { GlobalManager } from "../../global/global-manager";
+import { createConfiguredCommand } from "../../util/command";
 
 type CollectionCreateCommandOptions = {
 
@@ -16,10 +17,7 @@ export const createCollectionCreateCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const createCommand = new Command("create");
-    createCommand.configureHelp({
-        showGlobalOptions: true,
-    });
+    const createCommand: Command = createConfiguredCommand("create");
 
     createCommand
         .description("create a new collection")

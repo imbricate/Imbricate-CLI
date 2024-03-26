@@ -6,22 +6,21 @@
 
 import { Command } from "commander";
 import { GlobalManager } from "../global/global-manager";
+import { createConfiguredCommand } from "../util/command";
 import { createOriginListCommand } from "./origin/list";
+import { createOriginUseCommand } from "./origin/use";
 
 export const createOriginCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const originCommand = new Command("origin");
+    const originCommand: Command = createConfiguredCommand("origin");
 
     originCommand
-        .description("manage imbricate origins")
-        .addCommand(createOriginListCommand(globalManager));
+        .description("manage imbricate origins");
 
-    originCommand
-        .configureHelp({
-            showGlobalOptions: true,
-        });
+    originCommand.addCommand(createOriginListCommand(globalManager));
+    originCommand.addCommand(createOriginUseCommand(globalManager));
 
     return originCommand;
 };

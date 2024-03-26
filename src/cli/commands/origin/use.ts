@@ -7,6 +7,7 @@
 import { Command } from "commander";
 import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
+import { createConfiguredCommand } from "../../util/command";
 
 type OriginUseCommandOptions = {
 
@@ -17,10 +18,7 @@ export const createOriginUseCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const useCommand = new Command("use");
-    useCommand.configureHelp({
-        showGlobalOptions: true,
-    });
+    const useCommand: Command = createConfiguredCommand("use");
 
     useCommand
         .description("set specific origin as current origin")

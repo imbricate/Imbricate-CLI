@@ -5,8 +5,9 @@
  */
 
 import { Command } from "commander";
-import { GlobalManager } from "../../global/global-manager";
 import { GlobalManagerOriginResponse } from "../../global/definition";
+import { GlobalManager } from "../../global/global-manager";
+import { createConfiguredCommand } from "../../util/command";
 
 type OriginListCommandOptions = {
 
@@ -17,10 +18,7 @@ export const createOriginListCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const listCommand = new Command("list");
-    listCommand.configureHelp({
-        showGlobalOptions: true,
-    });
+    const listCommand: Command = createConfiguredCommand("list");
 
     listCommand
         .description("list available origins")
