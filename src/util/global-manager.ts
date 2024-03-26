@@ -14,23 +14,32 @@ export class GlobalManager {
         return new GlobalManager();
     }
 
-    private _origins: IImbricateOrigin[] = [];
+    private _origins: Map<IImbricateOrigin, boolean>;
 
     private _verboseConfiguration: boolean;
     private _workingDirectory: string;
 
     private constructor() {
 
-        this._origins = [
-            FileSystemImbricateOrigin.withBasePath(process.cwd()),
-        ];
+        this._origins = new Map<IImbricateOrigin, boolean>();
+        this._origins.set(FileSystemImbricateOrigin.withBasePath(process.cwd()), true);
 
         this._verboseConfiguration = false;
         this._workingDirectory = process.cwd();
     }
 
-    public get origins(): IImbricateOrigin[] {
+    public get origins(): Map<IImbricateOrigin, boolean> {
         return this._origins;
+    }
+    public get activeOrigins(): IImbricateOrigin[] {
+
+        const result: IImbricateOrigin[] = [];
+        for (const [origin, active] of this._origins) {
+            if (active) {
+                result.push(origin);
+            }
+        }
+        return result;
     }
 
     public get verboseConfiguration(): boolean {

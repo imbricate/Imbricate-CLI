@@ -26,7 +26,7 @@ export const createOriginShowCommand = (
 
             if (options.json) {
 
-                console.log(globalManager.origins.map((origin) => {
+                console.log(globalManager.activeOrigins.map((origin) => {
                     return {
                         originName: origin.originName,
                     };
@@ -34,7 +34,7 @@ export const createOriginShowCommand = (
                 return;
             }
 
-            console.log(globalManager.origins.map((origin) => {
+            console.log(globalManager.activeOrigins.map((origin) => {
                 return origin.originName;
             }).join("\n"));
 
