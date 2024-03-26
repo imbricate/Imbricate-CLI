@@ -5,6 +5,7 @@
             "esnext"
         ],
         "outDir": "../app",
+        "downlevelIteration": true,
         "skipLibCheck": true,
         "strict": true,
         "esModuleInterop": true,

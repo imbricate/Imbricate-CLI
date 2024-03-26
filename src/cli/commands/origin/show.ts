@@ -26,11 +26,13 @@ export const createOriginShowCommand = (
 
             if (options.json) {
 
-                console.log(globalManager.activeOrigins.map((origin) => {
-                    return {
-                        originName: origin.originName,
-                    };
-                }));
+                console.log([...globalManager.origins.entries()]
+                    .map(([origin, active]) => {
+                        return {
+                            originName: origin.originName,
+                            active,
+                        };
+                    }));
                 return;
             }
 
