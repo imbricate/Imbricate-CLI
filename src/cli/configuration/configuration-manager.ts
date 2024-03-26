@@ -4,7 +4,8 @@
  * @description Configuration Manager
  */
 
-import { readTextFile, writeTextFile } from "@sudoo/io";
+import { pathExists, readTextFile, writeTextFile } from "@sudoo/io";
+import { CLIConfigurationFileNotExistError } from "../error/configuration/configuration-file-not-exist";
 import { fixHomeDirectory, resolveDirectory } from "../util/fix-directory";
 import { IImbricateConfiguration } from "./definition";
 import { parseRawImbricateConfiguration } from "./parse";
@@ -26,6 +27,13 @@ export class ConfigurationManager {
             configurationPath,
             "imbricate.config.json",
         );
+
+        const configExist = await pathExists(configurationFilePath);
+
+        if (!configExist) {
+            throw CLIConfigurationFileNotExistError
+                .withConfigurationPath(configurationFilePath);
+        }
 
         const configurationText: string = await readTextFile(configurationFilePath);
 
