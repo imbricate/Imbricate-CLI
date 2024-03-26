@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace Util
+ * @namespace CLI_Util
  * @description Fix Directory
  * @override Unit Test
  */
 
-import { fixDirectory } from "../../../src/util/fix-directory";
+import { fixDirectory } from "../../../../src/cli/util/fix-directory";
 
 describe("Given [Fix Directory] Helper Methods", (): void => {
 

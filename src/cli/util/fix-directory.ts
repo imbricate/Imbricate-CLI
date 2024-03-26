@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Util
+ * @namespace CLI_Util
  * @description Fix Directory
  */
 

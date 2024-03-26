@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace Util
+ * @namespace CLI_Global
  * @description Global Manager
  */
 
-import { IImbricateOrigin } from "../origin/interface";
-import { GlobalManagerOriginResponse } from "./global-manager/definition";
+import { IImbricateOrigin } from "../../origin/interface";
+import { GlobalManagerOriginResponse } from "./definition";
 
 export class GlobalManager {
 

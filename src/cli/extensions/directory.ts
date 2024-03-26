@@ -5,8 +5,8 @@
  */
 
 import { Command, Option } from "commander";
-import { GlobalManager } from "../../util/global-manager";
-import { fixDirectory } from "../../util/fix-directory";
+import { GlobalManager } from "../global/global-manager";
+import { fixDirectory } from "../util/fix-directory";
 
 export const addDirectoryExtension = (
     program: Command,

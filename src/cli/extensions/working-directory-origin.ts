@@ -6,7 +6,7 @@
 
 import { Command, Option } from "commander";
 import { FileSystemImbricateOrigin } from "../../origin-implementation/file-system/origin";
-import { GlobalManager } from "../../util/global-manager";
+import { GlobalManager } from "../global/global-manager";
 
 export const addWorkingDirectoryOriginExtension = (
     program: Command,

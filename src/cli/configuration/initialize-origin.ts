@@ -4,7 +4,7 @@
  * @description Initialize Origin
  */
 
-import { GlobalManager } from "../../util/global-manager";
+import { GlobalManager } from "../global/global-manager";
 
 export const initializeOrigin = (_globalManager: GlobalManager): void => {
 

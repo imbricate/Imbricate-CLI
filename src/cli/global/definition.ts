@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Util_GlobalManager
+ * @namespace CLI_Global_GlobalManager
  * @description Definition
  */
 

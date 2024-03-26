@@ -16,5 +16,6 @@ export const parseRawImbricateConfiguration = (
         origins: Array.isArray(configuration.origins)
             ? configuration.origins
             : [configuration.origins],
+        activeOrigin: configuration.activeOrigin ?? null,
     };
 };

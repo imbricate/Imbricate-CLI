@@ -5,7 +5,7 @@
  */
 
 import { Command } from "commander";
-import { GlobalManager } from "../../../util/global-manager";
+import { GlobalManager } from "../../global/global-manager";
 
 type CollectionCreateCommandOptions = {
 
@@ -16,9 +16,14 @@ export const createCollectionCreateCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const callCommand = new Command("create");
-    callCommand
+    const createCommand = new Command("create");
+    createCommand.configureHelp({
+        showGlobalOptions: true,
+    });
+
+    createCommand
         .description("create a new collection")
+        .option("-q, --quiet", "quite mode")
         .argument("<collection-name>", "Name of the collection")
         .action(async (
             collectionName: string,
@@ -28,5 +33,5 @@ export const createCollectionCreateCommand = (
             console.log("Collection Create", collectionName, options, globalManager.workingDirectory);
         });
 
-    return callCommand;
+    return createCommand;
 };

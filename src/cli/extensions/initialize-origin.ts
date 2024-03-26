@@ -5,7 +5,7 @@
  */
 
 import { Command } from "commander";
-import { GlobalManager } from "../../util/global-manager";
+import { GlobalManager } from "../global/global-manager";
 import { initializeOrigin } from "../configuration/initialize-origin";
 
 export const addInitializeOriginExtension = (

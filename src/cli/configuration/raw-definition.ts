@@ -13,4 +13,5 @@ export interface IImbricateConfigurationOrigin {
 export interface IRawImbricateConfiguration {
 
     readonly origins: ListableValue<IImbricateConfigurationOrigin>;
+    readonly activeOrigin: string;
 }

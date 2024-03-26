@@ -5,7 +5,7 @@
  */
 
 import { Command } from "commander";
-import { GlobalManager } from "../../util/global-manager";
+import { GlobalManager } from "../global/global-manager";
 import { createOriginListCommand } from "./origin/list";
 
 export const createOriginCommand = (

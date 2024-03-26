@@ -5,8 +5,8 @@
  */
 
 import { Command } from "commander";
-import { GlobalManager } from "../../../util/global-manager";
-import { GlobalManagerOriginResponse } from "../../../util/global-manager/definition";
+import { GlobalManager } from "../../global/global-manager";
+import { GlobalManagerOriginResponse } from "../../global/definition";
 
 type OriginListCommandOptions = {
 
@@ -17,8 +17,12 @@ export const createOriginListCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const callCommand = new Command("list");
-    callCommand
+    const listCommand = new Command("list");
+    listCommand.configureHelp({
+        showGlobalOptions: true,
+    });
+
+    listCommand
         .description("list available origins")
         .option("-j, --json", "Print as JSON")
         .action(async (
@@ -46,5 +50,5 @@ export const createOriginListCommand = (
             return;
         });
 
-    return callCommand;
+    return listCommand;
 };
