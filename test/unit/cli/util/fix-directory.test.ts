@@ -5,27 +5,27 @@
  * @override Unit Test
  */
 
-import { fixDirectory } from "../../../../src/cli/util/fix-directory";
+import { fixCurrentWorkingDirectory } from "../../../../src/cli/util/fix-directory";
 
 describe("Given [Fix Directory] Helper Methods", (): void => {
 
-    test("Should be able to resolve direction with undefined", (): void => {
+    test("Should be able to resolve cwd direction with undefined", (): void => {
 
-        const result: string = fixDirectory(undefined);
-
-        expect(result).toEqual(process.cwd());
-    });
-
-    test("Should be able to resolve direction with empty", (): void => {
-
-        const result: string = fixDirectory("");
+        const result: string = fixCurrentWorkingDirectory(undefined);
 
         expect(result).toEqual(process.cwd());
     });
 
-    test("Should be able to resolve direction with absolute", (): void => {
+    test("Should be able to resolve cwd direction with empty", (): void => {
 
-        const result: string = fixDirectory("/test");
+        const result: string = fixCurrentWorkingDirectory("");
+
+        expect(result).toEqual(process.cwd());
+    });
+
+    test("Should be able to resolve cwd direction with absolute", (): void => {
+
+        const result: string = fixCurrentWorkingDirectory("/test");
 
         expect(result.endsWith("test")).toBeTruthy();
     });

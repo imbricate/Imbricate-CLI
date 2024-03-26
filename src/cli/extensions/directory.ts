@@ -6,7 +6,7 @@
 
 import { Command, Option } from "commander";
 import { GlobalManager } from "../global/global-manager";
-import { fixDirectory } from "../util/fix-directory";
+import { fixCurrentWorkingDirectory } from "../util/fix-directory";
 
 export const addDirectoryExtension = (
     program: Command,
@@ -21,7 +21,7 @@ export const addDirectoryExtension = (
     program.addOption(directoryOption);
     program.on("option:directory", (directory?: string) => {
 
-        const fixedDirectory: string = fixDirectory(directory);
+        const fixedDirectory: string = fixCurrentWorkingDirectory(directory);
         globalManager.setWorkingDirectory(fixedDirectory);
     });
 };

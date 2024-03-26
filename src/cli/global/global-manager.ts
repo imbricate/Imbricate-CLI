@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin } from "../../origin/interface";
+import { fixCurrentWorkingDirectory } from "../util/fix-directory";
 import { GlobalManagerOriginResponse } from "./definition";
 
 export class GlobalManager {
@@ -24,7 +25,7 @@ export class GlobalManager {
         this._origins = new Map<string, IImbricateOrigin>();
 
         this._verboseConfiguration = false;
-        this._workingDirectory = process.cwd();
+        this._workingDirectory = fixCurrentWorkingDirectory();
     }
 
     public get origins(): GlobalManagerOriginResponse[] {
