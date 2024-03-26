@@ -1,0 +1,45 @@
+/**
+ * @author WMXPY
+ * @namespace CLI_Commands_Origin
+ * @description Show
+ */
+
+import { Command } from "commander";
+import { GlobalManager } from "../../../util/global-manager";
+
+type OriginShowCommandOptions = {
+
+    readonly json?: boolean;
+};
+
+export const createOriginShowCommand = (
+    globalManager: GlobalManager,
+): Command => {
+
+    const callCommand = new Command("show");
+    callCommand
+        .description("Show available origins")
+        .option("-j, --json", "Print as JSON")
+        .action(async (
+            options: OriginShowCommandOptions,
+        ): Promise<void> => {
+
+            if (options.json) {
+
+                console.log(globalManager.origins.map((origin) => {
+                    return {
+                        originName: origin.originName,
+                    };
+                }));
+                return;
+            }
+
+            console.log(globalManager.origins.map((origin) => {
+                return origin.originName;
+            }).join("\n"));
+
+            return;
+        });
+
+    return callCommand;
+};

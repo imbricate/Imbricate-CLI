@@ -9,6 +9,10 @@ import { IImbricateOrigin } from "../../origin/interface";
 
 export class MongoImbricateOrigin implements IImbricateOrigin {
 
+    public get originName(): string {
+        return "Mongo";
+    }
+
     public async createCollection(): Promise<void> {
 
         throw new Error("Method not implemented.");

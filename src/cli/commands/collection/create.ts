@@ -18,12 +18,14 @@ export const createCollectionCreateCommand = (
 
     const callCommand = new Command("create");
     callCommand
-        .description("Control collections")
-        .argument("<api-name>", "API name")
-        .option("-q, --quiet", "run in quiet mode")
-        .action(async (apiName, options: CollectionCreateCommandOptions): Promise<void> => {
+        .description("Create new collection")
+        .argument("<collection-name>", "Name of the collection")
+        .action(async (
+            collectionName: string,
+            options: CollectionCreateCommandOptions,
+        ): Promise<void> => {
 
-            console.log("Collection Create", apiName, options, globalManager.workingDirectory);
+            console.log("Collection Create", collectionName, options, globalManager.workingDirectory);
         });
 
     return callCommand;
