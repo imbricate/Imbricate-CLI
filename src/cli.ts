@@ -4,9 +4,7 @@
  */
 
 import { Command } from "commander";
-import { createCallCommand } from "./cli/commands/call";
-import { createListCommand } from "./cli/commands/list";
-import { createServeCommand } from "./cli/commands/serve";
+import { createCollectionCommand } from "./cli/commands/collection";
 import { addDirectoryExtension } from "./cli/extensions/directory";
 import { addVerboseConfigurationExtension } from "./cli/extensions/verbose-configuration";
 import { GlobalManager } from "./util/global-manager";
@@ -23,9 +21,7 @@ imbricateProgram
 addDirectoryExtension(imbricateProgram, globalManager);
 addVerboseConfigurationExtension(imbricateProgram, globalManager);
 
-imbricateProgram.addCommand(createCallCommand(globalManager));
-imbricateProgram.addCommand(createListCommand(globalManager));
-imbricateProgram.addCommand(createServeCommand(globalManager));
+imbricateProgram.addCommand(createCollectionCommand(globalManager));
 
 export const execute = async (): Promise<void> => {
     imbricateProgram.parse(process.argv);

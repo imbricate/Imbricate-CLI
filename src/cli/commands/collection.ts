@@ -1,29 +1,29 @@
 /**
  * @author WMXPY
  * @namespace CLI_Commands
- * @description Call
+ * @description Collection
  */
 
 import { Command } from "commander";
 import { GlobalManager } from "../../util/global-manager";
 
-type CallCommandOptions = {
+type CollectionCommandOptions = {
 
     readonly quiet?: boolean;
 };
 
-export const createCallCommand = (
+export const createCollectionCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const callCommand = new Command("call");
+    const callCommand = new Command("collection");
     callCommand
-        .description("Call API")
+        .description("Control collections")
         .argument("<api-name>", "API name")
         .option("-q, --quiet", "run in quiet mode")
-        .action(async (apiName, options: CallCommandOptions): Promise<void> => {
+        .action(async (apiName, options: CollectionCommandOptions): Promise<void> => {
 
-            console.log("Call", apiName, options, globalManager.workingDirectory);
+            console.log("Collection", apiName, options, globalManager.workingDirectory);
         });
 
     return callCommand;
