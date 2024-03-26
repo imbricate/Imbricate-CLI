@@ -15,7 +15,7 @@ export const createOriginCommand = (
     const originCommand = new Command("origin");
 
     originCommand
-        .description("Origins Management")
+        .description("manage imbricate origins")
         .addCommand(createOriginListCommand(globalManager));
 
     originCommand

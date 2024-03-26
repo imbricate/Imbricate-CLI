@@ -15,7 +15,7 @@ export const createCollectionCommand = (
     const collectionCommand = new Command("collection");
 
     collectionCommand
-        .description("Collections Management")
+        .description("create, read, update and delete collections")
         .alias("cl")
         .addCommand(createCollectionCreateCommand(globalManager));
 

@@ -18,7 +18,7 @@ export const createCollectionCreateCommand = (
 
     const callCommand = new Command("create");
     callCommand
-        .description("Create new collection")
+        .description("create a new collection")
         .argument("<collection-name>", "Name of the collection")
         .action(async (
             collectionName: string,

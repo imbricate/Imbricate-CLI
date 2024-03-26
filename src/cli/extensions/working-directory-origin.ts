@@ -28,7 +28,7 @@ export const addWorkingDirectoryOriginExtension = (
         }
 
         globalManager.putOrigin(
-            "current-path",
+            fixedOriginName,
             FileSystemImbricateOrigin.withBasePath(
                 globalManager.workingDirectory,
             ),

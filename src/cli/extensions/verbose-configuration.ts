@@ -13,7 +13,7 @@ export const addVerboseConfigurationExtension = (
 ): void => {
 
     const verboseConfigurationOption = new Option(
-        "--verbose-configuration",
+        "-VC, --verbose-configuration",
         "[DEBUG] verbose configuration file information",
     );
 

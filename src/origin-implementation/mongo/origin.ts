@@ -12,6 +12,7 @@ export class MongoImbricateOrigin implements IImbricateOrigin {
     public readonly metadata: ImbricateOriginMetadata = {
         type: "mongo",
     };
+    public readonly payloads: Record<string, any> = {};
 
     public async createCollection(): Promise<void> {
 

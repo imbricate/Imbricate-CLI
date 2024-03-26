@@ -19,6 +19,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
     public readonly metadata: ImbricateOriginMetadata = {
         type: "file-system",
     };
+    public readonly payloads: Record<string, any>;
 
     private readonly _basePath: string;
 
@@ -27,6 +28,9 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
     ) {
 
         this._basePath = basePath;
+        this.payloads = {
+            basePath,
+        };
     }
 
     public async createCollection(): Promise<void> {

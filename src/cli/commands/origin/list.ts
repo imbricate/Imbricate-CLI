@@ -19,7 +19,7 @@ export const createOriginListCommand = (
 
     const callCommand = new Command("list");
     callCommand
-        .description("List available origins")
+        .description("list available origins")
         .option("-j, --json", "Print as JSON")
         .action(async (
             options: OriginListCommandOptions,
@@ -32,6 +32,7 @@ export const createOriginListCommand = (
                         return {
                             originName: originResponse.originName,
                             type: originResponse.origin.metadata.type,
+                            payloads: originResponse.origin.payloads,
                         };
                     }), null, 2));
                 return;
