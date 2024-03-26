@@ -12,11 +12,17 @@ export const createCollectionCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const callCommand = new Command("collection");
-    callCommand
+    const collectionCommand = new Command("collection");
+
+    collectionCommand
         .description("Collections Management")
         .alias("cl")
         .addCommand(createCollectionCreateCommand(globalManager));
 
-    return callCommand;
+    collectionCommand
+        .configureHelp({
+            showGlobalOptions: true,
+        });
+
+    return collectionCommand;
 };

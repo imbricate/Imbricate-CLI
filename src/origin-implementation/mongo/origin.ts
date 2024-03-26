@@ -5,9 +5,13 @@
  */
 
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
-import { IImbricateOrigin } from "../../origin/interface";
+import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
 
 export class MongoImbricateOrigin implements IImbricateOrigin {
+
+    public readonly metadata: ImbricateOriginMetadata = {
+        type: "mongo",
+    };
 
     public async createCollection(): Promise<void> {
 

@@ -6,6 +6,7 @@
 
 import { Command } from "commander";
 import { GlobalManager } from "../../../util/global-manager";
+import { GlobalManagerOriginResponse } from "../../../util/global-manager/definition";
 
 type OriginListCommandOptions = {
 
@@ -24,22 +25,22 @@ export const createOriginListCommand = (
             options: OriginListCommandOptions,
         ): Promise<void> => {
 
-            const originNames: string[] = Object.keys(globalManager.origins);
-
             if (options.json) {
 
-                console.log(JSON.stringify(originNames
-                    .map((originName) => {
+                console.log(JSON.stringify(globalManager.origins
+                    .map((originResponse: GlobalManagerOriginResponse) => {
                         return {
-                            originName,
+                            originName: originResponse.originName,
+                            type: originResponse.origin.metadata.type,
                         };
                     }), null, 2));
                 return;
             }
 
-            console.log(originNames.map((origin) => {
-                return origin;
-            }).join("\n"));
+            console.log(globalManager.origins
+                .map((originResponse: GlobalManagerOriginResponse) => {
+                    return originResponse.originName;
+                }).join("\n"));
 
             return;
         });

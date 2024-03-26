@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin } from "../origin/interface";
+import { GlobalManagerOriginResponse } from "./global-manager/definition";
 
 export class GlobalManager {
 
@@ -26,18 +27,16 @@ export class GlobalManager {
         this._workingDirectory = process.cwd();
     }
 
-    public get origins(): Record<string, IImbricateOrigin> {
-        const result: Record<string, IImbricateOrigin> = {};
+    public get origins(): GlobalManagerOriginResponse[] {
+
+        const response: GlobalManagerOriginResponse[] = [];
         for (const [key, value] of this._origins) {
-            result[key] = value;
+            response.push({
+                originName: key,
+                origin: value,
+            });
         }
-        return result;
-    }
-    public get originList(): IImbricateOrigin[] {
-        const result: IImbricateOrigin[] = [
-            ...this._origins.values(),
-        ];
-        return result;
+        return response;
     }
     public putOrigin(originName: string, origin: IImbricateOrigin): this {
 

@@ -12,10 +12,16 @@ export const createOriginCommand = (
     globalManager: GlobalManager,
 ): Command => {
 
-    const callCommand = new Command("origin");
-    callCommand
+    const originCommand = new Command("origin");
+
+    originCommand
         .description("Origins Management")
         .addCommand(createOriginListCommand(globalManager));
 
-    return callCommand;
+    originCommand
+        .configureHelp({
+            showGlobalOptions: true,
+        });
+
+    return originCommand;
 };

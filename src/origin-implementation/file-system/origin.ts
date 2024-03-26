@@ -5,7 +5,7 @@
  */
 
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
-import { IImbricateOrigin } from "../../origin/interface";
+import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
 import { createOrGetFile } from "./util/io";
 import { joinCollectionMetaFilePath } from "./util/path-joiner";
 
@@ -15,6 +15,10 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
 
         return new FileSystemImbricateOrigin(basePath);
     }
+
+    public readonly metadata: ImbricateOriginMetadata = {
+        type: "file-system",
+    };
 
     private readonly _basePath: string;
 
