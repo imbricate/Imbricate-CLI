@@ -42,6 +42,11 @@ export const createOriginListCommand = (
                 return;
             }
 
+            if (globalManager.origins.length === 0) {
+                terminalController.printInfo("No origins found");
+                return;
+            }
+
             terminalController.printInfo(globalManager.origins
                 .map((originResponse: GlobalManagerOriginResponse) => {
                     return originResponse.originName;

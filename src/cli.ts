@@ -85,8 +85,6 @@ export const executeWithConfiguration = async (
 
         debugLog("Origin Initialized");
 
-        console.log(commands);
-
         imbricateProgram.parse(commands);
     } catch (error) {
 
