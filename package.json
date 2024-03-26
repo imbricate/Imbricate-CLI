@@ -15,7 +15,9 @@
     "license": "sdb license",
     "replace-version": "ts-node --project typescript/tsconfig.script.json scripts/replace-version.ts",
     "release": "yarn lint && yarn test && yarn license && yarn build && yarn replace-version",
-    "link": "yarn release && cd app && npm link",
+    "chmod-link": "chmod +x app/i7e-bin && chmod +x app/imbricate-bin",
+    "link": "yarn release && cd app && npm link && yarn chmod-link",
+    "relink": "yarn release && yarn chmod-link",
     "publish-dry-run": "yarn release && sdb --only publish-dry-run",
     "publish": "yarn release && sdb --only publish"
   },

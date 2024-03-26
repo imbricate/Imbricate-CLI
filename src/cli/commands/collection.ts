@@ -15,6 +15,7 @@ export const createCollectionCommand = (
     const callCommand = new Command("collection");
     callCommand
         .description("Collections Management")
+        .alias("cl")
         .addCommand(createCollectionCreateCommand(globalManager));
 
     return callCommand;
