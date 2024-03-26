@@ -42,8 +42,12 @@ export const execute = async (): Promise<void> => {
 
         addWorkingDirectoryOriginExtension(imbricateProgram, globalManager);
 
-        imbricateProgram.addCommand(createCollectionCommand(globalManager));
-        imbricateProgram.addCommand(createOriginCommand(globalManager, configurationManager));
+        imbricateProgram.addCommand(
+            createCollectionCommand(globalManager, configurationManager),
+        );
+        imbricateProgram.addCommand(
+            createOriginCommand(globalManager, configurationManager),
+        );
 
         debugLog("Start Imbricate CLI");
 

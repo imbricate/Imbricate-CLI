@@ -5,6 +5,7 @@
  */
 
 import { Command } from "commander";
+import { ConfigurationManager } from "../../configuration/configuration-manager";
 import { GlobalManager } from "../../global/global-manager";
 import { createConfiguredCommand } from "../../util/command";
 
@@ -15,6 +16,7 @@ type CollectionCreateCommandOptions = {
 
 export const createCollectionCreateCommand = (
     globalManager: GlobalManager,
+    configurationManager: ConfigurationManager,
 ): Command => {
 
     const createCommand: Command = createConfiguredCommand("create");
@@ -29,6 +31,8 @@ export const createCollectionCreateCommand = (
         ): Promise<void> => {
 
             console.log("Collection Create", collectionName, options, globalManager.workingDirectory);
+
+            configurationManager.origins;
         });
 
     return createCommand;

@@ -10,6 +10,7 @@ import { IImbricateConfiguration } from "./definition";
 import { readCLIConfiguration } from "./io";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
 import { debugLog } from "../util/debug";
+import { printInfo } from "../util/log";
 
 export class ConfigurationManager {
 
@@ -100,6 +101,8 @@ export class ConfigurationManager {
             this._configurationPath,
             "imbricate.config.json",
         );
+
+        printInfo("Configuration Updated", configurationFilePath);
 
         await writeTextFile(configurationFilePath, configurationText);
     }
