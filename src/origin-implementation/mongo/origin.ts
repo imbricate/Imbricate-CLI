@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace FileSystem
+ * @namespace Mongo
  * @description Origin
  */
 
@@ -8,7 +8,7 @@ import { PromiseOr } from "../../definition/promise";
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin } from "../../origin/interface";
 
-export class FileSystemImbricateOrigin implements IImbricateOrigin {
+export class MongoImbricateOrigin implements IImbricateOrigin {
 
     public createCollection(): PromiseOr<void> {
         throw new Error("Method not implemented.");
