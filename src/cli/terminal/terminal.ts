@@ -21,4 +21,9 @@ export class TTYTerminalController implements ITerminalController {
 
         console.log(...args);
     }
+
+    public printErrorMessage(...args: string[]): void {
+
+        console.error(...args);
+    }
 }

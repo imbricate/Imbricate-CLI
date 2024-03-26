@@ -24,9 +24,19 @@ export const createOriginCommand = (
     originCommand
         .description("manage imbricate origins");
 
-    originCommand.addCommand(createOriginAddCommand(globalManager, configurationManager));
-    originCommand.addCommand(createOriginListCommand(globalManager, terminalController));
-    originCommand.addCommand(createOriginUseCommand(globalManager));
+    originCommand.addCommand(createOriginAddCommand(
+        globalManager,
+        configurationManager,
+    ));
+    originCommand.addCommand(createOriginListCommand(
+        globalManager,
+        terminalController,
+    ));
+    originCommand.addCommand(createOriginUseCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
 
     return originCommand;
 };

@@ -98,6 +98,6 @@ export const executeWithConfiguration = async (
                 ? CLIUnknownError.withError(error)
                 : CLIUnknownError.withError(new Error(error as any));
 
-        console.error(fixedError.toString());
+        terminalController.printErrorMessage(fixedError.message);
     }
 };

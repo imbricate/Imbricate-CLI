@@ -7,4 +7,5 @@
 export interface ITerminalController {
 
     printInfo(...args: string[]): void;
+    printErrorMessage(...args: string[]): void;
 }
