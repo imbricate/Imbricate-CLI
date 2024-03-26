@@ -18,12 +18,19 @@ import { debugLog, isDebug } from "./cli/util/debug";
 
 export const execute = async (): Promise<void> => {
 
+    const configurationManager: ConfigurationManager =
+        await ConfigurationManager.fromHomeConfigurationPath();
+
+    await executeWithConfiguration(configurationManager);
+};
+
+export const executeWithConfiguration = async (
+    configurationManager: ConfigurationManager,
+): Promise<void> => {
+
     try {
 
         const globalManager = GlobalManager.fromScratch();
-
-        const configurationManager: ConfigurationManager =
-            await ConfigurationManager.fromHomeConfigurationPath();
 
         const imbricateProgram = new Command();
 
