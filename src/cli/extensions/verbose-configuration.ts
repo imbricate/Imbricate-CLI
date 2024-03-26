@@ -6,6 +6,7 @@
 
 import { Command, Option } from "commander";
 import { GlobalManager } from "../global/global-manager";
+import { printInfo } from "../util/log";
 
 export const addVerboseConfigurationExtension = (
     program: Command,
@@ -24,6 +25,6 @@ export const addVerboseConfigurationExtension = (
     program.on("option:verbose-configuration", () => {
 
         globalManager.setVerboseConfiguration(true);
-        console.log("Verbose Configuration");
+        printInfo("Verbose Configuration");
     });
 };

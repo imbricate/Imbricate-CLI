@@ -8,6 +8,7 @@ import { Command } from "commander";
 import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
 import { createConfiguredCommand } from "../../util/command";
+import { printInfo } from "../../util/log";
 
 type OriginListCommandOptions = {
 
@@ -29,7 +30,7 @@ export const createOriginListCommand = (
 
             if (options.json) {
 
-                console.log(JSON.stringify(globalManager.origins
+                printInfo(JSON.stringify(globalManager.origins
                     .map((originResponse: GlobalManagerOriginResponse) => {
                         return {
                             originName: originResponse.originName,
@@ -40,7 +41,7 @@ export const createOriginListCommand = (
                 return;
             }
 
-            console.log(globalManager.origins
+            printInfo(globalManager.origins
                 .map((originResponse: GlobalManagerOriginResponse) => {
                     return originResponse.originName;
                 }).join("\n"));

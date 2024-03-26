@@ -7,6 +7,7 @@
 import { Command, Option } from "commander";
 import { FileSystemImbricateOrigin } from "../../origin-implementation/file-system/origin";
 import { GlobalManager } from "../global/global-manager";
+import { printInfo } from "../util/log";
 
 export const addWorkingDirectoryOriginExtension = (
     program: Command,
@@ -24,7 +25,7 @@ export const addWorkingDirectoryOriginExtension = (
         const fixedOriginName: string = originName ?? "working-directory";
 
         if (globalManager.verboseConfiguration) {
-            console.log(`Using PWD origin with origin name: ${fixedOriginName}`);
+            printInfo(`Using PWD origin with origin name: ${fixedOriginName}`);
         }
 
         globalManager.putOrigin(
