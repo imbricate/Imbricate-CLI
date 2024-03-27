@@ -9,6 +9,7 @@ import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createConfiguredCommand } from "../../util/command";
+import { createOriginConfigGetCommand } from "./config/get";
 import { createOriginConfigSetCommand } from "./config/set";
 import { createOriginConfigShowCommand } from "./config/show";
 
@@ -23,6 +24,11 @@ export const createOriginConfigCommand = (
     configCommand
         .description("manage config of origins");
 
+    configCommand.addCommand(createOriginConfigGetCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
     configCommand.addCommand(createOriginConfigSetCommand(
         globalManager,
         terminalController,
