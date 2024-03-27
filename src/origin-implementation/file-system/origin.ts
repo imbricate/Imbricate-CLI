@@ -14,9 +14,13 @@ import { joinCollectionMetaFilePath } from "./util/path-joiner";
 
 export class FileSystemImbricateOrigin implements IImbricateOrigin {
 
-    public static withBasePath(basePath: string): FileSystemImbricateOrigin {
+    public static withPayloads(
+        payload: FileSystemOriginPayload,
+    ): FileSystemImbricateOrigin {
 
-        return new FileSystemImbricateOrigin(basePath);
+        return new FileSystemImbricateOrigin(
+            payload,
+        );
     }
 
     public readonly metadata: ImbricateOriginMetadata = {
@@ -27,14 +31,11 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
     private readonly _basePath: string;
 
     private constructor(
-        basePath: string,
+        payload: FileSystemOriginPayload,
     ) {
 
-        this._basePath = basePath;
-        this.payloads = {
-            basePath,
-            startEditorCommand: "code {path}",
-        };
+        this._basePath = payload.basePath;
+        this.payloads = payload;
     }
 
     public async createCollection(collectionName: string): Promise<void> {

@@ -49,6 +49,11 @@ export class MockConfigurationManager implements IConfigurationManager {
         throw new Error("Method not implemented.");
     }
 
+    public updateOrigin(_originName: string, _origin: IImbricateConfigurationOrigin): this {
+
+        throw new Error("Method not implemented.");
+    }
+
     public registerOriginConstructor(
         _type: string,
         _constructor: (origin: IImbricateConfigurationOrigin) => any,

@@ -15,6 +15,7 @@ export interface IConfigurationManager {
 
     setActiveOrigin(origin: string | null): this;
     addOrigin(origin: IImbricateConfigurationOrigin): this;
+    updateOrigin(originName: string, origin: IImbricateConfigurationOrigin): this;
 
     registerOriginConstructor(
         type: string,

@@ -51,6 +51,16 @@ export class GlobalManager {
         }
         return response;
     }
+
+    public getOrigin(originName: string): IImbricateOrigin | null {
+
+        const origin: IImbricateOrigin | undefined = this._origins.get(originName);
+        if (!origin) {
+            return null;
+        }
+        return origin;
+    }
+
     public putOrigin(originName: string, origin: IImbricateOrigin): this {
 
         this._origins.set(originName, origin);

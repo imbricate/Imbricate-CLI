@@ -95,7 +95,7 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
             });
     }
 
-    public async createPage(title: string, open: boolean): Promise<ImbricateOriginCollectionListPagesResponse> {
+    public async createPage(title: string): Promise<ImbricateOriginCollectionListPagesResponse> {
 
         await this._ensureCollectionFolder();
         const uuid: string = UUIDVersion1.generateString();
@@ -103,7 +103,6 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         await this._putFileToCollectionFolder(
             this._fixFileNameFromIdentifier(uuid),
             "",
-            open,
         );
 
         const currentTime: number = new Date().getTime();
@@ -116,8 +115,9 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
                 createdAt: currentTime,
                 updatedAt: currentTime,
             }, null, 2),
-            open,
         );
+
+        await this.openPage(uuid);
 
         return {
             title,
@@ -220,7 +220,6 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
     private async _putFileToCollectionFolder(
         identifier: string,
         content: string,
-        open: boolean,
     ): Promise<void> {
 
         const targetFilePath = joinCollectionFolderPath(
@@ -230,16 +229,11 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         );
 
         await writeTextFile(targetFilePath, content);
-
-        if (open) {
-            await this._openEditor(targetFilePath);
-        }
     }
 
     private async _putFileToCollectionMetaFolder(
         fileName: string,
         content: string,
-        open: boolean,
     ): Promise<void> {
 
         const targetFilePath = joinCollectionFolderPath(
@@ -250,10 +244,6 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         );
 
         await writeTextFile(targetFilePath, content);
-
-        if (open) {
-            await this._openEditor(targetFilePath);
-        }
     }
 
     private async _openEditor(path: string): Promise<string> {

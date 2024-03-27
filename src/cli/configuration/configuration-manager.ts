@@ -6,6 +6,8 @@
 
 import { writeTextFile } from "@sudoo/io";
 import { IImbricateOrigin } from "../../origin/interface";
+import { CLIOriginNotFound } from "../error/origin/origin-not-found";
+import { CLIUnknownOriginType } from "../error/origin/unknown-origin-type";
 import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
 import { fixHomeDirectory, resolveDirectory } from "../util/fix-directory";
@@ -13,7 +15,6 @@ import { IImbricateConfiguration } from "./definition";
 import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
-import { CLIUnknownOriginType } from "../error/origin/unknown-origin-type";
 
 export class ConfigurationManager implements IConfigurationManager {
 
@@ -106,6 +107,24 @@ export class ConfigurationManager implements IConfigurationManager {
     public addOrigin(origin: IImbricateConfigurationOrigin): this {
 
         this._origins.push(origin);
+
+        this._persistConfiguration();
+        return this;
+    }
+
+    public updateOrigin(originName: string, origin: IImbricateConfigurationOrigin): this {
+
+        const index: number = this._origins.findIndex((
+            each: IImbricateConfigurationOrigin,
+        ) => {
+            return each.originName === originName;
+        });
+
+        if (index === -1) {
+            throw CLIOriginNotFound.withOriginName(originName);
+        }
+
+        this._origins[index] = origin;
 
         this._persistConfiguration();
         return this;

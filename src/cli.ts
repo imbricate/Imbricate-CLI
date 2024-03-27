@@ -10,6 +10,7 @@ import { createPageCommand } from "./cli/commands/page";
 import { ConfigurationManager } from "./cli/configuration/configuration-manager";
 import { initializeOrigin } from "./cli/configuration/initialize-origin";
 import { IConfigurationManager } from "./cli/configuration/interface";
+import { IImbricateConfigurationOrigin } from "./cli/configuration/raw-definition";
 import { addDirectoryExtension } from "./cli/extensions/directory";
 import { addVerboseConfigurationExtension } from "./cli/extensions/verbose-configuration";
 import { addWorkingDirectoryOriginExtension } from "./cli/extensions/working-directory-origin";
@@ -18,6 +19,8 @@ import { ITerminalController } from "./cli/terminal/definition";
 import { TTYTerminalController } from "./cli/terminal/terminal";
 import { debugLog } from "./cli/util/debug";
 import { handleError } from "./cli/util/handle-error";
+import { FileSystemOriginPayload } from "./origin-implementation/file-system/definition/origin";
+import { FileSystemImbricateOrigin } from "./origin-implementation/file-system/origin";
 
 export const execute = async (): Promise<void> => {
 
@@ -26,6 +29,14 @@ export const execute = async (): Promise<void> => {
 
     const configurationManager: IConfigurationManager =
         await ConfigurationManager.fromHomeConfigurationPath(ttyTerminalController);
+
+    configurationManager.registerOriginConstructor("file-system", (
+        origin: IImbricateConfigurationOrigin,
+    ) => {
+        return FileSystemImbricateOrigin.withPayloads(
+            origin.payloads as FileSystemOriginPayload,
+        );
+    });
 
     await executeWithConfiguration(
         ttyTerminalController,

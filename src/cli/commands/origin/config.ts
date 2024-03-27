@@ -9,6 +9,7 @@ import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createConfiguredCommand } from "../../util/command";
+import { createOriginConfigSetCommand } from "./config/set";
 import { createOriginConfigShowCommand } from "./config/show";
 
 export const createOriginConfigCommand = (
@@ -17,16 +18,21 @@ export const createOriginConfigCommand = (
     configurationManager: IConfigurationManager,
 ): Command => {
 
-    const addCommand: Command = createConfiguredCommand("config");
+    const configCommand: Command = createConfiguredCommand("config");
 
-    addCommand
+    configCommand
         .description("manage config of origins");
 
-    addCommand.addCommand(createOriginConfigShowCommand(
+    configCommand.addCommand(createOriginConfigSetCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    configCommand.addCommand(createOriginConfigShowCommand(
         globalManager,
         terminalController,
         configurationManager,
     ));
 
-    return addCommand;
+    return configCommand;
 };

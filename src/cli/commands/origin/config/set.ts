@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace CLI_Commands_Origin_Config
- * @description Show
+ * @description Set
  */
 
 import { Command } from "commander";
@@ -13,26 +13,30 @@ import { ITerminalController } from "../../../terminal/definition";
 import { createActionRunner } from "../../../util/action-runner";
 import { createConfiguredCommand } from "../../../util/command";
 
-type OriginConfigShowCommandOptions = {
+type OriginConfigSetCommandOptions = {
 
-    readonly json?: boolean;
+    readonly quiet?: boolean;
 };
 
-export const createOriginConfigShowCommand = (
+export const createOriginConfigSetCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
-    const showCommand: Command = createConfiguredCommand("show");
+    const setCommand: Command = createConfiguredCommand("set");
 
-    showCommand
-        .description("show configuration of an origin")
-        .option("-j, --json", "print result as JSON")
+    setCommand
+        .description("set a configuration of an origin")
+        .option("-q, --quiet", "quite mode")
         .argument("<origin>", "origin name")
+        .argument("<key>", "key of the configuration")
+        .argument("<value>", "value of the configuration")
         .action(createActionRunner(terminalController, async (
             originName: string,
-            options: OriginConfigShowCommandOptions,
+            key: string,
+            value: string,
+            options: OriginConfigSetCommandOptions,
         ): Promise<void> => {
 
             const origin: IImbricateOrigin | null =
@@ -42,21 +46,22 @@ export const createOriginConfigShowCommand = (
                 throw CLIOriginNotFound.withOriginName(originName);
             }
 
-            if (options.json) {
-
-                terminalController.printInfo(JSON.stringify({
+            configurationManager.updateOrigin(originName, {
+                originName,
+                type: origin.metadata.type,
+                payloads: {
                     ...origin.payloads,
-                }, null, 2));
-                return;
-            }
+                    [key]: value,
+                },
+            });
 
-            terminalController.printInfo(
-                Object.keys(origin.payloads).map((key: string) => {
-                    return `${key}=${origin.payloads[key]}`;
-                }).join("\n"),
-            );
+            if (!options.quiet) {
+                terminalController.printInfo(
+                    `Set configuration of origin: ${originName}, ${key}=${value}`,
+                );
+            }
             return;
         }));
 
-    return showCommand;
+    return setCommand;
 };
