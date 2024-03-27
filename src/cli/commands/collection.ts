@@ -11,6 +11,7 @@ import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createCollectionCreateCommand } from "./collection/create";
 import { createCollectionListCommand } from "./collection/list";
+import { createCollectionConfigCommand } from "./collection/config";
 
 export const createCollectionCommand = (
     globalManager: GlobalManager,
@@ -24,6 +25,11 @@ export const createCollectionCommand = (
         .description("create, read, update and delete collections")
         .alias("cl");
 
+    collectionCommand.addCommand(createCollectionConfigCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
     collectionCommand.addCommand(createCollectionCreateCommand(
         globalManager,
         terminalController,

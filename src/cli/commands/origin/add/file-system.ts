@@ -29,8 +29,8 @@ export const createOriginAddFileSystemCommand = (
     fileSystem
         .description("add new file system origin")
         .option("-q, --quiet", "quite mode")
-        .argument("<originName>", "origin name")
-        .argument("<basePath>", "base path of the file system")
+        .argument("<origin-name>", "origin name")
+        .argument("<base-path>", "base path of the file system")
         .action(createActionRunner(terminalController, async (
             originName: string,
             basePath: string,
