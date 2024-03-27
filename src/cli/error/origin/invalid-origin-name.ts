@@ -10,7 +10,9 @@ export class CLIOriginInvalidOriginName extends CLIOriginError {
 
     public static withOriginName(originName: string): CLIOriginInvalidOriginName {
 
-        return new CLIOriginInvalidOriginName(originName);
+        return new CLIOriginInvalidOriginName(
+            `Origin "${originName}" is invalid`,
+        );
     }
 
     protected constructor(

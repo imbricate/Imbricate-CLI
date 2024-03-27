@@ -57,6 +57,19 @@ export class GlobalManager {
         return this;
     }
 
+    public findCurrentOrigin(): IImbricateOrigin | null {
+
+        if (!this._activeOrigin) {
+            return null;
+        }
+
+        const origin: IImbricateOrigin | undefined = this._origins.get(this._activeOrigin);
+        if (!origin) {
+            return null;
+        }
+        return origin;
+    }
+
     public get verboseConfiguration(): boolean {
         return this._verboseConfiguration;
     }

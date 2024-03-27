@@ -10,7 +10,9 @@ export class CLIOriginNotFound extends CLIOriginError {
 
     public static withOriginName(originName: string): CLIOriginNotFound {
 
-        return new CLIOriginNotFound(originName);
+        return new CLIOriginNotFound(
+            `Origin "${originName}" not found`,
+        );
     }
 
     protected constructor(

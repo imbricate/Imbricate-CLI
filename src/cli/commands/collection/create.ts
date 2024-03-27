@@ -10,6 +10,8 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { IImbricateOrigin } from "../../../origin/interface";
+import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 
 type CollectionCreateCommandOptions = {
 
@@ -32,6 +34,12 @@ export const createCollectionCreateCommand = (
             collectionName: string,
             options: CollectionCreateCommandOptions,
         ): Promise<void> => {
+
+            const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
+
+            if (!currentOrigin) {
+                throw CLIActiveOriginNotFound.create();
+            }
 
             console.log("Collection Create", collectionName, options, globalManager.workingDirectory);
 
