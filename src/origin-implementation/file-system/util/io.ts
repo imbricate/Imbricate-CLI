@@ -32,3 +32,14 @@ export const createOrGetFile = async (
 
     return defaultValue;
 };
+
+export const putFile = async (
+    path: string,
+    content: string,
+): Promise<void> => {
+
+    const folderPath = Path.dirname(path);
+
+    await attemptMarkDir(folderPath);
+    await writeTextFile(path, content);
+};

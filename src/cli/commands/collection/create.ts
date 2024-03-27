@@ -16,6 +16,7 @@ import { createConfiguredCommand } from "../../util/command";
 
 type CollectionCreateCommandOptions = {
 
+    readonly description?: string;
     readonly quiet?: boolean;
 };
 
@@ -29,6 +30,7 @@ export const createCollectionCreateCommand = (
 
     createCommand
         .description("create a new collection")
+        .option("-d, --description <description>", "description of the collection")
         .option("-q, --quiet", "quite mode")
         .argument("<collection-name>", "Name of the collection")
         .action(createActionRunner(terminalController, async (
@@ -48,7 +50,7 @@ export const createCollectionCreateCommand = (
                 throw CLICollectionAlreadyExists.withCollectionName(collectionName);
             }
 
-            await currentOrigin.createCollection(collectionName);
+            await currentOrigin.createCollection(collectionName, options.description);
 
             if (!options.quiet) {
                 terminalController.printInfo(`Collection ${collectionName} created`);

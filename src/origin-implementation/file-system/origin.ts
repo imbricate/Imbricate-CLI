@@ -8,7 +8,7 @@ import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
 import { FileSystemImbricateCollection } from "./collection";
 import { FileSystemCollectionMetadata, FileSystemCollectionMetadataCollection } from "./definition/collection";
-import { createOrGetFile } from "./util/io";
+import { createOrGetFile, putFile } from "./util/io";
 import { joinCollectionMetaFilePath } from "./util/path-joiner";
 
 export class FileSystemImbricateOrigin implements IImbricateOrigin {
@@ -49,6 +49,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
             ],
         };
 
+        console.log(newMetaData);
         await this._putCollectionsMetaData(newMetaData);
     }
 
@@ -103,6 +104,6 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
     private async _putCollectionsMetaData(metaData: FileSystemCollectionMetadata): Promise<void> {
 
         const collectionMetaFile = joinCollectionMetaFilePath(this._basePath);
-        await createOrGetFile(collectionMetaFile, JSON.stringify(metaData, null, 2));
+        await putFile(collectionMetaFile, JSON.stringify(metaData, null, 2));
     }
 }
