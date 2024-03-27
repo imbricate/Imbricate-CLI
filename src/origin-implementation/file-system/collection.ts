@@ -37,4 +37,11 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
 
         throw new Error("Method not implemented.");
     }
+
+    public createPage(title: string): Promise<void> {
+
+        console.log(title);
+
+        throw new Error("Method not implemented.");
+    }
 }

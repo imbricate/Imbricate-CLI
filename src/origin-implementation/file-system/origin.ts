@@ -66,6 +66,28 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         return found;
     }
 
+    public async getCollection(collectionName: string): Promise<IImbricateOriginCollection | null> {
+
+        const collectionsMetaData: FileSystemCollectionMetadata =
+            await this._getCollectionsMetaData();
+
+        const found: FileSystemCollectionMetadataCollection | undefined =
+            collectionsMetaData.collections.find((
+                collection: FileSystemCollectionMetadataCollection,
+            ) => {
+                return collection.collectionName === collectionName;
+            });
+
+        if (!found) {
+            return null;
+        }
+
+        const instance: FileSystemImbricateCollection =
+            FileSystemImbricateCollection.withConfig(found);
+
+        return instance;
+    }
+
     public async listCollections(): Promise<IImbricateOriginCollection[]> {
 
         const collectionsMetaData: FileSystemCollectionMetadata =

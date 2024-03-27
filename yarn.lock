@@ -2005,6 +2005,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sudoo/asynchronous@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@sudoo/asynchronous@npm:2.3.1"
+  checksum: 10c0/f38756214b846badc714e243335b38fddb60b2cbbd84494812d4289d34efe1f82af818735d95c0a88878d455213c3e945f990ad3a50198bf779c805fb28ac209
+  languageName: node
+  linkType: hard
+
 "@sudoo/bark@npm:^2.7.2":
   version: 2.7.2
   resolution: "@sudoo/bark@npm:2.7.2"
@@ -3625,6 +3632,7 @@ __metadata:
     "@babel/core": "npm:^7"
     "@babel/preset-env": "npm:^7"
     "@babel/preset-typescript": "npm:^7"
+    "@sudoo/asynchronous": "npm:^2.3.1"
     "@sudoo/io": "npm:^1"
     "@types/jest": "npm:^29"
     "@typescript-eslint/eslint-plugin": "npm:^7"

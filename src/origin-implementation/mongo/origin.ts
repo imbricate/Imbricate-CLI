@@ -9,7 +9,6 @@ import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interfac
 
 export class MongoImbricateOrigin implements IImbricateOrigin {
 
-
     public readonly metadata: ImbricateOriginMetadata = {
         type: "mongo",
     };
@@ -21,6 +20,11 @@ export class MongoImbricateOrigin implements IImbricateOrigin {
     }
 
     public async hasCollection(_collectionName: string): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async getCollection(_collectionName: string): Promise<IImbricateOriginCollection | null> {
+
         throw new Error("Method not implemented.");
     }
 

@@ -19,6 +19,7 @@ export interface IImbricateOrigin {
 
     createCollection(collectionName: string, description?: string): PromiseOr<void>;
     hasCollection(collectionName: string): PromiseOr<boolean>;
+    getCollection(collectionName: string): PromiseOr<IImbricateOriginCollection | null>;
     listCollections(): PromiseOr<IImbricateOriginCollection[]>;
     removeCollection(): PromiseOr<void>;
 }
