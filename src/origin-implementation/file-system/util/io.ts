@@ -4,7 +4,7 @@
  * @description IO
  */
 
-import { attemptMarkDir, isFile, readTextFile, writeTextFile } from "@sudoo/io";
+import { attemptMarkDir, isFile, pathExists, readTextFile, writeTextFile } from "@sudoo/io";
 import * as Path from "path";
 
 export const createOrGetFile = async (
@@ -12,9 +12,16 @@ export const createOrGetFile = async (
     defaultValue: string,
 ): Promise<string> => {
 
-    const fileExist: boolean = await isFile(path);
+    const fileExist: boolean = await pathExists(path);
 
     if (fileExist) {
+
+        const pathIsFile: boolean = await isFile(path);
+
+        if (!pathIsFile) {
+            throw new Error(`Path "${path}" is not a file`);
+        }
+
         return await readTextFile(path);
     }
 

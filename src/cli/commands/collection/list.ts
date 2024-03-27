@@ -1,38 +1,37 @@
 /**
  * @author WMXPY
  * @namespace CLI_Commands_Collection
- * @description Create
+ * @description List
  */
 
 import { Command } from "commander";
+import { IImbricateOriginCollection } from "../../../origin/collection/interface";
+import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
+import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { IImbricateOrigin } from "../../../origin/interface";
-import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 
-type CollectionCreateCommandOptions = {
+type CollectionListCommandOptions = {
 
     readonly quiet?: boolean;
 };
 
-export const createCollectionCreateCommand = (
+export const createCollectionListCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("create");
+    const createCommand: Command = createConfiguredCommand("list");
 
     createCommand
-        .description("create a new collection")
-        .option("-q, --quiet", "quite mode")
-        .argument("<collection-name>", "Name of the collection")
+        .description("list collections")
         .action(createActionRunner(terminalController, async (
             collectionName: string,
-            options: CollectionCreateCommandOptions,
+            options: CollectionListCommandOptions,
         ): Promise<void> => {
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -41,7 +40,9 @@ export const createCollectionCreateCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            currentOrigin.createCollection(collectionName);
+            const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
+
+            console.log(collections);
 
             console.log("Collection Create", collectionName, options, globalManager.workingDirectory);
 

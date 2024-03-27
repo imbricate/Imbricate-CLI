@@ -7,9 +7,10 @@
 import { Command } from "commander";
 import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
+import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createCollectionCreateCommand } from "./collection/create";
-import { ITerminalController } from "../terminal/definition";
+import { createCollectionListCommand } from "./collection/list";
 
 export const createCollectionCommand = (
     globalManager: GlobalManager,
@@ -24,6 +25,12 @@ export const createCollectionCommand = (
         .alias("cl");
 
     collectionCommand.addCommand(createCollectionCreateCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+
+    collectionCommand.addCommand(createCollectionListCommand(
         globalManager,
         terminalController,
         configurationManager,

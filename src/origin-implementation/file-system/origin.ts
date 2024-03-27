@@ -33,19 +33,22 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         };
     }
 
-    public async createCollection(): Promise<void> {
+    public async createCollection(collectionName: string): Promise<void> {
 
-        const collectionMetaFile = joinCollectionMetaFilePath(this._basePath);
-        const collectionMeta = await createOrGetFile(collectionMetaFile, "{}");
+        const collectionsMetaData: Record<string, string> = await this._getCollectionsMetaData();
 
-        const parsed: Record<string, string> = JSON.parse(collectionMeta);
+        console.log(collectionName);
 
-        console.log(parsed);
+        console.log(collectionsMetaData);
 
         throw new Error("Method not implemented.");
     }
 
     public async listCollections(): Promise<IImbricateOriginCollection[]> {
+
+        const collectionsMetaData: Record<string, string> = await this._getCollectionsMetaData();
+
+        console.log(collectionsMetaData);
 
         throw new Error("Method not implemented.");
     }
@@ -53,5 +56,15 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
     public async removeCollection(): Promise<void> {
 
         throw new Error("Method not implemented.");
+    }
+
+    private async _getCollectionsMetaData(): Promise<Record<string, string>> {
+
+        const collectionMetaFile = joinCollectionMetaFilePath(this._basePath);
+        const collectionMeta = await createOrGetFile(collectionMetaFile, "{}");
+
+        const parsed: Record<string, string> = JSON.parse(collectionMeta);
+
+        return parsed;
     }
 }

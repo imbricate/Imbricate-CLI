@@ -17,7 +17,7 @@ export interface IImbricateOrigin {
     readonly metadata: ImbricateOriginMetadata;
     readonly payloads: Record<string, any>;
 
-    createCollection(): PromiseOr<void>;
+    createCollection(collectionName: string): PromiseOr<void>;
     listCollections(): PromiseOr<IImbricateOriginCollection[]>;
     removeCollection(): PromiseOr<void>;
 }
