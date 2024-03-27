@@ -16,7 +16,7 @@ import { createConfiguredCommand } from "../../util/command";
 
 type CollectionListCommandOptions = {
 
-    readonly quiet?: boolean;
+    readonly json?: boolean;
 };
 
 export const createCollectionListCommand = (
@@ -29,8 +29,9 @@ export const createCollectionListCommand = (
 
     createCommand
         .description("list collections")
+        .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
-            _options: CollectionListCommandOptions,
+            options: CollectionListCommandOptions,
         ): Promise<void> => {
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -40,6 +41,17 @@ export const createCollectionListCommand = (
             }
 
             const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
+
+            if (options.json) {
+
+                terminalController.printInfo(JSON.stringify(collections.map((collection) => {
+                    return {
+                        collectionName: collection.collectionName,
+                        description: collection.description,
+                    };
+                }), null, 2));
+                return;
+            }
 
             if (collections.length === 0) {
                 terminalController.printInfo("No collection found");

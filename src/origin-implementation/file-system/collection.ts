@@ -68,11 +68,19 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
 
         const collectionFolderPath = joinCollectionFolderPath(this._basePath, this._collectionName);
 
-        const files = await directoryFiles(collectionFolderPath);
+        const files: string[] = await directoryFiles(collectionFolderPath);
 
-        console.log(files);
-
-        return [];
+        return files
+            .filter((file: string) => file.endsWith(".meta.json"))
+            .filter((file: string) => !file.startsWith("."))
+            .map((file: string) => {
+                return file.slice(0, file.length - ".meta.json".length);
+            })
+            .map((file: string) => {
+                return {
+                    title: file,
+                };
+            });
     }
 
     public async createPage(title: string, open: boolean): Promise<void> {
@@ -80,8 +88,20 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         await this._ensureCollectionFolder();
 
         await this._putFileToCollectionFolder(
-            title,
+            this._fixFileName(title),
             "",
+            open,
+        );
+
+        const currentTime: number = new Date().getTime();
+
+        await this._putFileToCollectionFolder(
+            this._fixMetaFileName(title),
+            JSON.stringify({
+                title,
+                createdAt: currentTime,
+                updatedAt: currentTime,
+            }, null, 2),
             open,
         );
     }
@@ -125,12 +145,10 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         open: boolean,
     ): Promise<void> {
 
-        const fixedFileName: string = this._fixFileName(fileName);
-
         const targetFilePath = joinCollectionFolderPath(
             this._basePath,
             this._collectionName,
-            fixedFileName,
+            fileName,
         );
 
         await writeTextFile(targetFilePath, content);
@@ -163,6 +181,19 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         const output = await executeCommand(command);
 
         return output;
+    }
+
+    private _fixMetaFileName(fileName: string): string {
+
+        let fixedFileName: string = fileName.trim();
+
+        const metaJSONExtension: string = ".meta.json";
+
+        if (!fixedFileName.endsWith(metaJSONExtension)) {
+            fixedFileName = `${fixedFileName}${metaJSONExtension}`;
+        }
+
+        return fixedFileName;
     }
 
     private _fixFileName(fileName: string): string {

@@ -18,6 +18,7 @@ import { createConfiguredCommand } from "../../util/command";
 type PageListCommandOptions = {
 
     readonly collection: string;
+    readonly json?: boolean;
 };
 
 export const createPageListCommand = (
@@ -34,6 +35,7 @@ export const createPageListCommand = (
             "-c, --collection <description>",
             "specify the collection of the page (required)",
         )
+        .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
             options: PageListCommandOptions,
         ): Promise<void> => {
@@ -59,9 +61,25 @@ export const createPageListCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const pages: ImbricateOriginCollectionListPagesResponse[] = await collection.listPages();
+            const pages: ImbricateOriginCollectionListPagesResponse[] =
+                await collection.listPages();
 
-            console.log(pages);
+            if (options.json) {
+
+                terminalController.printInfo(JSON.stringify(pages, null, 2));
+                return;
+            }
+
+            if (pages.length === 0) {
+                terminalController.printInfo("No pages found");
+                return;
+            }
+
+            terminalController.printInfo(
+                pages
+                    .map((page: ImbricateOriginCollectionListPagesResponse) => page.title)
+                    .join("\n"),
+            );
         }));
 
     return createCommand;

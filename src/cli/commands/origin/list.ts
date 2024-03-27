@@ -25,7 +25,7 @@ export const createOriginListCommand = (
 
     listCommand
         .description("list available origins")
-        .option("-j, --json", "Print as JSON")
+        .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
             options: OriginListCommandOptions,
         ): Promise<void> => {
