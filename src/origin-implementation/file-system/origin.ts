@@ -83,7 +83,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         }
 
         const instance: FileSystemImbricateCollection =
-            FileSystemImbricateCollection.withConfig(found);
+            FileSystemImbricateCollection.withConfig(this._basePath, found);
 
         return instance;
     }
@@ -98,7 +98,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         ) => {
 
             const instance: FileSystemImbricateCollection =
-                FileSystemImbricateCollection.withConfig(collection);
+                FileSystemImbricateCollection.withConfig(this._basePath, collection);
 
             return instance;
         });

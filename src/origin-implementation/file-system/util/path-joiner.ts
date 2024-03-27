@@ -6,20 +6,39 @@
 
 import * as Path from "path";
 
-export const joinCollectionMetaFilePath =
-    (basePath: string): string => {
+export const joinCollectionMetaFilePath = (
+    basePath: string,
+): string => {
 
-        return Path.join(basePath, "collection.meta.json");
-    };
+    return Path.join(basePath, "collection.meta.json");
+};
 
-export const joinCollectionFolderPath =
-    (basePath: string, collectionName: string): string => {
+export const getCollectionFolderPath = (
+    basePath: string,
+): string => {
 
-        return Path.join(basePath, "collections", collectionName);
-    };
+    return Path.join(basePath, "collections");
+};
 
-export const joinCollectionFolderListFilePath =
-    (basePath: string, collectionName: string): string => {
+export const joinCollectionFolderPath = (
+    basePath: string,
+    collectionName: string,
+    ...paths: string[]
+): string => {
 
-        return Path.join(basePath, "collections", collectionName, "list.meta.json");
-    };
+    const fixedCollectionName: string = collectionName
+        .replace(/\//g, "-")
+        .replace(/\\/g, "-")
+        .replace(/:/g, "-")
+        .replace(/ /g, "-");
+
+    return Path.join(basePath, "collections", fixedCollectionName, ...paths);
+};
+
+export const joinCollectionFolderListFilePath = (
+    basePath: string,
+    collectionName: string,
+): string => {
+
+    return Path.join(basePath, "collections", collectionName, "list.meta.json");
+};
