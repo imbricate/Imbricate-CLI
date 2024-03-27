@@ -26,6 +26,7 @@ export const createOriginCommand = (
 
     originCommand.addCommand(createOriginAddCommand(
         globalManager,
+        terminalController,
         configurationManager,
     ));
     originCommand.addCommand(createOriginListCommand(

@@ -6,11 +6,12 @@
 
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { CLIOriginNotFound } from "../../error/origin/origin-not-found";
 import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
+import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { CLIOriginNotFound } from "../../error/origin/origin-not-found";
 
 type OriginUseCommandOptions = {
 
@@ -29,7 +30,7 @@ export const createOriginUseCommand = (
         .description("set specific origin as current origin")
         .option("-q, --quiet", "quite mode")
         .argument("<origin>", "origin name")
-        .action(async (
+        .action(createActionRunner(terminalController, async (
             originName: string,
             _options: OriginUseCommandOptions,
         ): Promise<void> => {
@@ -54,7 +55,7 @@ export const createOriginUseCommand = (
             terminalController.printInfo(`Active origin updated: ${targetOrigin.originName}`);
 
             return;
-        });
+        }));
 
     return useCommand;
 };

@@ -8,6 +8,8 @@ import { Command } from "commander";
 import { IConfigurationManager } from "../../../configuration/interface";
 import { CLIOriginInvalidOriginName } from "../../../error/origin/invalid-origin-name";
 import { GlobalManager } from "../../../global/global-manager";
+import { ITerminalController } from "../../../terminal/definition";
+import { createActionRunner } from "../../../util/action-runner";
 import { createConfiguredCommand } from "../../../util/command";
 import { resolveDirectory } from "../../../util/fix-directory";
 
@@ -18,6 +20,7 @@ type OriginAddFileSystemCommandOptions = {
 
 export const createOriginAddFileSystemCommand = (
     _globalManager: GlobalManager,
+    terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
 
@@ -28,7 +31,7 @@ export const createOriginAddFileSystemCommand = (
         .option("-q, --quiet", "quite mode")
         .argument("<originName>", "origin name")
         .argument("<basePath>", "base path of the file system")
-        .action(async (
+        .action(createActionRunner(terminalController, async (
             originName: string,
             basePath: string,
             _options: OriginAddFileSystemCommandOptions,
@@ -49,7 +52,7 @@ export const createOriginAddFileSystemCommand = (
             });
 
             return;
-        });
+        }));
 
     return fileSystem;
 };

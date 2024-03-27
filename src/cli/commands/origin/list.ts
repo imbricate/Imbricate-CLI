@@ -8,6 +8,7 @@ import { Command } from "commander";
 import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
+import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 
 type OriginListCommandOptions = {
@@ -25,7 +26,7 @@ export const createOriginListCommand = (
     listCommand
         .description("list available origins")
         .option("-j, --json", "Print as JSON")
-        .action(async (
+        .action(createActionRunner(terminalController, async (
             options: OriginListCommandOptions,
         ): Promise<void> => {
 
@@ -53,7 +54,7 @@ export const createOriginListCommand = (
                 }).join("\n"));
 
             return;
-        });
+        }));
 
     return listCommand;
 };

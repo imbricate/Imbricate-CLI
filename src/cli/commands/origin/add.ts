@@ -8,6 +8,8 @@ import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
+import { ITerminalController } from "../../terminal/definition";
+import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 import { createOriginAddFileSystemCommand } from "./add/file-system";
 
@@ -18,6 +20,7 @@ type OriginAddCommandOptions = {
 
 export const createOriginAddCommand = (
     globalManager: GlobalManager,
+    terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
 
@@ -26,7 +29,7 @@ export const createOriginAddCommand = (
     addCommand
         .description("add new origin")
         .option("-q, --quiet", "quite mode")
-        .action(async (
+        .action(createActionRunner(terminalController, async (
             _options: OriginAddCommandOptions,
         ): Promise<void> => {
 
@@ -35,11 +38,13 @@ export const createOriginAddCommand = (
             console.log(origins);
 
             return;
-        });
+        }));
 
-    addCommand.addCommand(
-        createOriginAddFileSystemCommand(globalManager, configurationManager),
-    );
+    addCommand.addCommand(createOriginAddFileSystemCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
 
     return addCommand;
 };

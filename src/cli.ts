@@ -9,15 +9,14 @@ import { createOriginCommand } from "./cli/commands/origin";
 import { ConfigurationManager } from "./cli/configuration/configuration-manager";
 import { initializeOrigin } from "./cli/configuration/initialize-origin";
 import { IConfigurationManager } from "./cli/configuration/interface";
-import { CLIError } from "./cli/error/cli-error";
-import { CLIUnknownError } from "./cli/error/unknown";
 import { addDirectoryExtension } from "./cli/extensions/directory";
 import { addVerboseConfigurationExtension } from "./cli/extensions/verbose-configuration";
 import { addWorkingDirectoryOriginExtension } from "./cli/extensions/working-directory-origin";
 import { GlobalManager } from "./cli/global/global-manager";
 import { ITerminalController } from "./cli/terminal/definition";
 import { TTYTerminalController } from "./cli/terminal/terminal";
-import { debugLog, isDebug } from "./cli/util/debug";
+import { debugLog } from "./cli/util/debug";
+import { handleError } from "./cli/util/handle-error";
 
 export const execute = async (): Promise<void> => {
 
@@ -71,6 +70,7 @@ export const executeWithConfiguration = async (
 
         imbricateProgram.addCommand(createCollectionCommand(
             globalManager,
+            terminalController,
             configurationManager,
         ));
         imbricateProgram.addCommand(createOriginCommand(
@@ -88,16 +88,6 @@ export const executeWithConfiguration = async (
         imbricateProgram.parse(commands);
     } catch (error) {
 
-        if (isDebug()) {
-            throw error;
-        }
-
-        const fixedError: CLIError = error instanceof CLIError
-            ? error
-            : error instanceof Error
-                ? CLIUnknownError.withError(error)
-                : CLIUnknownError.withError(new Error(error as any));
-
-        terminalController.printErrorMessage(fixedError.message);
+        handleError(terminalController, error);
     }
 };

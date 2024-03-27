@@ -7,6 +7,8 @@
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManager } from "../../global/global-manager";
+import { ITerminalController } from "../../terminal/definition";
+import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 
 type CollectionCreateCommandOptions = {
@@ -16,6 +18,7 @@ type CollectionCreateCommandOptions = {
 
 export const createCollectionCreateCommand = (
     globalManager: GlobalManager,
+    terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
 
@@ -25,7 +28,7 @@ export const createCollectionCreateCommand = (
         .description("create a new collection")
         .option("-q, --quiet", "quite mode")
         .argument("<collection-name>", "Name of the collection")
-        .action(async (
+        .action(createActionRunner(terminalController, async (
             collectionName: string,
             options: CollectionCreateCommandOptions,
         ): Promise<void> => {
@@ -33,7 +36,7 @@ export const createCollectionCreateCommand = (
             console.log("Collection Create", collectionName, options, globalManager.workingDirectory);
 
             configurationManager.origins;
-        });
+        }));
 
     return createCommand;
 };
