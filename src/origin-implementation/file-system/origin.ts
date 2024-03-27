@@ -6,6 +6,8 @@
 
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
+import { FileSystemImbricateCollection } from "./collection";
+import { FileSystemCollectionMetadata, FileSystemCollectionMetadataCollection } from "./definition/collection";
 import { createOrGetFile } from "./util/io";
 import { joinCollectionMetaFilePath } from "./util/path-joiner";
 
@@ -35,22 +37,48 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
 
     public async createCollection(collectionName: string): Promise<void> {
 
-        const collectionsMetaData: Record<string, string> = await this._getCollectionsMetaData();
+        const collectionsMetaData: FileSystemCollectionMetadata =
+            await this._getCollectionsMetaData();
 
-        console.log(collectionName);
+        const newMetaData: FileSystemCollectionMetadata = {
+            collections: [
+                ...collectionsMetaData.collections,
+                {
+                    collectionName,
+                },
+            ],
+        };
 
-        console.log(collectionsMetaData);
+        await this._putCollectionsMetaData(newMetaData);
+    }
 
-        throw new Error("Method not implemented.");
+    public async hasCollection(collectionName: string): Promise<boolean> {
+
+        const collectionsMetaData: FileSystemCollectionMetadata =
+            await this._getCollectionsMetaData();
+
+        const found: boolean = collectionsMetaData.collections.some((
+            collection: FileSystemCollectionMetadataCollection,
+        ) => {
+            return collection.collectionName === collectionName;
+        });
+        return found;
     }
 
     public async listCollections(): Promise<IImbricateOriginCollection[]> {
 
-        const collectionsMetaData: Record<string, string> = await this._getCollectionsMetaData();
+        const collectionsMetaData: FileSystemCollectionMetadata =
+            await this._getCollectionsMetaData();
 
-        console.log(collectionsMetaData);
+        return collectionsMetaData.collections.map((
+            collection: FileSystemCollectionMetadataCollection,
+        ) => {
 
-        throw new Error("Method not implemented.");
+            const instance: FileSystemImbricateCollection =
+                FileSystemImbricateCollection.withConfig(collection);
+
+            return instance;
+        });
     }
 
     public async removeCollection(): Promise<void> {
@@ -58,13 +86,23 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
-    private async _getCollectionsMetaData(): Promise<Record<string, string>> {
+    private async _getCollectionsMetaData(): Promise<FileSystemCollectionMetadata> {
 
         const collectionMetaFile = joinCollectionMetaFilePath(this._basePath);
-        const collectionMeta = await createOrGetFile(collectionMetaFile, "{}");
+        const collectionMeta = await createOrGetFile(collectionMetaFile, JSON.stringify(
+            {
+                collections: [],
+            } satisfies FileSystemCollectionMetadata,
+        ));
 
-        const parsed: Record<string, string> = JSON.parse(collectionMeta);
+        const parsed: FileSystemCollectionMetadata = JSON.parse(collectionMeta);
 
         return parsed;
+    }
+
+    private async _putCollectionsMetaData(metaData: FileSystemCollectionMetadata): Promise<void> {
+
+        const collectionMetaFile = joinCollectionMetaFilePath(this._basePath);
+        await createOrGetFile(collectionMetaFile, JSON.stringify(metaData, null, 2));
     }
 }

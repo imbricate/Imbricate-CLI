@@ -6,7 +6,7 @@
 
 export interface IImbricateOriginCollection {
 
-    readonly title: string;
+    readonly collectionName: string;
     readonly description?: string;
 
     findScripts(...onActivities: string[]): Promise<void>;

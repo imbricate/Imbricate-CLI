@@ -22,7 +22,7 @@ type CollectionListCommandOptions = {
 export const createCollectionListCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    configurationManager: IConfigurationManager,
+    _configurationManager: IConfigurationManager,
 ): Command => {
 
     const createCommand: Command = createConfiguredCommand("list");
@@ -30,8 +30,7 @@ export const createCollectionListCommand = (
     createCommand
         .description("list collections")
         .action(createActionRunner(terminalController, async (
-            collectionName: string,
-            options: CollectionListCommandOptions,
+            _options: CollectionListCommandOptions,
         ): Promise<void> => {
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -42,11 +41,16 @@ export const createCollectionListCommand = (
 
             const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
 
-            console.log(collections);
+            if (collections.length === 0) {
+                terminalController.printInfo("No collection found");
+                return;
+            }
 
-            console.log("Collection Create", collectionName, options, globalManager.workingDirectory);
+            terminalController.printInfo(collections.map((collection: IImbricateOriginCollection) => {
+                return collection.collectionName;
+            }).join("\n"));
 
-            configurationManager.origins;
+            return;
         }));
 
     return createCommand;

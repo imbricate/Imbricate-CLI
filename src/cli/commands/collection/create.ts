@@ -5,13 +5,14 @@
  */
 
 import { Command } from "commander";
+import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
+import { CLICollectionAlreadyExists } from "../../error/collection/collection-already-exists";
+import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { IImbricateOrigin } from "../../../origin/interface";
-import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 
 type CollectionCreateCommandOptions = {
 
@@ -21,7 +22,7 @@ type CollectionCreateCommandOptions = {
 export const createCollectionCreateCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    configurationManager: IConfigurationManager,
+    _configurationManager: IConfigurationManager,
 ): Command => {
 
     const createCommand: Command = createConfiguredCommand("create");
@@ -41,11 +42,17 @@ export const createCollectionCreateCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            currentOrigin.createCollection(collectionName);
+            const hasCollection: boolean = await currentOrigin.hasCollection(collectionName);
 
-            console.log("Collection Create", collectionName, options, globalManager.workingDirectory);
+            if (hasCollection) {
+                throw CLICollectionAlreadyExists.withCollectionName(collectionName);
+            }
 
-            configurationManager.origins;
+            await currentOrigin.createCollection(collectionName);
+
+            if (!options.quiet) {
+                terminalController.printInfo(`Collection ${collectionName} created`);
+            }
         }));
 
     return createCommand;

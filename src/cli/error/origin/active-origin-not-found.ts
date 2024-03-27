@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace CLI_Error_Configuration
+ * @namespace CLI_Error_Origin
  * @description Active Origin Not Found
  */
 

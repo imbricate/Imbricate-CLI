@@ -18,6 +18,7 @@ export interface IImbricateOrigin {
     readonly payloads: Record<string, any>;
 
     createCollection(collectionName: string): PromiseOr<void>;
+    hasCollection(collectionName: string): PromiseOr<boolean>;
     listCollections(): PromiseOr<IImbricateOriginCollection[]>;
     removeCollection(): PromiseOr<void>;
 }
