@@ -8,6 +8,7 @@ import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
 import { FileSystemImbricateCollection } from "./collection";
 import { FileSystemCollectionMetadata, FileSystemCollectionMetadataCollection } from "./definition/collection";
+import { FileSystemOriginPayload } from "./definition/origin";
 import { createOrGetFile, putFile } from "./util/io";
 import { joinCollectionMetaFilePath } from "./util/path-joiner";
 
@@ -21,7 +22,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
     public readonly metadata: ImbricateOriginMetadata = {
         type: "file-system",
     };
-    public readonly payloads: Record<string, any>;
+    public readonly payloads: FileSystemOriginPayload;
 
     private readonly _basePath: string;
 
@@ -32,6 +33,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         this._basePath = basePath;
         this.payloads = {
             basePath,
+            startEditorCommand: "code {path}",
         };
     }
 
@@ -49,7 +51,6 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
             ],
         };
 
-        console.log(newMetaData);
         await this._putCollectionsMetaData(newMetaData);
     }
 
@@ -63,6 +64,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         ) => {
             return collection.collectionName === collectionName;
         });
+
         return found;
     }
 
@@ -83,7 +85,11 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         }
 
         const instance: FileSystemImbricateCollection =
-            FileSystemImbricateCollection.withConfig(this._basePath, found);
+            FileSystemImbricateCollection.withConfig(
+                this._basePath,
+                this.payloads,
+                found,
+            );
 
         return instance;
     }
@@ -98,7 +104,11 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         ) => {
 
             const instance: FileSystemImbricateCollection =
-                FileSystemImbricateCollection.withConfig(this._basePath, collection);
+                FileSystemImbricateCollection.withConfig(
+                    this._basePath,
+                    this.payloads,
+                    collection,
+                );
 
             return instance;
         });
@@ -112,11 +122,13 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
     private async _getCollectionsMetaData(): Promise<FileSystemCollectionMetadata> {
 
         const collectionMetaFile = joinCollectionMetaFilePath(this._basePath);
-        const collectionMeta = await createOrGetFile(collectionMetaFile, JSON.stringify(
-            {
-                collections: [],
-            } satisfies FileSystemCollectionMetadata,
-        ));
+        const collectionMeta = await createOrGetFile(
+            collectionMetaFile, JSON.stringify(
+                {
+                    collections: [],
+                } satisfies FileSystemCollectionMetadata,
+            ),
+        );
 
         const parsed: FileSystemCollectionMetadata = JSON.parse(collectionMeta);
 
@@ -126,6 +138,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
     private async _putCollectionsMetaData(metaData: FileSystemCollectionMetadata): Promise<void> {
 
         const collectionMetaFile = joinCollectionMetaFilePath(this._basePath);
+
         await putFile(collectionMetaFile, JSON.stringify(metaData, null, 2));
     }
 }

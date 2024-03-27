@@ -4,38 +4,45 @@
  * @description Collection
  */
 
-import { attemptMarkDir, isFolder, pathExists, writeTextFile } from "@sudoo/io";
-import { IImbricateOriginCollection } from "../../origin/collection/interface";
-import { FileSystemCollectionMetadataCollection } from "./definition/collection";
-import { getCollectionFolderPath, joinCollectionFolderPath } from "./util/path-joiner";
+import { attemptMarkDir, directoryFiles, isFolder, pathExists, writeTextFile } from "@sudoo/io";
 import { CLICollectionFolderOccupied } from "../../cli/error/collection/collection-folder-occupied";
+import { IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "../../origin/collection/interface";
+import { FileSystemCollectionMetadataCollection } from "./definition/collection";
+import { FileSystemOriginPayload } from "./definition/origin";
+import { executeCommand } from "./util/execute";
+import { getCollectionFolderPath, joinCollectionFolderPath } from "./util/path-joiner";
 
 export class FileSystemImbricateCollection implements IImbricateOriginCollection {
 
     public static withConfig(
         basePath: string,
+        payloads: FileSystemOriginPayload,
         collection: FileSystemCollectionMetadataCollection,
     ): FileSystemImbricateCollection {
 
         return new FileSystemImbricateCollection(
             basePath,
+            payloads,
             collection.collectionName,
             collection.description,
         );
     }
 
     private readonly _basePath: string;
+    private readonly _payloads: FileSystemOriginPayload;
 
     private readonly _collectionName: string;
     private readonly _description?: string;
 
     private constructor(
         basePath: string,
+        payload: FileSystemOriginPayload,
         collectionName: string,
         description?: string,
     ) {
 
         this._basePath = basePath;
+        this._payloads = payload;
 
         this._collectionName = collectionName;
         this._description = description;
@@ -55,14 +62,35 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         throw new Error("Method not implemented.");
     }
 
-    public async createPage(title: string): Promise<void> {
+    public async listPages(): Promise<ImbricateOriginCollectionListPagesResponse[]> {
+
+        await this._ensureCollectionFolder();
+
+        const collectionFolderPath = joinCollectionFolderPath(this._basePath, this._collectionName);
+
+        const files = await directoryFiles(collectionFolderPath);
+
+        console.log(files);
+
+        return [];
+    }
+
+    public async createPage(title: string, open: boolean): Promise<void> {
 
         await this._ensureCollectionFolder();
 
         await this._putFileToCollectionFolder(
             title,
             "",
+            open,
         );
+    }
+
+    public async hasPage(title: string): Promise<boolean> {
+
+        await this._ensureCollectionFolder();
+
+        return await this._checkFileInCollectionFolder(title);
     }
 
     private async _ensureCollectionFolder(): Promise<void> {
@@ -94,7 +122,50 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
     private async _putFileToCollectionFolder(
         fileName: string,
         content: string,
+        open: boolean,
     ): Promise<void> {
+
+        const fixedFileName: string = this._fixFileName(fileName);
+
+        const targetFilePath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+            fixedFileName,
+        );
+
+        await writeTextFile(targetFilePath, content);
+
+        if (open) {
+            await this._openEditor(targetFilePath);
+        }
+    }
+
+    private async _checkFileInCollectionFolder(fileName: string): Promise<boolean> {
+
+        const fixedFileName: string = this._fixFileName(fileName);
+
+        const targetFilePath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+            fixedFileName,
+        );
+
+        const fileExists = await pathExists(targetFilePath);
+
+        return fileExists;
+    }
+
+    private async _openEditor(path: string): Promise<string> {
+
+        const command: string = this._payloads.startEditorCommand
+            .replace("{path}", `"${path}"`);
+
+        const output = await executeCommand(command);
+
+        return output;
+    }
+
+    private _fixFileName(fileName: string): string {
 
         let fixedFileName: string = fileName.trim();
 
@@ -104,12 +175,6 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
             fixedFileName = `${fixedFileName}${markDownExtension}`;
         }
 
-        const targetFilePath = joinCollectionFolderPath(
-            this._basePath,
-            this._collectionName,
-            fixedFileName,
-        );
-
-        await writeTextFile(targetFilePath, content);
+        return fixedFileName;
     }
 }
