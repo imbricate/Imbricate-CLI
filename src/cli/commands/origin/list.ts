@@ -35,6 +35,7 @@ export const createOriginListCommand = (
                 terminalController.printInfo(JSON.stringify(globalManager.origins
                     .map((originResponse: GlobalManagerOriginResponse) => {
                         return {
+                            active: originResponse.active,
                             originName: originResponse.originName,
                             type: originResponse.origin.metadata.type,
                             payloads: originResponse.origin.payloads,
@@ -50,6 +51,11 @@ export const createOriginListCommand = (
 
             terminalController.printInfo(globalManager.origins
                 .map((originResponse: GlobalManagerOriginResponse) => {
+
+                    if (originResponse.active) {
+                        return `${originResponse.originName} [Active]`;
+                    }
+
                     return originResponse.originName;
                 }).join("\n"));
 

@@ -15,6 +15,7 @@ export class GlobalManager {
         return new GlobalManager();
     }
 
+    private _activeOrigin: string | null;
     private _origins: Map<string, IImbricateOrigin>;
 
     private _verboseConfiguration: boolean;
@@ -22,10 +23,20 @@ export class GlobalManager {
 
     private constructor() {
 
+        this._activeOrigin = null;
         this._origins = new Map<string, IImbricateOrigin>();
 
         this._verboseConfiguration = false;
         this._workingDirectory = fixCurrentWorkingDirectory();
+    }
+
+    public get activeOrigin(): string | null {
+        return this._activeOrigin;
+    }
+    public setActiveOrigin(originName: string | null): this {
+
+        this._activeOrigin = originName;
+        return this;
     }
 
     public get origins(): GlobalManagerOriginResponse[] {
@@ -33,6 +44,7 @@ export class GlobalManager {
         const response: GlobalManagerOriginResponse[] = [];
         for (const [key, value] of this._origins) {
             response.push({
+                active: this._activeOrigin === key,
                 originName: key,
                 origin: value,
             });

@@ -39,5 +39,6 @@ export const initializeOrigin = async (
         globalManager.putOrigin(originConfig.originName, origin);
     });
 
+    globalManager.setActiveOrigin(configurationManager.activeOrigin);
     return;
 };
