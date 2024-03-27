@@ -11,6 +11,7 @@ import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createPageCreateCommand } from "./page/create";
 import { createPageListCommand } from "./page/list";
+import { createPageOpenCommand } from "./page/open";
 
 export const createPageCommand = (
     globalManager: GlobalManager,
@@ -28,8 +29,12 @@ export const createPageCommand = (
         terminalController,
         configurationManager,
     ));
-
     pageCommand.addCommand(createPageListCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    pageCommand.addCommand(createPageOpenCommand(
         globalManager,
         terminalController,
         configurationManager,

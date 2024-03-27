@@ -29,7 +29,6 @@ export const createCollectionCommand = (
         terminalController,
         configurationManager,
     ));
-
     collectionCommand.addCommand(createCollectionListCommand(
         globalManager,
         terminalController,

@@ -125,6 +125,21 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         };
     }
 
+    public async openPage(title: string): Promise<void> {
+
+        await this._ensureCollectionFolder();
+
+        const fixedFileName: string = this._fixFileName(title);
+
+        const targetFilePath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+            fixedFileName,
+        );
+
+        await this._openEditor(targetFilePath);
+    }
+
     public async hasPage(title: string): Promise<boolean> {
 
         await this._ensureCollectionFolder();

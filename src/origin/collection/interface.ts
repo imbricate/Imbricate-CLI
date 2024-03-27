@@ -19,5 +19,6 @@ export interface IImbricateOriginCollection {
 
     listPages(): Promise<ImbricateOriginCollectionListPagesResponse[]>;
     createPage(title: string, open: boolean): Promise<ImbricateOriginCollectionListPagesResponse>;
+    openPage(title: string): Promise<void>;
     hasPage(title: string): Promise<boolean>;
 }
