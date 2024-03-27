@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace CLI_Commands_Page
- * @description Open
+ * @description Delete
  */
 
 import { Command } from "commander";
@@ -17,37 +17,37 @@ import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 
-type PageOpenCommandOptions = {
+type PageDeleteCommandOptions = {
 
     readonly collection: string;
     readonly title?: string;
     readonly identifier?: string;
 };
 
-export const createPageOpenCommand = (
+export const createPageDeleteCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
     _configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("open");
+    const createCommand: Command = createConfiguredCommand("delete");
 
     createCommand
-        .description("open a page in the collection")
+        .description("delete a existing page in the collection")
         .requiredOption(
             "-c, --collection <description>",
             "specify the collection of the page (required)",
         )
         .option(
             "-t, --title <page-title>",
-            "open page by page title (one-of)",
+            "delete page by page title (one-of)",
         )
         .option(
             "-i, --identifier <page-identifier>",
-            "open page by page identifier or pointer (one-of)",
+            "delete page by page identifier or pointer (one-of)",
         )
         .action(createActionRunner(terminalController, async (
-            options: PageOpenCommandOptions,
+            options: PageDeleteCommandOptions,
         ): Promise<void> => {
 
             if (!options.title && !options.identifier) {
@@ -90,7 +90,9 @@ export const createPageOpenCommand = (
                     throw CLIPageNotFound.withPageTitle(options.title);
                 }
 
-                await collection.openPage(page.identifier);
+                await collection.deletePage(page.identifier, page.title);
+                terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
+
                 return;
             }
 
@@ -100,7 +102,9 @@ export const createPageOpenCommand = (
 
                     if (page.identifier.startsWith(options.identifier)) {
 
-                        await collection.openPage(page.identifier);
+                        await collection.deletePage(page.identifier, page.title);
+                        terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
+
                         return;
                     }
                 }
