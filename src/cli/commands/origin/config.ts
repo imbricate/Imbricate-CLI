@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace CLI_Commands_Collection
+ * @namespace CLI_Commands_Origin
  * @description Config
  */
 
@@ -9,24 +9,24 @@ import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createConfiguredCommand } from "../../util/command";
-import { createCollectionConfigShowCommand } from "./config/show";
+import { createOriginConfigShowCommand } from "./config/show";
 
-export const createCollectionConfigCommand = (
+export const createOriginConfigCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("config");
+    const addCommand: Command = createConfiguredCommand("config");
 
-    createCommand
-        .description("manage config of collections");
+    addCommand
+        .description("manage config of origins");
 
-    createCommand.addCommand(createCollectionConfigShowCommand(
+    addCommand.addCommand(createOriginConfigShowCommand(
         globalManager,
         terminalController,
-        _configurationManager,
+        configurationManager,
     ));
 
-    return createCommand;
+    return addCommand;
 };

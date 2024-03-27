@@ -4,6 +4,7 @@
  * @description Interface
  */
 
+import { IImbricateOrigin } from "../../origin/interface";
 import { IImbricateConfigurationOrigin } from "./raw-definition";
 
 export interface IConfigurationManager {
@@ -14,4 +15,13 @@ export interface IConfigurationManager {
 
     setActiveOrigin(origin: string | null): this;
     addOrigin(origin: IImbricateConfigurationOrigin): this;
+
+    registerOriginConstructor(
+        type: string,
+        constructor: (origin: IImbricateConfigurationOrigin) => IImbricateOrigin,
+    ): this;
+    reconstructOrigin(
+        type: string,
+        origin: IImbricateConfigurationOrigin,
+    ): IImbricateOrigin;
 }

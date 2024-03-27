@@ -7,7 +7,7 @@
 import { CLIError } from "../error/cli-error";
 import { CLIUnknownError } from "../error/unknown";
 import { ITerminalController } from "../terminal/definition";
-import { isDebug } from "./debug";
+import { isDebug, isTest } from "./debug";
 
 export const handleError = (
     terminalController: ITerminalController,
@@ -26,5 +26,7 @@ export const handleError = (
 
     terminalController.printErrorMessage(fixedError.toString());
 
-    process.exit(1);
+    if (process.stdout.isTTY && !isTest()) {
+        process.exit(1);
+    }
 };

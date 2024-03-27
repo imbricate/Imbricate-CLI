@@ -5,6 +5,7 @@
  */
 
 import { writeTextFile } from "@sudoo/io";
+import { IImbricateOrigin } from "../../origin/interface";
 import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
 import { fixHomeDirectory, resolveDirectory } from "../util/fix-directory";
@@ -12,6 +13,7 @@ import { IImbricateConfiguration } from "./definition";
 import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
+import { CLIUnknownOriginType } from "../error/origin/unknown-origin-type";
 
 export class ConfigurationManager implements IConfigurationManager {
 
@@ -60,6 +62,10 @@ export class ConfigurationManager implements IConfigurationManager {
 
     private _origins: IImbricateConfigurationOrigin[];
     private _activeOrigin: string | null;
+    private _originConstructors: Map<
+        string,
+        (origin: IImbricateConfigurationOrigin) => IImbricateOrigin
+    >;
 
     private readonly _terminalController: ITerminalController;
 
@@ -73,6 +79,7 @@ export class ConfigurationManager implements IConfigurationManager {
 
         this._origins = configuration.origins;
         this._activeOrigin = configuration.activeOrigin;
+        this._originConstructors = new Map();
 
         this._terminalController = terminalController;
     }
@@ -102,6 +109,30 @@ export class ConfigurationManager implements IConfigurationManager {
 
         this._persistConfiguration();
         return this;
+    }
+
+    public registerOriginConstructor(
+        type: string,
+        constructor: (origin: IImbricateConfigurationOrigin) => IImbricateOrigin,
+    ): this {
+
+        this._originConstructors.set(type, constructor);
+        return this;
+    }
+
+    public reconstructOrigin(
+        type: string,
+        origin: IImbricateConfigurationOrigin,
+    ): IImbricateOrigin {
+
+        const constructor: ((origin: IImbricateConfigurationOrigin) => IImbricateOrigin)
+            | undefined = this._originConstructors.get(type);
+
+        if (!constructor) {
+            throw CLIUnknownOriginType.withOriginName(type);
+        }
+
+        return constructor(origin);
     }
 
     private async _persistConfiguration(): Promise<void> {

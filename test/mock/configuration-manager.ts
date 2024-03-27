@@ -8,6 +8,7 @@
 import { IImbricateConfiguration } from "../../src/cli/configuration/definition";
 import { IConfigurationManager } from "../../src/cli/configuration/interface";
 import { IImbricateConfigurationOrigin } from "../../src/cli/configuration/raw-definition";
+import { IImbricateOrigin } from "../../src/origin/interface";
 
 export class MockConfigurationManager implements IConfigurationManager {
 
@@ -25,6 +26,8 @@ export class MockConfigurationManager implements IConfigurationManager {
     public configurationPath: string;
     public origins: IImbricateConfigurationOrigin[];
     public activeOrigin: string | null;
+
+    private _mockOrigin: IImbricateOrigin | null = null;
 
     private constructor(
         configurationPath: string,
@@ -44,5 +47,31 @@ export class MockConfigurationManager implements IConfigurationManager {
     public addOrigin(_origin: IImbricateConfigurationOrigin): this {
 
         throw new Error("Method not implemented.");
+    }
+
+    public registerOriginConstructor(
+        _type: string,
+        _constructor: (origin: IImbricateConfigurationOrigin) => any,
+    ): this {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public reconstructOrigin(
+        _type: string,
+        _origin: IImbricateConfigurationOrigin,
+    ): any {
+
+        if (this._mockOrigin) {
+            return this._mockOrigin;
+        }
+
+        throw new Error("Method not implemented.");
+    }
+
+    public assignMockOrigin(origin: IImbricateOrigin): this {
+
+        this._mockOrigin = origin;
+        return this;
     }
 }

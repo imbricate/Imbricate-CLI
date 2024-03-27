@@ -61,8 +61,9 @@ export const createCollectionConfigShowCommand = (
             }
 
             terminalController.printInfo(`Collection: ${collection.collectionName}`);
-            terminalController.printInfo(`Description: ${collection.description}`);
-
+            if (collection.description) {
+                terminalController.printInfo(`Description: ${collection.description}`);
+            }
             return;
         }));
 
