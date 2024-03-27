@@ -7,6 +7,7 @@ import { Command } from "commander";
 import { createCollectionCommand } from "./cli/commands/collection";
 import { createOriginCommand } from "./cli/commands/origin";
 import { createPageCommand } from "./cli/commands/page";
+import { createSearchCommand } from "./cli/commands/search";
 import { ConfigurationManager } from "./cli/configuration/configuration-manager";
 import { initializeOrigin } from "./cli/configuration/initialize-origin";
 import { IConfigurationManager } from "./cli/configuration/interface";
@@ -91,6 +92,11 @@ export const executeWithConfiguration = async (
             configurationManager,
         ));
         imbricateProgram.addCommand(createPageCommand(
+            globalManager,
+            terminalController,
+            configurationManager,
+        ));
+        imbricateProgram.addCommand(createSearchCommand(
             globalManager,
             terminalController,
             configurationManager,
