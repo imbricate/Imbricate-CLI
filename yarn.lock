@@ -2029,6 +2029,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sudoo/uuid@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@sudoo/uuid@npm:1.1.0"
+  checksum: 10c0/5f92b03fe8a759d714099ee03d6cd9b57867cfaa52cc213d8b48380857998833e2316dcba2c7b2ef8de3ebc9e03ffbbb31078643272e2511df060dac0d17cfd0
+  languageName: node
+  linkType: hard
+
 "@tsconfig/node10@npm:^1.0.7":
   version: 1.0.9
   resolution: "@tsconfig/node10@npm:1.0.9"
@@ -3634,6 +3641,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7"
     "@sudoo/asynchronous": "npm:^2.3.1"
     "@sudoo/io": "npm:^1"
+    "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29"
     "@typescript-eslint/eslint-plugin": "npm:^7"
     "@typescript-eslint/parser": "npm:^7"

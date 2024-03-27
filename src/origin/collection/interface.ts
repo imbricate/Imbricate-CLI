@@ -7,6 +7,7 @@
 export type ImbricateOriginCollectionListPagesResponse = {
 
     readonly title: string;
+    readonly identifier: string;
 };
 
 export interface IImbricateOriginCollection {
@@ -17,6 +18,6 @@ export interface IImbricateOriginCollection {
     findScripts(...onActivities: string[]): Promise<void>;
 
     listPages(): Promise<ImbricateOriginCollectionListPagesResponse[]>;
-    createPage(title: string, open: boolean): Promise<void>;
+    createPage(title: string, open: boolean): Promise<ImbricateOriginCollectionListPagesResponse>;
     hasPage(title: string): Promise<boolean>;
 }

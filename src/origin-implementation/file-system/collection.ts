@@ -5,12 +5,15 @@
  */
 
 import { attemptMarkDir, directoryFiles, isFolder, pathExists, writeTextFile } from "@sudoo/io";
+import { UUIDVersion1 } from "@sudoo/uuid";
 import { CLICollectionFolderOccupied } from "../../cli/error/collection/collection-folder-occupied";
 import { IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "../../origin/collection/interface";
 import { FileSystemCollectionMetadataCollection } from "./definition/collection";
 import { FileSystemOriginPayload } from "./definition/origin";
 import { executeCommand } from "./util/execute";
 import { getCollectionFolderPath, joinCollectionFolderPath } from "./util/path-joiner";
+
+const metadataFolderName: string = ".metadata";
 
 export class FileSystemImbricateCollection implements IImbricateOriginCollection {
 
@@ -66,7 +69,11 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
 
         await this._ensureCollectionFolder();
 
-        const collectionFolderPath = joinCollectionFolderPath(this._basePath, this._collectionName);
+        const collectionFolderPath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+            metadataFolderName,
+        );
 
         const files: string[] = await directoryFiles(collectionFolderPath);
 
@@ -77,13 +84,18 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
                 return file.slice(0, file.length - ".meta.json".length);
             })
             .map((file: string) => {
+
+                const uuid: string = file.split(".").pop() as string;
+                const title: string = file.slice(0, file.length - uuid.length - 1);
+
                 return {
-                    title: file,
+                    identifier: uuid,
+                    title,
                 };
             });
     }
 
-    public async createPage(title: string, open: boolean): Promise<void> {
+    public async createPage(title: string, open: boolean): Promise<ImbricateOriginCollectionListPagesResponse> {
 
         await this._ensureCollectionFolder();
 
@@ -94,16 +106,23 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         );
 
         const currentTime: number = new Date().getTime();
+        const uuid: string = UUIDVersion1.generateString();
 
-        await this._putFileToCollectionFolder(
-            this._fixMetaFileName(title),
+        await this._putFileToCollectionMetaFolder(
+            this._fixMetaFileName(title, uuid),
             JSON.stringify({
                 title,
+                identifier: uuid,
                 createdAt: currentTime,
                 updatedAt: currentTime,
             }, null, 2),
             open,
         );
+
+        return {
+            title,
+            identifier: uuid,
+        };
     }
 
     public async hasPage(title: string): Promise<boolean> {
@@ -122,12 +141,25 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
             await attemptMarkDir(collectionPath);
         }
 
-        const collectionFolderPath = joinCollectionFolderPath(this._basePath, this._collectionName);
+        const collectionFolderPath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+        );
 
         const pathExistsResult: boolean = await pathExists(collectionFolderPath);
         if (!pathExistsResult) {
             await attemptMarkDir(collectionFolderPath);
-            return;
+        }
+
+        const metaFolderPath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+            metadataFolderName,
+        );
+
+        const metaPathExistsResult: boolean = await pathExists(metaFolderPath);
+        if (!metaPathExistsResult) {
+            await attemptMarkDir(metaFolderPath);
         }
 
         const isDirectory: boolean = await isFolder(collectionFolderPath);
@@ -135,6 +167,14 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
             throw CLICollectionFolderOccupied.withCollectionName(
                 this._collectionName,
                 collectionFolderPath,
+            );
+        }
+
+        const isMetaDirectory: boolean = await isFolder(metaFolderPath);
+        if (!isMetaDirectory) {
+            throw CLICollectionFolderOccupied.withCollectionName(
+                this._collectionName,
+                metaFolderPath,
             );
         }
     }
@@ -148,6 +188,26 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         const targetFilePath = joinCollectionFolderPath(
             this._basePath,
             this._collectionName,
+            fileName,
+        );
+
+        await writeTextFile(targetFilePath, content);
+
+        if (open) {
+            await this._openEditor(targetFilePath);
+        }
+    }
+
+    private async _putFileToCollectionMetaFolder(
+        fileName: string,
+        content: string,
+        open: boolean,
+    ): Promise<void> {
+
+        const targetFilePath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+            metadataFolderName,
             fileName,
         );
 
@@ -183,14 +243,14 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         return output;
     }
 
-    private _fixMetaFileName(fileName: string): string {
+    private _fixMetaFileName(fileName: string, uuid: string): string {
 
         let fixedFileName: string = fileName.trim();
 
         const metaJSONExtension: string = ".meta.json";
 
         if (!fixedFileName.endsWith(metaJSONExtension)) {
-            fixedFileName = `${fixedFileName}${metaJSONExtension}`;
+            fixedFileName = `${fixedFileName}.${uuid}${metaJSONExtension}`;
         }
 
         return fixedFileName;

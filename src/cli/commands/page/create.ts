@@ -38,7 +38,7 @@ export const createPageCreateCommand = (
             "specify the collection of the page (required)",
         )
         .option("-q, --quiet", "quite mode")
-        .option("-n, --no-open", "do not open the page after creation")
+        .option("-no, --no-open", "do not open the page after creation")
         .argument("<page-title>", "Title of the page")
         .action(createActionRunner(terminalController, async (
             pageTitle: string,
@@ -72,10 +72,11 @@ export const createPageCreateCommand = (
                 throw CLIPageAlreadyExists.withPageName(pageTitle);
             }
 
-            await collection.createPage(pageTitle, !!options.open);
+            const item = await collection.createPage(pageTitle, !!options.open);
 
             if (!options.quiet) {
-                terminalController.printInfo(`Page ${pageTitle} created`);
+                terminalController.printInfo(`Page "${pageTitle}" created`);
+                terminalController.printInfo(`Identifier: ${item.identifier}`);
             }
         }));
 

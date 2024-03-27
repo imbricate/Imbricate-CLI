@@ -14,13 +14,21 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
 
         const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
-                origins: [{}],
+                origins: [{
+                    originName: "test",
+                    type: "test",
+                    payloads: {},
+                }],
                 activeOrigin: "test",
             },
         );
 
         expect(parsed).toStrictEqual({
-            origins: [{}],
+            origins: [{
+                originName: "test",
+                type: "test",
+                payloads: {},
+            }],
             activeOrigin: "test",
         });
     });
@@ -29,13 +37,21 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
 
         const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
-                origins: {},
+                origins: {
+                    originName: "test",
+                    type: "test",
+                    payloads: {},
+                },
                 activeOrigin: "test",
             },
         );
 
         expect(parsed).toStrictEqual({
-            origins: [{}],
+            origins: [{
+                originName: "test",
+                type: "test",
+                payloads: {},
+            }],
             activeOrigin: "test",
         });
     });
@@ -44,12 +60,20 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
 
         const parsed: IImbricateConfiguration = parseRawImbricateConfiguration(
             {
-                origins: {},
+                origins: {
+                    originName: "test",
+                    type: "test",
+                    payloads: {},
+                },
             },
         );
 
         expect(parsed).toStrictEqual({
-            origins: [{}],
+            origins: [{
+                originName: "test",
+                type: "test",
+                payloads: {},
+            }],
             activeOrigin: null,
         });
     });

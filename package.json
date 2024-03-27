@@ -37,6 +37,7 @@
   "dependencies": {
     "@sudoo/asynchronous": "^2.3.1",
     "@sudoo/io": "^1",
+    "@sudoo/uuid": "^1.1.0",
     "commander": "^12"
   },
   "devDependencies": {
