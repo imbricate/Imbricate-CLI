@@ -9,10 +9,13 @@ Yes to accountable notes, no to external hosting. Free, for everyone.
 
 ## Install
 
+To install the CLI, run:
+
 ```sh
-yarn add imbricate
+yarn global add imbricate # Yarn 1.x
+yarn dlx -p imbricate # Yarn 2+
 # Or
-npm install imbricate --save
+npm install -g imbricate
 ```
 
 ## Documentation
