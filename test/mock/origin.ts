@@ -61,4 +61,38 @@ export class MockOrigin implements IImbricateOrigin {
 
         throw new Error("Method not implemented.");
     }
+
+    public createScript(
+        _scriptName: string,
+        _description?: string | undefined,
+    ): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public hasScript(
+        _scriptName: string,
+    ): Promise<boolean> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public getScript(
+        _scriptName: string,
+    ): Promise<string | null> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public listScripts(): Promise<string[]> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public removeScript(
+        _scriptName: string,
+    ): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
 }

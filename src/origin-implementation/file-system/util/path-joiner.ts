@@ -27,6 +27,13 @@ export const getScriptsFolderPath = (
     return Path.join(basePath, "scripts");
 };
 
+export const getScriptsMetadataFolderPath = (
+    basePath: string,
+): string => {
+
+    return Path.join(basePath, "scripts", ".metadata");
+};
+
 export const joinCollectionFolderPath = (
     basePath: string,
     collectionName: string,

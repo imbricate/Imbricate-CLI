@@ -4,13 +4,16 @@
  * @description Origin
  */
 
+import { ImbricateScriptMetadata } from "../../definition/script";
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
 import { FileSystemImbricateCollection } from "./collection";
 import { FileSystemCollectionMetadata, FileSystemCollectionMetadataCollection } from "./definition/collection";
 import { FileSystemOriginPayload } from "./definition/origin";
+import { fileSystemOriginHasScript } from "./script/has-script";
+import { fileSystemOriginListScripts } from "./script/list-scripts";
 import { createOrGetFile, putFile } from "./util/io";
-import { joinCollectionMetaFilePath } from "./util/path-joiner";
+import { getScriptsFolderPath, joinCollectionMetaFilePath } from "./util/path-joiner";
 
 export class FileSystemImbricateOrigin implements IImbricateOrigin {
 
@@ -120,27 +123,36 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
-    public async createScript(scriptName: string): Promise<void> {
+    public async createScript(_scriptName: string): Promise<void> {
+
+        const scriptPath: string = getScriptsFolderPath(this._basePath);
+
+        console.log(scriptPath);
 
         throw new Error("Method not implemented.");
     }
 
     public async hasScript(scriptName: string): Promise<boolean> {
 
+        return await fileSystemOriginHasScript(
+            this._basePath,
+            scriptName,
+        );
+    }
+
+    public async getScript(_scriptName: string): Promise<string | null> {
+
         throw new Error("Method not implemented.");
     }
 
-    public async getScript(scriptName: string): Promise<string | null> {
+    public async listScripts(): Promise<ImbricateScriptMetadata[]> {
 
-        throw new Error("Method not implemented.");
+        return await fileSystemOriginListScripts(
+            this._basePath,
+        );
     }
 
-    public async listScripts(): Promise<string[]> {
-
-        throw new Error("Method not implemented.");
-    }
-
-    public async removeScript(scriptName: string): Promise<void> {
+    public async removeScript(_scriptName: string): Promise<void> {
 
         throw new Error("Method not implemented.");
     }
