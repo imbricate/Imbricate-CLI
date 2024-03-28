@@ -14,7 +14,7 @@ describe("Given [Least Common Identifier] Origin Collection Helper Methods", ():
         const result: Record<string, string> = mapLeastCommonIdentifier(
             [
                 {
-                    title: "aa",
+                    key: "aa",
                     identifier: "aa",
                 },
             ],
@@ -30,11 +30,11 @@ describe("Given [Least Common Identifier] Origin Collection Helper Methods", ():
         const result: Record<string, string> = mapLeastCommonIdentifier(
             [
                 {
-                    title: "aa",
+                    key: "aa",
                     identifier: "aa",
                 },
                 {
-                    title: "bb",
+                    key: "bb",
                     identifier: "bb",
                 },
             ],
@@ -51,11 +51,11 @@ describe("Given [Least Common Identifier] Origin Collection Helper Methods", ():
         const result: Record<string, string> = mapLeastCommonIdentifier(
             [
                 {
-                    title: "aa",
+                    key: "aa",
                     identifier: "qaa",
                 },
                 {
-                    title: "bb",
+                    key: "bb",
                     identifier: "qbb",
                 },
             ],
