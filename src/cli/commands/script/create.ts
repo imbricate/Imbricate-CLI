@@ -9,7 +9,7 @@ import { ImbricateScriptMetadata } from "../../../definition/script";
 import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
-import { CLIScriptAlreadyExists } from "../../error/script/collection-already-exists";
+import { CLIScriptAlreadyExists } from "../../error/script/script-already-exists";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
@@ -31,6 +31,7 @@ export const createScriptCreateCommand = (
 
     createCommand
         .description("create a new standalone script")
+        .option("-q, --quiet", "quite mode")
         .option("-no, --no-open", "do not open the page after creation")
         .argument("<script-name>", "name of the script")
         .action(createActionRunner(terminalController, async (

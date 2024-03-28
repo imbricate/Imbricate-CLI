@@ -157,7 +157,7 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         );
     }
 
-    public async removeScript(_scriptName: string): Promise<void> {
+    public async removeScript(scriptIdentifier: string): Promise<void> {
 
         throw new Error("Method not implemented.");
     }

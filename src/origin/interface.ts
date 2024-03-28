@@ -29,5 +29,5 @@ export interface IImbricateOrigin {
     getScript(scriptName: string): PromiseOr<string | null>;
     openScript(scriptName: string): PromiseOr<void>;
     listScripts(): PromiseOr<ImbricateScriptMetadata[]>;
-    removeScript(scriptName: string): PromiseOr<void>;
+    removeScript(scriptIdentifier: string): PromiseOr<void>;
 }

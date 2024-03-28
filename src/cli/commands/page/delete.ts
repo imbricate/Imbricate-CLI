@@ -20,6 +20,7 @@ import { createConfiguredCommand } from "../../util/command";
 type PageDeleteCommandOptions = {
 
     readonly collection: string;
+
     readonly title?: string;
     readonly identifier?: string;
 };
