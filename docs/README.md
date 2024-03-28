@@ -18,3 +18,9 @@ npm install imbricate --save
 ## Documentation
 
 Visit [imbricate.io](https://imbricate.io/).
+
+## Usage
+
+```sh
+imbricate --help
+```
