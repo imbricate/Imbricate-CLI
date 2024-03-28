@@ -22,4 +22,10 @@ export interface IImbricateOrigin {
     getCollection(collectionName: string): PromiseOr<IImbricateOriginCollection | null>;
     listCollections(): PromiseOr<IImbricateOriginCollection[]>;
     removeCollection(): PromiseOr<void>;
+
+    createScript(scriptName: string, description?: string): PromiseOr<void>;
+    hasScript(scriptName: string): PromiseOr<boolean>;
+    getScript(scriptName: string): PromiseOr<string | null>;
+    listScripts(): PromiseOr<string[]>;
+    removeScript(scriptName: string): PromiseOr<void>;
 }

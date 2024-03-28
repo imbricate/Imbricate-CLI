@@ -120,6 +120,31 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
+    public async createScript(scriptName: string): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public async hasScript(scriptName: string): Promise<boolean> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public async getScript(scriptName: string): Promise<string | null> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public async listScripts(): Promise<string[]> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public async removeScript(scriptName: string): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
+
     private async _getCollectionsMetaData(): Promise<FileSystemCollectionMetadata> {
 
         const collectionMetaFile = joinCollectionMetaFilePath(this._basePath);

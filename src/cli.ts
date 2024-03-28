@@ -27,7 +27,7 @@ import { FileSystemImbricateOrigin } from "./origin-implementation/file-system/o
 export const execute = async (): Promise<void> => {
 
     const ttyTerminalController: ITerminalController =
-        await TTYTerminalController.create();
+        TTYTerminalController.create();
 
     const configurationManager: IConfigurationManager =
         await ConfigurationManager.fromHomeConfigurationPath(ttyTerminalController);
