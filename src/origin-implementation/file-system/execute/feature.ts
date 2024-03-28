@@ -14,7 +14,7 @@ export const createFileSystemOriginExecuteFeature = (): SandboxFeature[] => {
             .withPackageName("io")
             .withMethodName("print")
             .withImplementation((...content: any[]) => {
-                console.log(content);
+                console.log("[SCRIPT]", ...content);
             })
             .build(),
     ];

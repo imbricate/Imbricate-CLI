@@ -9,6 +9,7 @@ import { ImbricateScriptMetadata } from "../../definition/script";
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
 import { SandboxExecuteConfig } from "../../sandbox/definition/config";
+import { SandboxEnvironment } from "../../sandbox/definition/environment";
 import { SandboxFeature } from "../../sandbox/feature/feature";
 import { executeSandboxScript } from "../../sandbox/sandbox";
 import { FileSystemImbricateCollection } from "./collection";
@@ -196,10 +197,16 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         }
 
         const features: SandboxFeature[] = createFileSystemOriginExecuteFeature();
+        const environment: SandboxEnvironment = {
+            origin: {
+                type: this.metadata.type,
+            },
+        };
 
         return await executeSandboxScript(
             script,
             features,
+            environment,
             config,
         );
     }

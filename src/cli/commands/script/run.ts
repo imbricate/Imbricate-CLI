@@ -4,7 +4,7 @@
  * @description Run
  */
 
-import { MarkedResult } from "@sudoo/marked";
+import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { Command } from "commander";
 import { ImbricateScriptMetadata } from "../../../definition/script";
 import { IImbricateOrigin } from "../../../origin/interface";
@@ -77,11 +77,16 @@ export const createScriptRunCommand = (
                         {},
                     );
 
-                if (!script) {
+                if (!executeResult) {
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                console.log(executeResult);
+                if (executeResult.signal === END_SIGNAL.SUCCEED) {
+
+                    if (!options.quiet) {
+                        terminalController.printInfo(`Script "${script.scriptName}" executed successfully`);
+                    }
+                }
 
                 return;
             }
@@ -102,7 +107,12 @@ export const createScriptRunCommand = (
                             throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier or pointer "${options.identifier}" not found`);
                         }
 
-                        console.log(executeResult);
+                        if (executeResult.signal === END_SIGNAL.SUCCEED) {
+
+                            if (!options.quiet) {
+                                terminalController.printInfo(`Script "${each.scriptName}" executed successfully`);
+                            }
+                        }
 
                         return;
                     }

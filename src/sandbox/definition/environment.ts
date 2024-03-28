@@ -4,7 +4,12 @@
  * @description Environment
  */
 
+export type SandboxEnvironmentOrigin = {
+
+    readonly type: string;
+};
+
 export type SandboxEnvironment = {
 
-    readonly time: Date;
+    readonly origin: SandboxEnvironmentOrigin;
 };
