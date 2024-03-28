@@ -4,6 +4,7 @@
  * @description Run
  */
 
+import { MarkedResult } from "@sudoo/marked";
 import { Command } from "commander";
 import { ImbricateScriptMetadata } from "../../../definition/script";
 import { IImbricateOrigin } from "../../../origin/interface";
@@ -70,14 +71,17 @@ export const createScriptRunCommand = (
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                const scriptContent: string | null =
-                    await currentOrigin.getScript(script.identifier);
+                const executeResult: MarkedResult | null =
+                    await currentOrigin.executeScript(
+                        script.identifier,
+                        {},
+                    );
 
                 if (!script) {
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                console.log(scriptContent);
+                console.log(executeResult);
 
                 return;
             }
@@ -88,14 +92,17 @@ export const createScriptRunCommand = (
 
                     if (each.identifier.startsWith(options.identifier)) {
 
-                        const scriptContent: string | null =
-                            await currentOrigin.getScript(each.identifier);
+                        const executeResult: MarkedResult | null =
+                            await currentOrigin.executeScript(
+                                each.identifier,
+                                {},
+                            );
 
-                        if (!scriptContent) {
-                            continue;
+                        if (!executeResult) {
+                            throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier or pointer "${options.identifier}" not found`);
                         }
 
-                        console.log(scriptContent);
+                        console.log(executeResult);
 
                         return;
                     }

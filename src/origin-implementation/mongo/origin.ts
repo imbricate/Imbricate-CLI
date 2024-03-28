@@ -4,9 +4,11 @@
  * @description Origin
  */
 
+import { MarkedResult } from "@sudoo/marked";
 import { ImbricateScriptMetadata } from "../../definition/script";
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
+import { SandboxExecuteConfig } from "../../sandbox/definition/config";
 
 export class MongoImbricateOrigin implements IImbricateOrigin {
 
@@ -76,6 +78,14 @@ export class MongoImbricateOrigin implements IImbricateOrigin {
     public async removeScript(
         _scriptName: string,
     ): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public async executeScript(
+        _scriptIdentifier: string,
+        _config: SandboxExecuteConfig,
+    ): Promise<MarkedResult | null> {
 
         throw new Error("Method not implemented.");
     }

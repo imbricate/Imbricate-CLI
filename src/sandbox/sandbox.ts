@@ -4,7 +4,7 @@
  * @description Sandbox
  */
 
-import { Sandbox } from "@sudoo/marked";
+import { MarkedResult, Sandbox } from "@sudoo/marked";
 import { SandboxExecuteConfig } from "./definition/config";
 import { SandboxEnvironment } from "./definition/environment";
 import { SandboxFeature } from "./feature/feature";
@@ -21,11 +21,11 @@ export const createSandbox = (
     return sandbox;
 };
 
-export const executeCommand = async (
+export const executeSandboxScript = async (
     script: string,
     features: SandboxFeature[],
     config: SandboxExecuteConfig,
-): Promise<any> => {
+): Promise<MarkedResult> => {
 
     const sandbox: Sandbox = createSandbox(features);
 

@@ -4,12 +4,17 @@
  * @description Origin
  */
 
+import { MarkedResult } from "@sudoo/marked";
 import { ImbricateScriptMetadata } from "../../definition/script";
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
+import { SandboxExecuteConfig } from "../../sandbox/definition/config";
+import { SandboxFeature } from "../../sandbox/feature/feature";
+import { executeSandboxScript } from "../../sandbox/sandbox";
 import { FileSystemImbricateCollection } from "./collection";
 import { FileSystemCollectionMetadata, FileSystemCollectionMetadataCollection } from "./definition/collection";
 import { FileSystemOriginPayload } from "./definition/origin";
+import { createFileSystemOriginExecuteFeature } from "./execute/feature";
 import { fileSystemOriginCreateScript } from "./script/create-script";
 import { fileSystemOriginGetScript } from "./script/get-script";
 import { fileSystemOriginHasScript } from "./script/has-script";
@@ -176,6 +181,26 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
             this._basePath,
             scriptIdentifier,
             scriptName,
+        );
+    }
+
+    public async executeScript(
+        scriptIdentifier: string,
+        config: SandboxExecuteConfig,
+    ): Promise<MarkedResult | null> {
+
+        const script: string | null = await this.getScript(scriptIdentifier);
+
+        if (!script) {
+            return null;
+        }
+
+        const features: SandboxFeature[] = createFileSystemOriginExecuteFeature();
+
+        return await executeSandboxScript(
+            script,
+            features,
+            config,
         );
     }
 

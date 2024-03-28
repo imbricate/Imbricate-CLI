@@ -5,9 +5,11 @@
  * @override Mock 
  */
 
+import { MarkedResult } from "@sudoo/marked";
 import { ImbricateScriptMetadata } from "../../src/definition/script";
 import { IImbricateOriginCollection } from "../../src/origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../src/origin/interface";
+import { SandboxExecuteConfig } from "../../src/sandbox/definition/config";
 
 export class MockOrigin implements IImbricateOrigin {
 
@@ -100,6 +102,14 @@ export class MockOrigin implements IImbricateOrigin {
     public removeScript(
         _scriptName: string,
     ): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public async executeScript(
+        _scriptIdentifier: string,
+        _config: SandboxExecuteConfig,
+    ): Promise<MarkedResult | null> {
 
         throw new Error("Method not implemented.");
     }
