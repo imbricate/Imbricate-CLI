@@ -11,6 +11,7 @@ import { FileSystemImbricateCollection } from "./collection";
 import { FileSystemCollectionMetadata, FileSystemCollectionMetadataCollection } from "./definition/collection";
 import { FileSystemOriginPayload } from "./definition/origin";
 import { fileSystemOriginCreateScript } from "./script/create-script";
+import { fileSystemOriginGetScript } from "./script/get-script";
 import { fileSystemOriginHasScript } from "./script/has-script";
 import { fileSystemOriginListScripts } from "./script/list-scripts";
 import { fileSystemOriginOpenScript } from "./script/open-script";
@@ -126,11 +127,11 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
-    public async createScript(_scriptName: string): Promise<ImbricateScriptMetadata> {
+    public async createScript(scriptName: string): Promise<ImbricateScriptMetadata> {
 
         return await fileSystemOriginCreateScript(
             this._basePath,
-            _scriptName,
+            scriptName,
         );
     }
 
@@ -142,9 +143,12 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         );
     }
 
-    public async getScript(_scriptName: string): Promise<string | null> {
+    public async getScript(scriptIdentifier: string): Promise<string | null> {
 
-        throw new Error("Method not implemented.");
+        return await fileSystemOriginGetScript(
+            this._basePath,
+            scriptIdentifier,
+        );
     }
 
     public async openScript(scriptIdentifier: string): Promise<string> {

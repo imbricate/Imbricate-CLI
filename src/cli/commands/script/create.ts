@@ -58,6 +58,10 @@ export const createScriptCreateCommand = (
                 terminalController.printInfo(`Script "${scriptMetadata.scriptName}" created`);
                 terminalController.printInfo(`Identifier: ${scriptMetadata.identifier}`);
             }
+
+            if (options.open) {
+                await currentOrigin.openScript(scriptMetadata.identifier);
+            }
         }));
 
     return createCommand;
