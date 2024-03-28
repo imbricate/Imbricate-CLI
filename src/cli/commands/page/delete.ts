@@ -21,6 +21,8 @@ type PageDeleteCommandOptions = {
 
     readonly collection: string;
 
+    readonly quiet?: boolean;
+
     readonly title?: string;
     readonly identifier?: string;
 };
@@ -47,6 +49,7 @@ export const createPageDeleteCommand = (
             "-i, --identifier <page-identifier>",
             "delete page by page identifier or pointer (one-of)",
         )
+        .option("-q, --quiet", "quite mode")
         .action(createActionRunner(terminalController, async (
             options: PageDeleteCommandOptions,
         ): Promise<void> => {
@@ -92,7 +95,11 @@ export const createPageDeleteCommand = (
                 }
 
                 await collection.deletePage(page.identifier, page.title);
-                terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
+
+                if (!options.quiet) {
+
+                    terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
+                }
 
                 return;
             }
@@ -104,7 +111,10 @@ export const createPageDeleteCommand = (
                     if (page.identifier.startsWith(options.identifier)) {
 
                         await collection.deletePage(page.identifier, page.title);
-                        terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
+
+                        if (!options.quiet) {
+                            terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
+                        }
 
                         return;
                     }

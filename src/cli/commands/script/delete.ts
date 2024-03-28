@@ -30,11 +30,10 @@ export const createScriptDeleteCommand = (
     _configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("delete");
+    const deleteCommand: Command = createConfiguredCommand("delete");
 
-    createCommand
+    deleteCommand
         .description("delete a existing standalone script")
-        .option("-q, --quiet", "quite mode")
         .option(
             "-s, --script-name <script-name>",
             "delete page by script name (one-of)",
@@ -43,6 +42,7 @@ export const createScriptDeleteCommand = (
             "-i, --identifier <script-identifier>",
             "delete page by script identifier or pointer (one-of)",
         )
+        .option("-q, --quiet", "quite mode")
         .action(createActionRunner(terminalController, async (
             options: ScriptDeleteCommandOptions,
         ): Promise<void> => {
@@ -70,14 +70,36 @@ export const createScriptDeleteCommand = (
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                await currentOrigin.removeScript(script.identifier);
+                await currentOrigin.removeScript(script.identifier, script.scriptName);
+
+                if (!options.quiet) {
+
+                    terminalController.printInfo(`Script [${script.identifier}] -> "${script.scriptName}" deleted`);
+                }
+
+                return;
             }
 
-            // if (!options.quiet) {
-            //     terminalController.printInfo(`Script "${scriptMetadata.scriptName}" created`);
-            //     terminalController.printInfo(`Identifier: ${scriptMetadata.identifier}`);
-            // }
+            if (typeof options.identifier === "string" && options.identifier.length > 0) {
+
+                for (const each of scripts) {
+
+                    if (each.identifier.startsWith(options.identifier)) {
+
+                        await currentOrigin.removeScript(each.identifier, each.scriptName);
+
+                        if (!options.quiet) {
+
+                            terminalController.printInfo(`Script [${each.identifier}] -> "${each.scriptName}" deleted`);
+                        }
+
+                        return;
+                    }
+                }
+
+                throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier or pointer "${options.identifier}" not found`);
+            }
         }));
 
-    return createCommand;
+    return deleteCommand;
 };

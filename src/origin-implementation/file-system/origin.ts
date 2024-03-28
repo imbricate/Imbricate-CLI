@@ -13,6 +13,7 @@ import { FileSystemOriginPayload } from "./definition/origin";
 import { fileSystemOriginCreateScript } from "./script/create-script";
 import { fileSystemOriginHasScript } from "./script/has-script";
 import { fileSystemOriginListScripts } from "./script/list-scripts";
+import { fileSystemOriginRemoveScript } from "./script/remove-script";
 import { createOrGetFile, putFile } from "./util/io";
 import { joinCollectionMetaFilePath } from "./util/path-joiner";
 
@@ -157,9 +158,16 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         );
     }
 
-    public async removeScript(scriptIdentifier: string): Promise<void> {
+    public async removeScript(
+        scriptIdentifier: string,
+        scriptName: string,
+    ): Promise<void> {
 
-        throw new Error("Method not implemented.");
+        return await fileSystemOriginRemoveScript(
+            this._basePath,
+            scriptIdentifier,
+            scriptName,
+        );
     }
 
     private async _getCollectionsMetaData(): Promise<FileSystemCollectionMetadata> {
