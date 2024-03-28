@@ -4,7 +4,7 @@
  * @description Collection
  */
 
-import { attemptMarkDir, directoryFiles, isFolder, pathExists, removeFile, writeTextFile } from "@sudoo/io";
+import { attemptMarkDir, directoryFiles, isFolder, pathExists, readTextFile, removeFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { CLICollectionFolderOccupied } from "../../cli/error/collection/collection-folder-occupied";
 import { IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "../../origin/collection/interface";
@@ -178,25 +178,63 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
 
         const pages: ImbricateOriginCollectionListPagesResponse[] = await this.listPages();
 
-        const titleSnippets: Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>> =
-            pages
-                .filter((page: ImbricateOriginCollectionListPagesResponse) => {
-                    return page.title.includes(keyword);
-                })
-                .map((page: ImbricateOriginCollectionListPagesResponse) => {
-                    return {
+        const snippets: Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>> = [];
 
-                        type: IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE,
+        for (const page of pages) {
 
-                        identifier: page.identifier,
-                        headline: page.title,
+            const titleIndex: number = page.title.search(new RegExp(keyword, "i"));
 
-                        source: IMBRICATE_SEARCH_SNIPPET_PAGE_SNIPPET_SOURCE.TITLE,
-                        snippet: page.title,
-                    };
+            if (titleIndex !== -1) {
+
+                snippets.push({
+                    type: IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE,
+
+                    scope: this._collectionName,
+                    identifier: page.identifier,
+                    headline: page.title,
+
+                    source: IMBRICATE_SEARCH_SNIPPET_PAGE_SNIPPET_SOURCE.TITLE,
+                    snippet: page.title,
                 });
+            }
 
-        return titleSnippets;
+            const content: string = await this._getPageContent(page.identifier);
+
+            const regexIndex: number = content.search(new RegExp(keyword, "i"));
+
+            if (regexIndex === -1) {
+                continue;
+            }
+
+            const snippetAroundKeyword: string = content.slice(
+                Math.max(0, regexIndex - 10),
+                Math.min(content.length, regexIndex + keyword.length + 10),
+            );
+
+            snippets.push({
+                type: IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE,
+
+                scope: this._collectionName,
+                identifier: page.identifier,
+                headline: page.title,
+
+                source: IMBRICATE_SEARCH_SNIPPET_PAGE_SNIPPET_SOURCE.CONTENT,
+                snippet: snippetAroundKeyword,
+            });
+        }
+
+        return snippets;
+    }
+
+    private async _getPageContent(identifier: string): Promise<string> {
+
+        const targetFilePath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+            this._fixFileNameFromIdentifier(identifier),
+        );
+
+        return await readTextFile(targetFilePath);
     }
 
     private async _ensureCollectionFolder(): Promise<void> {

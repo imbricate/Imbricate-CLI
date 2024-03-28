@@ -5,7 +5,9 @@
  */
 
 import { Command } from "commander";
+import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin } from "../../origin/interface";
+import { IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet } from "../../search/snippet";
 import { IConfigurationManager } from "../configuration/interface";
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
 import { GlobalManager } from "../global/global-manager";
@@ -31,8 +33,8 @@ export const createSearchCommand = (
         .option("-j, --json", "print result as JSON")
         .argument("<prompt>", "prompt to search")
         .action(createActionRunner(terminalController, async (
-            _prompt: string,
-            _options: SearchCommandOptions,
+            prompt: string,
+            options: SearchCommandOptions,
         ): Promise<void> => {
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -41,9 +43,42 @@ export const createSearchCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            terminalController.printInfo("Search Command");
+            const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
 
-            return;
+            const snippets: Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE>> = [];
+
+            for (const collection of collections) {
+
+                const pageSnippets: Array<
+                    ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>
+                > = await collection.searchPages(prompt);
+
+                snippets.push(...pageSnippets);
+            }
+
+            if (options.json) {
+
+                terminalController.printInfo(JSON.stringify(snippets.map((snippet) => {
+
+                    return {
+                        type: snippet.type,
+                        scope: snippet.scope,
+                        identifier: snippet.identifier,
+                        headline: snippet.headline,
+                        source: snippet.source,
+                        snippet: snippet.snippet,
+                    };
+                }), null, 2));
+                return;
+            }
+
+            terminalController.printInfo(snippets.map((snippet) => {
+                return [
+                    `${snippet.type} - ${snippet.scope}:${snippet.identifier}`,
+                    `* | ${snippet.headline}`,
+                    `  | ${snippet.snippet}`,
+                ].join("\n");
+            }).join("\n"));
         }));
 
     return searchCommand;

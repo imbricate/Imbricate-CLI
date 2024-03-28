@@ -22,6 +22,8 @@ type IMBRICATE_SEARCH_SNIPPET_SNIPPET_SOURCE<T extends IMBRICATE_SEARCH_SNIPPET_
 export type ImbricateSearchSnippet<T extends IMBRICATE_SEARCH_SNIPPET_TYPE> = {
 
     readonly type: T;
+
+    readonly scope: string;
     readonly identifier: string;
 
     readonly headline: string;
