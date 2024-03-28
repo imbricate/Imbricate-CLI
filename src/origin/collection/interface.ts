@@ -4,6 +4,8 @@
  * @description Interface
  */
 
+import { IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet } from "../../search/snippet";
+
 export type ImbricateOriginCollectionListPagesResponse = {
 
     readonly title: string;
@@ -22,4 +24,7 @@ export interface IImbricateOriginCollection {
     deletePage(identifier: string, title: string): Promise<void>;
     openPage(title: string): Promise<void>;
     hasPage(title: string): Promise<boolean>;
+    searchPages(keyword: string): Promise<
+        Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>>
+    >;
 }

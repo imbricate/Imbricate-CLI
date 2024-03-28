@@ -8,6 +8,7 @@ import { attemptMarkDir, directoryFiles, isFolder, pathExists, removeFile, write
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { CLICollectionFolderOccupied } from "../../cli/error/collection/collection-folder-occupied";
 import { IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "../../origin/collection/interface";
+import { IMBRICATE_SEARCH_SNIPPET_PAGE_SNIPPET_SOURCE, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet } from "../../search/snippet";
 import { FileSystemCollectionMetadataCollection } from "./definition/collection";
 import { FileSystemOriginPayload } from "./definition/origin";
 import { executeCommand } from "./util/execute";
@@ -169,6 +170,33 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         return pages.some((page: ImbricateOriginCollectionListPagesResponse) => {
             return page.title === title;
         });
+    }
+
+    public async searchPages(
+        keyword: string,
+    ): Promise<Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>>> {
+
+        const pages: ImbricateOriginCollectionListPagesResponse[] = await this.listPages();
+
+        const titleSnippets: Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>> =
+            pages
+                .filter((page: ImbricateOriginCollectionListPagesResponse) => {
+                    return page.title.includes(keyword);
+                })
+                .map((page: ImbricateOriginCollectionListPagesResponse) => {
+                    return {
+
+                        type: IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE,
+
+                        identifier: page.identifier,
+                        headline: page.title,
+
+                        source: IMBRICATE_SEARCH_SNIPPET_PAGE_SNIPPET_SOURCE.TITLE,
+                        snippet: page.title,
+                    };
+                });
+
+        return titleSnippets;
     }
 
     private async _ensureCollectionFolder(): Promise<void> {

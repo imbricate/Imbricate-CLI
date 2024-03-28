@@ -6,6 +6,7 @@
  */
 
 import { IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "../../src/origin/collection/interface";
+import { IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet } from "../../src/search/snippet";
 
 export class MockCollection implements IImbricateOriginCollection {
 
@@ -35,7 +36,6 @@ export class MockCollection implements IImbricateOriginCollection {
 
     public createPage(
         _title: string,
-        _open: boolean,
     ): Promise<ImbricateOriginCollectionListPagesResponse> {
 
         throw new Error("Method not implemented.");
@@ -59,6 +59,13 @@ export class MockCollection implements IImbricateOriginCollection {
     public hasPage(
         _title: string,
     ): Promise<boolean> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public searchPages(
+        _keyword: string,
+    ): Promise<Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>>> {
 
         throw new Error("Method not implemented.");
     }
