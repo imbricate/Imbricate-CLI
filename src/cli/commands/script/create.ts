@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace CLI_Commands_Page
+ * @namespace CLI_Commands_Script
  * @description Create
  */
 
@@ -16,14 +16,14 @@ import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
 
-type PageCreateCommandOptions = {
+type ScriptCreateCommandOptions = {
 
     readonly collection: string;
     readonly open?: boolean;
     readonly quiet?: boolean;
 };
 
-export const createPageCreateCommand = (
+export const createScriptCreateCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
     _configurationManager: IConfigurationManager,
@@ -32,17 +32,12 @@ export const createPageCreateCommand = (
     const createCommand: Command = createConfiguredCommand("create");
 
     createCommand
-        .description("create a new page")
-        .requiredOption(
-            "-c, --collection <description>",
-            "specify the collection of the page (required)",
-        )
-        .option("-q, --quiet", "quite mode")
+        .description("create a new standalone script")
         .option("-no, --no-open", "do not open the page after creation")
-        .argument("<page-title>", "title of the page")
+        .argument("<script-name>", "name of the script")
         .action(createActionRunner(terminalController, async (
             pageTitle: string,
-            options: PageCreateCommandOptions,
+            options: ScriptCreateCommandOptions,
         ): Promise<void> => {
 
             const collectionName: string = options.collection;
