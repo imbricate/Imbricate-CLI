@@ -7,8 +7,8 @@
 import { writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { ImbricateScriptMetadata } from "../../../definition/script";
-import { getScriptsMetadataFolderPath } from "../util/path-joiner";
-import { ensureScriptFolders, fixMetaScriptFileName } from "./common";
+import { getScriptsFolderPath, getScriptsMetadataFolderPath } from "../util/path-joiner";
+import { ensureScriptFolders, fixMetaScriptFileName, fixScriptFileName } from "./common";
 
 export const fileSystemOriginCreateScript = async (
     basePath: string,
@@ -34,6 +34,11 @@ export const fileSystemOriginCreateScript = async (
             updatedAt: currentTime,
         }, null, 2),
     );
+
+    const scriptFileName: string = fixScriptFileName(uuid);
+    const scriptFolderPath: string = getScriptsFolderPath(basePath, scriptFileName);
+
+    await writeTextFile(scriptFolderPath, "");
 
     return {
         scriptName,
