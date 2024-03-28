@@ -7,6 +7,7 @@
 import { Command } from "commander";
 import { IImbricateOriginCollection } from "../../origin/collection/interface";
 import { IImbricateOrigin } from "../../origin/interface";
+import { getShortPrefixOfSnippet } from "../../search/prefix";
 import { IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet } from "../../search/snippet";
 import { IConfigurationManager } from "../configuration/interface";
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
@@ -72,11 +73,18 @@ export const createSearchCommand = (
                 return;
             }
 
+            if (snippets.length === 0) {
+                terminalController.printInfo("No result found");
+                return;
+            }
+
             terminalController.printInfo(snippets.map((snippet) => {
+
+                const prefix: string = getShortPrefixOfSnippet(snippet);
                 return [
                     `${snippet.type} - ${snippet.scope}:${snippet.identifier}`,
                     `* | ${snippet.headline}`,
-                    `  | ${snippet.snippet}`,
+                    `${prefix} | ${snippet.snippet}`,
                 ].join("\n");
             }).join("\n"));
         }));

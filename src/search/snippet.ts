@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Origin_Search
+ * @namespace Search
  * @description Snippet
  */
 
