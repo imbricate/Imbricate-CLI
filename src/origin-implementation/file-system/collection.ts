@@ -95,14 +95,17 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
             });
     }
 
-    public async createPage(title: string): Promise<ImbricateOriginCollectionListPagesResponse> {
+    public async createPage(
+        title: string,
+        initialContent: string = "",
+    ): Promise<ImbricateOriginCollectionListPagesResponse> {
 
         await this._ensureCollectionFolder();
         const uuid: string = UUIDVersion1.generateString();
 
         await this._putFileToCollectionFolder(
             this._fixFileNameFromIdentifier(uuid),
-            "",
+            initialContent,
         );
 
         const currentTime: number = new Date().getTime();

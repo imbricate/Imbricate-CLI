@@ -196,7 +196,9 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
             return null;
         }
 
-        const features: SandboxFeature[] = createFileSystemOriginExecuteFeature();
+        const features: SandboxFeature[] =
+            createFileSystemOriginExecuteFeature(this);
+
         const environment: SandboxEnvironment = {
             origin: {
                 type: this.metadata.type,

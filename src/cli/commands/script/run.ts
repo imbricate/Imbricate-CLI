@@ -16,6 +16,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { CLIScriptExecuteFailed } from "../../error/script/script-execute-failed";
 
 type ScriptRunCommandOptions = {
 
@@ -86,6 +87,8 @@ export const createScriptRunCommand = (
                     if (!options.quiet) {
                         terminalController.printInfo(`Script "${script.scriptName}" executed successfully`);
                     }
+                } else {
+                    throw CLIScriptExecuteFailed.create(script.scriptName, executeResult);
                 }
 
                 return;
@@ -112,6 +115,8 @@ export const createScriptRunCommand = (
                             if (!options.quiet) {
                                 terminalController.printInfo(`Script "${each.scriptName}" executed successfully`);
                             }
+                        } else {
+                            throw CLIScriptExecuteFailed.create(each.scriptName, executeResult);
                         }
 
                         return;
