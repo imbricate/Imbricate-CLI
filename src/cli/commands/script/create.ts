@@ -50,7 +50,8 @@ export const createScriptCreateCommand = (
                 throw CLIScriptAlreadyExists.withScriptName(scriptName);
             }
 
-            const scriptMetadata: ImbricateScriptMetadata = await currentOrigin.createScript(scriptName);
+            const scriptMetadata: ImbricateScriptMetadata =
+                await currentOrigin.createScript(scriptName);
 
             if (!options.quiet) {
                 terminalController.printInfo(`Script "${scriptMetadata.scriptName}" created`);

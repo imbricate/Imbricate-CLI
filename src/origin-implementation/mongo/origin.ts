@@ -61,6 +61,13 @@ export class MongoImbricateOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
+    public async openScript(
+        _scriptName: string,
+    ): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
+
     public async listScripts(): Promise<ImbricateScriptMetadata[]> {
 
         throw new Error("Method not implemented.");
