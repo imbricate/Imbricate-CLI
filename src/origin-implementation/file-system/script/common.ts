@@ -7,6 +7,8 @@
 import { attemptMarkDir } from "@sudoo/io";
 import { getScriptsFolderPath, getScriptsMetadataFolderPath } from "../util/path-joiner";
 
+export const SCRIPT_META_FILE_EXTENSION: string = ".meta.json";
+
 export const ensureScriptFolders = async (basePath: string): Promise<void> => {
 
     const scriptPath: string = getScriptsFolderPath(basePath);
@@ -23,5 +25,5 @@ export const fixMetaScriptFileName = (
     uuid: string,
 ): string => {
 
-    return `${scriptName}.${uuid}.meta.json`;
+    return `${scriptName}.${uuid}${SCRIPT_META_FILE_EXTENSION}`;
 };
