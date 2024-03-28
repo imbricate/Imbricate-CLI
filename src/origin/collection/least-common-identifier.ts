@@ -4,7 +4,11 @@
  * @description Least Common Identifier
  */
 
-import { ImbricateOriginCollectionListPagesResponse } from "./interface";
+export type LeastCommonIdentifierItem = {
+
+    readonly key: string;
+    readonly identifier: string;
+};
 
 class TrieNode {
 
@@ -42,7 +46,7 @@ class TrieNode {
 }
 
 export const mapLeastCommonIdentifier = (
-    identifiers: ImbricateOriginCollectionListPagesResponse[],
+    identifiers: LeastCommonIdentifierItem[],
 ): Record<string, string> => {
 
     const root: TrieNode = TrieNode.create();
@@ -51,7 +55,7 @@ export const mapLeastCommonIdentifier = (
 
         let current: TrieNode = root;
         for (const char of identifier.identifier) {
-            current.pushItem(identifier.title);
+            current.pushItem(identifier.key);
             current = current.getChild(char);
         }
     }
@@ -73,7 +77,7 @@ export const mapLeastCommonIdentifier = (
             }
         }
 
-        result[identifier.title] = currentIdentifier;
+        result[identifier.key] = currentIdentifier;
     }
 
     return result;

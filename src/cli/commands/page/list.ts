@@ -37,7 +37,12 @@ const generateRawPrint = (
     }
 
     const mappedLeastCommonIdentifier: Record<string, string> =
-        mapLeastCommonIdentifier(pages);
+        mapLeastCommonIdentifier(pages.map((item) => {
+            return {
+                key: item.title,
+                identifier: item.identifier,
+            };
+        }));
 
     return pages
         .map((page: ImbricateOriginCollectionListPagesResponse) => page.title)
@@ -62,7 +67,12 @@ const generateJSONPrint = (
     }
 
     const mappedLeastCommonIdentifier: Record<string, string> =
-        mapLeastCommonIdentifier(pages);
+        mapLeastCommonIdentifier(pages.map((item) => {
+            return {
+                key: item.title,
+                identifier: item.identifier,
+            };
+        }));
 
     return JSON.stringify(pages.map((page) => {
         return {
