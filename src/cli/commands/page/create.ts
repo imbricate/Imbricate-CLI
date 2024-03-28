@@ -10,11 +10,11 @@ import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
 
 type PageCreateCommandOptions = {
 
@@ -72,11 +72,18 @@ export const createPageCreateCommand = (
                 throw CLIPageAlreadyExists.withPageName(pageTitle);
             }
 
-            const item = await collection.createPage(pageTitle, !!options.open);
+            const item = await collection.createPage(pageTitle);
 
             if (!options.quiet) {
                 terminalController.printInfo(`Page "${pageTitle}" created`);
                 terminalController.printInfo(`Identifier: ${item.identifier}`);
+            }
+
+            if (options.open) {
+                if (!options.quiet) {
+                    terminalController.printInfo(`Opening page "${pageTitle}"`);
+                }
+                await collection.openPage(item.identifier);
             }
         }));
 

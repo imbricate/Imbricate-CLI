@@ -18,7 +18,7 @@ export interface IImbricateOriginCollection {
     findScripts(...onActivities: string[]): Promise<void>;
 
     listPages(): Promise<ImbricateOriginCollectionListPagesResponse[]>;
-    createPage(title: string, open: boolean): Promise<ImbricateOriginCollectionListPagesResponse>;
+    createPage(title: string): Promise<ImbricateOriginCollectionListPagesResponse>;
     deletePage(identifier: string, title: string): Promise<void>;
     openPage(title: string): Promise<void>;
     hasPage(title: string): Promise<boolean>;

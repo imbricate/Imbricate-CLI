@@ -117,8 +117,6 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
             }, null, 2),
         );
 
-        await this.openPage(uuid);
-
         return {
             title,
             identifier: uuid,
