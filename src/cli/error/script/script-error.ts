@@ -1,12 +1,12 @@
 /**
  * @author WMXPY
- * @namespace CLI_Error_Collection
- * @description Collection Error
+ * @namespace CLI_Error_Script
+ * @description Script Error
  */
 
 import { CLIError } from "../cli-error";
 
-export class CLICollectionError extends CLIError {
+export class CLIScriptError extends CLIError {
 
     protected constructor(
         message: string,
@@ -16,6 +16,6 @@ export class CLICollectionError extends CLIError {
 
         super(message, type, reason);
 
-        Object.setPrototypeOf(this, CLICollectionError.prototype);
+        Object.setPrototypeOf(this, CLIScriptError.prototype);
     }
 }

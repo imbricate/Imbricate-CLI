@@ -17,3 +17,11 @@ export const ensureScriptFolders = async (basePath: string): Promise<void> => {
 
     await attemptMarkDir(scriptMetadataPath);
 };
+
+export const fixMetaScriptFileName = (
+    scriptName: string,
+    uuid: string,
+): string => {
+
+    return `${scriptName}.${uuid}.meta.json`;
+};

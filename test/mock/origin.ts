@@ -66,7 +66,7 @@ export class MockOrigin implements IImbricateOrigin {
     public createScript(
         _scriptName: string,
         _description?: string | undefined,
-    ): Promise<void> {
+    ): Promise<ImbricateScriptMetadata> {
 
         throw new Error("Method not implemented.");
     }

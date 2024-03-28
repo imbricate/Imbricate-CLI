@@ -5,20 +5,18 @@
  */
 
 import { Command } from "commander";
-import { IImbricateOriginCollection } from "../../../origin/collection/interface";
+import { ImbricateScriptMetadata } from "../../../definition/script";
 import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
-import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIScriptAlreadyExists } from "../../error/script/collection-already-exists";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
 
 type ScriptCreateCommandOptions = {
 
-    readonly collection: string;
     readonly open?: boolean;
     readonly quiet?: boolean;
 };
@@ -36,11 +34,9 @@ export const createScriptCreateCommand = (
         .option("-no, --no-open", "do not open the page after creation")
         .argument("<script-name>", "name of the script")
         .action(createActionRunner(terminalController, async (
-            pageTitle: string,
+            scriptName: string,
             options: ScriptCreateCommandOptions,
         ): Promise<void> => {
-
-            const collectionName: string = options.collection;
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
@@ -48,30 +44,17 @@ export const createScriptCreateCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const hasCollection: boolean = await currentOrigin.hasCollection(collectionName);
+            const hasScript: boolean = await currentOrigin.hasScript(scriptName);
 
-            if (!hasCollection) {
-                throw CLICollectionNotFound.withCollectionName(collectionName);
+            if (hasScript) {
+                throw CLIScriptAlreadyExists.withScriptName(scriptName);
             }
 
-            const collection: IImbricateOriginCollection | null
-                = await currentOrigin.getCollection(collectionName);
-
-            if (!collection) {
-                throw CLICollectionNotFound.withCollectionName(collectionName);
-            }
-
-            const pageExists: boolean = await collection.hasPage(pageTitle);
-
-            if (pageExists) {
-                throw CLIPageAlreadyExists.withPageName(pageTitle);
-            }
-
-            const item = await collection.createPage(pageTitle, !!options.open);
+            const scriptMetadata: ImbricateScriptMetadata = await currentOrigin.createScript(scriptName);
 
             if (!options.quiet) {
-                terminalController.printInfo(`Page "${pageTitle}" created`);
-                terminalController.printInfo(`Identifier: ${item.identifier}`);
+                terminalController.printInfo(`Script "${scriptMetadata.scriptName}" created`);
+                terminalController.printInfo(`Identifier: ${scriptMetadata.identifier}`);
             }
         }));
 

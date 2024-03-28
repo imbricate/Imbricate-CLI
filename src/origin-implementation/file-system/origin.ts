@@ -10,10 +10,11 @@ import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interfac
 import { FileSystemImbricateCollection } from "./collection";
 import { FileSystemCollectionMetadata, FileSystemCollectionMetadataCollection } from "./definition/collection";
 import { FileSystemOriginPayload } from "./definition/origin";
+import { fileSystemOriginCreateScript } from "./script/create-script";
 import { fileSystemOriginHasScript } from "./script/has-script";
 import { fileSystemOriginListScripts } from "./script/list-scripts";
 import { createOrGetFile, putFile } from "./util/io";
-import { getScriptsFolderPath, joinCollectionMetaFilePath } from "./util/path-joiner";
+import { joinCollectionMetaFilePath } from "./util/path-joiner";
 
 export class FileSystemImbricateOrigin implements IImbricateOrigin {
 
@@ -123,13 +124,12 @@ export class FileSystemImbricateOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
-    public async createScript(_scriptName: string): Promise<void> {
+    public async createScript(_scriptName: string): Promise<ImbricateScriptMetadata> {
 
-        const scriptPath: string = getScriptsFolderPath(this._basePath);
-
-        console.log(scriptPath);
-
-        throw new Error("Method not implemented.");
+        return await fileSystemOriginCreateScript(
+            this._basePath,
+            _scriptName,
+        );
     }
 
     public async hasScript(scriptName: string): Promise<boolean> {

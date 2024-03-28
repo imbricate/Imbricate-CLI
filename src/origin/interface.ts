@@ -24,7 +24,7 @@ export interface IImbricateOrigin {
     listCollections(): PromiseOr<IImbricateOriginCollection[]>;
     removeCollection(): PromiseOr<void>;
 
-    createScript(scriptName: string, description?: string): PromiseOr<void>;
+    createScript(scriptName: string, description?: string): PromiseOr<ImbricateScriptMetadata>;
     hasScript(scriptName: string): PromiseOr<boolean>;
     getScript(scriptName: string): PromiseOr<string | null>;
     listScripts(): PromiseOr<ImbricateScriptMetadata[]>;
