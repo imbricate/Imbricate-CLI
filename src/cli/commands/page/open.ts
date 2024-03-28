@@ -30,9 +30,9 @@ export const createPageOpenCommand = (
     _configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("open");
+    const openCommand: Command = createConfiguredCommand("open");
 
-    createCommand
+    openCommand
         .description("open a page in the collection")
         .requiredOption(
             "-c, --collection <description>",
@@ -109,5 +109,5 @@ export const createPageOpenCommand = (
             }
         }));
 
-    return createCommand;
+    return openCommand;
 };

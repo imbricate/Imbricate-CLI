@@ -86,8 +86,8 @@ export class MockOrigin implements IImbricateOrigin {
     }
 
     public openScript(
-        _scriptName: string,
-    ): Promise<void> {
+        _scriptIdentifier: string,
+    ): Promise<string> {
 
         throw new Error("Method not implemented.");
     }

@@ -33,9 +33,9 @@ export const createPageDeleteCommand = (
     _configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("delete");
+    const deleteCommand: Command = createConfiguredCommand("delete");
 
-    createCommand
+    deleteCommand
         .description("delete a existing page in the collection")
         .requiredOption(
             "-c, --collection <description>",
@@ -124,5 +124,5 @@ export const createPageDeleteCommand = (
             }
         }));
 
-    return createCommand;
+    return deleteCommand;
 };

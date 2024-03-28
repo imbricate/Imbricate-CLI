@@ -12,6 +12,7 @@ import { createConfiguredCommand } from "../util/command";
 import { createScriptCreateCommand } from "./script/create";
 import { createScriptDeleteCommand } from "./script/delete";
 import { createScriptListCommand } from "./script/list";
+import { createScriptOpenCommand } from "./script/open";
 
 export const createScriptCommand = (
     globalManager: GlobalManager,
@@ -35,6 +36,11 @@ export const createScriptCommand = (
         configurationManager,
     ));
     scriptCommand.addCommand(createScriptListCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    scriptCommand.addCommand(createScriptOpenCommand(
         globalManager,
         terminalController,
         configurationManager,

@@ -89,9 +89,9 @@ export const createPageListCommand = (
     _configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("list");
+    const listCommand: Command = createConfiguredCommand("list");
 
-    createCommand
+    listCommand
         .description("list available pages")
         .requiredOption(
             "-c, --collection <description>",
@@ -141,5 +141,5 @@ export const createPageListCommand = (
             terminalController.printInfo(generateRawPrint(pages, !!options.pointer));
         }));
 
-    return createCommand;
+    return listCommand;
 };

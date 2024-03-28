@@ -16,7 +16,6 @@ export const fileSystemOriginRemoveScript = async (
 
     await ensureScriptFolders(basePath);
 
-
     const fileName: string = fixMetaScriptFileName(scriptName, identifier);
     const scriptMetadataFilePath: string = getScriptsMetadataFolderPath(
         basePath,
