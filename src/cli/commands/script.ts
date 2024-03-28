@@ -10,6 +10,7 @@ import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createScriptCreateCommand } from "./script/create";
+import { createScriptListCommand } from "./script/list";
 
 export const createScriptCommand = (
     globalManager: GlobalManager,
@@ -23,6 +24,11 @@ export const createScriptCommand = (
         .description("manage imbricate pages");
 
     scriptCommand.addCommand(createScriptCreateCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    scriptCommand.addCommand(createScriptListCommand(
         globalManager,
         terminalController,
         configurationManager,

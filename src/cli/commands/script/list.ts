@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @namespace CLI_Commands_Collection
+ * @namespace CLI_Commands_Script
  * @description List
  */
 
 import { Command } from "commander";
-import { IImbricateOriginCollection } from "../../../origin/collection/interface";
+import { ImbricateScriptMetadata } from "../../../definition/script";
 import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -14,12 +14,12 @@ import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 
-type CollectionListCommandOptions = {
+type ScriptListCommandOptions = {
 
     readonly json?: boolean;
 };
 
-export const createCollectionListCommand = (
+export const createScriptListCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
     _configurationManager: IConfigurationManager,
@@ -28,10 +28,10 @@ export const createCollectionListCommand = (
     const listCommand: Command = createConfiguredCommand("list");
 
     listCommand
-        .description("list collections")
+        .description("list standalone scripts")
         .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
-            options: CollectionListCommandOptions,
+            options: ScriptListCommandOptions,
         ): Promise<void> => {
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -40,26 +40,26 @@ export const createCollectionListCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
+            const scripts: ImbricateScriptMetadata[] = await currentOrigin.listScripts();
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify(collections.map((collection) => {
+                terminalController.printInfo(JSON.stringify(scripts.map((script) => {
                     return {
-                        collectionName: collection.collectionName,
-                        description: collection.description,
+                        scriptName: script.scriptName,
+                        description: script.identifier,
                     };
                 }), null, 2));
                 return;
             }
 
-            if (collections.length === 0) {
-                terminalController.printInfo("No collection found");
+            if (scripts.length === 0) {
+                terminalController.printInfo("No script found");
                 return;
             }
 
-            terminalController.printInfo(collections.map((collection: IImbricateOriginCollection) => {
-                return collection.collectionName;
+            terminalController.printInfo(scripts.map((script: ImbricateScriptMetadata) => {
+                return script.scriptName;
             }).join("\n"));
 
             return;

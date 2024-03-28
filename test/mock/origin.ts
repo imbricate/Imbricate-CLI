@@ -5,6 +5,7 @@
  * @override Mock 
  */
 
+import { ImbricateScriptMetadata } from "../../src/definition/script";
 import { IImbricateOriginCollection } from "../../src/origin/collection/interface";
 import { IImbricateOrigin, ImbricateOriginMetadata } from "../../src/origin/interface";
 
@@ -84,7 +85,7 @@ export class MockOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
-    public listScripts(): Promise<string[]> {
+    public listScripts(): Promise<ImbricateScriptMetadata[]> {
 
         throw new Error("Method not implemented.");
     }
