@@ -9,6 +9,7 @@ import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
+import { createPageCatenateCommand } from "./page/catenate";
 import { createPageCreateCommand } from "./page/create";
 import { createPageDeleteCommand } from "./page/delete";
 import { createPageListCommand } from "./page/list";
@@ -25,6 +26,11 @@ export const createPageCommand = (
     pageCommand
         .description("manage imbricate pages");
 
+    pageCommand.addCommand(createPageCatenateCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
     pageCommand.addCommand(createPageCreateCommand(
         globalManager,
         terminalController,
