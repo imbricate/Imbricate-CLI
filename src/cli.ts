@@ -3,6 +3,7 @@
  * @description CLI
  */
 
+import { FileSystemImbricateOrigin, FileSystemOriginPayload } from "@imbricate/origin-file-system";
 import { Command } from "commander";
 import { createCollectionCommand } from "./cli/commands/collection";
 import { createOriginCommand } from "./cli/commands/origin";
@@ -21,8 +22,6 @@ import { ITerminalController } from "./cli/terminal/definition";
 import { TTYTerminalController } from "./cli/terminal/terminal";
 import { debugLog } from "./cli/util/debug";
 import { handleError } from "./cli/util/handle-error";
-import { FileSystemOriginPayload } from "./origin-implementation/file-system/definition/origin";
-import { FileSystemImbricateOrigin } from "./origin-implementation/file-system/origin";
 
 export const execute = async (): Promise<void> => {
 

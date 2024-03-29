@@ -4,8 +4,8 @@
  * @description Working Directory Origin
  */
 
+import { FileSystemImbricateOrigin } from "@imbricate/origin-file-system";
 import { Command, Option } from "commander";
-import { FileSystemImbricateOrigin } from "../../origin-implementation/file-system/origin";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 
