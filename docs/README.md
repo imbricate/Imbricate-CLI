@@ -9,18 +9,31 @@ Yes to accountable notes, no to external hosting. Free, for everyone.
 
 ## Install
 
-To install the CLI, run:
+Imbricate CLI is available through NPM for package management. To install the CLI:
 
-```sh
-yarn global add imbricate # Yarn 1.x
-yarn dlx -p imbricate # Yarn 2+
-# Or
-npm install -g imbricate
-```
-
-## Documentation
+## Full Documentation
 
 Visit [imbricate.io](https://imbricate.io/).
+
+### Using Yarn
+
+Yarn 1.x
+
+```sh
+yarn global add imbricate
+```
+
+Yarn 2.x
+
+```sh
+yarn dlx -p imbricate
+```
+
+### Using NPM
+
+```sh
+npm install -g imbricate
+```
 
 ## Usage
 
