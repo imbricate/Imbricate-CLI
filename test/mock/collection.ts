@@ -56,6 +56,13 @@ export class MockCollection implements IImbricateOriginCollection {
         throw new Error("Method not implemented.");
     }
 
+    public readPage(
+        _identifier: string,
+    ): Promise<string> {
+
+        throw new Error("Method not implemented.");
+    }
+
     public hasPage(
         _title: string,
     ): Promise<boolean> {

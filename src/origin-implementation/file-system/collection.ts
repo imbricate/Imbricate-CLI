@@ -163,6 +163,19 @@ export class FileSystemImbricateCollection implements IImbricateOriginCollection
         await this._openEditor(targetFilePath);
     }
 
+    public async readPage(identifier: string): Promise<string> {
+
+        await this._ensureCollectionFolder();
+
+        const targetFilePath = joinCollectionFolderPath(
+            this._basePath,
+            this._collectionName,
+            this._fixFileNameFromIdentifier(identifier),
+        );
+
+        return await readTextFile(targetFilePath);
+    }
+
     public async hasPage(title: string): Promise<boolean> {
 
         const pages: ImbricateOriginCollectionListPagesResponse[] = await this.listPages();

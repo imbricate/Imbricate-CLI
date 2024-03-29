@@ -91,7 +91,8 @@ export const createPageCatenateCommand = (
                     throw CLIPageNotFound.withPageTitle(options.title);
                 }
 
-                await collection.openPage(page.identifier);
+                const pageContent = await collection.readPage(page.identifier);
+                terminalController.printInfo(pageContent);
                 return;
             }
 
@@ -101,7 +102,8 @@ export const createPageCatenateCommand = (
 
                     if (page.identifier.startsWith(options.identifier)) {
 
-                        await collection.openPage(page.identifier);
+                        const pageContent = await collection.readPage(page.identifier);
+                        terminalController.printInfo(pageContent);
                         return;
                     }
                 }

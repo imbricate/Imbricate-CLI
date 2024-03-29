@@ -23,6 +23,7 @@ export interface IImbricateOriginCollection {
     createPage(title: string, initialContent?: string): Promise<ImbricateOriginCollectionListPagesResponse>;
     deletePage(identifier: string, title: string): Promise<void>;
     openPage(title: string): Promise<void>;
+    readPage(identifier: string): Promise<string>;
     hasPage(title: string): Promise<boolean>;
     searchPages(keyword: string): Promise<
         Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>>
