@@ -5,23 +5,23 @@
 
 import { FileSystemImbricateOrigin, FileSystemOriginPayload } from "@imbricate/origin-file-system";
 import { Command } from "commander";
-import { createCollectionCommand } from "./cli/commands/collection";
-import { createOriginCommand } from "./cli/commands/origin";
-import { createPageCommand } from "./cli/commands/page";
-import { createScriptCommand } from "./cli/commands/script";
-import { createSearchCommand } from "./cli/commands/search";
-import { ConfigurationManager } from "./cli/configuration/configuration-manager";
-import { initializeOrigin } from "./cli/configuration/initialize-origin";
-import { IConfigurationManager } from "./cli/configuration/interface";
-import { IImbricateConfigurationOrigin } from "./cli/configuration/raw-definition";
-import { addDirectoryExtension } from "./cli/extensions/directory";
-import { addVerboseConfigurationExtension } from "./cli/extensions/verbose-configuration";
-import { addWorkingDirectoryOriginExtension } from "./cli/extensions/working-directory-origin";
-import { GlobalManager } from "./cli/global/global-manager";
-import { ITerminalController } from "./cli/terminal/definition";
-import { TTYTerminalController } from "./cli/terminal/terminal";
-import { debugLog } from "./cli/util/debug";
-import { handleError } from "./cli/util/handle-error";
+import { createCollectionCommand } from "./commands/collection";
+import { createOriginCommand } from "./commands/origin";
+import { createPageCommand } from "./commands/page";
+import { createScriptCommand } from "./commands/script";
+import { createSearchCommand } from "./commands/search";
+import { ConfigurationManager } from "./configuration/configuration-manager";
+import { initializeOrigin } from "./configuration/initialize-origin";
+import { IConfigurationManager } from "./configuration/interface";
+import { IImbricateConfigurationOrigin } from "./configuration/raw-definition";
+import { addDirectoryExtension } from "./extensions/directory";
+import { addVerboseConfigurationExtension } from "./extensions/verbose-configuration";
+import { addWorkingDirectoryOriginExtension } from "./extensions/working-directory-origin";
+import { GlobalManager } from "./global/global-manager";
+import { ITerminalController } from "./terminal/definition";
+import { TTYTerminalController } from "./terminal/terminal";
+import { debugLog } from "./util/debug";
+import { handleError } from "./util/handle-error";
 
 export const execute = async (): Promise<void> => {
 

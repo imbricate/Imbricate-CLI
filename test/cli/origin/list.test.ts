@@ -6,7 +6,7 @@
  */
 
 import { executeWithConfiguration } from "../../../src/cli";
-import { IConfigurationManager } from "../../../src/cli/configuration/interface";
+import { IConfigurationManager } from "../../../src/configuration/interface";
 import { MockConfigurationManager } from "../../mock/configuration-manager";
 import { MockTerminalController } from "../../mock/terminal-controller";
 import { generateMockArguments } from "../../util/execute-command";

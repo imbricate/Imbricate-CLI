@@ -5,8 +5,8 @@
  * @override Unit Test
  */
 
-import { IImbricateConfiguration } from "../../../src/cli/configuration/definition";
-import { parseRawImbricateConfiguration } from "../../../src/cli/configuration/parse";
+import { IImbricateConfiguration } from "../../../src/configuration/definition";
+import { parseRawImbricateConfiguration } from "../../../src/configuration/parse";
 
 describe("Given [Parse] Configuration Helper Methods", (): void => {
 

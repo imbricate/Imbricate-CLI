@@ -5,7 +5,7 @@
  * @override Mock
  */
 
-import { ITerminalController } from "../../src/cli/terminal/definition";
+import { ITerminalController } from "../../src/terminal/definition";
 
 export class MockTerminalController implements ITerminalController {
 

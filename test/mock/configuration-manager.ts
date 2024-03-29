@@ -6,9 +6,9 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
-import { IImbricateConfiguration } from "../../src/cli/configuration/definition";
-import { IConfigurationManager } from "../../src/cli/configuration/interface";
-import { IImbricateConfigurationOrigin } from "../../src/cli/configuration/raw-definition";
+import { IImbricateConfiguration } from "../../src/configuration/definition";
+import { IConfigurationManager } from "../../src/configuration/interface";
+import { IImbricateConfigurationOrigin } from "../../src/configuration/raw-definition";
 
 export class MockConfigurationManager implements IConfigurationManager {
 
