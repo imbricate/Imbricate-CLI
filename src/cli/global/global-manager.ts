@@ -4,7 +4,7 @@
  * @description Global Manager
  */
 
-import { IImbricateOrigin } from "../../origin/interface";
+import { IImbricateOrigin } from "@imbricate/core";
 import { fixCurrentWorkingDirectory } from "../util/fix-directory";
 import { GlobalManagerOriginResponse } from "./definition";
 

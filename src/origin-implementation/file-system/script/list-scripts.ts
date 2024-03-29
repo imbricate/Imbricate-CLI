@@ -4,8 +4,8 @@
  * @description List Scripts
  */
 
+import { ImbricateScriptMetadata } from "@imbricate/core";
 import { directoryFiles } from "@sudoo/io";
-import { ImbricateScriptMetadata } from "../../../definition/script";
 import { getScriptsMetadataFolderPath } from "../util/path-joiner";
 import { SCRIPT_META_FILE_EXTENSION, ensureScriptFolders } from "./common";
 

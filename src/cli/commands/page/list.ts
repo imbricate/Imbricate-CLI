@@ -4,10 +4,8 @@
  * @description List
  */
 
+import { IImbricateOrigin, IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse, mapLeastCommonIdentifier } from "@imbricate/core";
 import { Command } from "commander";
-import { IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "../../../origin/collection/interface";
-import { mapLeastCommonIdentifier } from "../../../origin/collection/least-common-identifier";
-import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";

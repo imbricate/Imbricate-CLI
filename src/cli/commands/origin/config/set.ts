@@ -4,8 +4,8 @@
  * @description Set
  */
 
+import { IImbricateOrigin } from "@imbricate/core";
 import { Command } from "commander";
-import { IImbricateOrigin } from "../../../../origin/interface";
 import { IConfigurationManager } from "../../../configuration/interface";
 import { CLIOriginNotFound } from "../../../error/origin/origin-not-found";
 import { GlobalManager } from "../../../global/global-manager";

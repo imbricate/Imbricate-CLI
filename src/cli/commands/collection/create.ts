@@ -4,8 +4,8 @@
  * @description Create
  */
 
+import { IImbricateOrigin } from "@imbricate/core";
 import { Command } from "commander";
-import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionAlreadyExists } from "../../error/collection/collection-already-exists";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";

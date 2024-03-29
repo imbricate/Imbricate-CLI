@@ -4,7 +4,7 @@
  * @description Has Script
  */
 
-import { ImbricateScriptMetadata } from "../../../definition/script";
+import { ImbricateScriptMetadata } from "@imbricate/core";
 import { fileSystemOriginListScripts } from "./list-scripts";
 
 export const fileSystemOriginHasScript = async (

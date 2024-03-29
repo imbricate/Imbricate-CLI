@@ -4,7 +4,7 @@
  * @description Raw Definition
  */
 
-import { ListableValue } from "../../definition/listable";
+import { ListableValue } from "@imbricate/core";
 
 export interface IImbricateConfigurationOrigin {
 

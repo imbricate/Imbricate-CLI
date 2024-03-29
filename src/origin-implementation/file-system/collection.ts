@@ -4,11 +4,10 @@
  * @description Collection
  */
 
+import { IImbricateOriginCollection, IMBRICATE_SEARCH_SNIPPET_PAGE_SNIPPET_SOURCE, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateOriginCollectionListPagesResponse, ImbricateSearchSnippet } from "@imbricate/core";
 import { attemptMarkDir, directoryFiles, isFolder, pathExists, readTextFile, removeFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { CLICollectionFolderOccupied } from "../../cli/error/collection/collection-folder-occupied";
-import { IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "../../origin/collection/interface";
-import { IMBRICATE_SEARCH_SNIPPET_PAGE_SNIPPET_SOURCE, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet } from "../../search/snippet";
 import { FileSystemCollectionMetadataCollection } from "./definition/collection";
 import { FileSystemOriginPayload } from "./definition/origin";
 import { executeCommand } from "./util/execute";

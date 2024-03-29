@@ -4,11 +4,8 @@
  * @description Search
  */
 
+import { IImbricateOrigin, IImbricateOriginCollection, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet, getShortPrefixOfSnippet } from "@imbricate/core";
 import { Command } from "commander";
-import { IImbricateOriginCollection } from "../../origin/collection/interface";
-import { IImbricateOrigin } from "../../origin/interface";
-import { getShortPrefixOfSnippet } from "../../search/prefix";
-import { IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet } from "../../search/snippet";
 import { IConfigurationManager } from "../configuration/interface";
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
 import { GlobalManager } from "../global/global-manager";

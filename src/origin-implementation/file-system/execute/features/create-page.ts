@@ -4,10 +4,7 @@
  * @description Create Page
  */
 
-import { IImbricateOriginCollection } from "../../../../origin/collection/interface";
-import { IImbricateOrigin } from "../../../../origin/interface";
-import { SandboxFeatureBuilder } from "../../../../sandbox/feature/builder";
-import { SandboxFeature } from "../../../../sandbox/feature/feature";
+import { IImbricateOrigin, IImbricateOriginCollection, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
 
 type CreatePageInput = {
 

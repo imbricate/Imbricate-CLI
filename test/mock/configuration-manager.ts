@@ -5,10 +5,10 @@
  * @override Mock
  */
 
+import { IImbricateOrigin } from "@imbricate/core";
 import { IImbricateConfiguration } from "../../src/cli/configuration/definition";
 import { IConfigurationManager } from "../../src/cli/configuration/interface";
 import { IImbricateConfigurationOrigin } from "../../src/cli/configuration/raw-definition";
-import { IImbricateOrigin } from "../../src/origin/interface";
 
 export class MockConfigurationManager implements IConfigurationManager {
 

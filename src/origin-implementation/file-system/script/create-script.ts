@@ -4,9 +4,9 @@
  * @description Create Script
  */
 
+import { ImbricateScriptMetadata } from "@imbricate/core";
 import { writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
-import { ImbricateScriptMetadata } from "../../../definition/script";
 import { getScriptsFolderPath, getScriptsMetadataFolderPath } from "../util/path-joiner";
 import { ensureScriptFolders, fixMetaScriptFileName, fixScriptFileName } from "./common";
 

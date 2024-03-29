@@ -4,7 +4,7 @@
  * @description Definition
  */
 
-import { IImbricateOrigin } from "../../origin/interface";
+import { IImbricateOrigin } from "@imbricate/core";
 
 export type GlobalManagerOriginResponse = {
 

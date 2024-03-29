@@ -4,10 +4,8 @@
  * @description List
  */
 
+import { IImbricateOrigin, ImbricateScriptMetadata, mapLeastCommonIdentifier } from "@imbricate/core";
 import { Command } from "commander";
-import { ImbricateScriptMetadata } from "../../../definition/script";
-import { mapLeastCommonIdentifier } from "../../../origin/collection/least-common-identifier";
-import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";

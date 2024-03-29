@@ -4,9 +4,8 @@
  * @description List
  */
 
+import { IImbricateOrigin, IImbricateOriginCollection } from "@imbricate/core";
 import { Command } from "commander";
-import { IImbricateOriginCollection } from "../../../origin/collection/interface";
-import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";

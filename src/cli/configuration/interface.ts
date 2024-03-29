@@ -4,7 +4,7 @@
  * @description Interface
  */
 
-import { IImbricateOrigin } from "../../origin/interface";
+import { IImbricateOrigin } from "@imbricate/core";
 import { IImbricateConfigurationOrigin } from "./raw-definition";
 
 export interface IConfigurationManager {

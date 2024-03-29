@@ -4,7 +4,7 @@
  * @description Initialize Origin
  */
 
-import { IImbricateOrigin } from "../../origin/interface";
+import { IImbricateOrigin } from "@imbricate/core";
 import { GlobalManager } from "../global/global-manager";
 import { debugLog } from "../util/debug";
 import { IConfigurationManager } from "./interface";

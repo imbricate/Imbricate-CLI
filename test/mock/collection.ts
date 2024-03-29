@@ -5,8 +5,7 @@
  * @override Mock 
  */
 
-import { IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "../../src/origin/collection/interface";
-import { IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateSearchSnippet } from "../../src/search/snippet";
+import { IImbricateOriginCollection, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateOriginCollectionListPagesResponse, ImbricateSearchSnippet } from "@imbricate/core";
 
 export class MockCollection implements IImbricateOriginCollection {
 

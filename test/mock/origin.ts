@@ -5,11 +5,9 @@
  * @override Mock 
  */
 
+import { IImbricateOrigin, IImbricateOriginCollection, ImbricateOriginMetadata, ImbricateScriptMetadata } from "@imbricate/core";
+import { SandboxExecuteConfig } from "@imbricate/core/sandbox/definition/config";
 import { MarkedResult } from "@sudoo/marked";
-import { ImbricateScriptMetadata } from "../../src/definition/script";
-import { IImbricateOriginCollection } from "../../src/origin/collection/interface";
-import { IImbricateOrigin, ImbricateOriginMetadata } from "../../src/origin/interface";
-import { SandboxExecuteConfig } from "../../src/sandbox/definition/config";
 
 export class MockOrigin implements IImbricateOrigin {
 

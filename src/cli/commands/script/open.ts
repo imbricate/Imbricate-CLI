@@ -4,9 +4,8 @@
  * @description Open
  */
 
+import { IImbricateOrigin, ImbricateScriptMetadata } from "@imbricate/core";
 import { Command } from "commander";
-import { ImbricateScriptMetadata } from "../../../definition/script";
-import { IImbricateOrigin } from "../../../origin/interface";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIScriptInvalidInput } from "../../error/script/script-invalid-input";

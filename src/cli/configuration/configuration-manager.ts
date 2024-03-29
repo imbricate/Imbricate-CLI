@@ -4,8 +4,8 @@
  * @description Configuration Manager
  */
 
+import { IImbricateOrigin } from "@imbricate/core";
 import { writeTextFile } from "@sudoo/io";
-import { IImbricateOrigin } from "../../origin/interface";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
 import { CLIUnknownOriginType } from "../error/origin/unknown-origin-type";
 import { ITerminalController } from "../terminal/definition";

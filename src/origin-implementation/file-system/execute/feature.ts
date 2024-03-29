@@ -4,9 +4,7 @@
  * @description Feature
  */
 
-import { IImbricateOrigin } from "../../../origin/interface";
-import { SandboxFeatureBuilder } from "../../../sandbox/feature/builder";
-import { SandboxFeature } from "../../../sandbox/feature/feature";
+import { IImbricateOrigin, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
 import { createCreatePageFeature } from "./features/create-page";
 
 export const createFileSystemOriginExecuteFeature = (

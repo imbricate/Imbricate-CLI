@@ -4,11 +4,9 @@
  * @description Origin
  */
 
+import { IImbricateOrigin, IImbricateOriginCollection, ImbricateOriginMetadata, ImbricateScriptMetadata } from "@imbricate/core";
+import { SandboxExecuteConfig } from "@imbricate/core/sandbox/definition/config";
 import { MarkedResult } from "@sudoo/marked";
-import { ImbricateScriptMetadata } from "../../definition/script";
-import { IImbricateOriginCollection } from "../../origin/collection/interface";
-import { IImbricateOrigin, ImbricateOriginMetadata } from "../../origin/interface";
-import { SandboxExecuteConfig } from "../../sandbox/definition/config";
 
 export class MongoImbricateOrigin implements IImbricateOrigin {
 
