@@ -1,4 +1,4 @@
-# Imbricate
+# Imbricate-CLI
 
 [![Continuous Integration](https://github.com/Imbricate/Imbricate/actions/workflows/ci.yml/badge.svg)](https://github.com/Imbricate/Imbricate/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/Imbricate/Imbricate/branch/main/graph/badge.svg)](https://codecov.io/gh/Imbricate/Imbricate)
@@ -7,13 +7,13 @@
 
 Yes to accountable notes, no to external hosting. Free, for everyone.
 
+## Documentation
+
+Visit [imbricate.io](https://imbricate.io/).
+
 ## Install
 
 Imbricate CLI is available through NPM for package management. To install the CLI:
-
-## Full Documentation
-
-Visit [imbricate.io](https://imbricate.io/).
 
 ### Using Yarn
 
