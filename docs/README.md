@@ -5,7 +5,7 @@
 [![npm version](https://badge.fury.io/js/imbricate.svg)](https://badge.fury.io/js/imbricate)
 [![downloads](https://img.shields.io/npm/dm/imbricate.svg)](https://www.npmjs.com/package/imbricate)
 
-Yes to accountable notes, no to external hosting. Free, for everyone.
+CLI for Imbricate
 
 ## Documentation
 
