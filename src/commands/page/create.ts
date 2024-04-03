@@ -4,14 +4,16 @@
  * @description Create
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
+import { CLIPageNotFound } from "../../error/page/page-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
+import { openContentAndMonitor } from "../../terminal/open-file";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 
@@ -82,7 +84,20 @@ export const createPageCreateCommand = (
                 if (!options.quiet) {
                     terminalController.printInfo(`Opening page "${pageTitle}"`);
                 }
-                // await collection.openPage(item.identifier);
+
+                const page: IImbricatePage | null = await collection.getPage(item.identifier);
+
+                if (!page) {
+                    throw CLIPageNotFound.withPageIdentifier(item.identifier);
+                }
+
+                const pageContent: string = await page.readContent();
+
+                await openContentAndMonitor(
+                    collection.openPageCommand,
+                    pageContent,
+                    `${pageTitle}.md`,
+                );
             }
         }));
 

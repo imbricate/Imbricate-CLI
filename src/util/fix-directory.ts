@@ -23,6 +23,20 @@ export const fixHomeDirectory = (...paths: string[]): string => {
     return resolvedPath;
 };
 
+export const fixImbricateHomeDirectory = (...paths: string[]): string => {
+
+    const configurationPath: string = fixHomeDirectory(".imbricate");
+    return Path.join(configurationPath, ...paths);
+};
+
+export const fixImbricateTempDirectory = (...paths: string[]): string => {
+
+    const imbricateHome: string = fixImbricateHomeDirectory();
+    const tempPath: string = Path.join(imbricateHome, "temp");
+
+    return Path.resolve(tempPath, ...paths);
+};
+
 export const resolveDirectory = (...paths: string[]): string => {
 
     const resolvedPath: string = Path.resolve(...paths);

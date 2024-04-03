@@ -10,7 +10,7 @@ import { CLIOriginNotFound } from "../error/origin/origin-not-found";
 import { CLIUnknownOriginType } from "../error/origin/unknown-origin-type";
 import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
-import { fixHomeDirectory, resolveDirectory } from "../util/fix-directory";
+import { fixImbricateHomeDirectory, resolveDirectory } from "../util/fix-directory";
 import { IImbricateConfiguration } from "./definition";
 import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
@@ -22,7 +22,7 @@ export class ConfigurationManager implements IConfigurationManager {
         terminalController: ITerminalController,
     ): Promise<ConfigurationManager> {
 
-        const configurationPath: string = fixHomeDirectory(".imbricate");
+        const configurationPath: string = fixImbricateHomeDirectory();
 
         debugLog("Home Configuration Path", configurationPath);
 
