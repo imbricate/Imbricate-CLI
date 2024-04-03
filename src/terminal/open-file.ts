@@ -4,11 +4,11 @@
  * @description Open File
  */
 
-import { writeTextFile } from "@sudoo/io";
+import { pathExists, readTextFile, removeFile, writeTextFile } from "@sudoo/io";
 import { executeCommand } from "../util/execute-command";
 import { fixImbricateHomeDirectory, fixImbricateTempDirectory } from "../util/fix-directory";
 
-export const openContentAndMonitor = async (
+export const openContentAndUpdate = async (
     command: string,
     content: string,
     fileName: string,
@@ -16,14 +16,30 @@ export const openContentAndMonitor = async (
 
     const tempFilePath: string = fixImbricateTempDirectory(fileName);
     const tempEditingConfigPath: string = fixImbricateHomeDirectory("editing.json");
+
+    const editingExist: boolean = await pathExists(tempEditingConfigPath);
+
+    if (editingExist) {
+        throw new Error("Already editing");
+    }
+
+    const currentTime: number = new Date().getTime();
     const editingInfo: string = JSON.stringify({
         path: tempFilePath,
+        startedAt: currentTime,
     });
 
     await writeTextFile(tempFilePath, content);
     await writeTextFile(tempEditingConfigPath, editingInfo);
 
-    return await openFileAndMonitor(command, tempFilePath);
+    await openFileAndMonitor(command, tempFilePath);
+
+    const updatedContent: string = await readTextFile(tempFilePath);
+
+    await removeFile(tempFilePath);
+    await removeFile(tempEditingConfigPath);
+
+    return updatedContent;
 };
 
 export const openFileAndMonitor = async (command: string, path: string): Promise<string> => {

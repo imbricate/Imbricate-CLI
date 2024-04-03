@@ -13,7 +13,7 @@ import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
 import { CLIPageNotFound } from "../../error/page/page-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
-import { openContentAndMonitor } from "../../terminal/open-file";
+import { openContentAndUpdate } from "../../terminal/open-file";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 
@@ -81,6 +81,7 @@ export const createPageCreateCommand = (
             }
 
             if (options.open) {
+
                 if (!options.quiet) {
                     terminalController.printInfo(`Opening page "${pageTitle}"`);
                 }
@@ -93,11 +94,13 @@ export const createPageCreateCommand = (
 
                 const pageContent: string = await page.readContent();
 
-                await openContentAndMonitor(
-                    collection.openPageCommand,
+                const updated: string = await openContentAndUpdate(
+                    "code {path} --wait",
                     pageContent,
                     `${pageTitle}.md`,
                 );
+
+                console.log(updated);
             }
         }));
 
