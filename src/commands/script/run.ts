@@ -4,7 +4,7 @@
  * @description Run
  */
 
-import { IImbricateOrigin, ImbricateScriptMetadata } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateScript, ImbricateScriptSnapshot } from "@imbricate/core";
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -58,22 +58,27 @@ export const createScriptRunCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const scripts: ImbricateScriptMetadata[] = await currentOrigin.listScripts();
+            const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
 
             if (typeof options.scriptName === "string") {
 
-                const script: ImbricateScriptMetadata | undefined =
-                    scripts.find((each: ImbricateScriptMetadata) => {
+                const scriptSnapshot: ImbricateScriptSnapshot | undefined =
+                    scriptSnapshots.find((each: ImbricateScriptSnapshot) => {
                         return each.scriptName === options.scriptName;
                     });
+
+                if (!scriptSnapshot) {
+                    throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
+                }
+
+                const script: IImbricateScript | null = await currentOrigin.getScript(scriptSnapshot.identifier);
 
                 if (!script) {
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
                 const executeResult: MarkedResult | null =
-                    await currentOrigin.executeScript(
-                        script.identifier,
+                    await script.execute(
                         {},
                     );
 
@@ -84,10 +89,10 @@ export const createScriptRunCommand = (
                 if (executeResult.signal === END_SIGNAL.SUCCEED) {
 
                     if (!options.quiet) {
-                        terminalController.printInfo(`Script "${script.scriptName}" executed successfully`);
+                        terminalController.printInfo(`Script "${scriptSnapshot.scriptName}" executed successfully`);
                     }
                 } else {
-                    throw CLIScriptExecuteFailed.create(script.scriptName, executeResult);
+                    throw CLIScriptExecuteFailed.create(scriptSnapshot.scriptName, executeResult);
                 }
 
                 return;
@@ -95,13 +100,18 @@ export const createScriptRunCommand = (
 
             if (typeof options.identifier === "string" && options.identifier.length > 0) {
 
-                for (const each of scripts) {
+                for (const each of scriptSnapshots) {
 
                     if (each.identifier.startsWith(options.identifier)) {
 
+                        const script: IImbricateScript | null = await currentOrigin.getScript(each.identifier);
+
+                        if (!script) {
+                            throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
+                        }
+
                         const executeResult: MarkedResult | null =
-                            await currentOrigin.executeScript(
-                                each.identifier,
+                            await script.execute(
                                 {},
                             );
 

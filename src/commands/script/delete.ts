@@ -4,7 +4,7 @@
  * @description Delete
  */
 
-import { IImbricateOrigin, ImbricateScriptMetadata } from "@imbricate/core";
+import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -56,12 +56,12 @@ export const createScriptDeleteCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const scripts: ImbricateScriptMetadata[] = await currentOrigin.listScripts();
+            const scripts: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
 
             if (typeof options.scriptName === "string") {
 
-                const script: ImbricateScriptMetadata | undefined =
-                    scripts.find((each: ImbricateScriptMetadata) => {
+                const script: ImbricateScriptSnapshot | undefined =
+                    scripts.find((each: ImbricateScriptSnapshot) => {
                         return each.scriptName === options.scriptName;
                     });
 
@@ -69,7 +69,7 @@ export const createScriptDeleteCommand = (
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                await currentOrigin.removeScript(script.identifier, script.scriptName);
+                await currentOrigin.deleteScript(script.identifier, script.scriptName);
 
                 if (!options.quiet) {
 
@@ -85,7 +85,7 @@ export const createScriptDeleteCommand = (
 
                     if (each.identifier.startsWith(options.identifier)) {
 
-                        await currentOrigin.removeScript(each.identifier, each.scriptName);
+                        await currentOrigin.deleteScript(each.identifier, each.scriptName);
 
                         if (!options.quiet) {
 

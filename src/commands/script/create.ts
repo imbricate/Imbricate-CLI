@@ -4,7 +4,7 @@
  * @description Create
  */
 
-import { IImbricateOrigin, ImbricateScriptMetadata } from "@imbricate/core";
+import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -50,7 +50,7 @@ export const createScriptCreateCommand = (
                 throw CLIScriptAlreadyExists.withScriptName(scriptName);
             }
 
-            const scriptMetadata: ImbricateScriptMetadata =
+            const scriptMetadata: ImbricateScriptSnapshot =
                 await currentOrigin.createScript(scriptName);
 
             if (!options.quiet) {
@@ -59,7 +59,7 @@ export const createScriptCreateCommand = (
             }
 
             if (options.open) {
-                await currentOrigin.openScript(scriptMetadata.identifier);
+                // await currentOrigin.openScript(scriptMetadata.identifier);
             }
         }));
 

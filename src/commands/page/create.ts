@@ -82,7 +82,7 @@ export const createPageCreateCommand = (
                 if (!options.quiet) {
                     terminalController.printInfo(`Opening page "${pageTitle}"`);
                 }
-                await collection.openPage(item.identifier);
+                // await collection.openPage(item.identifier);
             }
         }));
 

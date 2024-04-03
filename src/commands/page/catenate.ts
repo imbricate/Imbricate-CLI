@@ -4,7 +4,7 @@
  * @description Catenate
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, ImbricatePageSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
@@ -75,33 +75,51 @@ export const createPageCatenateCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const pages: ImbricateOriginCollectionListPagesResponse[] =
+            const pages: ImbricatePageSnapshot[] =
                 await collection.listPages();
 
             if (typeof options.title === "string" && options.title.length > 0) {
 
-                const page: ImbricateOriginCollectionListPagesResponse | undefined = pages.find((
-                    each: ImbricateOriginCollectionListPagesResponse,
+                const pageSnapshot: ImbricatePageSnapshot | undefined = pages.find((
+                    each: ImbricatePageSnapshot,
                 ) => {
                     return each.title === options.title;
                 });
+
+                if (!pageSnapshot) {
+                    throw CLIPageNotFound.withPageTitle(options.title);
+                }
+
+                const page: IImbricatePage | null = await collection.getPage(pageSnapshot.identifier);
 
                 if (!page) {
                     throw CLIPageNotFound.withPageTitle(options.title);
                 }
 
-                const pageContent = await collection.readPage(page.identifier);
+                const pageContent: string = await page.readContent();
+
                 terminalController.printInfo(pageContent);
                 return;
             }
 
             if (typeof options.identifier === "string" && options.identifier.length > 0) {
 
-                for (const page of pages) {
+                for (const pageSnapshot of pages) {
 
-                    if (page.identifier.startsWith(options.identifier)) {
+                    if (pageSnapshot.identifier.startsWith(options.identifier)) {
 
-                        const pageContent = await collection.readPage(page.identifier);
+                        const page: IImbricatePage | null = await collection.getPage(
+                            pageSnapshot.identifier,
+                        );
+
+                        if (!page) {
+                            throw CLIPageNotFound.withPageIdentifier(
+                                pageSnapshot.identifier,
+                            );
+                        }
+
+                        const pageContent: string = await page.readContent();
+
                         terminalController.printInfo(pageContent);
                         return;
                     }

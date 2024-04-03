@@ -4,7 +4,7 @@
  * @description Delete
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
@@ -78,13 +78,13 @@ export const createPageDeleteCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const pages: ImbricateOriginCollectionListPagesResponse[] =
+            const pages: ImbricatePageSnapshot[] =
                 await collection.listPages();
 
             if (typeof options.title === "string" && options.title.length > 0) {
 
-                const page: ImbricateOriginCollectionListPagesResponse | undefined = pages.find((
-                    each: ImbricateOriginCollectionListPagesResponse,
+                const page: ImbricatePageSnapshot | undefined = pages.find((
+                    each: ImbricatePageSnapshot,
                 ) => {
                     return each.title === options.title;
                 });

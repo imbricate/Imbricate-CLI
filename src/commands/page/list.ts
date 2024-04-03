@@ -4,7 +4,7 @@
  * @description List
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, ImbricateOriginCollectionListPagesResponse, mapLeastCommonIdentifier } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot, mapLeastCommonIdentifier } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
@@ -22,7 +22,7 @@ type PageListCommandOptions = {
 };
 
 const generateRawPrint = (
-    pages: ImbricateOriginCollectionListPagesResponse[],
+    pages: ImbricatePageSnapshot[],
     pointer: boolean,
 ): string => {
 
@@ -43,7 +43,7 @@ const generateRawPrint = (
         }));
 
     return pages
-        .map((page: ImbricateOriginCollectionListPagesResponse) => page.title)
+        .map((page: ImbricatePageSnapshot) => page.title)
         .map((title: string) => {
             return `[${mappedLeastCommonIdentifier[title]}] -> ${title}`;
         })
@@ -51,7 +51,7 @@ const generateRawPrint = (
 };
 
 const generateJSONPrint = (
-    pages: ImbricateOriginCollectionListPagesResponse[],
+    pages: ImbricatePageSnapshot[],
     pointer: boolean,
 ): string => {
 
@@ -122,7 +122,7 @@ export const createPageListCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const pages: ImbricateOriginCollectionListPagesResponse[] =
+            const pages: ImbricatePageSnapshot[] =
                 await collection.listPages();
 
             if (options.json) {

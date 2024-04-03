@@ -33,7 +33,6 @@ export const addWorkingDirectoryOriginExtension = (
             fixedOriginName,
             FileSystemImbricateOrigin.withPayloads({
                 basePath: globalManager.workingDirectory,
-                startEditorCommand: "open {path}",
             }),
         );
     });

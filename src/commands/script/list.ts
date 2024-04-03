@@ -4,7 +4,7 @@
  * @description List
  */
 
-import { IImbricateOrigin, ImbricateScriptMetadata, mapLeastCommonIdentifier } from "@imbricate/core";
+import { IImbricateOrigin, ImbricateScriptSnapshot, mapLeastCommonIdentifier } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -20,13 +20,13 @@ type ScriptListCommandOptions = {
 };
 
 const generateRawPrint = (
-    scripts: ImbricateScriptMetadata[],
+    scripts: ImbricateScriptSnapshot[],
     pointer: boolean,
 ): string => {
 
     if (!pointer) {
         return scripts
-            .map((script: ImbricateScriptMetadata) => {
+            .map((script: ImbricateScriptSnapshot) => {
                 return script.scriptName;
             })
             .join("\n");
@@ -41,7 +41,7 @@ const generateRawPrint = (
         }));
 
     return scripts
-        .map((script: ImbricateScriptMetadata) => script.scriptName)
+        .map((script: ImbricateScriptSnapshot) => script.scriptName)
         .map((scriptName: string) => {
             return `[${mappedLeastCommonIdentifier[scriptName]}] -> ${scriptName}`;
         })
@@ -49,7 +49,7 @@ const generateRawPrint = (
 };
 
 const generateJSONPrint = (
-    scripts: ImbricateScriptMetadata[],
+    scripts: ImbricateScriptSnapshot[],
     pointer: boolean,
 ): string => {
 
@@ -101,7 +101,7 @@ export const createScriptListCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const scripts: ImbricateScriptMetadata[] = await currentOrigin.listScripts();
+            const scripts: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
 
             if (options.json) {
 

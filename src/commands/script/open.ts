@@ -4,7 +4,7 @@
  * @description Open
  */
 
-import { IImbricateOrigin, ImbricateScriptMetadata } from "@imbricate/core";
+import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -53,12 +53,12 @@ export const createScriptOpenCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const scripts: ImbricateScriptMetadata[] = await currentOrigin.listScripts();
+            const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
 
             if (typeof options.scriptName === "string") {
 
-                const script: ImbricateScriptMetadata | undefined =
-                    scripts.find((each: ImbricateScriptMetadata) => {
+                const script: ImbricateScriptSnapshot | undefined =
+                    scriptSnapshots.find((each: ImbricateScriptSnapshot) => {
                         return each.scriptName === options.scriptName;
                     });
 
@@ -66,17 +66,17 @@ export const createScriptOpenCommand = (
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                await currentOrigin.openScript(script.identifier);
+                // await currentOrigin.openScript(script.identifier);
                 return;
             }
 
             if (typeof options.identifier === "string" && options.identifier.length > 0) {
 
-                for (const each of scripts) {
+                for (const each of scriptSnapshots) {
 
                     if (each.identifier.startsWith(options.identifier)) {
 
-                        await currentOrigin.openScript(each.identifier);
+                        // await currentOrigin.openScript(each.identifier);
                         return;
                     }
                 }
