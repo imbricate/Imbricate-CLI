@@ -13,9 +13,10 @@ import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
 import { CLIPageNotFound } from "../../error/page/page-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
-import { openContentAndUpdate } from "../../terminal/open-file";
+import { openContentAndMonitor } from "../../editing/open-file";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 
 type PageCreateCommandOptions = {
 
@@ -27,7 +28,7 @@ type PageCreateCommandOptions = {
 export const createPageCreateCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const createCommand: Command = createConfiguredCommand("create");
@@ -93,14 +94,24 @@ export const createPageCreateCommand = (
                 }
 
                 const pageContent: string = await page.readContent();
+                const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
 
-                const updated: string = await openContentAndUpdate(
-                    "code {path} --wait",
+                    type: SAVING_TARGET_TYPE.PAGE,
+                    payload: {
+                        origin: globalManager.activeOrigin!,
+                        collection: collection.collectionName,
+                        identifier: page.identifier,
+                    },
+                };
+
+                await openContentAndMonitor(
                     pageContent,
                     `${pageTitle}.md`,
+                    target,
+                    globalManager,
+                    terminalController,
+                    configurationManager,
                 );
-
-                console.log(updated);
             }
         }));
 

@@ -154,6 +154,15 @@ export class ConfigurationManager implements IConfigurationManager {
         return constructor(origin);
     }
 
+    public getActiveEditingCommand(handsfree: boolean): string {
+
+        if(handsfree){
+            return "code {path}";
+        }
+
+        return "code {path} --wait";
+    }
+
     private async _persistConfiguration(): Promise<void> {
 
         const configuration: IRawImbricateConfiguration = {

@@ -15,6 +15,8 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { SavingTarget, SAVING_TARGET_TYPE } from "../../editing/definition";
+import { openContentAndMonitor } from "../../editing/open-file";
 
 type PageOpenCommandOptions = {
 
@@ -26,7 +28,7 @@ type PageOpenCommandOptions = {
 export const createPageOpenCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const openCommand: Command = createConfiguredCommand("open");
@@ -79,27 +81,78 @@ export const createPageOpenCommand = (
 
             if (typeof options.title === "string" && options.title.length > 0) {
 
-                const page: ImbricatePageSnapshot | undefined = pages.find((
+                const pageSnapshot: ImbricatePageSnapshot | undefined = pages.find((
                     each: ImbricatePageSnapshot,
                 ) => {
                     return each.title === options.title;
                 });
 
-                if (!page) {
+                if (!pageSnapshot) {
                     throw CLIPageNotFound.withPageTitle(options.title);
                 }
 
-                // await collection.openPage(page.identifier);
+                const page = await collection.getPage(pageSnapshot.identifier);
+
+                if (!page) {
+                    throw CLIPageNotFound.withPageIdentifier(pageSnapshot.identifier);
+                }
+
+                const pageContent: string = await page.readContent();
+                const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
+
+                    type: SAVING_TARGET_TYPE.PAGE,
+                    payload: {
+                        origin: globalManager.activeOrigin!,
+                        collection: collection.collectionName,
+                        identifier: page.identifier,
+                    },
+                };
+
+                await openContentAndMonitor(
+                    pageContent,
+                    `${pageSnapshot.title}.md`,
+                    target,
+                    globalManager,
+                    terminalController,
+                    configurationManager,
+                );
+
                 return;
             }
 
             if (typeof options.identifier === "string" && options.identifier.length > 0) {
 
-                for (const page of pages) {
+                for (const pageSnapshot of pages) {
 
-                    if (page.identifier.startsWith(options.identifier)) {
+                    if (pageSnapshot.identifier.startsWith(options.identifier)) {
 
-                        // await collection.openPage(page.identifier);
+
+                        const page = await collection.getPage(pageSnapshot.identifier);
+
+                        if (!page) {
+                            throw CLIPageNotFound.withPageIdentifier(pageSnapshot.identifier);
+                        }
+
+                        const pageContent: string = await page.readContent();
+                        const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
+
+                            type: SAVING_TARGET_TYPE.PAGE,
+                            payload: {
+                                origin: globalManager.activeOrigin!,
+                                collection: collection.collectionName,
+                                identifier: page.identifier,
+                            },
+                        };
+
+                        await openContentAndMonitor(
+                            pageContent,
+                            `${pageSnapshot.title}.md`,
+                            target,
+                            globalManager,
+                            terminalController,
+                            configurationManager,
+                        );
+
                         return;
                     }
                 }
