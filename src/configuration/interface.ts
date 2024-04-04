@@ -26,5 +26,5 @@ export interface IConfigurationManager {
         origin: IImbricateConfigurationOrigin,
     ): IImbricateOrigin;
 
-    getActiveEditingCommand(handsfree: boolean): string;
+    getActiveEditingCommand(handsFree: boolean): string;
 }

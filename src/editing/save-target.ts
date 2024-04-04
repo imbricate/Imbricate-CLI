@@ -4,6 +4,7 @@
  * @description Save Target
  */
 
+import { CLIEditingSaveTargetFiled } from "../error/editing/save-target-failed";
 import { GlobalManager } from "../global/global-manager";
 import { readActiveEditing, writeActiveEditing } from "./controller";
 import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "./definition";
@@ -38,18 +39,23 @@ export const performSavingTarget = async (
 
     switch (savingTarget.type) {
         case SAVING_TARGET_TYPE.PAGE: {
-            const origin = globalManager.getOrigin(savingTarget.payload.origin);
+
+            const fixedTarget: SavingTarget<SAVING_TARGET_TYPE.PAGE> =
+                savingTarget as SavingTarget<SAVING_TARGET_TYPE.PAGE>;
+
+            const origin = globalManager.getOrigin(fixedTarget.payload.origin);
             if (!origin) {
-                throw new Error("Saving taget failed")
-            }
-            const collection = await origin.getCollection((savingTarget as SavingTarget<SAVING_TARGET_TYPE.PAGE>).payload.collection);
-            if (!collection) {
-                throw new Error("Saving taget failed")
+                throw CLIEditingSaveTargetFiled.originNotFound(fixedTarget.payload.origin);
             }
 
-            const page = await collection.getPage(savingTarget.payload.identifier);
+            const collection = await origin.getCollection(fixedTarget.payload.collection);
+            if (!collection) {
+                throw CLIEditingSaveTargetFiled.collectionNotFound(fixedTarget.payload.collection);
+            }
+
+            const page = await collection.getPage(fixedTarget.payload.identifier);
             if (!page) {
-                throw new Error("Saving target failed")
+                throw CLIEditingSaveTargetFiled.pageNotFound(fixedTarget.payload.identifier);
             }
 
             await page.writeContent(content);
@@ -59,12 +65,12 @@ export const performSavingTarget = async (
 
             const origin = globalManager.getOrigin(savingTarget.payload.origin);
             if (!origin) {
-                throw new Error("Saving taget failed")
+                throw CLIEditingSaveTargetFiled.originNotFound(savingTarget.payload.origin);
             }
 
             const script = await origin.getScript(savingTarget.payload.identifier);
             if (!script) {
-                throw new Error("Saving target failed")
+                throw CLIEditingSaveTargetFiled.scriptNotFound(savingTarget.payload.identifier);
             }
 
             await script.writeScript(content);

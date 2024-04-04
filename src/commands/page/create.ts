@@ -7,16 +7,16 @@
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
+import { openContentAndMonitor } from "../../editing/open-file";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
 import { CLIPageNotFound } from "../../error/page/page-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
-import { openContentAndMonitor } from "../../editing/open-file";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 
 type PageCreateCommandOptions = {
 

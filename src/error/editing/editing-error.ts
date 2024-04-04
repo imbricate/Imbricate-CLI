@@ -1,12 +1,12 @@
 /**
  * @author WMXPY
- * @namespace Error_Page
- * @description Page Error
+ * @namespace Error_Editing
+ * @description Editing Error
  */
 
 import { CLIError } from "../cli-error";
 
-export class CLIPageError extends CLIError {
+export class CLIEditingError extends CLIError {
 
     protected constructor(
         message: string,
@@ -16,6 +16,6 @@ export class CLIPageError extends CLIError {
 
         super(message, type, reason);
 
-        Object.setPrototypeOf(this, CLIPageError.prototype);
+        Object.setPrototypeOf(this, CLIEditingError.prototype);
     }
 }
