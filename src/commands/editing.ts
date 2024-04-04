@@ -9,11 +9,7 @@ import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
-import { createScriptCreateCommand } from "./script/create";
-import { createScriptDeleteCommand } from "./script/delete";
-import { createScriptListCommand } from "./script/list";
-import { createScriptOpenCommand } from "./script/open";
-import { createScriptRunCommand } from "./script/run";
+import { createEditingListCommand } from "./editing/list";
 
 export const createEditingCommand = (
     globalManager: GlobalManager,
@@ -26,27 +22,7 @@ export const createEditingCommand = (
     editingCommand
         .description("manage editing imbricate pages and scripts");
 
-    editingCommand.addCommand(createScriptCreateCommand(
-        globalManager,
-        terminalController,
-        configurationManager,
-    ));
-    editingCommand.addCommand(createScriptDeleteCommand(
-        globalManager,
-        terminalController,
-        configurationManager,
-    ));
-    editingCommand.addCommand(createScriptListCommand(
-        globalManager,
-        terminalController,
-        configurationManager,
-    ));
-    editingCommand.addCommand(createScriptOpenCommand(
-        globalManager,
-        terminalController,
-        configurationManager,
-    ));
-    editingCommand.addCommand(createScriptRunCommand(
+    editingCommand.addCommand(createEditingListCommand(
         globalManager,
         terminalController,
         configurationManager,

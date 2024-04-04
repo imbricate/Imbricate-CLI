@@ -42,6 +42,11 @@ export const createEditingListCommand = (
                 return;
             }
 
+            if (activeEditing.length === 0) {
+                terminalController.printInfo("No Active Editing");
+                return;
+            }
+
             const parsedOutput: string = activeEditing.map((each: ActiveEditing) => {
                 return [
                     each.hash,
