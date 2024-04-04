@@ -10,6 +10,7 @@ import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
 import { fixImbricateTempDirectory } from "../util/fix-directory";
+import { hashString } from "../util/hash";
 import { readActiveEditing, writeActiveEditing } from "./controller";
 import { ActiveEditing, SavingTarget } from "./definition";
 import { hashSavingTarget, performSavingTarget } from "./save-target";
@@ -65,14 +66,18 @@ export const openContentAndMonitor = async (
 
     await writeTextFile(tempFilePath, content);
 
-    terminalController.printInfo("Opening...");
+    const beforeChecksum: string = hashString(content);
+
+    terminalController.printInfo(`Editing, Before Checksum: [${beforeChecksum}]`);
     await openFileAndMonitor(command, tempFilePath);
 
     const updatedContent: string = await readTextFile(tempFilePath);
 
+    const afterChecksum: string = hashString(updatedContent);
+
     terminalController.printInfo("Saving...");
     await performSavingTarget(savingTarget, updatedContent, globalManager);
-    terminalController.printInfo("Edit Saved");
+    terminalController.printInfo(`Saved, After Checksum: [${afterChecksum}]`);
 
     await removeFile(tempFilePath);
 };
