@@ -32,7 +32,7 @@ export const createCollectionCreateCommand = (
         .description("create a new collection")
         .option("-d, --description <description>", "description of the collection")
         .option("-q, --quiet", "quite mode")
-        .argument("<collection-name>", "Name of the collection")
+        .argument("<collection-name>", "name of the collection")
         .action(createActionRunner(terminalController, async (
             collectionName: string,
             options: CollectionCreateCommandOptions,

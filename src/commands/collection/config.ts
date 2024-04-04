@@ -14,7 +14,7 @@ import { createCollectionConfigShowCommand } from "./config/show";
 export const createCollectionConfigCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const createCommand: Command = createConfiguredCommand("config");
@@ -25,7 +25,7 @@ export const createCollectionConfigCommand = (
     createCommand.addCommand(createCollectionConfigShowCommand(
         globalManager,
         terminalController,
-        _configurationManager,
+        configurationManager,
     ));
 
     return createCommand;
