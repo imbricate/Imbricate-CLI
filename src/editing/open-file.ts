@@ -1,20 +1,18 @@
 /**
  * @author WMXPY
- * @namespace Terminal
+ * @namespace Editing
  * @description Open File
  */
 
 import { attemptMarkDir, readTextFile, removeFile, writeTextFile } from "@sudoo/io";
-import { UUIDVersion1 } from "@sudoo/uuid";
-import { executeCommand } from "../util/execute-command";
-import { fixImbricateTempDirectory } from "../util/fix-directory";
-import { readActiveEditing, writeActiveEditings } from "./controller";
-import { ActiveEditing, SavingTarget } from "./definition";
-import { hashSavingTarget, performSavingTarget } from "./save-target";
+import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
-import { ConfigurationManager } from "../configuration/configuration-manager";
-import { IConfigurationManager } from "../configuration/interface";
+import { executeCommand } from "../util/execute-command";
+import { fixImbricateTempDirectory } from "../util/fix-directory";
+import { readActiveEditing, writeActiveEditing } from "./controller";
+import { ActiveEditing, SavingTarget } from "./definition";
+import { hashSavingTarget, performSavingTarget } from "./save-target";
 
 export const openContentAndMonitor = async (
     content: string,
@@ -25,17 +23,15 @@ export const openContentAndMonitor = async (
     configurationManager: IConfigurationManager,
 ): Promise<void> => {
 
-    const uuid: string = UUIDVersion1.generateString();
-
     const tempPath: string = fixImbricateTempDirectory();
     await attemptMarkDir(tempPath);
 
-    const activeEditings = await readActiveEditing();
+    const activeEditing = await readActiveEditing();
 
     const command = configurationManager.getActiveEditingCommand(false);
     const savingTargetHash = hashSavingTarget(savingTarget);
-    
-    for (const editing of activeEditings) {
+
+    for (const editing of activeEditing) {
         if (editing.hash === savingTargetHash) {
 
             terminalController.printInfo("Unsaved change found, opening...");
@@ -55,17 +51,17 @@ export const openContentAndMonitor = async (
     const tempFilePath: string = fixImbricateTempDirectory(fileName);
 
     const currentTime: Date = new Date();
-    const updatedActiveEditings: ActiveEditing[] = [
-        ...activeEditings,
+    const updatedActiveEditing: ActiveEditing[] = [
+        ...activeEditing,
         {
             hash: savingTargetHash,
             path: tempFilePath,
             startedAt: currentTime,
             target: savingTarget,
-        }
+        },
     ];
 
-    await writeActiveEditings(updatedActiveEditings);
+    await writeActiveEditing(updatedActiveEditing);
 
     await writeTextFile(tempFilePath, content);
 

@@ -1,16 +1,23 @@
-import { attemptMarkDir, pathExists, readTextFile, writeTextFile } from "@sudoo/io";
-import { fixImbricateTempDirectory, fixImbricateHomeDirectory } from "../util/fix-directory";
+/**
+ * @author WMXPY
+ * @namespace Editing
+ * @description Controller
+ */
+
+import { pathExists, readTextFile, writeTextFile } from "@sudoo/io";
+import { fixImbricateHomeDirectory } from "../util/fix-directory";
 import { ActiveEditing } from "./definition";
+
+const activeEditingConfigPath: string = fixImbricateHomeDirectory("active-editing.json");
 
 export const readActiveEditing = async (): Promise<ActiveEditing[]> => {
 
-    const tempEditingConfigPath: string = fixImbricateHomeDirectory("active-editings.json");
-    const fileExist: boolean = await pathExists(tempEditingConfigPath);
+    const fileExist: boolean = await pathExists(activeEditingConfigPath);
 
     if (!fileExist) {
         return [];
     }
-    const editingFileContent = await readTextFile(tempEditingConfigPath);
+    const editingFileContent = await readTextFile(activeEditingConfigPath);
     const parsed: ActiveEditing[] = JSON.parse(editingFileContent);
 
     return parsed.map((item: ActiveEditing) => {
@@ -21,15 +28,17 @@ export const readActiveEditing = async (): Promise<ActiveEditing[]> => {
     });
 };
 
-export const writeActiveEditings = async (newValue: ActiveEditing[]) => {
+export const writeActiveEditing = async (newValue: ActiveEditing[]) => {
 
-    const tempEditingConfigPath: string = fixImbricateHomeDirectory("active-editings.json");
-    await writeTextFile(tempEditingConfigPath, JSON.stringify(
-        newValue.map((item: ActiveEditing) => {
-            return {
-                ...item,
-                startedAt: item.startedAt.getTime(),
-            };
-        }), null, 2,
-    ));
+    const fixedValue = newValue.map((item: ActiveEditing) => {
+        return {
+            ...item,
+            startedAt: item.startedAt.getTime(),
+        };
+    });
+
+    await writeTextFile(
+        activeEditingConfigPath,
+        JSON.stringify(fixedValue, null, 2),
+    );
 };

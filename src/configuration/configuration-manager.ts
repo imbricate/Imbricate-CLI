@@ -154,9 +154,9 @@ export class ConfigurationManager implements IConfigurationManager {
         return constructor(origin);
     }
 
-    public getActiveEditingCommand(handsfree: boolean): string {
+    public getActiveEditingCommand(handsFree: boolean): string {
 
-        if(handsfree){
+        if (handsFree) {
             return "code {path}";
         }
 
