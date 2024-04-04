@@ -4,11 +4,14 @@
  * @description Create
  */
 
-import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateScript, ImbricateScriptSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
+import { openContentAndMonitor } from "../../editing/open-file";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIScriptAlreadyExists } from "../../error/script/script-already-exists";
+import { CLIScriptNotFound } from "../../error/script/script-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
@@ -23,7 +26,7 @@ type ScriptCreateCommandOptions = {
 export const createScriptCreateCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const createCommand: Command = createConfiguredCommand("create");
@@ -59,7 +62,36 @@ export const createScriptCreateCommand = (
             }
 
             if (options.open) {
-                // await currentOrigin.openScript(scriptMetadata.identifier);
+
+                if (!options.quiet) {
+                    terminalController.printInfo(`Opening script "${scriptMetadata.scriptName}"`);
+                }
+
+                const script: IImbricateScript | null =
+                    await currentOrigin.getScript(scriptMetadata.identifier);
+
+                if (!script) {
+                    throw CLIScriptNotFound.withScriptIdentifier(scriptMetadata.identifier);
+                }
+
+                const scriptContent: string = await script.readScript();
+                const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
+
+                    type: SAVING_TARGET_TYPE.SCRIPT,
+                    payload: {
+                        origin: globalManager.activeOrigin!,
+                        identifier: scriptMetadata.identifier,
+                    },
+                };
+
+                await openContentAndMonitor(
+                    scriptContent,
+                    `${scriptMetadata.scriptName}.js`,
+                    target,
+                    globalManager,
+                    terminalController,
+                    configurationManager,
+                );
             }
         }));
 
