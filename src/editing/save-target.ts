@@ -83,6 +83,22 @@ export const performSavingTarget = async (
     await cleanupSavingTarget(savingTarget);
 };
 
+export const isSavingTargetActive = async (
+    savingTarget: SavingTarget<SAVING_TARGET_TYPE>,
+): Promise<boolean> => {
+
+    const activeEditing: ActiveEditing[] = await readActiveEditing();
+
+    const savingTargetHash = hashSavingTarget(savingTarget);
+    for (const editing of activeEditing) {
+        if (editing.hash === savingTargetHash) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
 export const cleanupSavingTarget = async (
     savingTarget: SavingTarget<SAVING_TARGET_TYPE>,
 ): Promise<void> => {
@@ -90,9 +106,11 @@ export const cleanupSavingTarget = async (
     const activeEditing: ActiveEditing[] = await readActiveEditing();
 
     const savingTargetHash = hashSavingTarget(savingTarget);
-    const updatedActiveEditing: ActiveEditing[] = activeEditing.filter((item: ActiveEditing) => {
-        return item.hash !== savingTargetHash;
-    });
+    const updatedActiveEditing: ActiveEditing[] = activeEditing.filter(
+        (item: ActiveEditing) => {
+            return item.hash !== savingTargetHash;
+        },
+    );
 
     await writeActiveEditing(updatedActiveEditing);
 };

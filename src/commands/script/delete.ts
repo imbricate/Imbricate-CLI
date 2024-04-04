@@ -7,7 +7,10 @@
 import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
+import { cleanupSavingTarget, isSavingTargetActive } from "../../editing/save-target";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIScriptEditing } from "../../error/script/script-editing";
 import { CLIScriptInvalidInput } from "../../error/script/script-invalid-input";
 import { CLIScriptNotFound } from "../../error/script/script-not-found";
 import { GlobalManager } from "../../global/global-manager";
@@ -18,9 +21,69 @@ import { createConfiguredCommand } from "../../util/command";
 type ScriptDeleteCommandOptions = {
 
     readonly quiet?: boolean;
+    readonly force?: boolean;
 
     readonly scriptName?: string;
     readonly identifier?: string;
+};
+
+const performScriptDelete = async (
+    origin: IImbricateOrigin,
+    script: ImbricateScriptSnapshot,
+    options: ScriptDeleteCommandOptions,
+    globalManager: GlobalManager,
+    terminalController: ITerminalController,
+): Promise<void> => {
+
+    const originName: string | null = globalManager.activeOrigin;
+
+    if (!originName) {
+        throw CLIActiveOriginNotFound.create();
+    }
+
+    const savingTarget: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
+
+        type: SAVING_TARGET_TYPE.SCRIPT,
+        payload: {
+            origin: originName,
+            identifier: script.identifier,
+        },
+    };
+
+    const isActive: boolean = await isSavingTargetActive(savingTarget);
+
+    if (isActive) {
+
+        if (!options.force) {
+
+            if (!options.quiet) {
+
+                terminalController.printInfo(`Script [${script.identifier}] -> "${script.scriptName}" is currently being edited`);
+                terminalController.printInfo("Consider use --force to delete it anyway, or resolve the editing first");
+            }
+
+            throw CLIScriptEditing.withScriptIdentifier(script.identifier);
+        }
+
+        if (!options.quiet) {
+
+            terminalController.printInfo(`Script [${script.identifier}] -> "${script.scriptName}" is currently being edited, resolving the editing...`);
+        }
+
+        await cleanupSavingTarget(savingTarget);
+
+        if (!options.quiet) {
+
+            terminalController.printInfo(`Editing for Script [${script.identifier}] -> "${script.scriptName}" resolved`);
+        }
+    }
+
+    await origin.deleteScript(script.identifier, script.scriptName);
+
+    if (!options.quiet) {
+
+        terminalController.printInfo(`Script [${script.identifier}] -> "${script.scriptName}" deleted`);
+    }
 };
 
 export const createScriptDeleteCommand = (
@@ -42,6 +105,7 @@ export const createScriptDeleteCommand = (
             "delete page by script identifier or pointer (one-of)",
         )
         .option("-q, --quiet", "quite mode")
+        .option("-f, --force", "force mode")
         .action(createActionRunner(terminalController, async (
             options: ScriptDeleteCommandOptions,
         ): Promise<void> => {
@@ -69,12 +133,13 @@ export const createScriptDeleteCommand = (
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                await currentOrigin.deleteScript(script.identifier, script.scriptName);
-
-                if (!options.quiet) {
-
-                    terminalController.printInfo(`Script [${script.identifier}] -> "${script.scriptName}" deleted`);
-                }
+                await performScriptDelete(
+                    currentOrigin,
+                    script,
+                    options,
+                    globalManager,
+                    terminalController,
+                );
 
                 return;
             }
@@ -85,12 +150,13 @@ export const createScriptDeleteCommand = (
 
                     if (each.identifier.startsWith(options.identifier)) {
 
-                        await currentOrigin.deleteScript(each.identifier, each.scriptName);
-
-                        if (!options.quiet) {
-
-                            terminalController.printInfo(`Script [${each.identifier}] -> "${each.scriptName}" deleted`);
-                        }
+                        await performScriptDelete(
+                            currentOrigin,
+                            each,
+                            options,
+                            globalManager,
+                            terminalController,
+                        );
 
                         return;
                     }

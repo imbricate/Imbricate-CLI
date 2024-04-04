@@ -7,6 +7,8 @@
 import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
+import { cleanupSavingTarget, isSavingTargetActive } from "../../editing/save-target";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIPageInvalidInput } from "../../error/page/page-invalid-input";
@@ -15,15 +17,76 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { CLIPageEditing } from "../../error/page/page-editing";
 
 type PageDeleteCommandOptions = {
 
     readonly collection: string;
 
     readonly quiet?: boolean;
+    readonly force?: boolean;
 
     readonly title?: string;
     readonly identifier?: string;
+};
+
+const performPageDelete = async (
+    collection: IImbricateOriginCollection,
+    page: ImbricatePageSnapshot,
+    options: PageDeleteCommandOptions,
+    globalManager: GlobalManager,
+    terminalController: ITerminalController,
+): Promise<void> => {
+
+    const originName: string | null = globalManager.activeOrigin;
+
+    if (!originName) {
+        throw CLIActiveOriginNotFound.create();
+    }
+
+    const savingTarget: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
+
+        type: SAVING_TARGET_TYPE.PAGE,
+        payload: {
+            origin: originName,
+            collection: collection.collectionName,
+            identifier: page.identifier,
+        },
+    };
+
+    const isActive: boolean = await isSavingTargetActive(savingTarget);
+
+    if (isActive) {
+
+        if (!options.force) {
+
+            if (!options.quiet) {
+
+                terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" is currently being edited`);
+                terminalController.printInfo("Consider use --force to delete it anyway, or resolve the editing first");
+            }
+
+            throw CLIPageEditing.withIdentifier(page.identifier);
+        }
+
+        if (!options.quiet) {
+
+            terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" is currently being edited, resolving the editing...`);
+        }
+
+        await cleanupSavingTarget(savingTarget);
+
+        if (!options.quiet) {
+
+            terminalController.printInfo(`Editing for page [${page.identifier}] -> "${page.title}" resolved`);
+        }
+    }
+
+    await collection.deletePage(page.identifier, page.title);
+
+    if (!options.quiet) {
+        terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
+    }
 };
 
 export const createPageDeleteCommand = (
@@ -49,6 +112,7 @@ export const createPageDeleteCommand = (
             "delete page by page identifier or pointer (one-of)",
         )
         .option("-q, --quiet", "quite mode")
+        .option("-f, --force", "force mode")
         .action(createActionRunner(terminalController, async (
             options: PageDeleteCommandOptions,
         ): Promise<void> => {
@@ -93,12 +157,13 @@ export const createPageDeleteCommand = (
                     throw CLIPageNotFound.withPageTitle(options.title);
                 }
 
-                await collection.deletePage(page.identifier, page.title);
-
-                if (!options.quiet) {
-
-                    terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
-                }
+                await performPageDelete(
+                    collection,
+                    page,
+                    options,
+                    globalManager,
+                    terminalController,
+                );
 
                 return;
             }
@@ -109,11 +174,13 @@ export const createPageDeleteCommand = (
 
                     if (page.identifier.startsWith(options.identifier)) {
 
-                        await collection.deletePage(page.identifier, page.title);
-
-                        if (!options.quiet) {
-                            terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
-                        }
+                        await performPageDelete(
+                            collection,
+                            page,
+                            options,
+                            globalManager,
+                            terminalController,
+                        );
 
                         return;
                     }
