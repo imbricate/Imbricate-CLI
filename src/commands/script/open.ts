@@ -7,6 +7,8 @@
 import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
+import { openContentAndMonitor } from "../../editing/open-file";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIScriptInvalidInput } from "../../error/script/script-invalid-input";
 import { CLIScriptNotFound } from "../../error/script/script-not-found";
@@ -24,7 +26,7 @@ type ScriptOpenCommandOptions = {
 export const createScriptOpenCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const openCommand: Command = createConfiguredCommand("open");
@@ -57,16 +59,40 @@ export const createScriptOpenCommand = (
 
             if (typeof options.scriptName === "string") {
 
-                const script: ImbricateScriptSnapshot | undefined =
+                const scriptSnapshot: ImbricateScriptSnapshot | undefined =
                     scriptSnapshots.find((each: ImbricateScriptSnapshot) => {
                         return each.scriptName === options.scriptName;
                     });
 
-                if (!script) {
+                if (!scriptSnapshot) {
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                // await currentOrigin.openScript(script.identifier);
+                const script = await currentOrigin.getScript(scriptSnapshot.identifier);
+
+                if (!script) {
+                    throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier "${scriptSnapshot.identifier}" not found`);
+                }
+
+                const scriptContent: string = await script.readScript();
+                const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
+
+                    type: SAVING_TARGET_TYPE.SCRIPT,
+                    payload: {
+                        origin: globalManager.activeOrigin!,
+                        identifier: scriptSnapshot.identifier,
+                    },
+                };
+
+                await openContentAndMonitor(
+                    scriptContent,
+                    `${scriptSnapshot.scriptName}.js`,
+                    target,
+                    globalManager,
+                    terminalController,
+                    configurationManager,
+                );
+
                 return;
             }
 
@@ -76,7 +102,31 @@ export const createScriptOpenCommand = (
 
                     if (each.identifier.startsWith(options.identifier)) {
 
-                        // await currentOrigin.openScript(each.identifier);
+                        const script = await currentOrigin.getScript(each.identifier);
+
+                        if (!script) {
+                            throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier "${each.identifier}" not found`);
+                        }
+
+                        const scriptContent: string = await script.readScript();
+                        const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
+
+                            type: SAVING_TARGET_TYPE.SCRIPT,
+                            payload: {
+                                origin: globalManager.activeOrigin!,
+                                identifier: each.identifier,
+                            },
+                        };
+
+                        await openContentAndMonitor(
+                            scriptContent,
+                            `${each.scriptName}.js`,
+                            target,
+                            globalManager,
+                            terminalController,
+                            configurationManager,
+                        );
+
                         return;
                     }
                 }
