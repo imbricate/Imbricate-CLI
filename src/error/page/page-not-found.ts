@@ -22,6 +22,13 @@ export class CLIPageNotFound extends CLIPageError {
         );
     }
 
+    public static withUnknownIssue(): CLIPageNotFound {
+
+        return new CLIPageNotFound(
+            "Unknown issue",
+        );
+    }
+
     protected constructor(
         message: string,
         reason?: any,
