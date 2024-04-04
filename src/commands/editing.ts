@@ -9,6 +9,7 @@ import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
+import { createEditingCleanCommand } from "./editing/clean";
 import { createEditingListCommand } from "./editing/list";
 
 export const createEditingCommand = (
@@ -22,6 +23,11 @@ export const createEditingCommand = (
     editingCommand
         .description("manage editing imbricate pages and scripts");
 
+    editingCommand.addCommand(createEditingCleanCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
     editingCommand.addCommand(createEditingListCommand(
         globalManager,
         terminalController,

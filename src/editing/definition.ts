@@ -28,6 +28,7 @@ export type SavingTarget<T> = {
 
 export type ActiveEditing = {
 
+    identifier: string;
     hash: string;
     path: string;
     startedAt: Date;

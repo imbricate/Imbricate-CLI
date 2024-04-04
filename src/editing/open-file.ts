@@ -4,7 +4,8 @@
  * @description Open File
  */
 
-import { attemptMarkDir, readTextFile, removeFile, writeTextFile } from "@sudoo/io";
+import { attemptMarkDir, directoryFiles, readTextFile, removeDirectory, removeFile, writeTextFile } from "@sudoo/io";
+import { UUIDVersion1 } from "@sudoo/uuid";
 import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
@@ -84,12 +85,22 @@ export const openContentAndMonitor = async (
         }
     }
 
-    const tempFilePath: string = fixImbricateTempDirectory(fileName);
+    const editingIdentifier: string = UUIDVersion1.generateString();
+
+    const tempFolderPath: string = fixImbricateTempDirectory();
+    await attemptMarkDir(tempFolderPath);
+
+    const outerTempFolderPath: string = fixImbricateTempDirectory(editingIdentifier);
+    await attemptMarkDir(outerTempFolderPath);
+
+    const tempFilePath: string = fixImbricateTempDirectory(editingIdentifier, fileName);
 
     const currentTime: Date = new Date();
+
     const updatedActiveEditing: ActiveEditing[] = [
         ...activeEditing,
         {
+            identifier: editingIdentifier,
             hash: savingTargetHash,
             path: tempFilePath,
             startedAt: currentTime,
@@ -111,6 +122,11 @@ export const openContentAndMonitor = async (
     );
 
     await removeFile(tempFilePath);
+
+    const remainingFiles: string[] = await directoryFiles(outerTempFolderPath);
+    if (remainingFiles.length === 0) {
+        await removeDirectory(outerTempFolderPath);
+    }
 };
 
 export const openFileAndMonitor = async (command: string, path: string): Promise<string> => {
