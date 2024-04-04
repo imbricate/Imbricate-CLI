@@ -74,7 +74,8 @@ export const createEditingListCommand = (
 
                 return [
                     `${each.target.type} - ${reference}`,
-                    `|> ${each.path}`,
+                    `|> ${each.identifier}`,
+                    `|- ${each.path}`,
                 ].join("\n");
             }).join("\n");
 
