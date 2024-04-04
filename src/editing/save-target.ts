@@ -59,6 +59,7 @@ export const performSavingTarget = async (
             }
 
             await page.writeContent(content);
+            await page.refreshUpdatedAt(new Date());
             break;
         }
         case SAVING_TARGET_TYPE.SCRIPT: {
@@ -74,6 +75,7 @@ export const performSavingTarget = async (
             }
 
             await script.writeScript(content);
+            await script.refreshUpdatedAt(new Date());
             break;
         }
     }
