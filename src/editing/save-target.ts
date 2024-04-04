@@ -80,6 +80,13 @@ export const performSavingTarget = async (
         }
     }
 
+    await cleanupSavingTarget(savingTarget);
+};
+
+export const cleanupSavingTarget = async (
+    savingTarget: SavingTarget<SAVING_TARGET_TYPE>,
+): Promise<void> => {
+
     const activeEditing: ActiveEditing[] = await readActiveEditing();
 
     const savingTargetHash = hashSavingTarget(savingTarget);

@@ -13,7 +13,45 @@ import { fixImbricateTempDirectory } from "../util/fix-directory";
 import { hashString } from "../util/hash";
 import { readActiveEditing, writeActiveEditing } from "./controller";
 import { ActiveEditing, SavingTarget } from "./definition";
-import { hashSavingTarget, performSavingTarget } from "./save-target";
+import { cleanupSavingTarget, hashSavingTarget, performSavingTarget } from "./save-target";
+
+const performEditing = async (
+    filePath: string,
+    content: string,
+    savingTarget: SavingTarget<any>,
+    globalManager: GlobalManager,
+    terminalController: ITerminalController,
+    configurationManager: IConfigurationManager,
+) => {
+
+    const tempPath: string = fixImbricateTempDirectory();
+    await attemptMarkDir(tempPath);
+
+    const command = configurationManager.getActiveEditingCommand(false);
+
+    terminalController.printInfo("Waiting For Change...");
+    await openFileAndMonitor(command, filePath);
+
+    const updatedContent: string = await readTextFile(filePath);
+
+    const beforeChecksum: string = hashString(content);
+    const afterChecksum: string = hashString(updatedContent);
+
+    terminalController.printInfo(`<- #[${beforeChecksum}]`);
+    terminalController.printInfo(`-> #[${afterChecksum}]`);
+
+    if (beforeChecksum === afterChecksum) {
+
+        terminalController.printInfo("No Change Detected...");
+        await cleanupSavingTarget(savingTarget);
+        terminalController.printInfo("Edit Cancelled");
+    } else {
+
+        terminalController.printInfo("Saving...");
+        await performSavingTarget(savingTarget, updatedContent, globalManager);
+        terminalController.printInfo("Edit Saved");
+    }
+};
 
 export const openContentAndMonitor = async (
     content: string,
@@ -24,27 +62,24 @@ export const openContentAndMonitor = async (
     configurationManager: IConfigurationManager,
 ): Promise<void> => {
 
-    const tempPath: string = fixImbricateTempDirectory();
-    await attemptMarkDir(tempPath);
-
     const activeEditing = await readActiveEditing();
 
-    const command = configurationManager.getActiveEditingCommand(false);
     const savingTargetHash = hashSavingTarget(savingTarget);
 
     for (const editing of activeEditing) {
         if (editing.hash === savingTargetHash) {
 
-            terminalController.printInfo("Unsaved change found, opening...");
-            await openFileAndMonitor(command, editing.path);
+            terminalController.printInfo(`Unsaved change found, started at ${editing.startedAt.toLocaleString()}`);
+            terminalController.printInfo("Reopen Editing...");
 
-            const updatedContent: string = await readTextFile(editing.path);
-
-            terminalController.printInfo("Saving...");
-            await performSavingTarget(savingTarget, updatedContent, globalManager);
-            terminalController.printInfo("Edit Saved");
-
-            await removeFile(editing.path);
+            await performEditing(
+                editing.path,
+                content,
+                savingTarget,
+                globalManager,
+                terminalController,
+                configurationManager,
+            );
             return;
         }
     }
@@ -66,18 +101,14 @@ export const openContentAndMonitor = async (
 
     await writeTextFile(tempFilePath, content);
 
-    const beforeChecksum: string = hashString(content);
-
-    terminalController.printInfo(`Editing, Before Checksum: [${beforeChecksum}]`);
-    await openFileAndMonitor(command, tempFilePath);
-
-    const updatedContent: string = await readTextFile(tempFilePath);
-
-    const afterChecksum: string = hashString(updatedContent);
-
-    terminalController.printInfo("Saving...");
-    await performSavingTarget(savingTarget, updatedContent, globalManager);
-    terminalController.printInfo(`Saved, After Checksum: [${afterChecksum}]`);
+    await performEditing(
+        tempFilePath,
+        content,
+        savingTarget,
+        globalManager,
+        terminalController,
+        configurationManager,
+    );
 
     await removeFile(tempFilePath);
 };
