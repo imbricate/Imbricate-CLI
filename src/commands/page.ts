@@ -14,6 +14,7 @@ import { createPageCreateCommand } from "./page/create";
 import { createPageDeleteCommand } from "./page/delete";
 import { createPageListCommand } from "./page/list";
 import { createPageOpenCommand } from "./page/open";
+import { createPageShowCommand } from "./page/show";
 
 export const createPageCommand = (
     globalManager: GlobalManager,
@@ -47,6 +48,11 @@ export const createPageCommand = (
         configurationManager,
     ));
     pageCommand.addCommand(createPageOpenCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    pageCommand.addCommand(createPageShowCommand(
         globalManager,
         terminalController,
         configurationManager,
