@@ -7,7 +7,7 @@
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { readActiveEditing } from "../../editing/controller";
-import { ActiveEditing } from "../../editing/definition";
+import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
@@ -48,9 +48,33 @@ export const createEditingListCommand = (
             }
 
             const parsedOutput: string = activeEditing.map((each: ActiveEditing) => {
+
+                let reference: string | undefined;
+                switch (each.target.type) {
+                    case SAVING_TARGET_TYPE.PAGE: {
+
+                        const fixedTarget = each.target as SavingTarget<SAVING_TARGET_TYPE.PAGE>;
+                        reference = [
+                            fixedTarget.payload.origin,
+                            fixedTarget.payload.collection,
+                            fixedTarget.payload.identifier,
+                        ].join(":");
+                        break;
+                    }
+                    case SAVING_TARGET_TYPE.SCRIPT: {
+
+                        const fixedTarget = each.target as SavingTarget<SAVING_TARGET_TYPE.SCRIPT>;
+                        reference = [
+                            fixedTarget.payload.origin,
+                            fixedTarget.payload.identifier,
+                        ].join(":");
+                        break;
+                    }
+                }
+
                 return [
-                    each.hash,
-                    `- ${each.path}`,
+                    `${each.target.type} - ${reference}`,
+                    `|> ${each.path}`,
                 ].join("\n");
             }).join("\n");
 

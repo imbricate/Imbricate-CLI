@@ -6,6 +6,7 @@
 import { FileSystemImbricateOrigin, FileSystemOriginPayload } from "@imbricate/origin-file-system";
 import { Command } from "commander";
 import { createCollectionCommand } from "./commands/collection";
+import { createEditingCommand } from "./commands/editing";
 import { createOriginCommand } from "./commands/origin";
 import { createPageCommand } from "./commands/page";
 import { createScriptCommand } from "./commands/script";
@@ -22,7 +23,6 @@ import { ITerminalController } from "./terminal/definition";
 import { TTYTerminalController } from "./terminal/terminal";
 import { debugLog } from "./util/debug";
 import { handleError } from "./util/handle-error";
-import { createEditingCommand } from "./commands/editing";
 
 export const execute = async (): Promise<void> => {
 
@@ -61,6 +61,7 @@ export const executeWithConfiguration = async (
 
         imbricateProgram
             .version("<current-version>")
+            .usage("imbricate (i7e) [options] [command]")
             .name("imbricate")
             .description("Imbricate CLI");
 
