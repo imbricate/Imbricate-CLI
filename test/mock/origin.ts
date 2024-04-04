@@ -5,7 +5,7 @@
  * @override Mock 
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, ImbricateOriginMetadata, ImbricateScriptMetadata, SandboxExecuteConfig } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection, IImbricateScript, ImbricateOriginMetadata, ImbricateScriptSnapshot, SandboxExecuteConfig } from "@imbricate/core";
 import { MarkedResult } from "@sudoo/marked";
 
 export class MockOrigin implements IImbricateOrigin {
@@ -65,7 +65,7 @@ export class MockOrigin implements IImbricateOrigin {
     public createScript(
         _scriptName: string,
         _description?: string | undefined,
-    ): Promise<ImbricateScriptMetadata> {
+    ): Promise<IImbricateScript> {
 
         throw new Error("Method not implemented.");
     }
@@ -79,7 +79,7 @@ export class MockOrigin implements IImbricateOrigin {
 
     public getScript(
         _scriptName: string,
-    ): Promise<string | null> {
+    ): Promise<IImbricateScript | null> {
 
         throw new Error("Method not implemented.");
     }
@@ -91,12 +91,12 @@ export class MockOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
-    public listScripts(): Promise<ImbricateScriptMetadata[]> {
+    public listScripts(): Promise<ImbricateScriptSnapshot[]> {
 
         throw new Error("Method not implemented.");
     }
 
-    public removeScript(
+    public deleteScript(
         _scriptName: string,
     ): Promise<void> {
 

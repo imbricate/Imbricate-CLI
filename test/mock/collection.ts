@@ -5,7 +5,7 @@
  * @override Mock 
  */
 
-import { IImbricateOriginCollection, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricateOriginCollectionListPagesResponse, ImbricateSearchSnippet } from "@imbricate/core";
+import { IImbricateOriginCollection, IImbricatePage, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricatePageSnapshot, ImbricateSearchSnippet, PromiseOr } from "@imbricate/core";
 
 export class MockCollection implements IImbricateOriginCollection {
 
@@ -28,14 +28,14 @@ export class MockCollection implements IImbricateOriginCollection {
         throw new Error("Method not implemented.");
     }
 
-    public listPages(): Promise<ImbricateOriginCollectionListPagesResponse[]> {
+    public listPages(): Promise<ImbricatePageSnapshot[]> {
 
         throw new Error("Method not implemented.");
     }
 
     public createPage(
         _title: string,
-    ): Promise<ImbricateOriginCollectionListPagesResponse> {
+    ): Promise<IImbricatePage> {
 
         throw new Error("Method not implemented.");
     }
@@ -55,9 +55,9 @@ export class MockCollection implements IImbricateOriginCollection {
         throw new Error("Method not implemented.");
     }
 
-    public readPage(
+    public getPage(
         _identifier: string,
-    ): Promise<string> {
+    ): PromiseOr<IImbricatePage | null> {
 
         throw new Error("Method not implemented.");
     }

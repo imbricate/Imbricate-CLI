@@ -54,6 +54,13 @@ export class MockConfigurationManager implements IConfigurationManager {
         throw new Error("Method not implemented.");
     }
 
+    public getActiveEditingCommand(
+        _handsFree: boolean,
+    ): string {
+
+        throw new Error("Method not implemented.");
+    }
+
     public registerOriginConstructor(
         _type: string,
         _constructor: (origin: IImbricateConfigurationOrigin) => any,
