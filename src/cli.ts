@@ -77,7 +77,7 @@ export const executeWithConfiguration = async (
         );
         addOriginExtension(
             imbricateProgram,
-            configurationManager,
+            globalManager,
             terminalController,
         );
 

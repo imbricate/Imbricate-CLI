@@ -5,13 +5,13 @@
  */
 
 import { Command, Option } from "commander";
-import { IConfigurationManager } from "../configuration/interface";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
+import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 
 export const addOriginExtension = (
     program: Command,
-    configurationManager: IConfigurationManager,
+    globalManager: GlobalManager,
     terminalController: ITerminalController,
 ): void => {
 
@@ -23,11 +23,11 @@ export const addOriginExtension = (
     program.addOption(originOption);
     program.on("option:origin", (origin: string) => {
 
-        for (const existingOrigin of configurationManager.origins) {
+        for (const existingOrigin of globalManager.origins) {
 
             if (existingOrigin.originName === origin) {
 
-                configurationManager.setActiveOrigin(origin);
+                globalManager.setActiveOrigin(origin);
 
                 terminalController.printInfo(`Override to origin: ${origin}`);
                 return;

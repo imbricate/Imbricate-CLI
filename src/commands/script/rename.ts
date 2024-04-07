@@ -66,7 +66,6 @@ export const createScriptRenameCommand = (
 
             await currentOrigin.renameScript(script.identifier, newScriptName);
 
-
             if (!options.quite) {
 
                 terminalController.printInfo(`Renamed script "${script.scriptName}" -> "${newScriptName}"`);
