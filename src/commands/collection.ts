@@ -13,6 +13,7 @@ import { createCollectionCreateCommand } from "./collection/create";
 import { createCollectionListCommand } from "./collection/list";
 import { createCollectionConfigCommand } from "./collection/config";
 import { createCollectionDeleteCommand } from "./collection/delete";
+import { createCollectionRenameCommand } from "./collection/rename";
 
 export const createCollectionCommand = (
     globalManager: GlobalManager,
@@ -41,6 +42,11 @@ export const createCollectionCommand = (
         configurationManager,
     ));
     collectionCommand.addCommand(createCollectionListCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    collectionCommand.addCommand(createCollectionRenameCommand(
         globalManager,
         terminalController,
         configurationManager,
