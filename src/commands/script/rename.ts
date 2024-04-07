@@ -28,10 +28,10 @@ export const createScriptRenameCommand = (
     _configurationManager: IConfigurationManager,
 ): Command => {
 
-    const showCommand: Command = createConfiguredCommand("show");
+    const renameCommand: Command = createConfiguredCommand("rename");
 
-    showCommand
-        .description("show details of a existing standalone script")
+    renameCommand
+        .description("rename an existing script with a new script name")
         .argument("<new-script-name>", "the new name of the script")
         .option("-q, --quiet", "quite mode")
         .option(
@@ -73,5 +73,5 @@ export const createScriptRenameCommand = (
             }
         }));
 
-    return showCommand;
+    return renameCommand;
 };

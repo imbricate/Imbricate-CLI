@@ -22,7 +22,7 @@ import { readTextFile, writeTextFile } from "@sudoo/io";
 
     const replacedScript: string = scriptFile.replace("<current-version>", version);
 
-    console.log(`Replace version to: ${version}`);
+    console.log(`[Build] Replace version to: ${version}`);
 
     await writeTextFile(scriptPath, replacedScript);
 })();
