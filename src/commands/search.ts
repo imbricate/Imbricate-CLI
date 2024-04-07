@@ -4,7 +4,7 @@
  * @description Search
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricatePageSearchResult, ImbricatePageSearchSnippet, ImbricateScriptSearchResult, ImbricateScriptSearchSnippet, ImbricateSearchResult, getShortPrefixOfSnippet } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection, IMBRICATE_SEARCH_RESULT_TYPE, ImbricatePageSearchResult, ImbricatePageSearchSnippet, ImbricateScriptSearchResult, ImbricateScriptSearchSnippet, ImbricateSearchResult, getShortPrefixOfSnippet } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../configuration/interface";
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
@@ -43,7 +43,7 @@ export const createSearchCommand = (
 
             const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
 
-            const results: Array<ImbricateSearchResult<IMBRICATE_SEARCH_SNIPPET_TYPE>> = [];
+            const results: Array<ImbricateSearchResult<IMBRICATE_SEARCH_RESULT_TYPE>> = [];
 
             for (const collection of collections) {
 
@@ -73,7 +73,7 @@ export const createSearchCommand = (
 
                 switch (result.type) {
 
-                    case IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE: {
+                    case IMBRICATE_SEARCH_RESULT_TYPE.PAGE: {
 
                         const fixedResult: ImbricatePageSearchResult =
                             result as ImbricatePageSearchResult;
@@ -88,7 +88,7 @@ export const createSearchCommand = (
                         for (const snippet of snippets) {
 
                             const prefix: string = getShortPrefixOfSnippet(
-                                IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE,
+                                IMBRICATE_SEARCH_RESULT_TYPE.PAGE,
                                 snippet,
                             );
 
@@ -96,7 +96,7 @@ export const createSearchCommand = (
                         }
                         return lines.join("\n");
                     }
-                    case IMBRICATE_SEARCH_SNIPPET_TYPE.SCRIPT: {
+                    case IMBRICATE_SEARCH_RESULT_TYPE.SCRIPT: {
 
                         const fixedResult: ImbricateScriptSearchResult =
                             result as ImbricateScriptSearchResult;
@@ -111,7 +111,7 @@ export const createSearchCommand = (
                         for (const snippet of snippets) {
 
                             const prefix: string = getShortPrefixOfSnippet(
-                                IMBRICATE_SEARCH_SNIPPET_TYPE.SCRIPT,
+                                IMBRICATE_SEARCH_RESULT_TYPE.SCRIPT,
                                 snippet,
                             );
 
