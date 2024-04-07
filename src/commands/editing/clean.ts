@@ -20,6 +20,7 @@ import { resolvePath } from "../../util/resolve-path";
 type EditingCleanCommandOptions = {
 
     readonly quiet?: boolean;
+    readonly dryRun?: boolean;
 };
 
 export const createEditingCleanCommand = (
@@ -33,6 +34,7 @@ export const createEditingCleanCommand = (
     cleanCommand
         .description("clean up inactive editing drafts")
         .option("-q, --quiet", "quite mode")
+        .option("-d, --dry-run", "dry run mode")
         .action(createActionRunner(terminalController, async (
             options: EditingCleanCommandOptions,
         ): Promise<void> => {
@@ -78,6 +80,14 @@ export const createEditingCleanCommand = (
                     }
 
                     throw CLIEditingTooManyFiles.create(outcastFolder, directoryFileList);
+                }
+
+                if (options.dryRun) {
+
+                    if (!options.quiet) {
+                        terminalController.printInfo(`Draft folder [${outcastFolder}] will be deleted`);
+                    }
+                    continue folder;
                 }
 
                 for (const directoryFile of directoryFileList) {

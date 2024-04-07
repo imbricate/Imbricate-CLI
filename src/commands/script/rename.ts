@@ -13,6 +13,8 @@ import { cliGetScript } from "../../script/get-script";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { readActiveEditing } from "../../editing/controller";
+import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 
 type ScriptRenameCommandOptions = {
 
@@ -58,6 +60,19 @@ export const createScriptRenameCommand = (
                 options.scriptName,
                 options.identifier,
             );
+
+            const activeEditing = await readActiveEditing();
+
+            for (const editing of activeEditing) {
+
+                const target: SavingTarget<any> = editing.target;
+
+                if (target.type === SAVING_TARGET_TYPE.SCRIPT
+                    && target.payload.identifier === script.identifier) {
+
+                    throw new Error(`Cannot rename script "${script.scriptName}" while editing`);
+                }
+            }
 
             if (!options.quite) {
 
