@@ -80,6 +80,7 @@ export const createScriptRunCommand = (
                 const executeResult: MarkedResult | null =
                     await script.execute(
                         {},
+                        {},
                     );
 
                 if (!executeResult) {
@@ -112,6 +113,7 @@ export const createScriptRunCommand = (
 
                         const executeResult: MarkedResult | null =
                             await script.execute(
+                                {},
                                 {},
                             );
 

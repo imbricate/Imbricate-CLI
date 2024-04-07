@@ -16,6 +16,7 @@ import { initializeOrigin } from "./configuration/initialize-origin";
 import { IConfigurationManager } from "./configuration/interface";
 import { IImbricateConfigurationOrigin } from "./configuration/raw-definition";
 import { addDirectoryExtension } from "./extensions/directory";
+import { addOriginExtension } from "./extensions/origin";
 import { addVerboseConfigurationExtension } from "./extensions/verbose-configuration";
 import { addWorkingDirectoryOriginExtension } from "./extensions/working-directory-origin";
 import { GlobalManager } from "./global/global-manager";
@@ -61,7 +62,7 @@ export const executeWithConfiguration = async (
 
         imbricateProgram
             .version("<current-version>")
-            .usage("imbricate (i7e) [options] [command]")
+            .usage("(i7e) [options] [command]")
             .name("imbricate")
             .description("Imbricate CLI");
 
@@ -71,6 +72,8 @@ export const executeWithConfiguration = async (
             });
 
         addDirectoryExtension(imbricateProgram, globalManager);
+        addOriginExtension(imbricateProgram, configurationManager);
+
         addVerboseConfigurationExtension(
             imbricateProgram,
             globalManager,

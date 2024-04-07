@@ -25,7 +25,7 @@ export const createScriptCommand = (
     const scriptCommand: Command = createConfiguredCommand("script");
 
     scriptCommand
-        .description("manage imbricate pages");
+        .description("manage imbricate scripts");
 
     scriptCommand.addCommand(createScriptCreateCommand(
         globalManager,
