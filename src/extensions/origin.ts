@@ -6,10 +6,13 @@
 
 import { Command, Option } from "commander";
 import { IConfigurationManager } from "../configuration/interface";
+import { CLIOriginNotFound } from "../error/origin/origin-not-found";
+import { ITerminalController } from "../terminal/definition";
 
 export const addOriginExtension = (
     program: Command,
     configurationManager: IConfigurationManager,
+    terminalController: ITerminalController,
 ): void => {
 
     const originOption = new Option(
@@ -20,8 +23,17 @@ export const addOriginExtension = (
     program.addOption(originOption);
     program.on("option:origin", (origin: string) => {
 
-        console.log(configurationManager.activeOrigin);
+        for (const existingOrigin of configurationManager.origins) {
 
-        console.log(origin);
+            if (existingOrigin.originName === origin) {
+
+                configurationManager.setActiveOrigin(origin);
+
+                terminalController.printInfo(`Override to origin: ${origin}`);
+                return;
+            }
+        }
+
+        throw CLIOriginNotFound.withOriginName(origin);
     });
 };

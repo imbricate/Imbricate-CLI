@@ -71,8 +71,15 @@ export const executeWithConfiguration = async (
                 showGlobalOptions: true,
             });
 
-        addDirectoryExtension(imbricateProgram, globalManager);
-        addOriginExtension(imbricateProgram, configurationManager);
+        addDirectoryExtension(
+            imbricateProgram,
+            globalManager,
+        );
+        addOriginExtension(
+            imbricateProgram,
+            configurationManager,
+            terminalController,
+        );
 
         addVerboseConfigurationExtension(
             imbricateProgram,
