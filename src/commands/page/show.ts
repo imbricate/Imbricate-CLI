@@ -4,14 +4,12 @@
  * @description Show
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, ImbricatePageSnapshot } from "@imbricate/core";
+import { IImbricateOrigin, IImbricatePage } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
-import { CLIPageInvalidInput } from "../../error/page/page-invalid-input";
-import { CLIPageNotFound } from "../../error/page/page-not-found";
 import { GlobalManager } from "../../global/global-manager";
+import { cliGetPage } from "../../page/get-page";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
@@ -24,81 +22,6 @@ type PageShowCommandOptions = {
 
     readonly title?: string;
     readonly identifier?: string;
-};
-
-const getPage = async (
-    options: PageShowCommandOptions,
-    globalManager: GlobalManager,
-): Promise<IImbricatePage> => {
-
-    if (!options.title && !options.identifier) {
-        throw CLIPageInvalidInput.withMessage("One of --title or --identifier is required");
-    }
-
-    const collectionName: string = options.collection;
-
-    const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
-
-    if (!currentOrigin) {
-        throw CLIActiveOriginNotFound.create();
-    }
-
-    const hasCollection: boolean = await currentOrigin.hasCollection(collectionName);
-
-    if (!hasCollection) {
-        throw CLICollectionNotFound.withCollectionName(collectionName);
-    }
-
-    const collection: IImbricateOriginCollection | null
-        = await currentOrigin.getCollection(collectionName);
-
-    if (!collection) {
-        throw CLICollectionNotFound.withCollectionName(collectionName);
-    }
-
-    const pages: ImbricatePageSnapshot[] =
-        await collection.listPages();
-
-    if (typeof options.title === "string" && options.title.length > 0) {
-
-        const pageSnapshot: ImbricatePageSnapshot | undefined = pages.find((
-            each: ImbricatePageSnapshot,
-        ) => {
-            return each.title === options.title;
-        });
-
-        if (!pageSnapshot) {
-            throw CLIPageNotFound.withPageTitle(options.title);
-        }
-
-        const page = await collection.getPage(pageSnapshot.identifier);
-
-        if (!page) {
-            throw CLIPageNotFound.withPageIdentifier(pageSnapshot.identifier);
-        }
-
-        return page;
-    }
-
-    if (typeof options.identifier === "string" && options.identifier.length > 0) {
-
-        for (const pageSnapshot of pages) {
-
-            if (pageSnapshot.identifier.startsWith(options.identifier)) {
-
-
-                const page = await collection.getPage(pageSnapshot.identifier);
-
-                if (!page) {
-                    throw CLIPageNotFound.withPageIdentifier(pageSnapshot.identifier);
-                }
-
-                return page;
-            }
-        }
-    }
-
-    throw CLIPageNotFound.withUnknownIssue();
 };
 
 export const createPageShowCommand = (
@@ -128,7 +51,18 @@ export const createPageShowCommand = (
             options: PageShowCommandOptions,
         ): Promise<void> => {
 
-            const page: IImbricatePage = await getPage(options, globalManager);
+            const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
+
+            if (!currentOrigin) {
+                throw CLIActiveOriginNotFound.create();
+            }
+
+            const page: IImbricatePage = await cliGetPage(
+                currentOrigin,
+                options.collection,
+                options.title,
+                options.identifier,
+            );
 
             if (options.json) {
 

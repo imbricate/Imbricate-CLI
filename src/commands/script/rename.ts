@@ -14,11 +14,11 @@ import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 import { readActiveEditing } from "../../editing/controller";
-import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
+import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 
 type ScriptRenameCommandOptions = {
 
-    readonly quite?: boolean;
+    readonly quiet?: boolean;
 
     readonly scriptName?: string;
     readonly identifier?: string;
@@ -35,7 +35,7 @@ export const createScriptRenameCommand = (
     renameCommand
         .description("rename an existing script with a new script name")
         .argument("<new-script-name>", "the new name of the script")
-        .option("-q, --quiet", "quite mode")
+        .option("-q, --quiet", "quiet mode")
         .option(
             "-s, --script-name <script-name>",
             "delete page by script name (one-of)",
@@ -61,7 +61,7 @@ export const createScriptRenameCommand = (
                 options.identifier,
             );
 
-            const activeEditing = await readActiveEditing();
+            const activeEditing: ActiveEditing[] = await readActiveEditing();
 
             for (const editing of activeEditing) {
 
@@ -74,14 +74,14 @@ export const createScriptRenameCommand = (
                 }
             }
 
-            if (!options.quite) {
+            if (!options.quiet) {
 
                 terminalController.printInfo(`Found script "${script.scriptName}" with identifier "${script.identifier}"`);
             }
 
             await currentOrigin.renameScript(script.identifier, newScriptName);
 
-            if (!options.quite) {
+            if (!options.quiet) {
 
                 terminalController.printInfo(`Renamed script "${script.scriptName}" -> "${newScriptName}"`);
             }
