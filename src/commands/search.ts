@@ -70,8 +70,9 @@ export const createSearchCommand = (
                 return;
             }
 
-            terminalController.printInfo(results.map((result) => {
-
+            terminalController.printInfo(results.map((
+                result: ImbricateSearchResult<IMBRICATE_SEARCH_RESULT_TYPE>,
+            ) => {
                 return renderSearchResult(result);
             }).join("\n"));
         }));
