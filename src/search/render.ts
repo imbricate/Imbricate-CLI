@@ -6,6 +6,7 @@
 
 import { IMBRICATE_SEARCH_RESULT_TYPE, ImbricatePageSearchResult, ImbricatePageSearchSnippet, ImbricateScriptSearchResult, ImbricateScriptSearchSnippet, ImbricateSearchResult, getShortPrefixOfSnippet } from "@imbricate/core";
 import { CLIInvalidSearchResult } from "../error/search/invalid-search-result";
+import { highlightSearchSnippet } from "./highlight";
 
 export const renderSearchResult = (
     result: ImbricateSearchResult<IMBRICATE_SEARCH_RESULT_TYPE>,
@@ -32,7 +33,8 @@ export const renderSearchResult = (
                     snippet,
                 );
 
-                lines.push(`${prefix} | ${snippet.snippet}`);
+                const highlightedSnippet: string = highlightSearchSnippet(snippet);
+                lines.push(`${prefix} | ${highlightedSnippet}`);
             }
             return lines.join("\n");
         }
@@ -55,7 +57,8 @@ export const renderSearchResult = (
                     snippet,
                 );
 
-                lines.push(`${prefix} | ${snippet.snippet}`);
+                const highlightedSnippet: string = highlightSearchSnippet(snippet);
+                lines.push(`${prefix} | ${highlightedSnippet}`);
             }
             return lines.join("\n");
         }
