@@ -5,7 +5,6 @@
  */
 
 import { IMBRICATE_SEARCH_RESULT_TYPE, ImbricateSearchSnippet } from "@imbricate/core";
-import chalk from "chalk";
 import { checkIsTTY } from "../util/tty";
 
 export const highlightSearchSnippet = (
@@ -25,7 +24,7 @@ export const highlightSearchSnippet = (
     const highlight: string = snippet.snippet.substring(highLightIndex, highLightIndex + highLightLength);
     const after: string = snippet.snippet.substring(highLightIndex + highLightLength);
 
-    const highlighted: string = chalk.red(highlight);
+    const highlighted: string = `\u001b[31m${highlight}\u001b[39m`;
 
     return `${before}${highlighted}${after}`;
 };

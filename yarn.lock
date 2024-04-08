@@ -1647,15 +1647,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/origin-file-system@npm:^1.5.2":
-  version: 1.5.2
-  resolution: "@imbricate/origin-file-system@npm:1.5.2"
+"@imbricate/origin-file-system@npm:^1.5.3":
+  version: 1.5.3
+  resolution: "@imbricate/origin-file-system@npm:1.5.3"
   dependencies:
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/9095543d0568e7d2f083004d90ae13699ca0964284eaae7426347520a46509c31cf2ab83611f41437a2db2f8e3ddfaf734b39434df4a0e06aa77908a2ed2a9d4
+  checksum: 10c0/fccb672f1d003e10e757b6dbe3b40cba47845a9c324f4b3b87ae1cbbfec869d75c11ae99d7d5e8945d205cca8d85a943d261af386935b7ea3147dadceba7f53d
   languageName: node
   linkType: hard
 
@@ -2914,13 +2914,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "chalk@npm:5.3.0"
-  checksum: 10c0/8297d436b2c0f95801103ff2ef67268d362021b8210daf8ddbe349695333eb3610a71122172ff3b0272f1ef2cf7cc2c41fdaa4715f52e49ffe04c56340feed09
-  languageName: node
-  linkType: hard
-
 "char-regex@npm:^1.0.2":
   version: 1.0.2
   resolution: "char-regex@npm:1.0.2"
@@ -3811,7 +3804,7 @@ __metadata:
     "@babel/preset-env": "npm:^7"
     "@babel/preset-typescript": "npm:^7"
     "@imbricate/core": "npm:^1.6.3"
-    "@imbricate/origin-file-system": "npm:^1.5.2"
+    "@imbricate/origin-file-system": "npm:^1.5.3"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29"
@@ -3819,7 +3812,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7"
     "@typescript-eslint/parser": "npm:^7"
     babel-jest: "npm:^29"
-    chalk: "npm:^5.3.0"
     commander: "npm:^12.0.0"
     eslint: "npm:^8"
     jest: "npm:^29"
