@@ -7,6 +7,29 @@
 import { exec } from "child_process";
 import { ITerminalController } from "../terminal/definition";
 
+
+const splitAndPrint = (
+    text: string,
+    terminalController: ITerminalController,
+    error: boolean,
+): void => {
+
+    const lines: string[] = text.split("\n");
+
+    for (const line of lines) {
+
+        if (line.trim() === "") {
+            continue;
+        }
+
+        if (error) {
+            terminalController.printErrorMessage(`[COMMAND-ERROR] ${line}`);
+        } else {
+            terminalController.printInfo(`[COMMAND] ${line}`);
+        }
+    }
+};
+
 export const executeCommand = async (
     command: string,
     terminalController: ITerminalController,
@@ -19,13 +42,8 @@ export const executeCommand = async (
 
         exec(command, (error: any, stdout: string, stderr: string) => {
 
-            if (stdout.trim() !== "") {
-                terminalController.printInfo(`[COMMAND] ${stdout}`);
-            }
-
-            if (stderr.trim() !== "") {
-                terminalController.printErrorMessage(`[COMMAND-ERROR] ${stderr}`);
-            }
+            splitAndPrint(stdout, terminalController, false);
+            splitAndPrint(stderr, terminalController, true);
 
             if (error) {
                 reject(error);
