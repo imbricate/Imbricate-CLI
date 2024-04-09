@@ -21,7 +21,7 @@ import { getFileName } from "../../util/fix-directory";
 
 type EditingResumeCommandOptions = {
 
-    readonly json?: boolean;
+    readonly handsFree?: boolean;
 };
 
 export const createEditingResumeCommand = (
@@ -35,9 +35,10 @@ export const createEditingResumeCommand = (
     resumeCommand
         .description("resume existing editing pages and scripts")
         .argument("<editing-identifier>", "the identifier of active editing")
+        .option("-h, --hands-free", "resume the editing without monitoring the file changes")
         .action(createActionRunner(terminalController, async (
             editingIdentifier: string,
-            _options: EditingResumeCommandOptions,
+            options: EditingResumeCommandOptions,
         ): Promise<void> => {
 
             const activeEditing: ActiveEditing[] = await readActiveEditing();
@@ -81,6 +82,7 @@ export const createEditingResumeCommand = (
                 globalManager,
                 terminalController,
                 configurationManager,
+                options.handsFree ?? false,
             );
         }));
 

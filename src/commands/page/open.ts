@@ -24,6 +24,8 @@ type PageOpenCommandOptions = {
 
     readonly title?: string;
     readonly identifier?: string;
+
+    readonly handsFree?: boolean;
 };
 
 export const createPageOpenCommand = (
@@ -52,8 +54,6 @@ export const createPageOpenCommand = (
         .action(createActionRunner(terminalController, async (
             options: PageOpenCommandOptions,
         ): Promise<void> => {
-
-            console.log(options);
 
             if (!options.title && !options.identifier) {
                 throw CLIPageInvalidInput.withMessage("One of --title or --identifier is required");
@@ -119,6 +119,7 @@ export const createPageOpenCommand = (
                     globalManager,
                     terminalController,
                     configurationManager,
+                    options.handsFree ?? false,
                 );
 
                 return;
@@ -155,6 +156,7 @@ export const createPageOpenCommand = (
                             globalManager,
                             terminalController,
                             configurationManager,
+                            options.handsFree ?? false,
                         );
 
                         return;

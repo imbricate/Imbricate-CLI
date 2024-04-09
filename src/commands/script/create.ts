@@ -21,6 +21,8 @@ type ScriptCreateCommandOptions = {
 
     readonly open?: boolean;
     readonly quiet?: boolean;
+
+    readonly handsFree?: boolean;
 };
 
 export const createScriptCreateCommand = (
@@ -35,6 +37,7 @@ export const createScriptCreateCommand = (
         .description("create a new standalone script")
         .option("-q, --quiet", "quite mode")
         .option("-no, --no-open", "do not open the page after creation")
+        .option("-h, --hands-free", "open the created page without monitoring the file changes")
         .argument("<script-name>", "name of the script")
         .action(createActionRunner(terminalController, async (
             scriptName: string,
@@ -91,6 +94,7 @@ export const createScriptCreateCommand = (
                     globalManager,
                     terminalController,
                     configurationManager,
+                    options.handsFree ?? false,
                 );
             }
         }));

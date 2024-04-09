@@ -21,8 +21,11 @@ import { createConfiguredCommand } from "../../util/command";
 type PageCreateCommandOptions = {
 
     readonly collection: string;
+
     readonly open?: boolean;
     readonly quiet?: boolean;
+
+    readonly handsFree?: boolean;
 };
 
 export const createPageCreateCommand = (
@@ -41,6 +44,7 @@ export const createPageCreateCommand = (
         )
         .option("-q, --quiet", "quite mode")
         .option("-no, --no-open", "do not open the page after creation")
+        .option("-h, --hands-free", "open the created page without monitoring the file changes")
         .argument("<page-title>", "title of the page")
         .action(createActionRunner(terminalController, async (
             pageTitle: string,
@@ -111,6 +115,7 @@ export const createPageCreateCommand = (
                     globalManager,
                     terminalController,
                     configurationManager,
+                    options.handsFree ?? false,
                 );
             }
         }));

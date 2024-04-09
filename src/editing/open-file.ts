@@ -23,10 +23,21 @@ const performEditing = async (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
+    handsFree: boolean,
 ) => {
 
     const tempPath: string = fixImbricateTempDirectory();
     await attemptMarkDir(tempPath);
+
+    if (handsFree) {
+
+        const command = configurationManager.getActiveHandsFreeEditCommand();
+        openFileAndMonitor(command, filePath);
+
+        terminalController.printInfo(`File Opened: ${filePath}`);
+
+        return;
+    }
 
     const command = configurationManager.getActiveEditCommand();
 
@@ -61,6 +72,7 @@ export const openContentAndMonitor = async (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
+    handsFree: boolean,
 ): Promise<void> => {
 
     const activeEditing = await readActiveEditing();
@@ -80,6 +92,7 @@ export const openContentAndMonitor = async (
                 globalManager,
                 terminalController,
                 configurationManager,
+                handsFree,
             );
             return;
         }
@@ -119,6 +132,7 @@ export const openContentAndMonitor = async (
         globalManager,
         terminalController,
         configurationManager,
+        handsFree,
     );
 
     await removeFile(tempFilePath);

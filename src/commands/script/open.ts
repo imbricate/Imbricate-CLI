@@ -21,6 +21,8 @@ type ScriptOpenCommandOptions = {
 
     readonly scriptName?: string;
     readonly identifier?: string;
+
+    readonly handsFree?: boolean;
 };
 
 export const createScriptOpenCommand = (
@@ -41,6 +43,7 @@ export const createScriptOpenCommand = (
             "-i, --identifier <script-identifier>",
             "delete page by script identifier or pointer (one-of)",
         )
+        .option("-h, --hands-free", "open the script without monitoring the file changes")
         .action(createActionRunner(terminalController, async (
             options: ScriptOpenCommandOptions,
         ): Promise<void> => {
@@ -91,6 +94,7 @@ export const createScriptOpenCommand = (
                     globalManager,
                     terminalController,
                     configurationManager,
+                    options.handsFree ?? false,
                 );
 
                 return;
@@ -125,6 +129,7 @@ export const createScriptOpenCommand = (
                             globalManager,
                             terminalController,
                             configurationManager,
+                            options.handsFree ?? false,
                         );
 
                         return;
