@@ -5,7 +5,7 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
-import { IImbricateConfigurationOrigin } from "./raw-definition";
+import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
 
 export interface IConfigurationManager {
 
@@ -26,5 +26,14 @@ export interface IConfigurationManager {
         origin: IImbricateConfigurationOrigin,
     ): IImbricateOrigin;
 
-    getActiveEditingCommand(handsFree: boolean): string;
+    getActiveEditCommand(): string;
+    setEditCommand(command: string): Promise<void>;
+
+    getActiveHandsFreeEditCommand(): string;
+    setHandsFreeEditCommand(command: string): Promise<void>;
+
+    getActiveDiffCommand(): string;
+    setDiffCommand(command: string): Promise<void>;
+
+    buildConfiguration(): IRawImbricateConfiguration;
 }

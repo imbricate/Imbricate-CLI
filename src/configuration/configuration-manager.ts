@@ -63,6 +63,11 @@ export class ConfigurationManager implements IConfigurationManager {
 
     private _origins: IImbricateConfigurationOrigin[];
     private _activeOrigin: string | null;
+
+    private _editCommand: string;
+    private _editHandsFreeCommand: string;
+    private _diffCommand: string;
+
     private _originConstructors: Map<
         string,
         (origin: IImbricateConfigurationOrigin) => IImbricateOrigin
@@ -80,6 +85,11 @@ export class ConfigurationManager implements IConfigurationManager {
 
         this._origins = configuration.origins;
         this._activeOrigin = configuration.activeOrigin;
+
+        this._editCommand = configuration.editCommand;
+        this._editHandsFreeCommand = configuration.editHandsFreeCommand;
+        this._diffCommand = configuration.diffCommand;
+
         this._originConstructors = new Map();
 
         this._terminalController = terminalController;
@@ -154,21 +164,55 @@ export class ConfigurationManager implements IConfigurationManager {
         return constructor(origin);
     }
 
-    public getActiveEditingCommand(handsFree: boolean): string {
+    public getActiveEditCommand(): string {
 
-        if (handsFree) {
-            return "code {path}";
-        }
+        return this._editCommand;
+    }
 
-        return "code {path} --wait";
+    public async setEditCommand(command: string): Promise<void> {
+
+        this._editCommand = command;
+        await this._persistConfiguration();
+    }
+
+    public getActiveHandsFreeEditCommand(): string {
+
+        return this._editHandsFreeCommand;
+    }
+
+    public async setHandsFreeEditCommand(command: string): Promise<void> {
+
+        this._editHandsFreeCommand = command;
+        await this._persistConfiguration();
+    }
+
+    public getActiveDiffCommand(): string {
+
+        return this._diffCommand;
+    }
+
+    public async setDiffCommand(command: string): Promise<void> {
+
+        this._diffCommand = command;
+        await this._persistConfiguration();
+    }
+
+    public buildConfiguration(): IRawImbricateConfiguration {
+
+        return {
+            origins: this._origins,
+            activeOrigin: this._activeOrigin,
+
+            editCommand: this._editCommand,
+            editHandsFreeCommand: this._editHandsFreeCommand,
+            diffCommand: this._diffCommand,
+        };
     }
 
     private async _persistConfiguration(): Promise<void> {
 
-        const configuration: IRawImbricateConfiguration = {
-            origins: this._origins,
-            activeOrigin: this._activeOrigin,
-        };
+        const configuration: IRawImbricateConfiguration =
+            this.buildConfiguration();
 
         const configurationText: string = JSON.stringify(configuration, null, 2);
         const configurationFilePath: string = resolveDirectory(
