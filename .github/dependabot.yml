@@ -6,3 +6,6 @@ updates:
       interval: daily
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    ignore:
+      - dependency-name: "eslint"
+        versions: ["9.x"]
