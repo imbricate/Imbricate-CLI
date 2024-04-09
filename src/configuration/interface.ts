@@ -6,6 +6,7 @@
 
 import { IImbricateOrigin } from "@imbricate/core";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
+import { ConfigurationEditorPreset } from "./editor/presets";
 
 export interface IConfigurationManager {
 
@@ -34,6 +35,8 @@ export interface IConfigurationManager {
 
     getActiveDiffCommand(): string;
     setDiffCommand(command: string): Promise<void>;
+
+    setEditPreset(preset: ConfigurationEditorPreset): Promise<void>;
 
     buildConfiguration(): IRawImbricateConfiguration;
 }

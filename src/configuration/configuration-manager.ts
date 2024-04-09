@@ -15,6 +15,7 @@ import { IImbricateConfiguration } from "./definition";
 import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
+import { ConfigurationEditorPreset } from "./editor/presets";
 
 export class ConfigurationManager implements IConfigurationManager {
 
@@ -194,6 +195,15 @@ export class ConfigurationManager implements IConfigurationManager {
     public async setDiffCommand(command: string): Promise<void> {
 
         this._diffCommand = command;
+        await this._persistConfiguration();
+    }
+
+    public async setEditPreset(preset: ConfigurationEditorPreset): Promise<void> {
+
+        this._editCommand = preset.editCommand;
+        this._editHandsFreeCommand = preset.editHandsFreeCommand;
+        this._diffCommand = preset.diffCommand;
+
         await this._persistConfiguration();
     }
 

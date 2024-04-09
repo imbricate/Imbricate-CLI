@@ -44,9 +44,7 @@ export const createConfigEditorUseCommand = (
                 return;
             }
 
-            configurationManager.setEditCommand(preset.editCommand);
-            configurationManager.setHandsFreeEditCommand(preset.editHandsFreeCommand);
-            configurationManager.setDiffCommand(preset.diffCommand);
+            configurationManager.setEditPreset(preset);
 
             if (!options.quiet) {
                 terminalController.printInfo(`Preset ${presetName} applied`);

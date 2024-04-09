@@ -48,9 +48,12 @@ export const createPageOpenCommand = (
             "-i, --identifier <page-identifier>",
             "open page by page identifier or pointer (one-of)",
         )
+        .option("-h, --hands-free", "open the page without monitoring the file changes")
         .action(createActionRunner(terminalController, async (
             options: PageOpenCommandOptions,
         ): Promise<void> => {
+
+            console.log(options);
 
             if (!options.title && !options.identifier) {
                 throw CLIPageInvalidInput.withMessage("One of --title or --identifier is required");
