@@ -10,7 +10,7 @@ import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
-import { fixImbricateTempDirectory } from "../util/fix-directory";
+import { fixImbricateTempDirectory, getFolderPath } from "../util/fix-directory";
 import { hashString } from "../util/hash";
 import { readActiveEditing, writeActiveEditing } from "./controller";
 import { ActiveEditing, SavingTarget } from "./definition";
@@ -26,8 +26,8 @@ const performEditing = async (
     handsFree: boolean,
 ) => {
 
-    const tempPath: string = fixImbricateTempDirectory();
-    await attemptMarkDir(tempPath);
+    const tempFolderPath: string = fixImbricateTempDirectory();
+    await attemptMarkDir(tempFolderPath);
 
     if (handsFree) {
 
@@ -62,6 +62,15 @@ const performEditing = async (
         terminalController.printInfo("Saving...");
         await performSavingTarget(savingTarget, updatedContent, globalManager);
         terminalController.printInfo("Edit Saved");
+    }
+
+    const outerTempFolderPath: string = getFolderPath(filePath);
+
+    await removeFile(filePath);
+
+    const remainingFiles: string[] = await directoryFiles(outerTempFolderPath);
+    if (remainingFiles.length === 0) {
+        await removeDirectory(outerTempFolderPath);
     }
 };
 
@@ -142,17 +151,6 @@ export const openContentAndMonitor = async (
         configurationManager,
         fixedHandFree,
     );
-
-    if (fixedHandFree) {
-        return;
-    }
-
-    await removeFile(tempFilePath);
-
-    const remainingFiles: string[] = await directoryFiles(outerTempFolderPath);
-    if (remainingFiles.length === 0) {
-        await removeDirectory(outerTempFolderPath);
-    }
 };
 
 export const openFileAndMonitor = async (

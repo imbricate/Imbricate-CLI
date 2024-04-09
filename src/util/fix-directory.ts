@@ -49,3 +49,9 @@ export const getFileName = (filePath: string): string => {
     const parsedPath: Path.ParsedPath = Path.parse(filePath);
     return parsedPath.name;
 };
+
+export const getFolderPath = (filePath: string): string => {
+
+    const parsedPath: Path.ParsedPath = Path.parse(filePath);
+    return parsedPath.dir;
+};
