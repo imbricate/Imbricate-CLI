@@ -7,12 +7,13 @@
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { readActiveEditing } from "../../editing/controller";
-import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
+import { ActiveEditing } from "../../editing/definition";
+import { mapEditingLeastCommonIdentifier } from "../../editing/map-identifier";
+import { getActiveEditingReference } from "../../editing/reference";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { mapEditingLeastCommonIdentifier } from "../../editing/map-identifier";
 
 type EditingListCommandOptions = {
 
@@ -53,29 +54,7 @@ export const createEditingListCommand = (
 
             const parsedOutput: string = activeEditing.map((each: ActiveEditing) => {
 
-                let reference: string | undefined;
-                switch (each.target.type) {
-                    case SAVING_TARGET_TYPE.PAGE: {
-
-                        const fixedTarget = each.target as SavingTarget<SAVING_TARGET_TYPE.PAGE>;
-                        reference = [
-                            fixedTarget.payload.origin,
-                            fixedTarget.payload.collection,
-                            fixedTarget.payload.identifier,
-                        ].join(":");
-                        break;
-                    }
-                    case SAVING_TARGET_TYPE.SCRIPT: {
-
-                        const fixedTarget = each.target as SavingTarget<SAVING_TARGET_TYPE.SCRIPT>;
-                        reference = [
-                            fixedTarget.payload.origin,
-                            fixedTarget.payload.identifier,
-                        ].join(":");
-                        break;
-                    }
-                }
-
+                const reference: string = getActiveEditingReference(each);
                 return [
                     `${each.target.type} - ${reference}`,
                     `|> ${mappedIdentifier[each.identifier]}`,
