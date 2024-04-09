@@ -135,6 +135,10 @@ export const openContentAndMonitor = async (
         handsFree,
     );
 
+    if (handsFree) {
+        return;
+    }
+
     await removeFile(tempFilePath);
 
     const remainingFiles: string[] = await directoryFiles(outerTempFolderPath);
