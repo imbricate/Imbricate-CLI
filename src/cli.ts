@@ -24,6 +24,7 @@ import { ITerminalController } from "./terminal/definition";
 import { TTYTerminalController } from "./terminal/terminal";
 import { debugLog } from "./util/debug";
 import { handleError } from "./util/handle-error";
+import { createConfigCommand } from "./commands/config";
 
 export const execute = async (): Promise<void> => {
 
@@ -94,6 +95,11 @@ export const executeWithConfiguration = async (
         );
 
         imbricateProgram.addCommand(createCollectionCommand(
+            globalManager,
+            terminalController,
+            configurationManager,
+        ));
+        imbricateProgram.addCommand(createConfigCommand(
             globalManager,
             terminalController,
             configurationManager,

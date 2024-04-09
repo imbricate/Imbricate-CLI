@@ -43,3 +43,9 @@ export const resolveDirectory = (...paths: string[]): string => {
 
     return resolvedPath;
 };
+
+export const getFileName = (filePath: string): string => {
+
+    const parsedPath: Path.ParsedPath = Path.parse(filePath);
+    return parsedPath.name;
+};
