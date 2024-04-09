@@ -4,13 +4,12 @@
  * @description Save
  */
 
-import { hashString, readTextFile } from "@sudoo/io";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { readActiveEditing } from "../../editing/controller";
 import { ActiveEditing } from "../../editing/definition";
+import { performSaveAndCleanup } from "../../editing/open-file";
 import { getActiveEditingReference } from "../../editing/reference";
-import { cleanupSavingTarget, performSavingTarget } from "../../editing/save-target";
 import { getContentWithSavingTarget } from "../../editing/saving-target/get-content";
 import { CLIEditingNotFound } from "../../error/editing/editing-not-found";
 import { CLIInvalidSavingTarget } from "../../error/editing/invalid-saving-target";
@@ -72,25 +71,13 @@ export const createEditingSaveCommand = (
                 ].join("\n"),
             );
 
-            const updatedContent: string = await readTextFile(targetEditing.path);
-
-            const beforeChecksum: string = hashString(beforeContent);
-            const afterChecksum: string = hashString(updatedContent);
-
-            terminalController.printInfo(`<- #[${beforeChecksum}]`);
-            terminalController.printInfo(`-> #[${afterChecksum}]`);
-
-            if (beforeChecksum === afterChecksum) {
-
-                terminalController.printInfo("No Change Detected...");
-                await cleanupSavingTarget(targetEditing.target);
-                terminalController.printInfo("Edit Cancelled");
-            } else {
-
-                terminalController.printInfo("Saving...");
-                await performSavingTarget(targetEditing.target, updatedContent, globalManager);
-                terminalController.printInfo("Edit Saved");
-            }
+            await performSaveAndCleanup(
+                targetEditing.path,
+                beforeContent,
+                targetEditing.target,
+                globalManager,
+                terminalController,
+            );
         }));
 
     return saveCommand;

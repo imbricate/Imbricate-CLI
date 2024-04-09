@@ -44,6 +44,23 @@ const performEditing = async (
     terminalController.printInfo("Waiting For Change...");
     await openFileAndMonitor(command, filePath, terminalController);
 
+    await performSaveAndCleanup(
+        filePath,
+        content,
+        savingTarget,
+        globalManager,
+        terminalController,
+    );
+};
+
+export const performSaveAndCleanup = async (
+    filePath: string,
+    content: string,
+    savingTarget: SavingTarget<any>,
+    globalManager: GlobalManager,
+    terminalController: ITerminalController,
+) => {
+
     const updatedContent: string = await readTextFile(filePath);
 
     const beforeChecksum: string = hashString(content);
