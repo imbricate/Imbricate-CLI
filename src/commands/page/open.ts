@@ -21,6 +21,7 @@ import { createConfiguredCommand } from "../../util/command";
 type PageOpenCommandOptions = {
 
     readonly collection: string;
+
     readonly title?: string;
     readonly identifier?: string;
 };

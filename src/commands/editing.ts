@@ -10,7 +10,10 @@ import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createEditingCleanCommand } from "./editing/clean";
+import { createEditingDiffCommand } from "./editing/diff";
 import { createEditingListCommand } from "./editing/list";
+import { createEditingResumeCommand } from "./editing/resume";
+import { createEditingSaveCommand } from "./editing/save";
 
 export const createEditingCommand = (
     globalManager: GlobalManager,
@@ -28,7 +31,22 @@ export const createEditingCommand = (
         terminalController,
         configurationManager,
     ));
+    editingCommand.addCommand(createEditingDiffCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
     editingCommand.addCommand(createEditingListCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    editingCommand.addCommand(createEditingResumeCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    editingCommand.addCommand(createEditingSaveCommand(
         globalManager,
         terminalController,
         configurationManager,
