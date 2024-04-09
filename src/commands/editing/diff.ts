@@ -53,6 +53,7 @@ export const createEditingDiffCommand = (
                 targetEditing.target,
                 globalManager,
                 configurationManager,
+                terminalController,
             );
         }));
 

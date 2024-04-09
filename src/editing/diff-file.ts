@@ -5,19 +5,21 @@
  */
 
 import { attemptMarkDir, writeTextFile } from "@sudoo/io";
+import { IConfigurationManager } from "../configuration/interface";
 import { CLIInvalidSavingTarget } from "../error/editing/invalid-saving-target";
 import { GlobalManager } from "../global/global-manager";
+import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
 import { fixImbricateTempDirectory } from "../util/fix-directory";
 import { SavingTarget } from "./definition";
 import { getContentWithSavingTarget } from "./saving-target/get-content";
-import { IConfigurationManager } from "../configuration/interface";
 
 export const diffSavingTarget = async (
     afterPath: string,
     savingTarget: SavingTarget<any>,
     globalManager: GlobalManager,
     configurationManager: IConfigurationManager,
+    terminalController: ITerminalController,
 ): Promise<void> => {
 
     const beforeContent: string | null =
@@ -37,5 +39,5 @@ export const diffSavingTarget = async (
         .replace("{path1}", `"${tempDiffPath}"`)
         .replace("{path2}", `"${afterPath}"`);
 
-    await executeCommand(fixedCommand);
+    await executeCommand(fixedCommand, terminalController);
 };

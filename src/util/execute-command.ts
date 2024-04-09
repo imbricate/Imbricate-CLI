@@ -5,8 +5,12 @@
  */
 
 import { exec } from "child_process";
+import { ITerminalController } from "../terminal/definition";
 
-export const executeCommand = async (command: string): Promise<string> => {
+export const executeCommand = async (
+    command: string,
+    terminalController: ITerminalController,
+): Promise<string> => {
 
     return new Promise<string>((
         resolve: (value: string) => void,
@@ -14,6 +18,14 @@ export const executeCommand = async (command: string): Promise<string> => {
     ) => {
 
         exec(command, (error: any, stdout: string, stderr: string) => {
+
+            if (stdout.trim() !== "") {
+                terminalController.printInfo(`[COMMAND] ${stdout}`);
+            }
+
+            if (stderr.trim() !== "") {
+                terminalController.printErrorMessage(`[COMMAND-ERROR] ${stderr}`);
+            }
 
             if (error) {
                 reject(error);

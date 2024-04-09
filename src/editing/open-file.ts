@@ -32,7 +32,7 @@ const performEditing = async (
     if (handsFree) {
 
         const command = configurationManager.getActiveHandsFreeEditCommand();
-        openFileAndMonitor(command, filePath);
+        openFileAndMonitor(command, filePath, terminalController);
 
         terminalController.printInfo(`File Opened: ${filePath}`);
 
@@ -42,7 +42,7 @@ const performEditing = async (
     const command = configurationManager.getActiveEditCommand();
 
     terminalController.printInfo("Waiting For Change...");
-    await openFileAndMonitor(command, filePath);
+    await openFileAndMonitor(command, filePath, terminalController);
 
     const updatedContent: string = await readTextFile(filePath);
 
@@ -155,12 +155,16 @@ export const openContentAndMonitor = async (
     }
 };
 
-export const openFileAndMonitor = async (command: string, path: string): Promise<string> => {
+export const openFileAndMonitor = async (
+    command: string,
+    path: string,
+    terminalController: ITerminalController,
+): Promise<string> => {
 
     const fixedCommand: string = command
         .replace("{path}", `"${path}"`);
 
-    const output = await executeCommand(fixedCommand);
+    const output = await executeCommand(fixedCommand, terminalController);
 
     return output;
 };
