@@ -75,6 +75,14 @@ export const openContentAndMonitor = async (
     handsFree: boolean,
 ): Promise<void> => {
 
+    let fixedHandFree: boolean = handsFree;
+
+    if (configurationManager.getActiveEditCommand() === configurationManager.getActiveHandsFreeEditCommand()) {
+
+        fixedHandFree = true;
+        terminalController.printInfo("Automatically Switched to Hands Free Mode due to duplicated editing and hands free editing command configured");
+    }
+
     const activeEditing = await readActiveEditing();
 
     const savingTargetHash = hashSavingTarget(savingTarget);
@@ -92,7 +100,7 @@ export const openContentAndMonitor = async (
                 globalManager,
                 terminalController,
                 configurationManager,
-                handsFree,
+                fixedHandFree,
             );
             return;
         }
@@ -132,10 +140,10 @@ export const openContentAndMonitor = async (
         globalManager,
         terminalController,
         configurationManager,
-        handsFree,
+        fixedHandFree,
     );
 
-    if (handsFree) {
+    if (fixedHandFree) {
         return;
     }
 
