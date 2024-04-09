@@ -12,6 +12,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { mapEditingLeastCommonIdentifier } from "../../editing/map-identifier";
 
 type EditingListCommandOptions = {
 
@@ -19,7 +20,7 @@ type EditingListCommandOptions = {
 };
 
 export const createEditingListCommand = (
-    globalManager: GlobalManager,
+    _globalManager: GlobalManager,
     terminalController: ITerminalController,
     _configurationManager: IConfigurationManager,
 ): Command => {
@@ -46,6 +47,9 @@ export const createEditingListCommand = (
                 terminalController.printInfo("No Active Editing");
                 return;
             }
+
+            const mappedIdentifier: Record<string, string> =
+                mapEditingLeastCommonIdentifier(activeEditing);
 
             const parsedOutput: string = activeEditing.map((each: ActiveEditing) => {
 
@@ -74,7 +78,7 @@ export const createEditingListCommand = (
 
                 return [
                     `${each.target.type} - ${reference}`,
-                    `|> ${each.identifier}`,
+                    `|> ${mappedIdentifier[each.identifier]}`,
                     `|- ${each.path}`,
                 ].join("\n");
             }).join("\n");
