@@ -28,7 +28,7 @@ const performEditing = async (
     const tempPath: string = fixImbricateTempDirectory();
     await attemptMarkDir(tempPath);
 
-    const command = configurationManager.getActiveEditingCommand(false);
+    const command = configurationManager.getActiveEditCommand();
 
     terminalController.printInfo("Waiting For Change...");
     await openFileAndMonitor(command, filePath);
