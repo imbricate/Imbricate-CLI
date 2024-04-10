@@ -25,14 +25,15 @@ export const parseRawImbricateConfiguration = (
             ? configuration.activeOrigin
             : null,
 
-        editCommand: configuration.editCommand
-            ? configuration.editCommand
-            : preset.editCommand,
-        editHandsFreeCommand: configuration.editHandsFreeCommand
-            ? configuration.editHandsFreeCommand
-            : preset.editHandsFreeCommand,
-        diffCommand: configuration.diffCommand
-            ? configuration.diffCommand
-            : preset.diffCommand,
+        profiles: configuration.profiles ?? {
+            "$default-fallback": {
+                editCommand: preset.editCommand,
+                editHandsFreeCommand: preset.editHandsFreeCommand,
+                diffCommand: preset.diffCommand,
+            },
+        },
+        defaultProfile: configuration.defaultProfile
+            ? configuration.defaultProfile
+            : "$default-fallback",
     };
 };

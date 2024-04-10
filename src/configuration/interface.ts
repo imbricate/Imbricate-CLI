@@ -5,13 +5,14 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
+import { ConfigurationProfileManager } from "./profile/profile-manager";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
-import { ConfigurationEditorPreset } from "./editor/presets";
 
 export interface IConfigurationManager {
 
     readonly configurationPath: string;
     readonly origins: IImbricateConfigurationOrigin[];
+
     readonly activeOrigin: string | null;
 
     setActiveOrigin(origin: string | null): this;
@@ -27,16 +28,8 @@ export interface IConfigurationManager {
         origin: IImbricateConfigurationOrigin,
     ): IImbricateOrigin;
 
-    getActiveEditCommand(): string;
-    setEditCommand(command: string): Promise<void>;
-
-    getActiveHandsFreeEditCommand(): string;
-    setHandsFreeEditCommand(command: string): Promise<void>;
-
-    getActiveDiffCommand(): string;
-    setDiffCommand(command: string): Promise<void>;
-
-    setEditPreset(preset: ConfigurationEditorPreset): Promise<void>;
+    getDefaultProfile(): ConfigurationProfileManager;
+    getProfile(profileName: string): ConfigurationProfileManager;
 
     buildConfiguration(): IRawImbricateConfiguration;
 }

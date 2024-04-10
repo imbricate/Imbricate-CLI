@@ -11,11 +11,11 @@ import { CLIUnknownOriginType } from "../error/origin/unknown-origin-type";
 import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
 import { fixImbricateHomeDirectory, resolveDirectory } from "../util/fix-directory";
-import { IImbricateConfiguration } from "./definition";
+import { IImbricateConfiguration, IImbricateConfigurationProfile, ImbricateConfigurationProfilePersistFunction } from "./definition";
 import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
+import { ConfigurationProfileManager } from "./profile/profile-manager";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
-import { ConfigurationEditorPreset } from "./editor/presets";
 
 export class ConfigurationManager implements IConfigurationManager {
 
@@ -65,9 +65,8 @@ export class ConfigurationManager implements IConfigurationManager {
     private _origins: IImbricateConfigurationOrigin[];
     private _activeOrigin: string | null;
 
-    private _editCommand: string;
-    private _editHandsFreeCommand: string;
-    private _diffCommand: string;
+    private _profiles: Record<string, IImbricateConfigurationProfile>;
+    private _defaultProfile: string;
 
     private _originConstructors: Map<
         string,
@@ -87,9 +86,8 @@ export class ConfigurationManager implements IConfigurationManager {
         this._origins = configuration.origins;
         this._activeOrigin = configuration.activeOrigin;
 
-        this._editCommand = configuration.editCommand;
-        this._editHandsFreeCommand = configuration.editHandsFreeCommand;
-        this._diffCommand = configuration.diffCommand;
+        this._profiles = configuration.profiles;
+        this._defaultProfile = configuration.defaultProfile;
 
         this._originConstructors = new Map();
 
@@ -165,57 +163,47 @@ export class ConfigurationManager implements IConfigurationManager {
         return constructor(origin);
     }
 
-    public getActiveEditCommand(): string {
+    public getDefaultProfile(): ConfigurationProfileManager {
 
-        return this._editCommand;
+        const persistProfile: ImbricateConfigurationProfilePersistFunction = async (
+            newProfile: IImbricateConfigurationProfile,
+        ) => {
+
+            this._profiles[this._defaultProfile] = newProfile;
+            await this._persistConfiguration();
+        };
+
+        return ConfigurationProfileManager.create(
+            this._profiles[this._defaultProfile],
+            persistProfile,
+        );
     }
 
-    public async setEditCommand(command: string): Promise<void> {
+    public getProfile(profileName: string): ConfigurationProfileManager {
 
-        this._editCommand = command;
-        await this._persistConfiguration();
-    }
+        const persistProfile: ImbricateConfigurationProfilePersistFunction = async (
+            newProfile: IImbricateConfigurationProfile,
+        ) => {
 
-    public getActiveHandsFreeEditCommand(): string {
+            this._profiles[profileName] = newProfile;
+            await this._persistConfiguration();
+        };
 
-        return this._editHandsFreeCommand;
-    }
-
-    public async setHandsFreeEditCommand(command: string): Promise<void> {
-
-        this._editHandsFreeCommand = command;
-        await this._persistConfiguration();
-    }
-
-    public getActiveDiffCommand(): string {
-
-        return this._diffCommand;
-    }
-
-    public async setDiffCommand(command: string): Promise<void> {
-
-        this._diffCommand = command;
-        await this._persistConfiguration();
-    }
-
-    public async setEditPreset(preset: ConfigurationEditorPreset): Promise<void> {
-
-        this._editCommand = preset.editCommand;
-        this._editHandsFreeCommand = preset.editHandsFreeCommand;
-        this._diffCommand = preset.diffCommand;
-
-        await this._persistConfiguration();
+        return ConfigurationProfileManager.create(
+            this._profiles[profileName],
+            persistProfile,
+        );
     }
 
     public buildConfiguration(): IRawImbricateConfiguration {
 
         return {
+
             origins: this._origins,
             activeOrigin: this._activeOrigin,
 
-            editCommand: this._editCommand,
-            editHandsFreeCommand: this._editHandsFreeCommand,
-            diffCommand: this._diffCommand,
+            profiles: this._profiles,
+            defaultProfile: this._defaultProfile,
         };
     }
 
