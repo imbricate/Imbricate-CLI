@@ -22,9 +22,12 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
                 }],
                 activeOrigin: "test",
 
-                editCommand: "edit",
-                editHandsFreeCommand: "edit-hands-free",
-                diffCommand: "diff",
+                profiles: {
+                    "a": {
+                        ...configurationEditorEchoPreset,
+                    },
+                },
+                defaultProfile: "a",
             },
         );
 
@@ -35,9 +38,13 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
                 payloads: {},
             }],
             activeOrigin: "test",
-            editCommand: "edit",
-            editHandsFreeCommand: "edit-hands-free",
-            diffCommand: "diff",
+
+            profiles: {
+                "a": {
+                    ...configurationEditorEchoPreset,
+                },
+            },
+            defaultProfile: "a",
         });
     });
 
@@ -52,9 +59,12 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
                 },
                 activeOrigin: "test",
 
-                editCommand: "edit",
-                editHandsFreeCommand: "edit-hands-free",
-                diffCommand: "diff",
+                profiles: {
+                    "a": {
+                        ...configurationEditorEchoPreset,
+                    },
+                },
+                defaultProfile: "a",
             },
         );
 
@@ -65,9 +75,13 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
                 payloads: {},
             }],
             activeOrigin: "test",
-            editCommand: "edit",
-            editHandsFreeCommand: "edit-hands-free",
-            diffCommand: "diff",
+
+            profiles: {
+                "a": {
+                    ...configurationEditorEchoPreset,
+                },
+            },
+            defaultProfile: "a",
         });
     });
 
@@ -82,9 +96,12 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
                 },
                 activeOrigin: null,
 
-                editCommand: "edit",
-                editHandsFreeCommand: "edit-hands-free",
-                diffCommand: "diff",
+                profiles: {
+                    "a": {
+                        ...configurationEditorEchoPreset,
+                    },
+                },
+                defaultProfile: "a",
             },
         );
 
@@ -95,9 +112,13 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
                 payloads: {},
             }],
             activeOrigin: null,
-            editCommand: "edit",
-            editHandsFreeCommand: "edit-hands-free",
-            diffCommand: "diff",
+
+            profiles: {
+                "a": {
+                    ...configurationEditorEchoPreset,
+                },
+            },
+            defaultProfile: "a",
         });
     });
 
@@ -112,13 +133,10 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
                 },
                 activeOrigin: null,
 
-                editCommand: undefined as any,
-                editHandsFreeCommand: undefined as any,
-                diffCommand: undefined as any,
+                profiles: undefined,
+                defaultProfile: undefined,
             },
         );
-
-        const echoPreset = configurationEditorEchoPreset;
 
         expect(parsed).toStrictEqual({
             origins: [{
@@ -127,9 +145,13 @@ describe("Given [Parse] Configuration Helper Methods", (): void => {
                 payloads: {},
             }],
             activeOrigin: null,
-            editCommand: echoPreset.editCommand,
-            editHandsFreeCommand: echoPreset.editHandsFreeCommand,
-            diffCommand: echoPreset.diffCommand,
+
+            profiles: {
+                "$default-fallback": {
+                    ...configurationEditorEchoPreset,
+                },
+            },
+            defaultProfile: "$default-fallback",
         });
     });
 });
