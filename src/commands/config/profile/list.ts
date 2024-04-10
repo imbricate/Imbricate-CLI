@@ -25,7 +25,7 @@ export const createConfigProfileListCommand = (
     const listCommand: Command = createConfiguredCommand("list");
 
     listCommand
-        .description("list preset configuration for editor commands")
+        .description("list all configuration profiles")
         .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
             options: ConfigProfileListCommandOptions,

@@ -8,10 +8,13 @@ import { IImbricateOrigin } from "@imbricate/core";
 import { writeTextFile } from "@sudoo/io";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
 import { CLIUnknownOriginType } from "../error/origin/unknown-origin-type";
+import { CLIProfileAlreadyExists } from "../error/profile/profile-already-exists";
+import { CLIProfileNotFound } from "../error/profile/profile-not-found";
 import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
 import { fixImbricateHomeDirectory, resolveDirectory } from "../util/fix-directory";
 import { IImbricateConfiguration, IImbricateConfigurationProfile, ImbricateConfigurationProfilePersistFunction } from "./definition";
+import { configurationEditorEchoPreset } from "./editor/presets";
 import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
 import { ConfigurationProfileManager } from "./profile/profile-manager";
@@ -188,6 +191,48 @@ export class ConfigurationManager implements IConfigurationManager {
             this._profiles[this._defaultProfile],
             persistProfile,
         );
+    }
+
+    public async addProfile(profileName: string): Promise<ConfigurationProfileManager> {
+
+        if (this._profiles[profileName]) {
+            throw CLIProfileAlreadyExists.withProfileName(profileName);
+        }
+
+        const persistProfile: ImbricateConfigurationProfilePersistFunction = async (
+            newProfile: IImbricateConfigurationProfile,
+        ) => {
+
+            this._profiles[profileName] = newProfile;
+            await this._persistConfiguration();
+        };
+
+        await persistProfile({
+            ...configurationEditorEchoPreset,
+        });
+
+        return ConfigurationProfileManager.create(
+            this._profiles[profileName],
+            persistProfile,
+        );
+    }
+
+    public async deleteProfile(profileName: string): Promise<void> {
+
+        if (!this._profiles[profileName]) {
+            throw CLIProfileNotFound.withProfileName(profileName);
+        }
+
+        this._profiles = Object.keys(this._profiles)
+            .filter((key: string) => key !== profileName)
+            .reduce((previous: Record<string, IImbricateConfigurationProfile>, current: string) => {
+                return {
+                    ...previous,
+                    [current]: this._profiles[current],
+                };
+            }, {});
+
+        await this._persistConfiguration();
     }
 
     public getProfile(profileName: string): ConfigurationProfileManager | null {

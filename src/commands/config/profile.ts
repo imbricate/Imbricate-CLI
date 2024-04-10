@@ -9,6 +9,8 @@ import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createConfiguredCommand } from "../../util/command";
+import { createConfigProfileCreateCommand } from "./profile/create";
+import { createConfigProfileDeleteCommand } from "./profile/delete";
 import { createConfigProfileListCommand } from "./profile/list";
 
 export const createConfigProfileCommand = (
@@ -22,6 +24,16 @@ export const createConfigProfileCommand = (
     profileCommand
         .description("manage imbricate profile configurations");
 
+    profileCommand.addCommand(createConfigProfileCreateCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    profileCommand.addCommand(createConfigProfileDeleteCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
     profileCommand.addCommand(createConfigProfileListCommand(
         globalManager,
         terminalController,
