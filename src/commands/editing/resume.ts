@@ -6,6 +6,7 @@
 
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { readActiveEditing } from "../../editing/controller";
 import { ActiveEditing } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
@@ -53,6 +54,9 @@ export const createEditingResumeCommand = (
                 throw CLIEditingNotFound.withPartialIdentifier(editingIdentifier);
             }
 
+            const profile: ConfigurationProfileManager =
+                configurationManager.getDefaultProfile();
+
             const reference: string = getActiveEditingReference(targetEditing);
 
             const beforeContent: string | null = await getContentWithSavingTarget(
@@ -81,7 +85,7 @@ export const createEditingResumeCommand = (
                 targetEditing.target,
                 globalManager,
                 terminalController,
-                configurationManager,
+                profile,
                 options.handsFree ?? false,
             );
         }));

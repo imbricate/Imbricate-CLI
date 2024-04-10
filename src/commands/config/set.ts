@@ -6,6 +6,7 @@
 
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
@@ -35,19 +36,21 @@ export const createConfigSetCommand = (
             options: ConfigSetCommandOptions,
         ): Promise<void> => {
 
+            const profile: ConfigurationProfileManager =
+                configurationManager.getDefaultProfile();
 
             switch (key) {
 
                 case "editCommand": {
-                    configurationManager.setEditCommand(value);
+                    await profile.setEditCommand(value);
                     break;
                 }
                 case "editHandsFreeCommand": {
-                    configurationManager.setHandsFreeEditCommand(value);
+                    await profile.setHandsFreeEditCommand(value);
                     break;
                 }
                 case "diffCommand": {
-                    configurationManager.setDiffCommand(value);
+                    await profile.setDiffCommand(value);
                     break;
                 }
                 default: {

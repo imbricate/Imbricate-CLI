@@ -6,7 +6,7 @@
 
 import { attemptMarkDir, directoryFiles, readTextFile, removeDirectory, removeFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
-import { IConfigurationManager } from "../configuration/interface";
+import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
@@ -22,7 +22,7 @@ const performEditing = async (
     savingTarget: SavingTarget<any>,
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    configurationManager: IConfigurationManager,
+    profile: ConfigurationProfileManager,
     handsFree: boolean,
 ) => {
 
@@ -31,7 +31,7 @@ const performEditing = async (
 
     if (handsFree) {
 
-        const command = configurationManager.getActiveHandsFreeEditCommand();
+        const command = profile.getActiveHandsFreeEditCommand();
         openFileAndMonitor(command, filePath, terminalController);
 
         terminalController.printInfo(`File Opened: ${filePath}`);
@@ -39,7 +39,7 @@ const performEditing = async (
         return;
     }
 
-    const command = configurationManager.getActiveEditCommand();
+    const command = profile.getActiveEditCommand();
 
     terminalController.printInfo("Waiting For Change...");
     await openFileAndMonitor(command, filePath, terminalController);
@@ -97,13 +97,13 @@ export const openContentAndMonitor = async (
     savingTarget: SavingTarget<any>,
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    configurationManager: IConfigurationManager,
+    profile: ConfigurationProfileManager,
     handsFree: boolean,
 ): Promise<void> => {
 
     let fixedHandFree: boolean = handsFree;
 
-    if (configurationManager.getActiveEditCommand() === configurationManager.getActiveHandsFreeEditCommand()) {
+    if (profile.getActiveEditCommand() === profile.getActiveHandsFreeEditCommand()) {
 
         fixedHandFree = true;
         terminalController.printInfo("Automatically Switched to Hands Free Mode due to duplicated editing and hands free editing command configured");
@@ -125,7 +125,7 @@ export const openContentAndMonitor = async (
                 savingTarget,
                 globalManager,
                 terminalController,
-                configurationManager,
+                profile,
                 fixedHandFree,
             );
             return;
@@ -165,7 +165,7 @@ export const openContentAndMonitor = async (
         savingTarget,
         globalManager,
         terminalController,
-        configurationManager,
+        profile,
         fixedHandFree,
     );
 };

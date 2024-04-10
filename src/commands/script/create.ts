@@ -7,6 +7,7 @@
 import { IImbricateOrigin, IImbricateScript, ImbricateScriptSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -56,6 +57,9 @@ export const createScriptCreateCommand = (
                 throw CLIScriptAlreadyExists.withScriptName(scriptName);
             }
 
+            const profile: ConfigurationProfileManager =
+                configurationManager.getDefaultProfile();
+
             const scriptMetadata: ImbricateScriptSnapshot =
                 await currentOrigin.createScript(scriptName);
 
@@ -93,7 +97,7 @@ export const createScriptCreateCommand = (
                     target,
                     globalManager,
                     terminalController,
-                    configurationManager,
+                    profile,
                     options.handsFree ?? false,
                 );
             }

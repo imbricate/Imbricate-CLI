@@ -7,6 +7,7 @@
 import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
@@ -80,6 +81,9 @@ export const createPageOpenCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
+            const profile: ConfigurationProfileManager =
+                configurationManager.getDefaultProfile();
+
             const pages: ImbricatePageSnapshot[] =
                 await collection.listPages();
 
@@ -118,7 +122,7 @@ export const createPageOpenCommand = (
                     target,
                     globalManager,
                     terminalController,
-                    configurationManager,
+                    profile,
                     options.handsFree ?? false,
                 );
 
@@ -155,7 +159,7 @@ export const createPageOpenCommand = (
                             target,
                             globalManager,
                             terminalController,
-                            configurationManager,
+                            profile,
                             options.handsFree ?? false,
                         );
 

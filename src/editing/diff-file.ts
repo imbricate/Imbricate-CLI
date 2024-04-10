@@ -5,7 +5,7 @@
  */
 
 import { attemptMarkDir, writeTextFile } from "@sudoo/io";
-import { IConfigurationManager } from "../configuration/interface";
+import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
 import { CLIInvalidSavingTarget } from "../error/editing/invalid-saving-target";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
@@ -18,7 +18,7 @@ export const diffSavingTarget = async (
     afterPath: string,
     savingTarget: SavingTarget<any>,
     globalManager: GlobalManager,
-    configurationManager: IConfigurationManager,
+    profile: ConfigurationProfileManager,
     terminalController: ITerminalController,
 ): Promise<void> => {
 
@@ -35,7 +35,7 @@ export const diffSavingTarget = async (
     const tempDiffPath: string = fixImbricateTempDirectory("diff");
     await writeTextFile(tempDiffPath, beforeContent);
 
-    const fixedCommand: string = configurationManager.getActiveDiffCommand()
+    const fixedCommand: string = profile.getActiveDiffCommand()
         .replace("{path1}", `"${tempDiffPath}"`)
         .replace("{path2}", `"${afterPath}"`);
 

@@ -7,6 +7,7 @@
 import { Command } from "commander";
 import { ConfigurationEditorPreset, configurationEditorPresets } from "../../../configuration/editor/presets";
 import { IConfigurationManager } from "../../../configuration/interface";
+import { ConfigurationProfileManager } from "../../../configuration/profile/profile-manager";
 import { GlobalManager } from "../../../global/global-manager";
 import { ITerminalController } from "../../../terminal/definition";
 import { createActionRunner } from "../../../util/action-runner";
@@ -44,7 +45,9 @@ export const createConfigEditorUseCommand = (
                 return;
             }
 
-            configurationManager.setEditPreset(preset);
+            const profile: ConfigurationProfileManager =
+                configurationManager.getDefaultProfile();
+            await profile.setEditPreset(preset);
 
             if (!options.quiet) {
                 terminalController.printInfo(`Preset ${presetName} applied`);

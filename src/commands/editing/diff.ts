@@ -6,6 +6,7 @@
 
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { readActiveEditing } from "../../editing/controller";
 import { ActiveEditing } from "../../editing/definition";
 import { diffSavingTarget } from "../../editing/diff-file";
@@ -48,11 +49,14 @@ export const createEditingDiffCommand = (
                 throw CLIEditingNotFound.withPartialIdentifier(editingIdentifier);
             }
 
+            const profile: ConfigurationProfileManager =
+                configurationManager.getDefaultProfile();
+
             await diffSavingTarget(
                 targetEditing.path,
                 targetEditing.target,
                 globalManager,
-                configurationManager,
+                profile,
                 terminalController,
             );
         }));

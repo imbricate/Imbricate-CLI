@@ -10,6 +10,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 
 type ConfigGetCommandOptions = {
 
@@ -33,20 +34,22 @@ export const createConfigGetCommand = (
             options: ConfigGetCommandOptions,
         ): Promise<void> => {
 
+            const profile: ConfigurationProfileManager =
+                configurationManager.getDefaultProfile();
 
             let value: string | undefined = undefined;
             switch (key) {
 
                 case "editCommand": {
-                    value = configurationManager.getActiveEditCommand();
+                    value = profile.getActiveEditCommand();
                     break;
                 }
                 case "editHandsFreeCommand": {
-                    value = configurationManager.getActiveHandsFreeEditCommand();
+                    value = profile.getActiveHandsFreeEditCommand();
                     break;
                 }
                 case "diffCommand": {
-                    value = configurationManager.getActiveDiffCommand();
+                    value = profile.getActiveDiffCommand();
                     break;
                 }
             }
