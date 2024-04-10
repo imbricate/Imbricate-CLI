@@ -49,13 +49,17 @@ export const createSearchCommand = (
             for (const collection of collections) {
 
                 const pageResults: ImbricatePageSearchResult[] =
-                    await collection.searchPages(prompt);
+                    await collection.searchPages(prompt, {
+                        exact: false,
+                    });
 
                 results.push(...pageResults);
             }
 
             const scriptResults: ImbricateScriptSearchResult[] =
-                await currentOrigin.searchScripts(prompt);
+                await currentOrigin.searchScripts(prompt, {
+                    exact: false,
+                });
 
             results.push(...scriptResults);
 
