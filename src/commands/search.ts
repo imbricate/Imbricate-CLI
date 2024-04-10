@@ -16,6 +16,7 @@ import { createConfiguredCommand } from "../util/command";
 
 type SearchCommandOptions = {
 
+    readonly exact?: boolean;
     readonly json?: boolean;
 };
 
@@ -29,12 +30,15 @@ export const createSearchCommand = (
 
     searchCommand
         .description("search for items in imbricate")
+        .option("-e, --exact", "search for exact match")
         .option("-j, --json", "print result as JSON")
         .argument("<prompt>", "prompt to search")
         .action(createActionRunner(terminalController, async (
             prompt: string,
             options: SearchCommandOptions,
         ): Promise<void> => {
+
+            const usingExact: boolean = Boolean(options.exact);
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
@@ -50,7 +54,7 @@ export const createSearchCommand = (
 
                 const pageResults: ImbricatePageSearchResult[] =
                     await collection.searchPages(prompt, {
-                        exact: false,
+                        exact: usingExact,
                     });
 
                 results.push(...pageResults);
@@ -58,7 +62,7 @@ export const createSearchCommand = (
 
             const scriptResults: ImbricateScriptSearchResult[] =
                 await currentOrigin.searchScripts(prompt, {
-                    exact: false,
+                    exact: usingExact,
                 });
 
             results.push(...scriptResults);
