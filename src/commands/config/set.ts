@@ -6,6 +6,7 @@
 
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
@@ -37,7 +38,7 @@ export const createConfigSetCommand = (
         ): Promise<void> => {
 
             const profile: ConfigurationProfileManager =
-                configurationManager.getDefaultProfile();
+                getProfileFromConfiguration(configurationManager);
 
             switch (key) {
 

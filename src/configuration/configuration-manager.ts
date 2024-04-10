@@ -163,7 +163,11 @@ export class ConfigurationManager implements IConfigurationManager {
         return constructor(origin);
     }
 
-    public getDefaultProfile(): ConfigurationProfileManager {
+    public getDefaultProfile(): ConfigurationProfileManager | null {
+
+        if (!this._profiles[this._defaultProfile]) {
+            return null;
+        }
 
         const persistProfile: ImbricateConfigurationProfilePersistFunction = async (
             newProfile: IImbricateConfigurationProfile,
@@ -179,7 +183,11 @@ export class ConfigurationManager implements IConfigurationManager {
         );
     }
 
-    public getProfile(profileName: string): ConfigurationProfileManager {
+    public getProfile(profileName: string): ConfigurationProfileManager | null {
+
+        if (!this._profiles[profileName]) {
+            return null;
+        }
 
         const persistProfile: ImbricateConfigurationProfilePersistFunction = async (
             newProfile: IImbricateConfigurationProfile,

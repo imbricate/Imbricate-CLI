@@ -28,8 +28,8 @@ export interface IConfigurationManager {
         origin: IImbricateConfigurationOrigin,
     ): IImbricateOrigin;
 
-    getDefaultProfile(): ConfigurationProfileManager;
-    getProfile(profileName: string): ConfigurationProfileManager;
+    getDefaultProfile(): ConfigurationProfileManager | null;
+    getProfile(profileName: string): ConfigurationProfileManager | null;
 
     buildConfiguration(): IRawImbricateConfiguration;
 }

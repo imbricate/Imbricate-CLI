@@ -6,6 +6,7 @@
 
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { readActiveEditing } from "../../editing/controller";
 import { ActiveEditing } from "../../editing/definition";
@@ -55,7 +56,7 @@ export const createEditingResumeCommand = (
             }
 
             const profile: ConfigurationProfileManager =
-                configurationManager.getDefaultProfile();
+                getProfileFromConfiguration(configurationManager);
 
             const reference: string = getActiveEditingReference(targetEditing);
 

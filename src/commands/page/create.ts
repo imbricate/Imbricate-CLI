@@ -7,6 +7,7 @@
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
@@ -74,7 +75,7 @@ export const createPageCreateCommand = (
             }
 
             const profile: ConfigurationProfileManager =
-                configurationManager.getDefaultProfile();
+                getProfileFromConfiguration(configurationManager);
 
             const pageExists: boolean = await collection.hasPage(pageTitle);
 

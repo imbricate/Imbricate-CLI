@@ -6,11 +6,12 @@
 
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
+import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 
 type ConfigGetCommandOptions = {
 
@@ -35,7 +36,7 @@ export const createConfigGetCommand = (
         ): Promise<void> => {
 
             const profile: ConfigurationProfileManager =
-                configurationManager.getDefaultProfile();
+                getProfileFromConfiguration(configurationManager);
 
             let value: string | undefined = undefined;
             switch (key) {

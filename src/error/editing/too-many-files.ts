@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Error_Page
+ * @namespace Error_Editing
  * @description Too Many Files
  */
 
