@@ -22,7 +22,7 @@ export const createConfigEditorCommand = (
     const editor: Command = createConfiguredCommand("editor");
 
     editor
-        .description("manager imbricate editor configurations");
+        .description("manage imbricate editor configurations");
 
     editor.addCommand(createConfigEditorListCommand(
         globalManager,

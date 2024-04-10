@@ -9,10 +9,11 @@ import { IConfigurationManager } from "../configuration/interface";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
-import { createConfigShowCommand } from "./config/show";
-import { createConfigSetCommand } from "./config/set";
-import { createConfigGetCommand } from "./config/get";
 import { createConfigEditorCommand } from "./config/editor";
+import { createConfigGetCommand } from "./config/get";
+import { createConfigProfileCommand } from "./config/profile";
+import { createConfigSetCommand } from "./config/set";
+import { createConfigShowCommand } from "./config/show";
 
 export const createConfigCommand = (
     globalManager: GlobalManager,
@@ -31,6 +32,11 @@ export const createConfigCommand = (
         configurationManager,
     ));
     configCommand.addCommand(createConfigGetCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    configCommand.addCommand(createConfigProfileCommand(
         globalManager,
         terminalController,
         configurationManager,

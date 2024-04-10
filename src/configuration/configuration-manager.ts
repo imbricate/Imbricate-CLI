@@ -105,6 +105,13 @@ export class ConfigurationManager implements IConfigurationManager {
         return this._activeOrigin;
     }
 
+    public get profiles(): Record<string, IImbricateConfigurationProfile> {
+        return this._profiles;
+    }
+    public get defaultProfile(): string {
+        return this._defaultProfile;
+    }
+
     public setActiveOrigin(origin: string | null): this {
 
         this._activeOrigin = origin;

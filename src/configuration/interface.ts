@@ -5,15 +5,19 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
+import { IImbricateConfigurationProfile } from "./definition";
 import { ConfigurationProfileManager } from "./profile/profile-manager";
 import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
 
 export interface IConfigurationManager {
 
     readonly configurationPath: string;
-    readonly origins: IImbricateConfigurationOrigin[];
 
+    readonly origins: IImbricateConfigurationOrigin[];
     readonly activeOrigin: string | null;
+
+    readonly profiles: Record<string, IImbricateConfigurationProfile>;
+    readonly defaultProfile: string;
 
     setActiveOrigin(origin: string | null): this;
     addOrigin(origin: IImbricateConfigurationOrigin): this;

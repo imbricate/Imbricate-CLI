@@ -1,26 +1,25 @@
 /**
  * @author WMXPY
- * @namespace Commands_Config_Editor
+ * @namespace Commands_Config_Profile
  * @description List
  */
 
 import { Command } from "commander";
-import { ConfigurationEditorPreset, configurationEditorPresets } from "../../../configuration/editor/presets";
 import { IConfigurationManager } from "../../../configuration/interface";
 import { GlobalManager } from "../../../global/global-manager";
 import { ITerminalController } from "../../../terminal/definition";
 import { createActionRunner } from "../../../util/action-runner";
 import { createConfiguredCommand } from "../../../util/command";
 
-type ConfigEditorListCommandOptions = {
+type ConfigProfileListCommandOptions = {
 
     readonly json?: boolean;
 };
 
-export const createConfigEditorListCommand = (
+export const createConfigProfileListCommand = (
     _globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const listCommand: Command = createConfiguredCommand("list");
@@ -29,32 +28,37 @@ export const createConfigEditorListCommand = (
         .description("list preset configuration for editor commands")
         .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
-            options: ConfigEditorListCommandOptions,
+            options: ConfigProfileListCommandOptions,
         ): Promise<void> => {
+
+            const profileNames: string[] = Object.keys(configurationManager.profiles);
+
+            const jsonOutput = profileNames.map((profileName: string) => {
+
+                return {
+                    profileName,
+                    default: profileName === configurationManager.defaultProfile,
+                };
+            });
 
             if (options.json) {
 
                 terminalController.printInfo(JSON.stringify(
-                    configurationEditorPresets,
+                    jsonOutput,
                     null,
                     2,
                 ));
                 return;
             }
 
-            const presetNames: string[] = Object.keys(configurationEditorPresets);
+            const textOutput: string = profileNames
+                .map((profileName: string) => {
 
-            const textOutput: string = presetNames
-                .map((each: string) => {
+                    if (profileName === configurationManager.defaultProfile) {
+                        return `${profileName} (default)`;
+                    }
 
-                    const preset: ConfigurationEditorPreset = configurationEditorPresets[each as keyof typeof configurationEditorPresets];
-
-                    return [
-                        `|- Preset: ${each}`,
-                        ` | Edit Command: ${preset.editCommand}`,
-                        ` | Edit Hands Free Command: ${preset.editHandsFreeCommand}`,
-                        ` | Diff Command: ${preset.diffCommand}`,
-                    ].join("\n");
+                    return profileName;
                 })
                 .join("\n");
 
