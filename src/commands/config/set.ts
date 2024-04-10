@@ -19,7 +19,7 @@ type ConfigSetCommandOptions = {
 };
 
 export const createConfigSetCommand = (
-    _globalManager: GlobalManager,
+    globalManager: GlobalManager,
     terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
@@ -37,8 +37,12 @@ export const createConfigSetCommand = (
             options: ConfigSetCommandOptions,
         ): Promise<void> => {
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+                options.quiet,
+            );
 
             switch (key) {
 

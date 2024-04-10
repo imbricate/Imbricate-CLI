@@ -55,8 +55,11 @@ export const createEditingResumeCommand = (
                 throw CLIEditingNotFound.withPartialIdentifier(editingIdentifier);
             }
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+            );
 
             const reference: string = getActiveEditingReference(targetEditing);
 

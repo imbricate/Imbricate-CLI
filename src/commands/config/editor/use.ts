@@ -20,7 +20,7 @@ type ConfigEditorUseCommandOptions = {
 };
 
 export const createConfigEditorUseCommand = (
-    _globalManager: GlobalManager,
+    globalManager: GlobalManager,
     terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
@@ -46,8 +46,12 @@ export const createConfigEditorUseCommand = (
                 return;
             }
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+                options.quiet,
+            );
 
             await profile.setEditPreset(preset);
 

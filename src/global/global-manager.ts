@@ -18,6 +18,8 @@ export class GlobalManager {
     private _activeOrigin: string | null;
     private _origins: Map<string, IImbricateOrigin>;
 
+    private _profileName: string | null;
+
     private _verboseConfiguration: boolean;
     private _workingDirectory: string;
 
@@ -25,6 +27,8 @@ export class GlobalManager {
 
         this._activeOrigin = null;
         this._origins = new Map<string, IImbricateOrigin>();
+
+        this._profileName = null;
 
         this._verboseConfiguration = false;
         this._workingDirectory = fixCurrentWorkingDirectory();
@@ -36,6 +40,15 @@ export class GlobalManager {
     public setActiveOrigin(originName: string | null): this {
 
         this._activeOrigin = originName;
+        return this;
+    }
+
+    public get profileName(): string | null {
+        return this._profileName;
+    }
+    public setProfileName(profileName: string | null): this {
+
+        this._profileName = profileName;
         return this;
     }
 

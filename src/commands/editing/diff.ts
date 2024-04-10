@@ -50,8 +50,11 @@ export const createEditingDiffCommand = (
                 throw CLIEditingNotFound.withPartialIdentifier(editingIdentifier);
             }
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+            );
 
             await diffSavingTarget(
                 targetEditing.path,

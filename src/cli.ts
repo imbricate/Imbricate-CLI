@@ -6,6 +6,7 @@
 import { FileSystemImbricateOrigin, FileSystemOriginPayload } from "@imbricate/origin-file-system";
 import { Command } from "commander";
 import { createCollectionCommand } from "./commands/collection";
+import { createConfigCommand } from "./commands/config";
 import { createEditingCommand } from "./commands/editing";
 import { createOriginCommand } from "./commands/origin";
 import { createPageCommand } from "./commands/page";
@@ -17,6 +18,7 @@ import { IConfigurationManager } from "./configuration/interface";
 import { IImbricateConfigurationOrigin } from "./configuration/raw-definition";
 import { addDirectoryExtension } from "./extensions/directory";
 import { addOriginExtension } from "./extensions/origin";
+import { addProfileExtension } from "./extensions/profile";
 import { addVerboseConfigurationExtension } from "./extensions/verbose-configuration";
 import { addWorkingDirectoryOriginExtension } from "./extensions/working-directory-origin";
 import { GlobalManager } from "./global/global-manager";
@@ -24,7 +26,6 @@ import { ITerminalController } from "./terminal/definition";
 import { TTYTerminalController } from "./terminal/terminal";
 import { debugLog } from "./util/debug";
 import { handleError } from "./util/handle-error";
-import { createConfigCommand } from "./commands/config";
 
 export const execute = async (): Promise<void> => {
 
@@ -80,6 +81,10 @@ export const executeWithConfiguration = async (
             imbricateProgram,
             globalManager,
             terminalController,
+        );
+        addProfileExtension(
+            imbricateProgram,
+            globalManager,
         );
 
         addVerboseConfigurationExtension(

@@ -19,7 +19,7 @@ type ConfigGetCommandOptions = {
 };
 
 export const createConfigGetCommand = (
-    _globalManager: GlobalManager,
+    globalManager: GlobalManager,
     terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
@@ -35,8 +35,11 @@ export const createConfigGetCommand = (
             options: ConfigGetCommandOptions,
         ): Promise<void> => {
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+            );
 
             let value: string | undefined = undefined;
             switch (key) {

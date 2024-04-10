@@ -82,8 +82,11 @@ export const createPageOpenCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+            );
 
             const pages: ImbricatePageSnapshot[] =
                 await collection.listPages();

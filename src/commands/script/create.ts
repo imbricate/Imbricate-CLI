@@ -58,8 +58,12 @@ export const createScriptCreateCommand = (
                 throw CLIScriptAlreadyExists.withScriptName(scriptName);
             }
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+                options.quiet,
+            );
 
             const scriptMetadata: ImbricateScriptSnapshot =
                 await currentOrigin.createScript(scriptName);

@@ -96,7 +96,7 @@ export const createPageListCommand = (
             "specify the collection of the page (required)",
         )
         .option("-j, --json", "print result as JSON")
-        .option("-np, --no-pointer", "not to map pointer")
+        .option("--no-pointer", "not to map pointer")
         .action(createActionRunner(terminalController, async (
             options: PageListCommandOptions,
         ): Promise<void> => {

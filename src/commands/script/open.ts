@@ -60,8 +60,11 @@ export const createScriptOpenCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+            );
 
             const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
 

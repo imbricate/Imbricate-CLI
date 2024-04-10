@@ -90,7 +90,7 @@ export const createScriptListCommand = (
     listCommand
         .description("list standalone scripts")
         .option("-j, --json", "print result as JSON")
-        .option("-np, --no-pointer", "not to map pointer")
+        .option("--no-pointer", "not to map pointer")
         .action(createActionRunner(terminalController, async (
             options: ScriptListCommandOptions,
         ): Promise<void> => {

@@ -74,8 +74,12 @@ export const createPageCreateCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const profile: ConfigurationProfileManager =
-                getProfileFromConfiguration(configurationManager);
+            const profile: ConfigurationProfileManager = getProfileFromConfiguration(
+                globalManager,
+                terminalController,
+                configurationManager,
+                options.quiet,
+            );
 
             const pageExists: boolean = await collection.hasPage(pageTitle);
 
