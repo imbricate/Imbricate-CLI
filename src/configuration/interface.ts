@@ -33,6 +33,8 @@ export interface IConfigurationManager {
     ): IImbricateOrigin;
 
     getDefaultProfile(): ConfigurationProfileManager | null;
+    setDefaultProfile(profileName: string): Promise<void>;
+
     addProfile(profileName: string): Promise<ConfigurationProfileManager>;
     deleteProfile(profileName: string): Promise<void>;
     getProfile(profileName: string): ConfigurationProfileManager | null;

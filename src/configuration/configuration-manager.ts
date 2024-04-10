@@ -193,6 +193,16 @@ export class ConfigurationManager implements IConfigurationManager {
         );
     }
 
+    public setDefaultProfile(profileName: string): Promise<void> {
+
+        if (!this._profiles[profileName]) {
+            throw CLIProfileNotFound.withProfileName(profileName);
+        }
+
+        this._defaultProfile = profileName;
+        return this._persistConfiguration();
+    }
+
     public async addProfile(profileName: string): Promise<ConfigurationProfileManager> {
 
         if (this._profiles[profileName]) {
