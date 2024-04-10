@@ -6,6 +6,7 @@
 
 import { IImbricateOrigin } from "@imbricate/core";
 import { writeTextFile } from "@sudoo/io";
+import { CLIOriginIsActive } from "../error/origin/origin-is-active";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
 import { CLIUnknownOriginType } from "../error/origin/unknown-origin-type";
 import { CLIProfileAlreadyExists } from "../error/profile/profile-already-exists";
@@ -129,6 +130,19 @@ export class ConfigurationManager implements IConfigurationManager {
 
         this._persistConfiguration();
         return this;
+    }
+
+    public async deleteOrigin(originName: string): Promise<void> {
+
+        if (this._activeOrigin === originName) {
+            throw CLIOriginIsActive.withOriginName(originName);
+        }
+
+        this._origins = this._origins.filter((each: IImbricateConfigurationOrigin) => {
+            return each.originName !== originName;
+        });
+
+        await this._persistConfiguration();
     }
 
     public updateOrigin(originName: string, origin: IImbricateConfigurationOrigin): this {

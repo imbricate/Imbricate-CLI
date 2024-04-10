@@ -11,6 +11,7 @@ import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createOriginAddCommand } from "./origin/add";
 import { createOriginConfigCommand } from "./origin/config";
+import { createOriginDeleteCommand } from "./origin/delete";
 import { createOriginListCommand } from "./origin/list";
 import { createOriginUseCommand } from "./origin/use";
 
@@ -31,6 +32,11 @@ export const createOriginCommand = (
         configurationManager,
     ));
     originCommand.addCommand(createOriginConfigCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    originCommand.addCommand(createOriginDeleteCommand(
         globalManager,
         terminalController,
         configurationManager,

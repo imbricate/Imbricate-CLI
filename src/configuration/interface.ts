@@ -20,7 +20,10 @@ export interface IConfigurationManager {
     readonly defaultProfile: string;
 
     setActiveOrigin(origin: string | null): this;
+
     addOrigin(origin: IImbricateConfigurationOrigin): this;
+    deleteOrigin(originName: string): Promise<void>;
+
     updateOrigin(originName: string, origin: IImbricateConfigurationOrigin): this;
 
     registerOriginConstructor(
