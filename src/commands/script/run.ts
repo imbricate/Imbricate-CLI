@@ -4,7 +4,7 @@
  * @description Run
  */
 
-import { IImbricateOrigin, IImbricateScript, ImbricateScriptSnapshot } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateScript, ImbricateScriptSnapshot, SandboxFeature } from "@imbricate/core";
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -13,6 +13,7 @@ import { CLIScriptExecuteFailed } from "../../error/script/script-execute-failed
 import { CLIScriptInvalidInput } from "../../error/script/script-invalid-input";
 import { CLIScriptNotFound } from "../../error/script/script-not-found";
 import { GlobalManager } from "../../global/global-manager";
+import { createIOFeatures } from "../../script/features/io";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
@@ -60,6 +61,10 @@ export const createScriptRunCommand = (
 
             const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
 
+            const interfaceFeatures: SandboxFeature[] = [
+                ...createIOFeatures(terminalController),
+            ];
+
             if (typeof options.scriptName === "string") {
 
                 const scriptSnapshot: ImbricateScriptSnapshot | undefined =
@@ -79,6 +84,7 @@ export const createScriptRunCommand = (
 
                 const executeResult: MarkedResult | null =
                     await script.execute(
+                        interfaceFeatures,
                         {},
                         {},
                     );
@@ -113,6 +119,7 @@ export const createScriptRunCommand = (
 
                         const executeResult: MarkedResult | null =
                             await script.execute(
+                                interfaceFeatures,
                                 {},
                                 {},
                             );

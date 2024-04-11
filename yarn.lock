@@ -1633,9 +1633,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/core@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@imbricate/core@npm:1.7.1"
+"@imbricate/core@npm:^1.7.2":
+  version: 1.7.2
+  resolution: "@imbricate/core@npm:1.7.2"
   dependencies:
     "@sudoo/marked": "npm:^3.21.4"
     "@sudoo/marked-mixin-date": "npm:^1.0.0"
@@ -1643,20 +1643,20 @@ __metadata:
     "@sudoo/marked-mixin-math": "npm:^1.4.0"
     "@sudoo/marked-mixin-object": "npm:^1.3.0"
     "@sudoo/marked-mixin-parse": "npm:^1.0.0"
-  checksum: 10c0/41618b1e4ff782cd657e1b37663d283760bc13659328af96214cb6a6310d2556b6ad2f7043b105c3a6bec7aa80c14bf2bed7023aaabda39465bed4219d2f039b
+  checksum: 10c0/b0a982a31821f5ace362e3c9964f6221829dd2b28ccfc8de15fd6acc2779706248795915664f637d9a7029247e26b4374e88e97eed47c5768eaeea7034fa25f7
   languageName: node
   linkType: hard
 
-"@imbricate/origin-file-system@npm:^1.6.2":
-  version: 1.6.2
-  resolution: "@imbricate/origin-file-system@npm:1.6.2"
+"@imbricate/origin-file-system@npm:^1.6.3":
+  version: 1.6.3
+  resolution: "@imbricate/origin-file-system@npm:1.6.3"
   dependencies:
     "@sudoo/asynchronous": "npm:^2.4.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/483381b7af468ec082ebb9037e8c36601936fb85c5029d8a86d55bbb49dcdf3cd1c209a72509ef0184ae8248af44e3944018856d4cb9ca6e2b9aa2322158569c
+  checksum: 10c0/0b6d82fe29edbfa0c145c8879835d9f25ab0bb0fb833edd0bdf260297860aff113fe9502da3213a299a67abf53da21cf8b13a5efd0a396940d74ee0a46636ffb
   languageName: node
   linkType: hard
 
@@ -3811,8 +3811,8 @@ __metadata:
     "@babel/core": "npm:^7"
     "@babel/preset-env": "npm:^7"
     "@babel/preset-typescript": "npm:^7"
-    "@imbricate/core": "npm:^1.7.1"
-    "@imbricate/origin-file-system": "npm:^1.6.2"
+    "@imbricate/core": "npm:^1.7.2"
+    "@imbricate/origin-file-system": "npm:^1.6.3"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29"
