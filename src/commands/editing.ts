@@ -14,6 +14,7 @@ import { createEditingDiffCommand } from "./editing/diff";
 import { createEditingListCommand } from "./editing/list";
 import { createEditingResumeCommand } from "./editing/resume";
 import { createEditingSaveCommand } from "./editing/save";
+import { createEditingSaveAllCommand } from "./editing/save-all";
 
 export const createEditingCommand = (
     globalManager: GlobalManager,
@@ -47,6 +48,11 @@ export const createEditingCommand = (
         configurationManager,
     ));
     editingCommand.addCommand(createEditingSaveCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    editingCommand.addCommand(createEditingSaveAllCommand(
         globalManager,
         terminalController,
         configurationManager,
