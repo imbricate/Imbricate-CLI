@@ -17,6 +17,8 @@ type CreatePageInput = {
 
     readonly collection: string;
     readonly identifier: string;
+
+    readonly handsFree?: boolean;
 };
 
 const createImplementation = (
@@ -75,7 +77,7 @@ const createImplementation = (
             globalManager,
             terminalController,
             profile,
-            true,
+            input.handsFree ?? true,
         );
     };
 };

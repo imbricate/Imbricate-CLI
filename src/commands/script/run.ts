@@ -18,6 +18,7 @@ import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 import { parseRunScriptParameterInput } from "../../util/run-script-input";
+import { createOpenPageFeature } from "../../script/features/open-page";
 
 type ScriptRunCommandOptions = {
 
@@ -89,6 +90,7 @@ export const createScriptRunCommand = (
 
             const interfaceFeatures: SandboxFeature[] = [
                 ...createIOFeatures(terminalController),
+                createOpenPageFeature(currentOrigin, globalManager, terminalController, _configurationManager),
             ];
 
             if (typeof options.scriptName === "string") {
