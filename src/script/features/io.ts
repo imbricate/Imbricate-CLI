@@ -4,18 +4,19 @@
  * @description IO
  */
 
-import { IImbricateOrigin, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
+import { SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
+import { ITerminalController } from "../../terminal/definition";
 
 export const createIOFeatures = (
-    _origin: IImbricateOrigin,
+    terminalController: ITerminalController,
 ): SandboxFeature[] => {
 
     return [
-        SandboxFeatureBuilder.fromScratch()
+        SandboxFeatureBuilder.providedByInterface()
             .withPackageName("io")
             .withMethodName("print")
             .withImplementation((...content: any[]) => {
-                console.log("[SCRIPT]", ...content);
+                terminalController.printInfo("[SCRIPT]", ...content);
             })
             .build(),
     ];
