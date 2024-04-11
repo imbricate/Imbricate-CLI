@@ -23,7 +23,7 @@ import { createOpenPageFeature } from "../../script/features/open-page";
 type ScriptRunCommandOptions = {
 
     readonly quiet?: boolean;
-    readonly parameters?: SandboxExecuteParameter;
+    readonly parameter?: SandboxExecuteParameter;
 
     readonly scriptName?: string;
     readonly identifier?: string;
@@ -76,6 +76,8 @@ export const createScriptRunCommand = (
             options: ScriptRunCommandOptions,
         ): Promise<void> => {
 
+            console.log(options);
+
             if (!options.scriptName && !options.identifier) {
                 throw CLIScriptInvalidInput.withMessage("One of --script-name or --identifier is required");
             }
@@ -114,7 +116,7 @@ export const createScriptRunCommand = (
                     await script.execute(
                         interfaceFeatures,
                         {},
-                        options.parameters ?? {},
+                        options.parameter ?? {},
                     );
 
                 if (!executeResult) {
@@ -149,7 +151,7 @@ export const createScriptRunCommand = (
                             await script.execute(
                                 interfaceFeatures,
                                 {},
-                                options.parameters ?? {},
+                                options.parameter ?? {},
                             );
 
                         if (!executeResult) {
