@@ -4,7 +4,7 @@
  * @description Run
  */
 
-import { IImbricateOrigin, IImbricateScript, ImbricateScriptSnapshot, SandboxFeature } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateScript, ImbricateScriptSnapshot, SandboxExecuteParameter, SandboxFeature } from "@imbricate/core";
 import { END_SIGNAL, MarkedResult } from "@sudoo/marked";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -17,10 +17,12 @@ import { createIOFeatures } from "../../script/features/io";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { parseRunScriptParameterInput } from "../../util/run-script-input";
 
 type ScriptRunCommandOptions = {
 
     readonly quiet?: boolean;
+    readonly parameters?: SandboxExecuteParameter;
 
     readonly scriptName?: string;
     readonly identifier?: string;
@@ -34,6 +36,25 @@ export const createScriptRunCommand = (
 
     const runCommand: Command = createConfiguredCommand("run");
 
+    const collectParameter = (
+        value: string,
+        previous: SandboxExecuteParameter,
+    ): SandboxExecuteParameter => {
+
+        const parsedResult = parseRunScriptParameterInput(value);
+
+        if (!previous) {
+            return {
+                [parsedResult.key]: parsedResult.value,
+            };
+        }
+
+        return {
+            ...previous,
+            [parsedResult.key]: parsedResult.value,
+        };
+    };
+
     runCommand
         .description("run a existing standalone script")
         .option(
@@ -43,6 +64,11 @@ export const createScriptRunCommand = (
         .option(
             "-i, --identifier <script-identifier>",
             "delete page by script identifier or pointer (one-of)",
+        )
+        .option(
+            "-+, --parameter <key-value>",
+            "add parameter to script execution (multiple)",
+            collectParameter,
         )
         .option("-q, --quiet", "quite mode")
         .action(createActionRunner(terminalController, async (
@@ -86,7 +112,7 @@ export const createScriptRunCommand = (
                     await script.execute(
                         interfaceFeatures,
                         {},
-                        {},
+                        options.parameters ?? {},
                     );
 
                 if (!executeResult) {
@@ -121,7 +147,7 @@ export const createScriptRunCommand = (
                             await script.execute(
                                 interfaceFeatures,
                                 {},
-                                {},
+                                options.parameters ?? {},
                             );
 
                         if (!executeResult) {
