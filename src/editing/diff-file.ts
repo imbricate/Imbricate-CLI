@@ -36,8 +36,8 @@ export const diffSavingTarget = async (
     await writeTextFile(tempDiffPath, beforeContent);
 
     const fixedCommand: string = profile.getActiveDiffCommand()
-        .replace("{path1}", `"${tempDiffPath}"`)
-        .replace("{path2}", `"${afterPath}"`);
+        .replace("{path1}", `${tempDiffPath}`)
+        .replace("{path2}", `${afterPath}`);
 
     await executeCommand(fixedCommand, terminalController);
 };

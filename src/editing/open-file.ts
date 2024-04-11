@@ -177,7 +177,9 @@ export const openFileAndMonitor = async (
 ): Promise<string> => {
 
     const fixedCommand: string = command
-        .replace("{path}", `"${path}"`);
+        .replace("{path}", `${path}`);
+
+    console.log(fixedCommand);
 
     const output = await executeCommand(fixedCommand, terminalController);
 
