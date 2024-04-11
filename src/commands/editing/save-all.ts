@@ -19,7 +19,7 @@ import { createConfiguredCommand } from "../../util/command";
 
 type EditingSaveAllCommandOptions = {
 
-    readonly json?: boolean;
+    readonly quiet?: boolean;
 };
 
 export const createEditingSaveAllCommand = (
@@ -32,14 +32,18 @@ export const createEditingSaveAllCommand = (
 
     saveAllCommand
         .description("save all existing editing pages and scripts")
+        .option("-q, --quiet", "quite mode")
         .action(createActionRunner(terminalController, async (
-            _options: EditingSaveAllCommandOptions,
+            options: EditingSaveAllCommandOptions,
         ): Promise<void> => {
 
             const activeEditing: ActiveEditing[] = await readActiveEditing();
 
             if (activeEditing.length === 0) {
-                terminalController.printInfo("No Active Editing Found");
+
+                if (!options.quiet) {
+                    terminalController.printInfo("No Active Editing Found");
+                }
                 return;
             }
 
@@ -56,14 +60,17 @@ export const createEditingSaveAllCommand = (
                     throw CLIInvalidSavingTarget.withSavingTarget(targetEditing.target);
                 }
 
-                terminalController.printInfo(
-                    [
-                        "Saving Editing",
-                        `|| ${targetEditing.target.type} - ${reference}`,
-                        `|> ${targetEditing.identifier}`,
-                        `|- ${targetEditing.path}`,
-                    ].join("\n"),
-                );
+                if (!options.quiet) {
+
+                    terminalController.printInfo(
+                        [
+                            "Saving Editing",
+                            `|| ${targetEditing.target.type} - ${reference}`,
+                            `|> ${targetEditing.identifier}`,
+                            `|- ${targetEditing.path}`,
+                        ].join("\n"),
+                    );
+                }
 
                 await performSaveAndCleanup(
                     targetEditing.path,
