@@ -20,7 +20,7 @@ import { createConfiguredCommand } from "../../util/command";
 
 type EditingSaveCommandOptions = {
 
-    readonly json?: boolean;
+    readonly quiet?: boolean;
 };
 
 export const createEditingSaveCommand = (
@@ -33,10 +33,11 @@ export const createEditingSaveCommand = (
 
     saveCommand
         .description("save existing editing pages and scripts")
+        .option("-q, --quiet", "quite mode")
         .argument("<editing-identifier>", "the identifier of active editing")
         .action(createActionRunner(terminalController, async (
             editingIdentifier: string,
-            _options: EditingSaveCommandOptions,
+            options: EditingSaveCommandOptions,
         ): Promise<void> => {
 
             const activeEditing: ActiveEditing[] = await readActiveEditing();
@@ -62,14 +63,17 @@ export const createEditingSaveCommand = (
                 throw CLIInvalidSavingTarget.withSavingTarget(targetEditing.target);
             }
 
-            terminalController.printInfo(
-                [
-                    "Active Editing Found",
-                    `|| ${targetEditing.target.type} - ${reference}`,
-                    `|> ${targetEditing.identifier}`,
-                    `|- ${targetEditing.path}`,
-                ].join("\n"),
-            );
+            if (!options.quiet) {
+
+                terminalController.printInfo(
+                    [
+                        "Active Editing Found",
+                        `|| ${targetEditing.target.type} - ${reference}`,
+                        `|> ${targetEditing.identifier}`,
+                        `|- ${targetEditing.path}`,
+                    ].join("\n"),
+                );
+            }
 
             await performSaveAndCleanup(
                 targetEditing.path,
