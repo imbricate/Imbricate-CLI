@@ -76,8 +76,6 @@ export const createScriptRunCommand = (
             options: ScriptRunCommandOptions,
         ): Promise<void> => {
 
-            console.log(options);
-
             if (!options.scriptName && !options.identifier) {
                 throw CLIScriptInvalidInput.withMessage("One of --script-name or --identifier is required");
             }
