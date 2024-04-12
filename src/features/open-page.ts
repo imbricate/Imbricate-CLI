@@ -1,17 +1,17 @@
 /**
  * @author WMXPY
- * @namespace Script_Features
+ * @namespace Features
  * @description Open Page
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
-import { IConfigurationManager } from "../../configuration/interface";
-import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
-import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
-import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
-import { openContentAndMonitor } from "../../editing/open-file";
-import { GlobalManager } from "../../global/global-manager";
-import { ITerminalController } from "../../terminal/definition";
+import { IConfigurationManager } from "../configuration/interface";
+import { getProfileFromConfiguration } from "../configuration/profile/get-profile";
+import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
+import { SAVING_TARGET_TYPE, SavingTarget } from "../editing/definition";
+import { openContentAndMonitor } from "../editing/open-file";
+import { GlobalManager } from "../global/global-manager";
+import { ITerminalController } from "../terminal/definition";
 
 type CreatePageInput = {
 

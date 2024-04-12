@@ -12,13 +12,13 @@ import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-fo
 import { CLIScriptExecuteFailed } from "../../error/script/script-execute-failed";
 import { CLIScriptInvalidInput } from "../../error/script/script-invalid-input";
 import { CLIScriptNotFound } from "../../error/script/script-not-found";
+import { createIOFeatures } from "../../features/io";
+import { createOpenPageFeature } from "../../features/open-page";
 import { GlobalManager } from "../../global/global-manager";
-import { createIOFeatures } from "../../script/features/io";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 import { parseRunScriptParameterInput } from "../../util/run-script-input";
-import { createOpenPageFeature } from "../../script/features/open-page";
 
 type ScriptRunCommandOptions = {
 
