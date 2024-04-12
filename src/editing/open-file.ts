@@ -179,8 +179,6 @@ export const openFileAndMonitor = async (
     const fixedCommand: string = command
         .replace("{path}", `${path}`);
 
-    console.log(fixedCommand);
-
     const output = await executeCommand(fixedCommand, terminalController);
 
     return output;
