@@ -11,6 +11,7 @@ import { ITerminalController } from "../terminal/definition";
 import { createIOFeatures } from "./io";
 import { createOpenPageFeature } from "./open-page";
 import { createOpenScriptFeature } from "./open-script";
+import { createRunCommandFeature } from "./run-command";
 
 export const prepareInterfaceFeatures = (
     currentOrigin: IImbricateOrigin,
@@ -31,6 +32,11 @@ export const prepareInterfaceFeatures = (
         ),
         createOpenScriptFeature(
             currentOrigin,
+            globalManager,
+            terminalController,
+            configurationManager,
+        ),
+        createRunCommandFeature(
             globalManager,
             terminalController,
             configurationManager,
