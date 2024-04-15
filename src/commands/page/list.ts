@@ -13,6 +13,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { formatJSON } from "../../util/format-json";
 
 type PageListCommandOptions = {
 
@@ -56,12 +57,12 @@ const generateJSONPrint = (
 ): string => {
 
     if (!pointer) {
-        return JSON.stringify(pages.map((page) => {
+        return formatJSON(pages.map((page) => {
             return {
                 title: page.title,
                 identifier: page.identifier,
             };
-        }), null, 2);
+        }));
     }
 
     const mappedLeastCommonIdentifier: Record<string, string> =
@@ -72,13 +73,13 @@ const generateJSONPrint = (
             };
         }));
 
-    return JSON.stringify(pages.map((page) => {
+    return formatJSON(pages.map((page) => {
         return {
             title: page.title,
             pointer: mappedLeastCommonIdentifier[page.title],
             identifier: page.identifier,
         };
-    }), null, 2);
+    }));
 };
 
 export const createPageListCommand = (
@@ -127,7 +128,9 @@ export const createPageListCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(generateJSONPrint(pages, !!options.pointer));
+                terminalController.printInfo(
+                    generateJSONPrint(pages, !!options.pointer),
+                );
                 return;
             }
 

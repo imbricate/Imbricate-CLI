@@ -38,8 +38,8 @@ export const createEditingListCommand = (
             const activeEditing: ActiveEditing[] = await readActiveEditing();
 
             if (options.json) {
-                terminalController.printInfo(
-                    JSON.stringify(activeEditing, null, 2),
+                terminalController.printJsonInfo(
+                    activeEditing,
                 );
                 return;
             }

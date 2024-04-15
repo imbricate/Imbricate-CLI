@@ -44,9 +44,9 @@ export const createOriginConfigShowCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify({
+                terminalController.printJsonInfo({
                     ...origin.payloads,
-                }, null, 2));
+                });
                 return;
             }
 

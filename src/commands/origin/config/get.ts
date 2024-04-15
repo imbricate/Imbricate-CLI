@@ -48,11 +48,11 @@ export const createOriginConfigGetCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify({
+                terminalController.printJsonInfo({
                     key,
                     exists: Boolean(value),
                     value,
-                }, null, 2));
+                });
                 return;
             }
 

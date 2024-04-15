@@ -43,11 +43,9 @@ export const createConfigProfileListCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify(
+                terminalController.printJsonInfo(
                     jsonOutput,
-                    null,
-                    2,
-                ));
+                );
                 return;
             }
 

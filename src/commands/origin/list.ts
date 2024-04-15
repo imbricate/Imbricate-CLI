@@ -32,15 +32,16 @@ export const createOriginListCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify(globalManager.origins
-                    .map((originResponse: GlobalManagerOriginResponse) => {
+                terminalController.printJsonInfo(
+                    globalManager.origins.map((originResponse: GlobalManagerOriginResponse) => {
                         return {
                             active: originResponse.active,
                             originName: originResponse.originName,
                             type: originResponse.origin.metadata.type,
                             payloads: originResponse.origin.payloads,
                         };
-                    }), null, 2));
+                    }),
+                );
                 return;
             }
 
