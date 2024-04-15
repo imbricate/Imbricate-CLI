@@ -4,7 +4,7 @@
  * @description Show
  */
 
-import { IImbricateOrigin, IImbricateScript } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateScript, ImbricateScriptAttributes } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -57,11 +57,15 @@ export const createScriptShowCommand = (
                 options.identifier,
             );
 
+            const scriptAttributes: ImbricateScriptAttributes =
+                await script.readAttributes();
+
             if (options.json) {
 
                 terminalController.printInfo(JSON.stringify({
                     scriptName: script.scriptName,
                     identifier: script.identifier,
+                    attributes: scriptAttributes,
                     createdAt: script.createdAt.toISOString(),
                     updatedAt: script.updatedAt.toISOString(),
                 }, null, 2));
@@ -71,6 +75,7 @@ export const createScriptShowCommand = (
             const textOutput: string = [
                 `Script Name: ${script.scriptName}`,
                 `Identifier: ${script.identifier}`,
+                `Attributes: ${JSON.stringify(scriptAttributes, null, 2)}`,
                 `Created At: ${script.createdAt.toLocaleString()}`,
                 `Updated At: ${script.updatedAt.toLocaleString()}`,
             ].join("\n");
