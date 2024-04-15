@@ -12,8 +12,7 @@ import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-fo
 import { CLIScriptExecuteFailed } from "../../error/script/script-execute-failed";
 import { CLIScriptInvalidInput } from "../../error/script/script-invalid-input";
 import { CLIScriptNotFound } from "../../error/script/script-not-found";
-import { createIOFeatures } from "../../features/io";
-import { createOpenPageFeature } from "../../features/open-page";
+import { prepareInterfaceFeatures } from "../../features/prepare";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
@@ -88,10 +87,12 @@ export const createScriptRunCommand = (
 
             const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
 
-            const interfaceFeatures: SandboxFeature[] = [
-                ...createIOFeatures(terminalController),
-                createOpenPageFeature(currentOrigin, globalManager, terminalController, _configurationManager),
-            ];
+            const interfaceFeatures: SandboxFeature[] = prepareInterfaceFeatures(
+                currentOrigin,
+                globalManager,
+                terminalController,
+                _configurationManager,
+            );
 
             if (typeof options.scriptName === "string") {
 
