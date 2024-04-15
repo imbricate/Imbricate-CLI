@@ -4,7 +4,7 @@
  * @description Show
  */
 
-import { IImbricateOrigin, IImbricatePage } from "@imbricate/core";
+import { IImbricateOrigin, IImbricatePage, ImbricatePageAttributes } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -64,11 +64,15 @@ export const createPageShowCommand = (
                 options.identifier,
             );
 
+            const pageAttributes: ImbricatePageAttributes =
+                await page.readAttributes();
+
             if (options.json) {
 
                 terminalController.printInfo(JSON.stringify({
                     title: page.title,
                     identifier: page.identifier,
+                    attributes: pageAttributes,
                     createdAt: page.createdAt.toISOString(),
                     updatedAt: page.updatedAt.toISOString(),
                 }, null, 2));
@@ -78,6 +82,7 @@ export const createPageShowCommand = (
             const textOutput: string = [
                 `Title: ${page.title}`,
                 `Identifier: ${page.identifier}`,
+                `Attributes: ${JSON.stringify(pageAttributes, null, 2)}`,
                 `Created At: ${page.createdAt.toLocaleString()}`,
                 `Updated At: ${page.updatedAt.toLocaleString()}`,
             ].join("\n");
