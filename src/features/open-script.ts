@@ -4,7 +4,7 @@
  * @description Open Script
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateScript, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
 import { IConfigurationManager } from "../configuration/interface";
 import { getProfileFromConfiguration } from "../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
@@ -31,25 +31,14 @@ const createImplementation = (
         input: OpenScriptInput,
     ): Promise<void> => {
 
-        if (typeof input.collection !== "string") {
-            throw new Error("Collection is required");
-        }
-
         if (typeof input.identifier !== "string") {
             throw new Error("Identifier is required");
         }
 
-        const collection: IImbricateOriginCollection | null =
-            await origin.getCollection(input.collection);
+        const script: IImbricateScript | null = await origin.getScript(input.identifier);
 
-        if (!collection) {
-            throw new Error(`Collection [${input.collection}] not found`);
-        }
-
-        const page: IImbricatePage | null = await collection.getPage(input.identifier);
-
-        if (!page) {
-            throw new Error(`Page [${input.identifier}] not found`);
+        if (!script) {
+            throw new Error(`Script [${input.identifier}] not found`);
         }
 
         const profile: ConfigurationProfileManager = getProfileFromConfiguration(
@@ -58,20 +47,19 @@ const createImplementation = (
             configurationManager,
         );
 
-        const pageContent: string = await page.readContent();
-        const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
+        const scriptContent: string = await script.readScript();
+        const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
 
-            type: SAVING_TARGET_TYPE.PAGE,
+            type: SAVING_TARGET_TYPE.SCRIPT,
             payload: {
                 origin: globalManager.activeOrigin!,
-                collection: collection.collectionName,
-                identifier: page.identifier,
+                identifier: script.identifier,
             },
         };
 
         await openContentAndMonitor(
-            pageContent,
-            `${page.title}.md`,
+            scriptContent,
+            `${script.scriptName}.js`,
             target,
             globalManager,
             terminalController,
@@ -81,7 +69,7 @@ const createImplementation = (
     };
 };
 
-export const createOpenPageFeature = (
+export const createOpenScriptFeature = (
     origin: IImbricateOrigin,
     globalManager: GlobalManager,
     terminalController: ITerminalController,
@@ -89,8 +77,8 @@ export const createOpenPageFeature = (
 ): SandboxFeature => {
 
     return SandboxFeatureBuilder.providedByInterface()
-        .withPackageName("page")
-        .withMethodName("openPage")
+        .withPackageName("script")
+        .withMethodName("openScript")
         .withImplementation(createImplementation(
             origin,
             globalManager,
