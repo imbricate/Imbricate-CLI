@@ -34,11 +34,9 @@ export const createConfigEditorListCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify(
+                terminalController.printJsonInfo(
                     configurationEditorPresets,
-                    null,
-                    2,
-                ));
+                );
                 return;
             }
 

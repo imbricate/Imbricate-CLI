@@ -60,12 +60,10 @@ export const createConfigGetCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(
-                    JSON.stringify({
-                        key,
-                        value,
-                    }, null, 2),
-                );
+                terminalController.printJsonInfo({
+                    key,
+                    value,
+                });
                 return;
             }
 

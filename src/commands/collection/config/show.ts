@@ -52,10 +52,10 @@ export const createCollectionConfigShowCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify({
+                terminalController.printJsonInfo({
                     collectionName: collection.collectionName,
                     description: collection.description,
-                }, null, 2));
+                });
                 return;
             }
 

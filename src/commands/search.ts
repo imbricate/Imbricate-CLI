@@ -69,7 +69,7 @@ export const createSearchCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify(results, null, 2));
+                terminalController.printJsonInfo(results);
                 return;
             }
 

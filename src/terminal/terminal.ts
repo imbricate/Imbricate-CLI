@@ -32,4 +32,9 @@ export class TTYTerminalController implements ITerminalController {
 
         console.error(...args);
     }
+
+    public printJsonErrorMessage(input: any): void {
+
+        this.printErrorMessage(formatJSON(input));
+    }
 }

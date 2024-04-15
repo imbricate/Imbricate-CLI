@@ -11,6 +11,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { formatLog } from "../../util/format-log";
 
 type ConfigShowCommandOptions = {
 
@@ -37,8 +38,8 @@ export const createConfigShowCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(
-                    JSON.stringify(configuration, null, 2),
+                terminalController.printJsonInfo(
+                    configuration,
                 );
                 return;
             }
@@ -46,7 +47,7 @@ export const createConfigShowCommand = (
             const textOutput: string =
                 Object.entries(configuration)
                     .map(([key, value]: [string, any]) => `${key}: ${value
-                        ? JSON.stringify(value, null, 2)
+                        ? formatLog(value)
                         : "[Unknown]"}`)
                     .join("\n");
 

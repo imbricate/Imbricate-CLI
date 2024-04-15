@@ -43,12 +43,14 @@ export const createCollectionListCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify(collections.map((collection) => {
-                    return {
-                        collectionName: collection.collectionName,
-                        description: collection.description,
-                    };
-                }), null, 2));
+                terminalController.printJsonInfo(
+                    collections.map((collection) => {
+                        return {
+                            collectionName: collection.collectionName,
+                            description: collection.description,
+                        };
+                    }),
+                );
                 return;
             }
 

@@ -44,25 +44,25 @@ export const createConfigEditorShowCommand = (
                     terminalController.printErrorMessage(`Preset ${presetName} not found`);
                 } else {
 
-                    terminalController.printErrorMessage(JSON.stringify({
+                    terminalController.printJsonErrorMessage({
                         presetName: presetName,
                         editCommand: "[Undefined]",
                         editHandsFreeCommand: "[Undefined]",
                         diffCommand: "[Undefined]",
                         message: `Preset ${presetName} not found`,
-                    }, null, 2));
+                    });
                 }
                 return;
             }
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify({
+                terminalController.printJsonInfo({
                     presetName: presetName,
                     editCommand: preset.editCommand,
                     editHandsFreeCommand: preset.editHandsFreeCommand,
                     diffCommand: preset.diffCommand,
-                }, null, 2));
+                });
                 return;
             }
 
