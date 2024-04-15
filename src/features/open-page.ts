@@ -13,7 +13,7 @@ import { openContentAndMonitor } from "../editing/open-file";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 
-type CreatePageInput = {
+type OpenPageInput = {
 
     readonly collection: string;
     readonly identifier: string;
@@ -29,7 +29,7 @@ const createImplementation = (
 ) => {
 
     return async (
-        input: CreatePageInput,
+        input: OpenPageInput,
     ): Promise<void> => {
 
         if (typeof input.collection !== "string") {
