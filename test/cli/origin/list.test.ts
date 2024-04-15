@@ -23,6 +23,9 @@ describe("Given CLI (Origin List) Operation", (): void => {
                 {
                     origins: [],
                     activeOrigin: null,
+
+                    profiles: {},
+                    defaultProfile: "default",
                 },
             );
 
@@ -47,6 +50,9 @@ describe("Given CLI (Origin List) Operation", (): void => {
                 {
                     origins: [],
                     activeOrigin: null,
+
+                    profiles: {},
+                    defaultProfile: "default",
                 },
             );
 

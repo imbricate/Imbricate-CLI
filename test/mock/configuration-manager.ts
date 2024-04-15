@@ -8,7 +8,8 @@
 import { IImbricateOrigin } from "@imbricate/core";
 import { IImbricateConfiguration } from "../../src/configuration/definition";
 import { IConfigurationManager } from "../../src/configuration/interface";
-import { IImbricateConfigurationOrigin } from "../../src/configuration/raw-definition";
+import { ConfigurationProfileManager } from "../../src/configuration/profile/profile-manager";
+import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "../../src/configuration/raw-definition";
 
 export class MockConfigurationManager implements IConfigurationManager {
 
@@ -27,6 +28,9 @@ export class MockConfigurationManager implements IConfigurationManager {
     public origins: IImbricateConfigurationOrigin[];
     public activeOrigin: string | null;
 
+    public profiles: Record<string, any>;
+    public defaultProfile: string;
+
     private _mockOrigin: IImbricateOrigin | null = null;
 
     private constructor(
@@ -37,6 +41,29 @@ export class MockConfigurationManager implements IConfigurationManager {
         this.configurationPath = configurationPath;
         this.origins = configuration.origins;
         this.activeOrigin = configuration.activeOrigin;
+
+        this.profiles = configuration.profiles;
+        this.defaultProfile = configuration.defaultProfile;
+    }
+
+    public getDefaultProfile(): ConfigurationProfileManager | null {
+        throw new Error("Method not implemented.");
+    }
+
+    public setDefaultProfile(_profileName: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    public addProfile(_profileName: string): Promise<ConfigurationProfileManager> {
+        throw new Error("Method not implemented.");
+    }
+
+    public deleteProfile(_profileName: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    public getProfile(_profileName: string): ConfigurationProfileManager | null {
+        throw new Error("Method not implemented.");
     }
 
     public setActiveOrigin(_origin: string | null): this {
@@ -51,6 +78,10 @@ export class MockConfigurationManager implements IConfigurationManager {
 
     public updateOrigin(_originName: string, _origin: IImbricateConfigurationOrigin): this {
 
+        throw new Error("Method not implemented.");
+    }
+
+    public deleteOrigin(_originName: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
@@ -85,5 +116,15 @@ export class MockConfigurationManager implements IConfigurationManager {
 
         this._mockOrigin = origin;
         return this;
+    }
+
+    public buildConfiguration(): IRawImbricateConfiguration {
+
+        return {
+            origins: this.origins,
+            activeOrigin: this.activeOrigin,
+            profiles: this.profiles,
+            defaultProfile: this.defaultProfile,
+        };
     }
 }
