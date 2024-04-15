@@ -8,6 +8,7 @@ import { attemptMarkDir, pathExists, readTextFile, writeTextFile } from "@sudoo/
 import * as Path from "path";
 import { debugLog } from "../util/debug";
 import { resolveDirectory } from "../util/fix-directory";
+import { formatJSON } from "../util/format-json";
 import { IImbricateConfiguration } from "./definition";
 import { parseRawImbricateConfiguration } from "./parse";
 import { IRawImbricateConfiguration, getDefaultRawImbricateConfiguration } from "./raw-definition";
@@ -44,7 +45,7 @@ export const readCLIConfiguration = async (configurationPath: string): Promise<I
 
     const configurationText: string = await createOrGetFile(
         configurationFilePath,
-        JSON.stringify(getDefaultRawImbricateConfiguration(), null, 2),
+        formatJSON(getDefaultRawImbricateConfiguration()),
     );
 
     const configuration: IRawImbricateConfiguration = JSON.parse(configurationText);

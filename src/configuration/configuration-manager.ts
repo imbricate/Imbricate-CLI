@@ -14,6 +14,7 @@ import { CLIProfileNotFound } from "../error/profile/profile-not-found";
 import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
 import { fixImbricateHomeDirectory, resolveDirectory } from "../util/fix-directory";
+import { formatJSON } from "../util/format-json";
 import { IImbricateConfiguration, IImbricateConfigurationProfile, ImbricateConfigurationProfilePersistFunction } from "./definition";
 import { configurationEditorEchoPreset } from "./editor/presets";
 import { IConfigurationManager } from "./interface";
@@ -296,7 +297,7 @@ export class ConfigurationManager implements IConfigurationManager {
         const configuration: IRawImbricateConfiguration =
             this.buildConfiguration();
 
-        const configurationText: string = JSON.stringify(configuration, null, 2);
+        const configurationText: string = formatJSON(configuration);
         const configurationFilePath: string = resolveDirectory(
             this._configurationPath,
             "imbricate.config.json",

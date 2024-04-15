@@ -6,6 +6,7 @@
 
 import { pathExists, readTextFile, writeTextFile } from "@sudoo/io";
 import { fixImbricateHomeDirectory } from "../util/fix-directory";
+import { formatJSON } from "../util/format-json";
 import { ActiveEditing } from "./definition";
 
 const activeEditingConfigPath: string = fixImbricateHomeDirectory("active-editing.json");
@@ -39,6 +40,6 @@ export const writeActiveEditing = async (newValue: ActiveEditing[]) => {
 
     await writeTextFile(
         activeEditingConfigPath,
-        JSON.stringify(fixedValue, null, 2),
+        formatJSON(fixedValue),
     );
 };

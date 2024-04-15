@@ -13,6 +13,7 @@ import { cliGetPage } from "../../page/get-page";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { formatLog } from "../../util/format-log";
 
 type PageShowCommandOptions = {
 
@@ -69,20 +70,20 @@ export const createPageShowCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify({
+                terminalController.printJsonInfo({
                     title: page.title,
                     identifier: page.identifier,
                     attributes: pageAttributes,
                     createdAt: page.createdAt.toISOString(),
                     updatedAt: page.updatedAt.toISOString(),
-                }, null, 2));
+                });
                 return;
             }
 
             const textOutput: string = [
                 `Title: ${page.title}`,
                 `Identifier: ${page.identifier}`,
-                `Attributes: ${JSON.stringify(pageAttributes, null, 2)}`,
+                `Attributes: ${formatLog(pageAttributes)}`,
                 `Created At: ${page.createdAt.toLocaleString()}`,
                 `Updated At: ${page.updatedAt.toLocaleString()}`,
             ].join("\n");

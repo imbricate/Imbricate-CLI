@@ -13,6 +13,7 @@ import { cliGetScript } from "../../script/get-script";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { formatLog } from "../../util/format-log";
 
 type ScriptShowCommandOptions = {
 
@@ -62,20 +63,20 @@ export const createScriptShowCommand = (
 
             if (options.json) {
 
-                terminalController.printInfo(JSON.stringify({
+                terminalController.printJsonInfo({
                     scriptName: script.scriptName,
                     identifier: script.identifier,
                     attributes: scriptAttributes,
                     createdAt: script.createdAt.toISOString(),
                     updatedAt: script.updatedAt.toISOString(),
-                }, null, 2));
+                });
                 return;
             }
 
             const textOutput: string = [
                 `Script Name: ${script.scriptName}`,
                 `Identifier: ${script.identifier}`,
-                `Attributes: ${JSON.stringify(scriptAttributes, null, 2)}`,
+                `Attributes: ${formatLog(scriptAttributes)}`,
                 `Created At: ${script.createdAt.toLocaleString()}`,
                 `Updated At: ${script.updatedAt.toLocaleString()}`,
             ].join("\n");

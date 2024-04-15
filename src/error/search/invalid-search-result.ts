@@ -4,6 +4,7 @@
  * @description Invalid Search Result
  */
 
+import { formatLog } from "../../util/format-log";
 import { CLISearchError } from "./search-error";
 
 export class CLIInvalidSearchResult extends CLISearchError {
@@ -11,7 +12,7 @@ export class CLIInvalidSearchResult extends CLISearchError {
     public static withResult(result: any): CLIInvalidSearchResult {
 
         return new CLIInvalidSearchResult(
-            `Invalid search result: ${JSON.stringify(result)}`,
+            `Invalid search result: ${formatLog(result)}`,
         );
     }
 

@@ -5,6 +5,7 @@
  */
 
 import { SavingTarget } from "../../editing/definition";
+import { formatLog } from "../../util/format-log";
 import { CLIEditingError } from "./editing-error";
 
 export class CLIInvalidSavingTarget extends CLIEditingError {
@@ -14,7 +15,7 @@ export class CLIInvalidSavingTarget extends CLIEditingError {
     ): CLIInvalidSavingTarget {
 
         return new CLIInvalidSavingTarget(
-            `Invalid Saving Target: ${JSON.stringify(savingTarget)}`,
+            `Invalid Saving Target: ${formatLog(savingTarget)}`,
         );
     }
 

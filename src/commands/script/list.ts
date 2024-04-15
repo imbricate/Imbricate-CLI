@@ -12,6 +12,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { formatJSON } from "../../util/format-json";
 
 type ScriptListCommandOptions = {
 
@@ -54,12 +55,12 @@ const generateJSONPrint = (
 ): string => {
 
     if (!pointer) {
-        return JSON.stringify(scripts.map((script) => {
+        return formatJSON(scripts.map((script) => {
             return {
                 scriptName: script.scriptName,
                 identifier: script.identifier,
             };
-        }), null, 2);
+        }));
     }
 
     const mappedLeastCommonIdentifier: Record<string, string> =
@@ -70,13 +71,13 @@ const generateJSONPrint = (
             };
         }));
 
-    return JSON.stringify(scripts.map((script) => {
+    return formatJSON(scripts.map((script) => {
         return {
             scriptName: script.scriptName,
             pointer: mappedLeastCommonIdentifier[script.scriptName],
             identifier: script.identifier,
         };
-    }), null, 2);
+    }));
 };
 
 export const createScriptListCommand = (
