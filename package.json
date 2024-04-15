@@ -1,7 +1,7 @@
 {
   "name": "imbricate",
   "packageManager": "yarn@4.1.1",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Yes to accountable notes, no to external hosting. Free, for everyone.",
   "bin": {
     "i7e": "cli",
@@ -37,8 +37,8 @@
   },
   "homepage": "https://imbricate.io",
   "dependencies": {
-    "@imbricate/core": "^1.8.4",
-    "@imbricate/origin-file-system": "^1.6.6",
+    "@imbricate/core": "^1.8.5",
+    "@imbricate/origin-file-system": "^1.6.7",
     "@sudoo/io": "^1.8.0",
     "@sudoo/uuid": "^1.1.0",
     "commander": "^12.0.0"
