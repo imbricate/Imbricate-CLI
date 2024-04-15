@@ -4,9 +4,8 @@
  * @description Execute Command
  */
 
-import { exec } from "child_process";
+import { ChildProcess, spawn } from "child_process";
 import { ITerminalController } from "../terminal/definition";
-
 
 const splitAndPrint = (
     text: string,
@@ -31,31 +30,51 @@ const splitAndPrint = (
 };
 
 export const executeCommand = async (
-    command: string,
+    commands: string[],
     terminalController: ITerminalController,
-): Promise<string> => {
+): Promise<void> => {
 
-    return new Promise<string>((
-        resolve: (value: string) => void,
+    return new Promise<void>((
+        resolve: (value: void) => void,
         reject: (reason: any) => void,
     ) => {
 
-        exec(command, (error: any, stdout: string, stderr: string) => {
+        const fixedList: string[] = [...commands];
+        const command: string | undefined = fixedList.shift();
 
-            splitAndPrint(stdout, terminalController, false);
-            splitAndPrint(stderr, terminalController, true);
+        if (!command) {
+            reject(new Error("No command"));
+            return;
+        }
 
-            if (error) {
-                reject(error);
-                return;
+        const spawned: ChildProcess = spawn(command, fixedList, {
+            shell: true,
+            stdio: "pipe",
+        });
+
+        if (!spawned.stdout || !spawned.stderr) {
+            reject(new Error("No stdout or stderr"));
+            return;
+        }
+
+        spawned.stdout.on("data", (data: any) => {
+            splitAndPrint(data.toString(), terminalController, false);
+        });
+
+        spawned.stderr.on("data", (data: any) => {
+            splitAndPrint(data.toString(), terminalController, true);
+        });
+
+        spawned.on("message", (message: any) => {
+            terminalController.printInfo(`[COMMAND MESSAGE] ${message}`);
+        });
+
+        spawned.on("close", (code: number) => {
+            if (code === 0) {
+                resolve();
+            } else {
+                reject(code);
             }
-
-            if (stderr) {
-                reject(stderr);
-                return;
-            }
-
-            resolve(stdout);
         });
     });
 };

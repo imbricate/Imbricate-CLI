@@ -32,50 +32,50 @@ export class ConfigurationProfileManager {
         this._persistProfileFunction = persistProfileFunction;
     }
 
-    public getActiveEditCommand(): string {
+    public getActiveEditCommand(): string[] {
 
         return this._profile.editCommand;
     }
 
     public async setEditCommand(
-        command: string,
+        commands: string[],
     ): Promise<void> {
 
         const newProfile: IImbricateConfigurationProfile = {
             ...this._profile,
-            editCommand: command,
+            editCommand: commands,
         };
         await this._persistProfileFunction(newProfile);
     }
 
-    public getActiveHandsFreeEditCommand(): string {
+    public getActiveHandsFreeEditCommand(): string[] {
 
         return this._profile.editHandsFreeCommand;
     }
 
     public async setHandsFreeEditCommand(
-        command: string,
+        commands: string[],
     ): Promise<void> {
 
         const newProfile: IImbricateConfigurationProfile = {
             ...this._profile,
-            editHandsFreeCommand: command,
+            editHandsFreeCommand: commands,
         };
         await this._persistProfileFunction(newProfile);
     }
 
-    public getActiveDiffCommand(): string {
+    public getActiveDiffCommand(): string[] {
 
         return this._profile.diffCommand;
     }
 
     public async setDiffCommand(
-        command: string,
+        commands: string[],
     ): Promise<void> {
 
         const newProfile: IImbricateConfigurationProfile = {
             ...this._profile,
-            diffCommand: command,
+            diffCommand: commands,
         };
         await this._persistProfileFunction(newProfile);
     }

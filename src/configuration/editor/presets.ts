@@ -6,77 +6,75 @@
 
 export type ConfigurationEditorPreset = {
 
-    readonly editCommand: string;
-    readonly editHandsFreeCommand: string;
-    readonly diffCommand: string;
+    readonly editCommand: string[];
+    readonly editHandsFreeCommand: string[];
+    readonly diffCommand: string[];
 };
 
 export const configurationEditorEchoPreset: ConfigurationEditorPreset = {
 
-    editCommand: 'echo "{path}"',
-    editHandsFreeCommand: 'echo "{path}"',
-    diffCommand: 'echo "{path1}" "{path2}"',
+    editCommand: ["echo", "{path}"],
+    editHandsFreeCommand: ["echo", "{path}"],
+    diffCommand: ["echo", "{path1}", "{path2}"],
 };
 
-export const configurationEditorVscodeNewWindowPreset: ConfigurationEditorPreset = {
+const buildVSCodeLikePreset = (
+    command: string,
+    newWindow: boolean,
+): ConfigurationEditorPreset => {
 
-    editCommand: 'code "{path}" --wait --new-window',
-    editHandsFreeCommand: 'code "{path}" --new-window',
-    diffCommand: 'code --diff "{path1}" "{path2}" --new-window',
+    const editCommand: string[] = [command, "{path}", "--wait"];
+    const editHandsFreeCommand: string[] = [command, "{path}"];
+    const diffCommand: string[] = [command, "--diff", "{path1}", "{path2}"];
+
+    if (newWindow) {
+        editCommand.push("--new-window");
+        editHandsFreeCommand.push("--new-window");
+        diffCommand.push("--new-window");
+    }
+
+    return {
+        editCommand,
+        editHandsFreeCommand,
+        diffCommand,
+    };
 };
+
+export const configurationEditorVscodeNewWindowPreset: ConfigurationEditorPreset =
+    buildVSCodeLikePreset("code", true);
 
 export const configurationEditorPresets: Record<string, ConfigurationEditorPreset> = {
 
     "echo": configurationEditorEchoPreset,
-    "vscode": {
-        editCommand: 'code "{path}" --wait',
-        editHandsFreeCommand: 'code "{path}"',
-        diffCommand: 'code --diff "{path1}" "{path2}"',
-    },
+    "vscode": buildVSCodeLikePreset("code", false),
     "vscode-new-window": configurationEditorVscodeNewWindowPreset,
-    "vscodium": {
-        editCommand: 'codium "{path}" --wait',
-        editHandsFreeCommand: 'codium "{path}"',
-        diffCommand: 'codium --diff "{path1}" "{path2}"',
-    },
-    "vscodium-new-window": {
-        editCommand: 'codium "{path}" --wait --new-window',
-        editHandsFreeCommand: 'codium "{path}" --new-window',
-        diffCommand: 'codium --diff "{path1}" "{path2}" --new-window',
-    },
-    "vscode-insight": {
-        editCommand: 'code-insiders "{path}" --wait',
-        editHandsFreeCommand: 'code-insiders "{path}"',
-        diffCommand: 'code-insiders --diff "{path1}" "{path2}"',
-    },
-    "vscode-insight-new-window": {
-        editCommand: 'code-insiders "{path}" --wait --new-window',
-        editHandsFreeCommand: 'code-insiders "{path}" --new-window',
-        diffCommand: 'code-insiders --diff "{path1}" "{path2}" --new-window',
-    },
+    "vscodium": buildVSCodeLikePreset("codium", false),
+    "vscodium-new-window": buildVSCodeLikePreset("codium", true),
+    "vscode-insight": buildVSCodeLikePreset("code-insiders", false),
+    "vscode-insight-new-window": buildVSCodeLikePreset("code-insiders", true),
     "sublime": {
-        editCommand: 'subl "{path}"',
-        editHandsFreeCommand: 'subl "{path}"',
-        diffCommand: 'subl --command "side_by_side_diff" "{path1}" "{path2}"',
+        editCommand: ["subl", "{path}"],
+        editHandsFreeCommand: ["subl", "{path}"],
+        diffCommand: ["subl", "--command", "side_by_side_diff", "{path1}", "{path2}"],
     },
     "atom": {
-        editCommand: 'atom "{path}"',
-        editHandsFreeCommand: 'atom "{path}"',
-        diffCommand: 'atom --diff "{path1}" "{path2}"',
+        editCommand: ["atom", "{path}"],
+        editHandsFreeCommand: ["atom", "{path}"],
+        diffCommand: ["atom", "--diff", "{path1}", "{path2}"],
     },
     "notepad": {
-        editCommand: 'notepad "{path}"',
-        editHandsFreeCommand: 'notepad "{path}"',
-        diffCommand: 'notepad "{path1}" "{path2}"',
+        editCommand: ["start", "''", "/B", "notepad", "{path}"],
+        editHandsFreeCommand: ["start", "''", "/B", "notepad", "{path}"],
+        diffCommand: ["start", "''", "/B", "notepad", "{path1}"],
     },
     "start": {
-        editCommand: 'start "{path}"',
-        editHandsFreeCommand: 'start "{path}"',
-        diffCommand: 'start "{path1}" "{path2}"',
+        editCommand: ["start", "{path}"],
+        editHandsFreeCommand: ["start", "{path}"],
+        diffCommand: ["start", "{path1}", "{path2}"],
     },
     "open": {
-        editCommand: 'open "{path}"',
-        editHandsFreeCommand: 'open "{path}"',
-        diffCommand: 'open "{path1}" "{path2}"',
+        editCommand: ["open", "{path}"],
+        editHandsFreeCommand: ["open", "{path}"],
+        diffCommand: ["open", "{path1}", "{path2}"],
     },
 };

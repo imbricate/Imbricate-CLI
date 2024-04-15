@@ -35,9 +35,12 @@ export const diffSavingTarget = async (
     const tempDiffPath: string = fixImbricateTempDirectory("diff");
     await writeTextFile(tempDiffPath, beforeContent);
 
-    const fixedCommand: string = profile.getActiveDiffCommand()
-        .replace("{path1}", `${tempDiffPath}`)
-        .replace("{path2}", `${afterPath}`);
+    const fixedCommands: string[] = profile.getActiveDiffCommand()
+        .map((command: string) => {
+            return command
+                .replace("{path1}", `${tempDiffPath}`)
+                .replace("{path2}", `${afterPath}`);
+        });
 
-    await executeCommand(fixedCommand, terminalController);
+    await executeCommand(fixedCommands, terminalController);
 };

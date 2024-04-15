@@ -17,9 +17,9 @@ export interface IImbricateConfiguration {
 
 export interface IImbricateConfigurationProfile {
 
-    readonly editCommand: string;
-    readonly editHandsFreeCommand: string;
-    readonly diffCommand: string;
+    readonly editCommand: string[];
+    readonly editHandsFreeCommand: string[];
+    readonly diffCommand: string[];
 }
 
 export type ImbricateConfigurationProfilePersistFunction = (

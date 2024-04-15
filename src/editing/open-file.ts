@@ -31,18 +31,18 @@ const performEditing = async (
 
     if (handsFree) {
 
-        const command = profile.getActiveHandsFreeEditCommand();
-        openFileAndMonitor(command, filePath, terminalController);
+        const commands = profile.getActiveHandsFreeEditCommand();
+        openFileAndMonitor(commands, filePath, terminalController);
 
         terminalController.printInfo(`File Opened: ${filePath}`);
 
         return;
     }
 
-    const command = profile.getActiveEditCommand();
+    const commands = profile.getActiveEditCommand();
 
     terminalController.printInfo("Waiting For Change...");
-    await openFileAndMonitor(command, filePath, terminalController);
+    await openFileAndMonitor(commands, filePath, terminalController);
 
     await performSaveAndCleanup(
         filePath,
@@ -171,15 +171,16 @@ export const openContentAndMonitor = async (
 };
 
 export const openFileAndMonitor = async (
-    command: string,
+    commands: string[],
     path: string,
     terminalController: ITerminalController,
-): Promise<string> => {
+): Promise<void> => {
 
-    const fixedCommand: string = command
-        .replace("{path}", `${path}`);
+    const fixedCommands: string[] = commands
+        .map((command: string) => {
+            return command.replace("{path}", `${path}`);
+        });
 
-    const output = await executeCommand(fixedCommand, terminalController);
-
-    return output;
+    await executeCommand(fixedCommands, terminalController);
+    return;
 };

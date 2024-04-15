@@ -12,6 +12,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { formatLog } from "../../util/format-log";
 
 type ConfigGetCommandOptions = {
 
@@ -45,15 +46,15 @@ export const createConfigGetCommand = (
             switch (key) {
 
                 case "editCommand": {
-                    value = profile.getActiveEditCommand();
+                    value = formatLog(profile.getActiveEditCommand());
                     break;
                 }
                 case "editHandsFreeCommand": {
-                    value = profile.getActiveHandsFreeEditCommand();
+                    value = formatLog(profile.getActiveHandsFreeEditCommand());
                     break;
                 }
                 case "diffCommand": {
-                    value = profile.getActiveDiffCommand();
+                    value = formatLog(profile.getActiveDiffCommand());
                     break;
                 }
             }

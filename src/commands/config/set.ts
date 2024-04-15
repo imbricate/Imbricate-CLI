@@ -8,6 +8,7 @@ import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
+import { CLIConfigurationValueInvalidError } from "../../error/configuration/configuration-value-invalid";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
@@ -16,6 +17,17 @@ import { createConfiguredCommand } from "../../util/command";
 type ConfigSetCommandOptions = {
 
     readonly quiet?: boolean;
+};
+
+const parseValueToStringArray = (value: string): string[] => {
+
+    const parsedValue: string[] = JSON.parse(value);
+
+    if (!Array.isArray(parsedValue)) {
+
+        throw CLIConfigurationValueInvalidError.withValue(value);
+    }
+    return parsedValue;
 };
 
 export const createConfigSetCommand = (
@@ -47,15 +59,21 @@ export const createConfigSetCommand = (
             switch (key) {
 
                 case "editCommand": {
-                    await profile.setEditCommand(value);
+                    await profile.setEditCommand(
+                        parseValueToStringArray(value),
+                    );
                     break;
                 }
                 case "editHandsFreeCommand": {
-                    await profile.setHandsFreeEditCommand(value);
+                    await profile.setHandsFreeEditCommand(
+                        parseValueToStringArray(value),
+                    );
                     break;
                 }
                 case "diffCommand": {
-                    await profile.setDiffCommand(value);
+                    await profile.setDiffCommand(
+                        parseValueToStringArray(value),
+                    );
                     break;
                 }
                 default: {
