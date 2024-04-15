@@ -44,11 +44,11 @@ export const createPageRetitleCommand = (
         .option("-q, --quiet", "quite mode")
         .option(
             "-t, --title <page-title>",
-            "open page by page title (one-of)",
+            "retitle page by page title (one-of)",
         )
         .option(
             "-i, --identifier <page-identifier>",
-            "open page by page identifier or pointer (one-of)",
+            "retitle page by page identifier or pointer (one-of)",
         )
         .argument("<new-page-title>", "new title of the page")
         .action(createActionRunner(terminalController, async (

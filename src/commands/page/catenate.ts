@@ -33,18 +33,18 @@ export const createPageCatenateCommand = (
     catenateCommand.alias("cat");
 
     catenateCommand
-        .description("catenate in the collection")
+        .description("catenate a page from a collection")
         .requiredOption(
             "-c, --collection <description>",
             "specify the collection of the page (required)",
         )
         .option(
             "-t, --title <page-title>",
-            "open page by page title (one-of)",
+            "catenate page by page title (one-of)",
         )
         .option(
             "-i, --identifier <page-identifier>",
-            "open page by page identifier or pointer (one-of)",
+            "catenate page by page identifier or pointer (one-of)",
         )
         .action(createActionRunner(terminalController, async (
             options: PageCatenateCommandOptions,

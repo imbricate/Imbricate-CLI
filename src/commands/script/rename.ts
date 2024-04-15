@@ -38,11 +38,11 @@ export const createScriptRenameCommand = (
         .option("-q, --quiet", "quiet mode")
         .option(
             "-s, --script-name <script-name>",
-            "delete page by script name (one-of)",
+            "rename script by script name (one-of)",
         )
         .option(
             "-i, --identifier <script-identifier>",
-            "delete page by script identifier or pointer (one-of)",
+            "rename script by script identifier or pointer (one-of)",
         )
         .action(createActionRunner(terminalController, async (
             newScriptName: string,

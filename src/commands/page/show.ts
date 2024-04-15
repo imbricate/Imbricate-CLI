@@ -42,11 +42,11 @@ export const createPageShowCommand = (
         .option("-j, --json", "print result as JSON")
         .option(
             "-t, --title <page-title>",
-            "open page by page title (one-of)",
+            "show page by page title (one-of)",
         )
         .option(
             "-i, --identifier <page-identifier>",
-            "open page by page identifier or pointer (one-of)",
+            "show page by page identifier or pointer (one-of)",
         )
         .action(createActionRunner(terminalController, async (
             options: PageShowCommandOptions,

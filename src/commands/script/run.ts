@@ -59,11 +59,11 @@ export const createScriptRunCommand = (
         .description("run a existing standalone script")
         .option(
             "-s, --script-name <script-name>",
-            "delete page by script name (one-of)",
+            "run script by script name (one-of)",
         )
         .option(
             "-i, --identifier <script-identifier>",
-            "delete page by script identifier or pointer (one-of)",
+            "run script by script identifier or pointer (one-of)",
         )
         .option(
             "-+, --parameter <key-value>",

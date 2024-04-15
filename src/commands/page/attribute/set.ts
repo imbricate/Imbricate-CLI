@@ -43,11 +43,11 @@ export const createPageAttributeSetCommand = (
         )
         .option(
             "-t, --title <page-title>",
-            "open page by page title (one-of)",
+            "set attribute by page title (one-of)",
         )
         .option(
             "-i, --identifier <page-identifier>",
-            "open page by page identifier or pointer (one-of)",
+            "set attribute by page identifier or pointer (one-of)",
         )
         .option("-q, --quiet", "quite mode")
         .action(createActionRunner(terminalController, async (

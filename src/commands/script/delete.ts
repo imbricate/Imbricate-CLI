@@ -98,11 +98,11 @@ export const createScriptDeleteCommand = (
         .description("delete a existing standalone script")
         .option(
             "-s, --script-name <script-name>",
-            "delete page by script name (one-of)",
+            "delete script by script name (one-of)",
         )
         .option(
             "-i, --identifier <script-identifier>",
-            "delete page by script identifier or pointer (one-of)",
+            "delete script by script identifier or pointer (one-of)",
         )
         .option("-q, --quiet", "quite mode")
         .option("-f, --force", "force mode")

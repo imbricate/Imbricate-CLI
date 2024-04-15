@@ -36,11 +36,11 @@ export const createScriptAttributeSetCommand = (
         .argument("<attribute-value>", "the value of the attribute")
         .option(
             "-s, --script-name <script-name>",
-            "delete page by script name (one-of)",
+            "set attribute by script name (one-of)",
         )
         .option(
             "-i, --identifier <script-identifier>",
-            "delete page by script identifier or pointer (one-of)",
+            "set attribute by script identifier or pointer (one-of)",
         )
         .option("-q, --quiet", "quite mode")
         .action(createActionRunner(terminalController, async (

@@ -39,11 +39,11 @@ export const createScriptOpenCommand = (
         .description("open a existing standalone script")
         .option(
             "-s, --script-name <script-name>",
-            "delete page by script name (one-of)",
+            "open script by script name (one-of)",
         )
         .option(
             "-i, --identifier <script-identifier>",
-            "delete page by script identifier or pointer (one-of)",
+            "open script by script identifier or pointer (one-of)",
         )
         .option("-h, --hands-free", "open the script without monitoring the file changes")
         .action(createActionRunner(terminalController, async (

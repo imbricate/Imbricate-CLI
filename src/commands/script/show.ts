@@ -36,11 +36,11 @@ export const createScriptShowCommand = (
         .option("-j, --json", "print result as JSON")
         .option(
             "-s, --script-name <script-name>",
-            "delete page by script name (one-of)",
+            "show script by script name (one-of)",
         )
         .option(
             "-i, --identifier <script-identifier>",
-            "delete page by script identifier or pointer (one-of)",
+            "show script by script identifier or pointer (one-of)",
         )
         .action(createActionRunner(terminalController, async (
             options: ScriptShowCommandOptions,
