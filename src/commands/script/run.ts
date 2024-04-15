@@ -31,7 +31,7 @@ type ScriptRunCommandOptions = {
 export const createScriptRunCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const runCommand: Command = createConfiguredCommand("run");
@@ -91,7 +91,7 @@ export const createScriptRunCommand = (
                 currentOrigin,
                 globalManager,
                 terminalController,
-                _configurationManager,
+                configurationManager,
             );
 
             if (typeof options.scriptName === "string") {
