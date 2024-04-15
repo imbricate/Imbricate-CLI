@@ -30,11 +30,17 @@ export class MockTerminalController implements ITerminalController {
     printInfo(...args: string[]): void {
         this._infoLogs.push(args);
     }
+    printJsonInfo(input: any): void {
+        this.printInfo(JSON.stringify(input));
+    }
 
     public get errorLogs(): string[][] {
         return this._errorLogs;
     }
     printErrorMessage(...args: string[]): void {
         this._errorLogs.push(args);
+    }
+    printJsonErrorMessage(input: any): void {
+        this.printErrorMessage(JSON.stringify(input));
     }
 }
