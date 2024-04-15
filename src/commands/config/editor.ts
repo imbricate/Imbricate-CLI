@@ -19,26 +19,26 @@ export const createConfigEditorCommand = (
     configurationManager: IConfigurationManager,
 ): Command => {
 
-    const editor: Command = createConfiguredCommand("editor");
+    const editorCommand: Command = createConfiguredCommand("editor");
 
-    editor
+    editorCommand
         .description("manage imbricate editor configurations");
 
-    editor.addCommand(createConfigEditorListCommand(
+    editorCommand.addCommand(createConfigEditorListCommand(
         globalManager,
         terminalController,
         configurationManager,
     ));
-    editor.addCommand(createConfigEditorShowCommand(
+    editorCommand.addCommand(createConfigEditorShowCommand(
         globalManager,
         terminalController,
         configurationManager,
     ));
-    editor.addCommand(createConfigEditorUseCommand(
+    editorCommand.addCommand(createConfigEditorUseCommand(
         globalManager,
         terminalController,
         configurationManager,
     ));
 
-    return editor;
+    return editorCommand;
 };
