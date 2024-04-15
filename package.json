@@ -38,7 +38,7 @@
   "homepage": "https://imbricate.io",
   "dependencies": {
     "@imbricate/core": "^1.8.4",
-    "@imbricate/origin-file-system": "^1.6.4",
+    "@imbricate/origin-file-system": "^1.6.6",
     "@sudoo/io": "^1.8.0",
     "@sudoo/uuid": "^1.1.0",
     "commander": "^12.0.0"
