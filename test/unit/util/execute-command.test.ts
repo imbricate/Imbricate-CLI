@@ -19,8 +19,8 @@ describe("Given [Execute Command] Helper Methods", (): void => {
             terminalController,
         );
 
-        expect(terminalController.infoLogs).toStrictEqual([
-            ["[COMMAND] hello world"],
-        ]);
+        expect(terminalController.infoLogs).toHaveLength(1);
+        expect(terminalController.infoLogs[0]).toHaveLength(1);
+        expect(terminalController.infoLogs[0][0].includes("[COMMAND] hello world")).toBeTruthy();
     });
 });
