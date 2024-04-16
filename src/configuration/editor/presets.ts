@@ -64,6 +64,17 @@ const buildSublimeLikePreset = (
     };
 };
 
+const buildSimplePreset = (
+    command: string,
+): ConfigurationEditorPreset => {
+
+    return {
+        editCommand: [command, getPathPlaceholder()],
+        editHandsFreeCommand: [command, getPathPlaceholder()],
+        diffCommand: [command, getPathPlaceholder(1), getPathPlaceholder(2)],
+    };
+};
+
 export const configurationEditorEchoPreset: ConfigurationEditorPreset = {
 
     editCommand: ["echo", getPathPlaceholder()],
@@ -105,14 +116,6 @@ export const configurationEditorPresets: Record<string, ConfigurationEditorPrese
         editHandsFreeCommand: ["start", "notepad", getPathPlaceholder()],
         diffCommand: ["start", "notepad", getPathPlaceholder(1), getPathPlaceholder(2)],
     },
-    "start": {
-        editCommand: ["start", getPathPlaceholder()],
-        editHandsFreeCommand: ["start", getPathPlaceholder()],
-        diffCommand: ["start", getPathPlaceholder(1), getPathPlaceholder(2)],
-    },
-    "open": {
-        editCommand: ["open", getPathPlaceholder()],
-        editHandsFreeCommand: ["open", getPathPlaceholder()],
-        diffCommand: ["open", getPathPlaceholder(1), getPathPlaceholder(2)],
-    },
+    "start": buildSimplePreset("start"),
+    "open": buildSimplePreset("open"),
 };
