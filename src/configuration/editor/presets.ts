@@ -85,6 +85,11 @@ export const configurationEditorPresets: Record<string, ConfigurationEditorPrese
     "vscode-insight-new-window": buildVSCodeLikePreset("code-insiders", true),
     "sublime": buildSublimeLikePreset("subl", false),
     "sublime-new-window": buildSublimeLikePreset("subl", true),
+    "vim": {
+        editCommand: ["vim", getPathPlaceholder()],
+        editHandsFreeCommand: ["vim", getPathPlaceholder()],
+        diffCommand: ["vim", "--d", getPathPlaceholder(1), getPathPlaceholder(2)],
+    },
     "atom": {
         editCommand: ["atom", getPathPlaceholder()],
         editHandsFreeCommand: ["atom", getPathPlaceholder()],
