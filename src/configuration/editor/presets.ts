@@ -90,6 +90,11 @@ export const configurationEditorPresets: Record<string, ConfigurationEditorPrese
         editHandsFreeCommand: ["vim", getPathPlaceholder()],
         diffCommand: ["vim", "--d", getPathPlaceholder(1), getPathPlaceholder(2)],
     },
+    "nano": {
+        editCommand: ["nano", getPathPlaceholder()],
+        editHandsFreeCommand: ["nano", getPathPlaceholder()],
+        diffCommand: ["diff", getPathPlaceholder(1), getPathPlaceholder(2)],
+    },
     "atom": {
         editCommand: ["atom", getPathPlaceholder()],
         editHandsFreeCommand: ["atom", getPathPlaceholder()],
