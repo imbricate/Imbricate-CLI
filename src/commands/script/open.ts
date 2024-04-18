@@ -11,6 +11,7 @@ import { getProfileFromConfiguration } from "../../configuration/profile/get-pro
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
+import { createScriptSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIScriptInvalidInput } from "../../error/script/script-invalid-input";
 import { CLIScriptNotFound } from "../../error/script/script-not-found";
@@ -86,14 +87,10 @@ export const createScriptOpenCommand = (
                 }
 
                 const scriptContent: string = await script.readScript();
-                const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
-
-                    type: SAVING_TARGET_TYPE.SCRIPT,
-                    payload: {
-                        origin: globalManager.activeOrigin!,
-                        identifier: scriptSnapshot.identifier,
-                    },
-                };
+                const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = createScriptSavingTarget(
+                    globalManager,
+                    script.identifier,
+                );
 
                 await openContentAndMonitor(
                     scriptContent,
@@ -121,14 +118,10 @@ export const createScriptOpenCommand = (
                         }
 
                         const scriptContent: string = await script.readScript();
-                        const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
-
-                            type: SAVING_TARGET_TYPE.SCRIPT,
-                            payload: {
-                                origin: globalManager.activeOrigin!,
-                                identifier: each.identifier,
-                            },
-                        };
+                        const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = createScriptSavingTarget(
+                            globalManager,
+                            script.identifier,
+                        );
 
                         await openContentAndMonitor(
                             scriptContent,
