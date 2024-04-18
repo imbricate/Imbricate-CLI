@@ -10,6 +10,7 @@ import { getProfileFromConfiguration } from "../configuration/profile/get-profil
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../editing/definition";
 import { openContentAndMonitor } from "../editing/open-file";
+import { createScriptSavingTarget } from "../editing/saving-target/create-saving.target";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 
@@ -48,14 +49,10 @@ const createImplementation = (
         );
 
         const scriptContent: string = await script.readScript();
-        const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
-
-            type: SAVING_TARGET_TYPE.SCRIPT,
-            payload: {
-                origin: globalManager.activeOrigin!,
-                identifier: script.identifier,
-            },
-        };
+        const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = createScriptSavingTarget(
+            globalManager,
+            script.identifier,
+        );
 
         await openContentAndMonitor(
             scriptContent,

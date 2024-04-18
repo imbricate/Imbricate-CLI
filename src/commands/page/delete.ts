@@ -9,15 +9,16 @@ import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { cleanupSavingTarget, isSavingTargetActive } from "../../editing/save-target";
+import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIPageEditing } from "../../error/page/page-editing";
 import { CLIPageInvalidInput } from "../../error/page/page-invalid-input";
 import { CLIPageNotFound } from "../../error/page/page-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { CLIPageEditing } from "../../error/page/page-editing";
 
 type PageDeleteCommandOptions = {
 
@@ -44,15 +45,11 @@ const performPageDelete = async (
         throw CLIActiveOriginNotFound.create();
     }
 
-    const savingTarget: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
-
-        type: SAVING_TARGET_TYPE.PAGE,
-        payload: {
-            origin: originName,
-            collection: collection.collectionName,
-            identifier: page.identifier,
-        },
-    };
+    const savingTarget: SavingTarget<SAVING_TARGET_TYPE.PAGE> = createPageSavingTarget(
+        globalManager,
+        collection.collectionName,
+        page.identifier,
+    );
 
     const isActive: boolean = await isSavingTargetActive(savingTarget);
 

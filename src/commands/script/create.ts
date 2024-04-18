@@ -11,6 +11,7 @@ import { getProfileFromConfiguration } from "../../configuration/profile/get-pro
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
+import { createScriptSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIScriptAlreadyExists } from "../../error/script/script-already-exists";
 import { CLIScriptNotFound } from "../../error/script/script-not-found";
@@ -87,14 +88,10 @@ export const createScriptCreateCommand = (
                 }
 
                 const scriptContent: string = await script.readScript();
-                const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
-
-                    type: SAVING_TARGET_TYPE.SCRIPT,
-                    payload: {
-                        origin: globalManager.activeOrigin!,
-                        identifier: scriptMetadata.identifier,
-                    },
-                };
+                const target: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = createScriptSavingTarget(
+                    globalManager,
+                    scriptMetadata.identifier,
+                );
 
                 await openContentAndMonitor(
                     scriptContent,

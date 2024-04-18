@@ -10,6 +10,7 @@ import { getProfileFromConfiguration } from "../configuration/profile/get-profil
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../editing/definition";
 import { openContentAndMonitor } from "../editing/open-file";
+import { createPageSavingTarget } from "../editing/saving-target/create-saving.target";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 
@@ -60,15 +61,11 @@ const createImplementation = (
         );
 
         const pageContent: string = await page.readContent();
-        const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
-
-            type: SAVING_TARGET_TYPE.PAGE,
-            payload: {
-                origin: globalManager.activeOrigin!,
-                collection: collection.collectionName,
-                identifier: page.identifier,
-            },
-        };
+        const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = createPageSavingTarget(
+            globalManager,
+            collection.collectionName,
+            page.identifier,
+        );
 
         await openContentAndMonitor(
             pageContent,

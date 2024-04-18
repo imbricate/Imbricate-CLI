@@ -17,6 +17,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { createScriptSavingTarget } from "../../editing/saving-target/create-saving.target";
 
 type ScriptDeleteCommandOptions = {
 
@@ -41,14 +42,10 @@ const performScriptDelete = async (
         throw CLIActiveOriginNotFound.create();
     }
 
-    const savingTarget: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = {
-
-        type: SAVING_TARGET_TYPE.SCRIPT,
-        payload: {
-            origin: originName,
-            identifier: script.identifier,
-        },
-    };
+    const savingTarget: SavingTarget<SAVING_TARGET_TYPE.SCRIPT> = createScriptSavingTarget(
+        globalManager,
+        script.identifier,
+    );
 
     const isActive: boolean = await isSavingTargetActive(savingTarget);
 

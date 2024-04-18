@@ -19,6 +19,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
 
 type PageOpenCommandOptions = {
 
@@ -110,15 +111,11 @@ export const createPageOpenCommand = (
                 }
 
                 const pageContent: string = await page.readContent();
-                const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
-
-                    type: SAVING_TARGET_TYPE.PAGE,
-                    payload: {
-                        origin: globalManager.activeOrigin!,
-                        collection: collection.collectionName,
-                        identifier: page.identifier,
-                    },
-                };
+                const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = createPageSavingTarget(
+                    globalManager,
+                    collectionName,
+                    page.identifier,
+                );
 
                 await openContentAndMonitor(
                     pageContent,
@@ -147,15 +144,11 @@ export const createPageOpenCommand = (
                         }
 
                         const pageContent: string = await page.readContent();
-                        const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = {
-
-                            type: SAVING_TARGET_TYPE.PAGE,
-                            payload: {
-                                origin: globalManager.activeOrigin!,
-                                collection: collection.collectionName,
-                                identifier: page.identifier,
-                            },
-                        };
+                        const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = createPageSavingTarget(
+                            globalManager,
+                            collectionName,
+                            page.identifier,
+                        );
 
                         await openContentAndMonitor(
                             pageContent,
