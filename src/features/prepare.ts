@@ -12,6 +12,7 @@ import { createIOFeatures } from "./io";
 import { createOpenPageFeature } from "./open-page";
 import { createOpenScriptFeature } from "./open-script";
 import { createRunCommandFeature } from "./run-command";
+import { createStartPageEditingFeature } from "./start-page-editing";
 
 export const prepareInterfaceFeatures = (
     currentOrigin: IImbricateOrigin,
@@ -37,6 +38,12 @@ export const prepareInterfaceFeatures = (
             configurationManager,
         ),
         createRunCommandFeature(
+            globalManager,
+            terminalController,
+            configurationManager,
+        ),
+        createStartPageEditingFeature(
+            currentOrigin,
             globalManager,
             terminalController,
             configurationManager,
