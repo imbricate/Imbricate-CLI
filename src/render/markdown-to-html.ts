@@ -14,5 +14,5 @@ export const renderMarkdownToHtml = async (
 
     const result = await parser.process(markdown);
 
-    return String(result);
+    return String(result.value).trim();
 };
