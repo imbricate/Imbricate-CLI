@@ -11,6 +11,7 @@ import * as Path from "path";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIRenderContentReplacerNotFound } from "../../error/render/content-replacer-not-found";
 import { CLIRenderOutputAlreadyExists } from "../../error/render/output-already-exists";
 import { CLIRenderOutputPathNotExist } from "../../error/render/output-path-not-exist";
 import { CLIRenderTemplatePathNotAFile } from "../../error/render/template-path-not-a-file";
@@ -39,25 +40,36 @@ type PageRenderCommandOptions = {
     readonly output?: string;
 };
 
+const contentReplacer: string = "{{content}}";
+
 const getTemplate = async (templatePath?: string): Promise<string | null> => {
 
     if (typeof templatePath !== "string") {
         return null;
     }
 
-    const templateExist: boolean = await pathExists(templatePath);
+    const fixedTemplatePath: string = resolvePath(templatePath);
+    const templateExist: boolean = await pathExists(fixedTemplatePath);
 
     if (!templateExist) {
-        throw CLIRenderTemplatePathNotExist.withPath(templatePath);
+        throw CLIRenderTemplatePathNotExist.withPath(fixedTemplatePath);
     }
 
-    const templateIsFile: boolean = await isFile(templatePath);
+    const templateIsFile: boolean = await isFile(fixedTemplatePath);
 
     if (!templateIsFile) {
-        throw CLIRenderTemplatePathNotAFile.withPath(templatePath);
+        throw CLIRenderTemplatePathNotAFile.withPath(fixedTemplatePath);
     }
 
-    return await readTextFile(templatePath);
+    const templateContent: string = await readTextFile(fixedTemplatePath);
+
+    const contentReplacementExist: boolean = templateContent.includes(contentReplacer);
+
+    if (!contentReplacementExist) {
+        throw CLIRenderContentReplacerNotFound.withPath(fixedTemplatePath);
+    }
+
+    return templateContent;
 };
 
 export const createPageRenderCommand = (
@@ -129,7 +141,7 @@ export const createPageRenderCommand = (
                     terminalController.printInfo(`Rendering with template: ${options.template}`);
                 }
 
-                output = template.replace("{{content}}", parsed);
+                output = template.replace(contentReplacer, parsed);
             }
 
             if (typeof options.output !== "string") {
