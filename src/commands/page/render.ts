@@ -5,7 +5,7 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
-import { pathExists, writeTextFile } from "@sudoo/io";
+import { isFile, pathExists, readTextFile, writeTextFile } from "@sudoo/io";
 import { Command } from "commander";
 import * as Path from "path";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -13,6 +13,8 @@ import { CLICollectionNotFound } from "../../error/collection/collection-not-fou
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIRenderOutputAlreadyExists } from "../../error/render/output-already-exists";
 import { CLIRenderOutputPathNotExist } from "../../error/render/output-path-not-exist";
+import { CLIRenderTemplatePathNotAFile } from "../../error/render/template-path-not-a-file";
+import { CLIRenderTemplatePathNotExist } from "../../error/render/template-path-not-exist";
 import { GlobalManager } from "../../global/global-manager";
 import { cliGetPage } from "../../page/get-page";
 import { renderMarkdownToHtml } from "../../render/markdown-to-html";
@@ -35,6 +37,27 @@ type PageRenderCommandOptions = {
     readonly template?: string;
 
     readonly output?: string;
+};
+
+const getTemplate = async (templatePath?: string): Promise<string | null> => {
+
+    if (typeof templatePath !== "string") {
+        return null;
+    }
+
+    const templateExist: boolean = await pathExists(templatePath);
+
+    if (!templateExist) {
+        throw CLIRenderTemplatePathNotExist.withPath(templatePath);
+    }
+
+    const templateIsFile: boolean = await isFile(templatePath);
+
+    if (!templateIsFile) {
+        throw CLIRenderTemplatePathNotAFile.withPath(templatePath);
+    }
+
+    return await readTextFile(templatePath);
 };
 
 export const createPageRenderCommand = (
@@ -97,8 +120,20 @@ export const createPageRenderCommand = (
 
             const parsed: string = await renderMarkdownToHtml(content);
 
+            let output: string = parsed;
+            const template: string | null = await getTemplate(options.template);
+
+            if (typeof template === "string") {
+
+                if (!options.quiet) {
+                    terminalController.printInfo(`Rendering with template: ${options.template}`);
+                }
+
+                output = template.replace("{{content}}", parsed);
+            }
+
             if (typeof options.output !== "string") {
-                terminalController.printInfo(parsed);
+                terminalController.printInfo(output);
             }
 
             const resolvedOutputPath: string = resolvePath(options.output as string);
@@ -119,7 +154,7 @@ export const createPageRenderCommand = (
                 }
             }
 
-            await writeTextFile(resolvedOutputPath, parsed);
+            await writeTextFile(resolvedOutputPath, output);
 
             if (!options.quiet) {
                 terminalController.printInfo(`Page rendered output to: ${resolvedOutputPath}`);
