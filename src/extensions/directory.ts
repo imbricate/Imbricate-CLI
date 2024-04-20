@@ -14,7 +14,7 @@ export const addDirectoryExtension = (
 ): void => {
 
     const directoryOption = new Option(
-        "-d, --directory <path>",
+        "-D, --directory <path>",
         "specify working directory",
     );
 

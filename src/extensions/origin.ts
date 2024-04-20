@@ -16,7 +16,7 @@ export const addOriginExtension = (
 ): void => {
 
     const originOption = new Option(
-        "-o, --origin <origin-name>",
+        "-O, --origin <origin-name>",
         "override current origin",
     );
 

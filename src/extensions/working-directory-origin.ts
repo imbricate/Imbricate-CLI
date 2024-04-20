@@ -16,7 +16,7 @@ export const addWorkingDirectoryOriginExtension = (
 ): void => {
 
     const workingDirectoryOrigin = new Option(
-        "-w, --working-directory [origin-name]",
+        "-W, --working-directory [origin-name]",
         "use current working directory as a origin",
     ).preset("working-directory");
 

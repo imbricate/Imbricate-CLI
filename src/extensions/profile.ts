@@ -13,7 +13,7 @@ export const addProfileExtension = (
 ): void => {
 
     const directoryOption = new Option(
-        "-p, --profile <profile-name>",
+        "-P, --profile <profile-name>",
         "specify the configuration profile name",
     );
 
