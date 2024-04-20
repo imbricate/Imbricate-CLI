@@ -145,7 +145,9 @@ export const createPageRenderCommand = (
             }
 
             if (typeof options.output !== "string") {
+
                 terminalController.printInfo(output);
+                return;
             }
 
             const resolvedOutputPath: string = resolvePath(options.output as string);
