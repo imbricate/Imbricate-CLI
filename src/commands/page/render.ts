@@ -5,16 +5,20 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { isFolder } from "@sudoo/io";
 import { Command } from "commander";
+import * as Path from "path";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIRenderOutputPathNotExist } from "../../error/render/output-path-not-exist";
 import { GlobalManager } from "../../global/global-manager";
 import { cliGetPage } from "../../page/get-page";
 import { renderMarkdownToHtml } from "../../render/markdown-to-html";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { resolvePath } from "../../util/resolve-path";
 
 type PageRenderCommandOptions = {
 
@@ -24,6 +28,8 @@ type PageRenderCommandOptions = {
     readonly identifier?: string;
 
     readonly template?: string;
+
+    readonly output?: string;
 };
 
 export const createPageRenderCommand = (
@@ -51,6 +57,10 @@ export const createPageRenderCommand = (
         .option(
             "-e, --template <template>",
             "render page with template",
+        )
+        .option(
+            "-o, --output <output>",
+            "output to file",
         )
         .action(createActionRunner(terminalController, async (
             options: PageRenderCommandOptions,
@@ -80,7 +90,18 @@ export const createPageRenderCommand = (
 
             const parsed: string = await renderMarkdownToHtml(content);
 
-            terminalController.printInfo(parsed);
+            if (typeof options.output !== "string") {
+                terminalController.printInfo(parsed);
+            }
+
+            const resolvedOutputPath: string = resolvePath(options.output as string);
+            const outputDirectory: string = Path.dirname(resolvedOutputPath);
+
+            const folderExist: boolean = await isFolder(outputDirectory);
+
+            if (!folderExist) {
+                throw CLIRenderOutputPathNotExist.withDirectory(outputDirectory);
+            }
         }));
 
     return renderCommand;
