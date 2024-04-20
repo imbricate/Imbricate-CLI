@@ -6,6 +6,7 @@
 
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { resolveCLIConfigurationPath } from "../../configuration/io";
 import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { openFileAndMonitor } from "../../editing/open-file";
@@ -16,7 +17,8 @@ import { createConfiguredCommand } from "../../util/command";
 
 type ConfigOpenCommandOptions = {
 
-    // No options
+    readonly quiet?: boolean;
+    readonly folder?: boolean;
 };
 
 export const createConfigOpenCommand = (
@@ -29,11 +31,14 @@ export const createConfigOpenCommand = (
 
     openCommand
         .description("open imbricate configuration with current profile")
+        .option("-q, --quiet", "quite mode")
+        .option("-f, --folder", "open configuration folder instead of file")
         .action(createActionRunner(terminalController, async (
-            _options: ConfigOpenCommandOptions,
+            options: ConfigOpenCommandOptions,
         ): Promise<void> => {
 
             const configurationPath: string = configurationManager.configurationPath;
+            const configurationFilePath: string = resolveCLIConfigurationPath(configurationPath);
 
             const profile: ConfigurationProfileManager = getProfileFromConfiguration(
                 globalManager,
@@ -41,13 +46,29 @@ export const createConfigOpenCommand = (
                 configurationManager,
             );
 
+            if (options.folder) {
+
+                await openFileAndMonitor(
+                    profile.getActiveHandsFreeEditCommand(),
+                    configurationPath,
+                    terminalController,
+                );
+
+                if (!options.quiet) {
+                    terminalController.printInfo(`Folder Opened: ${configurationPath}`);
+                }
+                return;
+            }
+
             await openFileAndMonitor(
                 profile.getActiveHandsFreeEditCommand(),
-                configurationPath,
+                configurationFilePath,
                 terminalController,
             );
 
-            terminalController.printInfo(`File Opened: ${configurationPath}`);
+            if (!options.quiet) {
+                terminalController.printInfo(`File Opened: ${configurationFilePath}`);
+            }
         }));
 
     return openCommand;

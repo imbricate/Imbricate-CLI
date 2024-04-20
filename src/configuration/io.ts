@@ -34,11 +34,18 @@ const createOrGetFile = async (
     return defaultValue;
 };
 
-export const readCLIConfiguration = async (configurationPath: string): Promise<IImbricateConfiguration> => {
+export const resolveCLIConfigurationPath = (configurationPath: string): string => {
 
-    const configurationFilePath: string = resolveDirectory(
+    return resolveDirectory(
         configurationPath,
         "imbricate.config.json",
+    );
+};
+
+export const readCLIConfiguration = async (configurationPath: string): Promise<IImbricateConfiguration> => {
+
+    const configurationFilePath: string = resolveCLIConfigurationPath(
+        configurationPath,
     );
 
     debugLog("Configuration File Path", configurationFilePath);
