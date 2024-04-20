@@ -11,6 +11,7 @@ import { CLICollectionNotFound } from "../../error/collection/collection-not-fou
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { cliGetPage } from "../../page/get-page";
+import { renderMarkdownToHtml } from "../../render/markdown-to-html";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
@@ -21,6 +22,8 @@ type PageRenderCommandOptions = {
 
     readonly title?: string;
     readonly identifier?: string;
+
+    readonly template?: string;
 };
 
 export const createPageRenderCommand = (
@@ -39,11 +42,15 @@ export const createPageRenderCommand = (
         )
         .option(
             "-t, --title <page-title>",
-            "catenate page by page title (one-of)",
+            "render page by page title (one-of)",
         )
         .option(
             "-i, --identifier <page-identifier>",
-            "catenate page by page identifier or pointer (one-of)",
+            "render page by page identifier or pointer (one-of)",
+        )
+        .option(
+            "-e, --template <template>",
+            "render page with template",
         )
         .action(createActionRunner(terminalController, async (
             options: PageRenderCommandOptions,
@@ -71,7 +78,9 @@ export const createPageRenderCommand = (
 
             const content: string = await page.readContent();
 
-            terminalController.printInfo(content);
+            const parsed: string = await renderMarkdownToHtml(content);
+
+            terminalController.printInfo(parsed);
         }));
 
     return renderCommand;

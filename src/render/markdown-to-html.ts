@@ -4,15 +4,12 @@
  * @description Markdown To HTML
  */
 
-import { createMarkdownParser } from "./parser";
+import { Converter } from "showdown";
 
 export const renderMarkdownToHtml = async (
     markdown: string,
 ): Promise<string> => {
 
-    const parser = createMarkdownParser();
-
-    const result = await parser.process(markdown);
-
-    return String(result.value).trim();
+    const converter: Converter = new Converter();
+    return converter.makeHtml(markdown);
 };
