@@ -13,7 +13,9 @@ describe("Given [Markdown to HTML] Parser Helper Methods", (): void => {
 
         const source: string = "# Hello World";
 
-        const parsed: string = await renderMarkdownToHtml(source);
+        const parsed: string = await renderMarkdownToHtml(source, {
+            headerId: false,
+        });
 
         expect(parsed).toEqual("<h1>Hello World</h1>");
     });
@@ -25,7 +27,9 @@ describe("Given [Markdown to HTML] Parser Helper Methods", (): void => {
             "Hello World",
         ].join("\n");
 
-        const parsed: string = await renderMarkdownToHtml(source);
+        const parsed: string = await renderMarkdownToHtml(source, {
+            headerId: false,
+        });
 
         expect(parsed).toEqual([
             "<h1>Hello World</h1>",
