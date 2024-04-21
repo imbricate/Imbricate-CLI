@@ -8,6 +8,7 @@ import { IImbricateOrigin, IImbricateOriginCollection, IMBRICATE_SEARCH_RESULT_T
 import { Command } from "commander";
 import { IConfigurationManager } from "../configuration/interface";
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
+import { CLISearchInvalidLimit } from "../error/search/invalid-limit";
 import { GlobalManager } from "../global/global-manager";
 import { renderSearchResult } from "../search/render";
 import { ITerminalController } from "../terminal/definition";
@@ -20,6 +21,28 @@ type SearchCommandOptions = {
     readonly limit?: string;
 
     readonly json?: boolean;
+};
+
+const fixSearchLimit = (limit?: string): number | undefined => {
+
+    if (!limit) {
+        return undefined;
+    }
+
+    const parsed: number = Number(limit);
+    if (isNaN(parsed)) {
+        throw CLISearchInvalidLimit.notANumber(limit);
+    }
+
+    if (!Number.isInteger(parsed)) {
+        throw CLISearchInvalidLimit.notAInteger(parsed);
+    }
+
+    if (parsed <= 0) {
+        throw CLISearchInvalidLimit.notPositive(parsed);
+    }
+
+    return parsed;
 };
 
 export const createSearchCommand = (
@@ -53,11 +76,14 @@ export const createSearchCommand = (
 
             const results: Array<ImbricateSearchResult<IMBRICATE_SEARCH_RESULT_TYPE>> = [];
 
+            const searchLimit: number | undefined = fixSearchLimit(options.limit);
+
             for (const collection of collections) {
 
                 const pageResults: ImbricatePageSearchResult[] =
                     await collection.searchPages(prompt, {
                         exact: usingExact,
+                        limit: searchLimit,
                     });
 
                 results.push(...pageResults);
@@ -66,6 +92,7 @@ export const createSearchCommand = (
             const scriptResults: ImbricateScriptSearchResult[] =
                 await currentOrigin.searchScripts(prompt, {
                     exact: usingExact,
+                    limit: searchLimit,
                 });
 
             results.push(...scriptResults);
