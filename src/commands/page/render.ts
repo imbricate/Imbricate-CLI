@@ -39,6 +39,8 @@ type PageRenderCommandOptions = {
     readonly template?: string;
 
     readonly output?: string;
+
+    readonly mention?: string;
 };
 
 const getTemplate = async (templatePath?: string): Promise<string | null> => {
@@ -97,6 +99,10 @@ export const createPageRenderCommand = (
             "-o, --output <output>",
             "output to file",
         )
+        .option(
+            "-m, --mention <mention-link>",
+            "enable feature for '@person' to mention link, format: http://example.com/{@}",
+        )
         .option("-q, --quiet", "quite mode")
         .option("-f, --force", "force mode")
         .action(createActionRunner(terminalController, async (
@@ -125,7 +131,9 @@ export const createPageRenderCommand = (
 
             const content: string = await page.readContent();
 
-            const parsed: string = await renderMarkdownToHtml(content);
+            const parsed: string = await renderMarkdownToHtml(content, {
+                mentionLink: options.mention,
+            });
 
             let output: string = parsed;
             const template: string | null = await getTemplate(options.template);

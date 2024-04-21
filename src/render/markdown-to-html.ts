@@ -13,6 +13,8 @@ export type RenderMarkdownToHtmlConfig = {
     readonly simpleLineBreaks: boolean;
     readonly simplifiedAutoLink: boolean;
     readonly tableHeaderId: boolean;
+
+    readonly mentionLink?: string;
 };
 
 const createDefaultConfig = (): RenderMarkdownToHtmlConfig => {
@@ -59,6 +61,17 @@ export const renderMarkdownToHtml = async (
     converter.setOption("simpleLineBreaks", fixedConfig.simpleLineBreaks);
     converter.setOption("simplifiedAutoLink", fixedConfig.simplifiedAutoLink);
     converter.setOption("tablesHeaderId", fixedConfig.tableHeaderId);
+
+    // Format: https://example.com/{@}
+    if (typeof fixedConfig.mentionLink === "string") {
+
+        const fixedMentionLink: string = fixedConfig.mentionLink.replace("{@}", "{u}");
+        converter.setOption("ghMentions", true);
+        converter.setOption("ghMentionsLink", fixedMentionLink);
+    } else {
+
+        converter.setOption("ghMentions", false);
+    }
 
     return converter.makeHtml(markdown);
 };
