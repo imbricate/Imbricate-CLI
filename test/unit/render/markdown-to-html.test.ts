@@ -13,11 +13,9 @@ describe("Given [Markdown to HTML] Parser Helper Methods", (): void => {
 
         const source: string = "# Hello World";
 
-        const parsed: string = await renderMarkdownToHtml(source, {
-            headerId: false,
-        });
+        const parsed: string = await renderMarkdownToHtml(source);
 
-        expect(parsed).toEqual("<h1>Hello World</h1>");
+        expect(parsed).toEqual('<h1 id="hello-world">Hello World</h1>');
     });
 
     test("should be able to parse multiple lines markdown to HTML", async (): Promise<void> => {
@@ -27,12 +25,10 @@ describe("Given [Markdown to HTML] Parser Helper Methods", (): void => {
             "Hello World",
         ].join("\n");
 
-        const parsed: string = await renderMarkdownToHtml(source, {
-            headerId: false,
-        });
+        const parsed: string = await renderMarkdownToHtml(source);
 
         expect(parsed).toEqual([
-            "<h1>Hello World</h1>",
+            '<h1 id="hello-world">Hello World</h1>',
             "<p>Hello World</p>",
         ].join("\n"));
     });

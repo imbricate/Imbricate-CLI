@@ -1,7 +1,7 @@
 {
   "name": "imbricate",
   "packageManager": "yarn@4.1.1",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "Yes to accountable notes, no to external hosting. Free, for everyone.",
   "bin": {
     "i7e": "cli",
