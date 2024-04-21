@@ -19,6 +19,7 @@ import { CLIRenderTemplatePathNotExist } from "../../error/render/template-path-
 import { GlobalManager } from "../../global/global-manager";
 import { cliGetPage } from "../../page/get-page";
 import { renderMarkdownToHtml } from "../../render/markdown-to-html";
+import { contentRenderPlaceholder } from "../../render/placeholder";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { recursiveCheckDirectory } from "../../util/check-directory";
@@ -39,8 +40,6 @@ type PageRenderCommandOptions = {
 
     readonly output?: string;
 };
-
-const contentReplacer: string = "{{content}}";
 
 const getTemplate = async (templatePath?: string): Promise<string | null> => {
 
@@ -63,7 +62,8 @@ const getTemplate = async (templatePath?: string): Promise<string | null> => {
 
     const templateContent: string = await readTextFile(fixedTemplatePath);
 
-    const contentReplacementExist: boolean = templateContent.includes(contentReplacer);
+    const contentReplacementExist: boolean =
+        templateContent.includes(contentRenderPlaceholder);
 
     if (!contentReplacementExist) {
         throw CLIRenderContentReplacerNotFound.withPath(fixedTemplatePath);
@@ -141,7 +141,7 @@ export const createPageRenderCommand = (
                     terminalController.printInfo(`Rendering with template: ${options.template}`);
                 }
 
-                output = template.replace(contentReplacer, parsed);
+                output = template.replace(contentRenderPlaceholder, parsed);
             }
 
             if (typeof options.output !== "string") {
