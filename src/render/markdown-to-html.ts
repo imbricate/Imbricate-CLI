@@ -9,6 +9,7 @@ import { Converter } from "showdown";
 export type RenderMarkdownToHtmlConfig = {
 
     readonly headerId: boolean;
+    readonly tableHeaderId: boolean;
     readonly encodeEmails: boolean;
 };
 
@@ -16,6 +17,7 @@ const createDefaultConfig = (): RenderMarkdownToHtmlConfig => {
 
     return {
         headerId: true,
+        tableHeaderId: false,
         encodeEmails: true,
     };
 };
@@ -37,6 +39,9 @@ export const renderMarkdownToHtml = async (
 
     converter.setOption("noHeaderId", !fixedConfig.headerId);
     converter.setOption("encodeEmails", fixedConfig.encodeEmails);
+
+    converter.setOption("tables", true);
+    converter.setOption("tablesHeaderId", fixedConfig.tableHeaderId);
 
     return converter.makeHtml(markdown);
 };
