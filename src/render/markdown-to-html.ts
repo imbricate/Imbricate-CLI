@@ -44,11 +44,8 @@ export const renderMarkdownToHtml = async (
     const converter: Converter = new Converter({
         extensions: [
             showdownKatex({
-                // maybe you want katex to throwOnError
                 throwOnError: false,
-                // disable displayMode
                 displayMode: false,
-                // change errorColor to blue
                 errorColor: "red",
             }),
         ],
