@@ -7,18 +7,25 @@
 import { Converter } from "showdown";
 
 export type RenderMarkdownToHtmlConfig = {
-
+    // Preferences
     readonly headerId: boolean;
-    readonly tableHeaderId: boolean;
     readonly encodeEmails: boolean;
+    readonly simpleLineBreaks: boolean;
+
+    // Tables
+    readonly tableHeaderId: boolean;
 };
 
 const createDefaultConfig = (): RenderMarkdownToHtmlConfig => {
 
     return {
+        // Preferences
         headerId: true,
-        tableHeaderId: false,
         encodeEmails: true,
+        simpleLineBreaks: true,
+
+        // Tables
+        tableHeaderId: false,
     };
 };
 
@@ -37,9 +44,12 @@ export const renderMarkdownToHtml = async (
 
     converter.setFlavor("github");
 
+    // Preferences
     converter.setOption("noHeaderId", !fixedConfig.headerId);
     converter.setOption("encodeEmails", fixedConfig.encodeEmails);
+    converter.setOption("simpleLineBreaks", fixedConfig.simpleLineBreaks);
 
+    // Tables
     converter.setOption("tables", true);
     converter.setOption("tablesHeaderId", fixedConfig.tableHeaderId);
 
