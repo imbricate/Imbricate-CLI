@@ -94,7 +94,7 @@ export const createScriptDeleteCommand = (
     deleteCommand
         .description("delete a existing standalone script")
         .option(
-            "-s, --script-name <script-name>",
+            "-n, --script-name <script-name>",
             "delete script by script name (one-of)",
         )
         .option(

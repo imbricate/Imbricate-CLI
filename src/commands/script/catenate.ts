@@ -1,33 +1,30 @@
 /**
  * @author WMXPY
- * @namespace Commands_Page
+ * @namespace Commands_Script
  * @description Catenate
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateScript } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";
-import { cliGetPage } from "../../page/get-page";
+import { cliGetScript } from "../../script/get-script";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 import { inputParsePositiveInteger } from "../../util/input-parse";
 
-type PageCatenateCommandOptions = {
+type ScriptCatenateCommandOptions = {
 
-    readonly collection: string;
-
-    readonly title?: string;
+    readonly scriptName?: string;
     readonly identifier?: string;
 
     readonly lines?: number;
     readonly start?: number;
 };
 
-export const createPageCatenateCommand = (
+export const createScriptCatenateCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
     _configurationManager: IConfigurationManager,
@@ -37,18 +34,14 @@ export const createPageCatenateCommand = (
     catenateCommand.alias("cat");
 
     catenateCommand
-        .description("catenate a page from a collection")
-        .requiredOption(
-            "-c, --collection <collection>",
-            "specify the collection of the page (required)",
+        .description("catenate a script")
+        .option(
+            "-n, --script-name <script-name>",
+            "delete script by script name (one-of)",
         )
         .option(
-            "-t, --title <page-title>",
-            "catenate page by page title (one-of)",
-        )
-        .option(
-            "-i, --identifier <page-identifier>",
-            "catenate page by page identifier or pointer (one-of)",
+            "-i, --identifier <script-identifier>",
+            "delete script by script identifier or pointer (one-of)",
         )
         .option(
             "-l, --lines <lines>",
@@ -61,7 +54,7 @@ export const createPageCatenateCommand = (
             inputParsePositiveInteger,
         )
         .action(createActionRunner(terminalController, async (
-            options: PageCatenateCommandOptions,
+            options: ScriptCatenateCommandOptions,
         ): Promise<void> => {
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -70,21 +63,13 @@ export const createPageCatenateCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null
-                = await currentOrigin.getCollection(options.collection);
-
-            if (!collection) {
-                throw CLICollectionNotFound.withCollectionName(options.collection);
-            }
-
-            const page: IImbricatePage = await cliGetPage(
+            const script: IImbricateScript = await cliGetScript(
                 currentOrigin,
-                options.collection,
-                options.title,
+                options.scriptName,
                 options.identifier,
             );
 
-            const content: string = await page.readContent();
+            const content: string = await script.readScript();
 
             let lines: string[] = content.split("\n");
 

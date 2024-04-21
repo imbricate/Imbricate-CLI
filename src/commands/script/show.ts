@@ -35,7 +35,7 @@ export const createScriptShowCommand = (
         .description("show details of a existing standalone script")
         .option("-j, --json", "print result as JSON")
         .option(
-            "-s, --script-name <script-name>",
+            "-n, --script-name <script-name>",
             "show script by script name (one-of)",
         )
         .option(

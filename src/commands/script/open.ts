@@ -39,7 +39,7 @@ export const createScriptOpenCommand = (
     openCommand
         .description("open a existing standalone script")
         .option(
-            "-s, --script-name <script-name>",
+            "-n, --script-name <script-name>",
             "open script by script name (one-of)",
         )
         .option(

@@ -58,7 +58,7 @@ export const createScriptRunCommand = (
     runCommand
         .description("run a existing standalone script")
         .option(
-            "-s, --script-name <script-name>",
+            "-n, --script-name <script-name>",
             "run script by script name (one-of)",
         )
         .option(

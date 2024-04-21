@@ -10,6 +10,7 @@ import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createScriptAttributeCommand } from "./script/attribute";
+import { createScriptCatenateCommand } from "./script/catenate";
 import { createScriptCreateCommand } from "./script/create";
 import { createScriptDeleteCommand } from "./script/delete";
 import { createScriptListCommand } from "./script/list";
@@ -30,6 +31,11 @@ export const createScriptCommand = (
         .description("manage imbricate scripts");
 
     scriptCommand.addCommand(createScriptAttributeCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    scriptCommand.addCommand(createScriptCatenateCommand(
         globalManager,
         terminalController,
         configurationManager,

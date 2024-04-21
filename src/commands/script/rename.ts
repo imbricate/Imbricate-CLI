@@ -37,7 +37,7 @@ export const createScriptRenameCommand = (
         .argument("<new-script-name>", "the new name of the script")
         .option("-q, --quiet", "quiet mode")
         .option(
-            "-s, --script-name <script-name>",
+            "-n, --script-name <script-name>",
             "rename script by script name (one-of)",
         )
         .option(

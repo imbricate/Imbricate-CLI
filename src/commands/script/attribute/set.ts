@@ -35,7 +35,7 @@ export const createScriptAttributeSetCommand = (
         .argument("<attribute-key>", "the key of the attribute")
         .argument("<attribute-value>", "the value of the attribute")
         .option(
-            "-s, --script-name <script-name>",
+            "-n, --script-name <script-name>",
             "set attribute by script name (one-of)",
         )
         .option(
