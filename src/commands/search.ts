@@ -17,6 +17,8 @@ import { createConfiguredCommand } from "../util/command";
 type SearchCommandOptions = {
 
     readonly exact?: boolean;
+    readonly limit?: string;
+
     readonly json?: boolean;
 };
 
@@ -31,6 +33,7 @@ export const createSearchCommand = (
     searchCommand
         .description("search for items in imbricate")
         .option("-e, --exact", "search for exact match")
+        .option("-l, --limit <limit>", "limit of line for each search target")
         .option("-j, --json", "print result as JSON")
         .argument("<prompt>", "prompt to search")
         .action(createActionRunner(terminalController, async (

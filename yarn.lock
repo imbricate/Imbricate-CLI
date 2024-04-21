@@ -1647,16 +1647,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/origin-file-system@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@imbricate/origin-file-system@npm:1.7.1"
+"@imbricate/origin-file-system@npm:^1.7.2":
+  version: 1.7.2
+  resolution: "@imbricate/origin-file-system@npm:1.7.2"
   dependencies:
     "@sudoo/asynchronous": "npm:^2.4.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/76c8a9439030dcd81d406df63879826fbdc68fc4e85093f820b9b41b6c0589812ee6d1b0abece02a7cdc1cf85ec6d9361ef14bacfd93f0f3d2cc0707fb911fe1
+  checksum: 10c0/4f61ef793fa53e3e22c4cc7164ec7cc18083e037c10ed93d6eb2c79a95131d27f9d4ad0986622d7dd418a75b56cef651200a9aa29a03919f7bff63206c0bc2b0
   languageName: node
   linkType: hard
 
@@ -3826,7 +3826,7 @@ __metadata:
     "@babel/preset-env": "npm:^7"
     "@babel/preset-typescript": "npm:^7"
     "@imbricate/core": "npm:^1.9.0"
-    "@imbricate/origin-file-system": "npm:^1.7.1"
+    "@imbricate/origin-file-system": "npm:^1.7.2"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29"
