@@ -12,6 +12,7 @@ import { createIOFeatures } from "./io";
 import { createOpenPageFeature } from "./open-page";
 import { createOpenScriptFeature } from "./open-script";
 import { createRunCommandFeature } from "./run-command";
+import { createSendHttpRequestFeature } from "./send-http-request";
 import { createStartPageEditingFeature } from "./start-page-editing";
 
 export const prepareInterfaceFeatures = (
@@ -38,6 +39,11 @@ export const prepareInterfaceFeatures = (
             configurationManager,
         ),
         createRunCommandFeature(
+            globalManager,
+            terminalController,
+            configurationManager,
+        ),
+        createSendHttpRequestFeature(
             globalManager,
             terminalController,
             configurationManager,
