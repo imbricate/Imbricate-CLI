@@ -14,12 +14,17 @@ import { cliGetPage } from "../../page/get-page";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { inputParsePositiveInteger } from "../../util/input-parse";
 
 type PageCatenateCommandOptions = {
 
     readonly collection: string;
+
     readonly title?: string;
     readonly identifier?: string;
+
+    readonly lines?: number;
+    readonly start?: number;
 };
 
 export const createPageCatenateCommand = (
@@ -32,7 +37,7 @@ export const createPageCatenateCommand = (
     catenateCommand.alias("cat");
 
     catenateCommand
-        .description("catenate a page from a collection")
+        .description("catenate  a page from a collection")
         .requiredOption(
             "-c, --collection <description>",
             "specify the collection of the page (required)",
@@ -44,6 +49,16 @@ export const createPageCatenateCommand = (
         .option(
             "-i, --identifier <page-identifier>",
             "catenate page by page identifier or pointer (one-of)",
+        )
+        .option(
+            "-l, --lines <lines>",
+            "catenate only limited lines",
+            inputParsePositiveInteger,
+        )
+        .option(
+            "-s, --start <start>",
+            "catenate from specific line",
+            inputParsePositiveInteger,
         )
         .action(createActionRunner(terminalController, async (
             options: PageCatenateCommandOptions,
