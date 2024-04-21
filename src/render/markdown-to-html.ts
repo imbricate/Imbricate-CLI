@@ -5,6 +5,7 @@
  */
 
 import { Converter } from "showdown";
+import showdownKatex from "showdown-katex";
 
 export type RenderMarkdownToHtmlConfig = {
 
@@ -40,7 +41,18 @@ export const renderMarkdownToHtml = async (
         ...config,
     };
 
-    const converter: Converter = new Converter();
+    const converter: Converter = new Converter({
+        extensions: [
+            showdownKatex({
+                // maybe you want katex to throwOnError
+                throwOnError: false,
+                // disable displayMode
+                displayMode: false,
+                // change errorColor to blue
+                errorColor: "red",
+            }),
+        ],
+    });
 
     converter.setFlavor("github");
 
