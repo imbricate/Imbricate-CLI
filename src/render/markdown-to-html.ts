@@ -47,6 +47,7 @@ export const renderMarkdownToHtml = async (
     // Features
     converter.setOption("completeHTMLDocument", false);
     converter.setOption("customizedHeaderId", true);
+    converter.setOption("ellipsis", true);
     converter.setOption("ghCodeBlocks", true);
     converter.setOption("ghCompatibleHeaderId", true);
     converter.setOption("moreStyling", true);

@@ -43,7 +43,8 @@
     "@sudoo/uuid": "^1.1.0",
     "axios": "^1.6.8",
     "commander": "^12.0.0",
-    "showdown": "^2.1.0"
+    "showdown": "^2.1.0",
+    "showdown-katex": "^0.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7",
