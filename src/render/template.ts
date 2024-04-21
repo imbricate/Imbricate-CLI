@@ -4,13 +4,19 @@
  * @description Template
  */
 
+import { CLIRenderInvalidTemplate } from "../error/render/invalid-template";
 import { renderContentPlaceholder } from "./placeholder";
 
-export const verifyRenderTemplate = (template: string): boolean => {
+export const ensureRenderTemplateValid = (
+    template: string,
+    templatePath: string,
+): void => {
 
     if (!template.includes(renderContentPlaceholder)) {
-        return false;
-    }
 
-    return true;
+        throw CLIRenderInvalidTemplate.replacerNotFound(
+            templatePath,
+            renderContentPlaceholder,
+        );
+    }
 };

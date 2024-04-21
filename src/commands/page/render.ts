@@ -11,7 +11,6 @@ import * as Path from "path";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
-import { CLIRenderContentReplacerNotFound } from "../../error/render/content-replacer-not-found";
 import { CLIRenderOutputAlreadyExists } from "../../error/render/output-already-exists";
 import { CLIRenderOutputPathNotExist } from "../../error/render/output-path-not-exist";
 import { CLIRenderTemplatePathNotAFile } from "../../error/render/template-path-not-a-file";
@@ -20,7 +19,7 @@ import { GlobalManager } from "../../global/global-manager";
 import { cliGetPage } from "../../page/get-page";
 import { renderMarkdownToHtml } from "../../render/markdown-to-html";
 import { replaceTemplatePlaceholders } from "../../render/replace";
-import { verifyRenderTemplate } from "../../render/template";
+import { ensureRenderTemplateValid } from "../../render/template";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { recursiveCheckDirectory } from "../../util/check-directory";
@@ -63,12 +62,7 @@ const getTemplate = async (templatePath?: string): Promise<string | null> => {
 
     const templateContent: string = await readTextFile(fixedTemplatePath);
 
-    const isValidTemplate: boolean =
-        verifyRenderTemplate(templateContent);
-
-    if (!isValidTemplate) {
-        throw CLIRenderContentReplacerNotFound.withPath(fixedTemplatePath);
-    }
+    ensureRenderTemplateValid(templateContent, fixedTemplatePath);
 
     return templateContent;
 };
