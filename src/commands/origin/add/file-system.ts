@@ -7,6 +7,7 @@
 import { FileSystemOriginPayload } from "@imbricate/origin-file-system";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../../configuration/interface";
+import { CLIInvalidOriginConfig } from "../../../error/origin/invalid-origin-config";
 import { CLIOriginInvalidOriginName } from "../../../error/origin/invalid-origin-name";
 import { GlobalManager } from "../../../global/global-manager";
 import { ITerminalController } from "../../../terminal/definition";
@@ -51,15 +52,27 @@ export const createOriginAddFileSystemCommand = (
             const numberedLimit: number = Number(options.asynchronousPoolLimit);
 
             if (isNaN(numberedLimit)) {
-                throw new Error("Asynchronous pool limit must be a number");
+                throw CLIInvalidOriginConfig.withConfigNameValueAndReason(
+                    "asynchronous-pool-limit",
+                    options.asynchronousPoolLimit,
+                    "must be a number",
+                );
             }
 
             if (!Number.isInteger(numberedLimit)) {
-                throw new Error("Asynchronous pool limit must be an integer");
+                throw CLIInvalidOriginConfig.withConfigNameValueAndReason(
+                    "asynchronous-pool-limit",
+                    options.asynchronousPoolLimit,
+                    "must be an integer",
+                );
             }
 
             if (numberedLimit < 1) {
-                throw new Error("Asynchronous pool limit must be greater than 0");
+                throw CLIInvalidOriginConfig.withConfigNameValueAndReason(
+                    "asynchronous-pool-limit",
+                    options.asynchronousPoolLimit,
+                    "must be greater than 0",
+                );
             }
 
             const fixedBasePath: string = resolveDirectory(basePath);
