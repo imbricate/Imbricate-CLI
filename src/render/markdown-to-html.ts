@@ -7,24 +7,22 @@
 import { Converter } from "showdown";
 
 export type RenderMarkdownToHtmlConfig = {
-    // Preferences
-    readonly headerId: boolean;
-    readonly encodeEmails: boolean;
-    readonly simpleLineBreaks: boolean;
 
-    // Tables
+    readonly emoji: boolean;
+    readonly encodeEmails: boolean;
+    readonly headerId: boolean;
+    readonly simpleLineBreaks: boolean;
     readonly tableHeaderId: boolean;
 };
 
 const createDefaultConfig = (): RenderMarkdownToHtmlConfig => {
 
     return {
-        // Preferences
-        headerId: true,
-        encodeEmails: true,
-        simpleLineBreaks: true,
 
-        // Tables
+        emoji: true,
+        encodeEmails: true,
+        headerId: true,
+        simpleLineBreaks: true,
         tableHeaderId: false,
     };
 };
@@ -44,13 +42,15 @@ export const renderMarkdownToHtml = async (
 
     converter.setFlavor("github");
 
-    // Preferences
-    converter.setOption("noHeaderId", !fixedConfig.headerId);
-    converter.setOption("encodeEmails", fixedConfig.encodeEmails);
-    converter.setOption("simpleLineBreaks", fixedConfig.simpleLineBreaks);
-
-    // Tables
+    // Features
     converter.setOption("tables", true);
+    converter.setOption("moreStyling", true);
+
+    // Preferences
+    converter.setOption("emoji", fixedConfig.emoji);
+    converter.setOption("encodeEmails", fixedConfig.encodeEmails);
+    converter.setOption("noHeaderId", !fixedConfig.headerId);
+    converter.setOption("simpleLineBreaks", fixedConfig.simpleLineBreaks);
     converter.setOption("tablesHeaderId", fixedConfig.tableHeaderId);
 
     return converter.makeHtml(markdown);
