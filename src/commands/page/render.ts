@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { renderMarkdownToHtml } from "@imbricate/markdown-render";
 import { isFile, pathExists, readTextFile, writeTextFile } from "@sudoo/io";
 import { Command } from "commander";
 import * as Path from "path";
@@ -17,7 +18,6 @@ import { CLIRenderTemplatePathNotAFile } from "../../error/render/template-path-
 import { CLIRenderTemplatePathNotExist } from "../../error/render/template-path-not-exist";
 import { GlobalManager } from "../../global/global-manager";
 import { cliGetPage } from "../../page/get-page";
-import { renderMarkdownToHtml } from "../../render/markdown-to-html";
 import { replaceTemplatePlaceholders } from "../../render/replace";
 import { ensureRenderTemplateValid } from "../../render/template";
 import { ITerminalController } from "../../terminal/definition";

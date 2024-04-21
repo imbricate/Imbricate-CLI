@@ -38,13 +38,12 @@
   "homepage": "https://imbricate.io",
   "dependencies": {
     "@imbricate/core": "^1.9.0",
+    "@imbricate/markdown-render": "^1.0.1",
     "@imbricate/origin-file-system": "^1.7.3",
     "@sudoo/io": "^1.8.0",
     "@sudoo/uuid": "^1.1.0",
     "axios": "^1.6.8",
-    "commander": "^12.0.0",
-    "showdown": "^2.1.0",
-    "showdown-katex": "^0.8.0"
+    "commander": "^12.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7",
@@ -52,7 +51,6 @@
     "@babel/preset-typescript": "^7",
     "@types/jest": "^29",
     "@types/node": "^20",
-    "@types/showdown": "^2",
     "@typescript-eslint/eslint-plugin": "^7",
     "@typescript-eslint/parser": "^7",
     "babel-jest": "^29",

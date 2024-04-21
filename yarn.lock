@@ -1647,6 +1647,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@imbricate/markdown-render@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@imbricate/markdown-render@npm:1.0.1"
+  dependencies:
+    showdown: "npm:^2.1.0"
+    showdown-katex: "npm:^0.8.0"
+  checksum: 10c0/f1bfc113635fcabbc6318ae85b3574731d9bf175e83e17d0265e01102c94c720475a01a3adb33f3261a5c66b4eea09edd55cf3b00210b4a88d96aa1ed49c316f
+  languageName: node
+  linkType: hard
+
 "@imbricate/origin-file-system@npm:^1.7.3":
   version: 1.7.3
   resolution: "@imbricate/origin-file-system@npm:1.7.3"
@@ -2332,13 +2342,6 @@ __metadata:
   version: 7.5.8
   resolution: "@types/semver@npm:7.5.8"
   checksum: 10c0/8663ff927234d1c5fcc04b33062cb2b9fcfbe0f5f351ed26c4d1e1581657deebd506b41ff7fdf89e787e3d33ce05854bc01686379b89e9c49b564c4cfa988efa
-  languageName: node
-  linkType: hard
-
-"@types/showdown@npm:^2":
-  version: 2.0.6
-  resolution: "@types/showdown@npm:2.0.6"
-  checksum: 10c0/7136e47a9f0b871e74d8f17afcd99bca3d356f9fd81ee4ddb5361beb41be11d6d5705b86cf8f44796b6ca61caa5c4ff408029b772e436f6a1f9021bb73f36f95
   languageName: node
   linkType: hard
 
@@ -4062,12 +4065,12 @@ __metadata:
     "@babel/preset-env": "npm:^7"
     "@babel/preset-typescript": "npm:^7"
     "@imbricate/core": "npm:^1.9.0"
+    "@imbricate/markdown-render": "npm:^1.0.1"
     "@imbricate/origin-file-system": "npm:^1.7.3"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29"
     "@types/node": "npm:^20"
-    "@types/showdown": "npm:^2"
     "@typescript-eslint/eslint-plugin": "npm:^7"
     "@typescript-eslint/parser": "npm:^7"
     axios: "npm:^1.6.8"
@@ -4075,8 +4078,6 @@ __metadata:
     commander: "npm:^12.0.0"
     eslint: "npm:^8"
     jest: "npm:^29"
-    showdown: "npm:^2.1.0"
-    showdown-katex: "npm:^0.8.0"
     ts-node: "npm:^10"
     typescript: "npm:^5"
   bin:
