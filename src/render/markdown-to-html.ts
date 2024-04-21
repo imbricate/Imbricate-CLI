@@ -45,6 +45,7 @@ export const renderMarkdownToHtml = async (
     converter.setFlavor("github");
 
     // Features
+    converter.setOption("completeHTMLDocument", false);
     converter.setOption("customizedHeaderId", true);
     converter.setOption("ghCodeBlocks", true);
     converter.setOption("ghCompatibleHeaderId", true);
@@ -54,6 +55,7 @@ export const renderMarkdownToHtml = async (
     converter.setOption("strikethrough", true);
     converter.setOption("tables", true);
     converter.setOption("tasklists", true);
+    converter.setOption("underline", true);
 
     // Preferences
     converter.setOption("emoji", fixedConfig.emoji);
