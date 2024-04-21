@@ -20,7 +20,7 @@ type OriginDeleteCommandOptions = {
 };
 
 export const createOriginDeleteCommand = (
-    globalManager: GlobalManager,
+    _globalManager: GlobalManager,
     terminalController: ITerminalController,
     configurationManager: IConfigurationManager,
 ): Command => {
