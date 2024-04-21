@@ -9,6 +9,8 @@ import { Command, Option } from "commander";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 
+const asynchronousPoolLimit: number = 6;
+
 export const addWorkingDirectoryOriginExtension = (
     program: Command,
     globalManager: GlobalManager,
@@ -33,6 +35,7 @@ export const addWorkingDirectoryOriginExtension = (
             fixedOriginName,
             FileSystemImbricateOrigin.withPayloads({
                 basePath: globalManager.workingDirectory,
+                asynchronousPoolLimit,
             }),
         );
     });

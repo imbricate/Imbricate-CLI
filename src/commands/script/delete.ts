@@ -75,7 +75,7 @@ const performScriptDelete = async (
         }
     }
 
-    await origin.deleteScript(script.identifier, script.scriptName);
+    await origin.deleteScript(script.identifier);
 
     if (!options.quiet) {
 

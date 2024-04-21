@@ -79,7 +79,7 @@ const performPageDelete = async (
         }
     }
 
-    await collection.deletePage(page.identifier, page.title);
+    await collection.deletePage(page.identifier);
 
     if (!options.quiet) {
         terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" deleted`);
