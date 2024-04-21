@@ -86,7 +86,23 @@ export const createPageCatenateCommand = (
 
             const content: string = await page.readContent();
 
-            terminalController.printInfo(content);
+            let lines: string[] = content.split("\n");
+
+            if (typeof options.start === "number") {
+                lines = lines.slice(options.start);
+            }
+
+            if (typeof options.lines === "number") {
+                lines = lines.slice(0, options.lines);
+            }
+
+            if (lines.length === 0) {
+                return;
+            }
+
+            terminalController.printInfo(
+                lines.join("\n"),
+            );
         }));
 
     return catenateCommand;
