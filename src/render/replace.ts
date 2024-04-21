@@ -4,6 +4,8 @@
  * @description Replace
  */
 
+import { renderContentPlaceholder, renderTitlePlaceholder } from "./placeholder";
+
 export type ReplaceTemplatePlaceholdersData = {
 
     readonly title: string;
@@ -15,7 +17,10 @@ export const replaceTemplatePlaceholders = (
     data: ReplaceTemplatePlaceholdersData,
 ): string => {
 
+    const titleRegex: RegExp = new RegExp(renderTitlePlaceholder, "g");
+    const contentRegex: RegExp = new RegExp(renderContentPlaceholder, "g");
+
     return template
-        .replace(/{{title}}/g, data.title)
-        .replace(/{{content}}/g, data.content);
+        .replace(titleRegex, data.title)
+        .replace(contentRegex, data.content);
 };
