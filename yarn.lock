@@ -1647,13 +1647,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/markdown-render@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@imbricate/markdown-render@npm:1.0.1"
+"@imbricate/markdown-render@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@imbricate/markdown-render@npm:1.1.2"
   dependencies:
+    highlight.js: "npm:^11.9.0"
     showdown: "npm:^2.1.0"
     showdown-katex: "npm:^0.8.0"
-  checksum: 10c0/f1bfc113635fcabbc6318ae85b3574731d9bf175e83e17d0265e01102c94c720475a01a3adb33f3261a5c66b4eea09edd55cf3b00210b4a88d96aa1ed49c316f
+  checksum: 10c0/569ea78fb4a5291fe7b31a0ca19c1c9d88ac38edd42fb334bc8b6914889bd4de1d54ec239692088fdf04f748d561f6981e89b9e9bb4ffe7e7d18f7527cc4287a
   languageName: node
   linkType: hard
 
@@ -3961,6 +3962,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^11.9.0":
+  version: 11.9.0
+  resolution: "highlight.js@npm:11.9.0"
+  checksum: 10c0/27cfa8717dc9d200aecbdb383eb122d5f45ce715d2f468583785d36fbfe5076ce033abb02486dc13b407171721cda6f474ed3f3a5a8e8c3d91367fa5f51ee374
+  languageName: node
+  linkType: hard
+
 "html-encoding-sniffer@npm:^2.0.1":
   version: 2.0.1
   resolution: "html-encoding-sniffer@npm:2.0.1"
@@ -4065,7 +4073,7 @@ __metadata:
     "@babel/preset-env": "npm:^7"
     "@babel/preset-typescript": "npm:^7"
     "@imbricate/core": "npm:^1.9.0"
-    "@imbricate/markdown-render": "npm:^1.0.1"
+    "@imbricate/markdown-render": "npm:^1.1.2"
     "@imbricate/origin-file-system": "npm:^1.7.3"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
