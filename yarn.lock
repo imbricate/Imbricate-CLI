@@ -4314,13 +4314,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iterate-object@npm:^1.3.2":
-  version: 1.3.4
-  resolution: "iterate-object@npm:1.3.4"
-  checksum: 10c0/ff37f08223397ea637af136061ba74590efe5b29be5ca9006ae8168ce2faca67b0b4ebc763317173da65d2ae3ba81c1b51f4ceb80092a7bc668f3798f63db9e2
-  languageName: node
-  linkType: hard
-
 "jackspeak@npm:^2.3.5":
   version: 2.3.6
   resolution: "jackspeak@npm:2.3.6"
@@ -5623,13 +5616,6 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.8.4"
   checksum: 10c0/7cfe6931ec793269701994a93bab89c0cc95379191fad866270a7fea2adfec67ea62bb5b374db77058b60ba4509319d9b608664d0d288bd9989ca8dbd08fae90
-  languageName: node
-  linkType: hard
-
-"regex-escape@npm:^3.4.2":
-  version: 3.4.10
-  resolution: "regex-escape@npm:3.4.10"
-  checksum: 10c0/f3287c4ca363cf1d64541fd12e6b93de71e9d8d290b980da26e27544005703ca363853830e968d0fe5decdb6b4451a5abb3a6b60fa6a3d9ab9114700d106930d
   languageName: node
   linkType: hard
 
