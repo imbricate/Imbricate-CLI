@@ -25,6 +25,7 @@ import { GlobalManager } from "./global/global-manager";
 import { ITerminalController } from "./terminal/definition";
 import { TTYTerminalController } from "./terminal/terminal";
 import { debugLog } from "./util/debug";
+import { getApplicationDescription } from "./util/description";
 import { handleError } from "./util/handle-error";
 
 export const execute = async (): Promise<void> => {
@@ -66,7 +67,7 @@ export const executeWithConfiguration = async (
             .version("<current-version>")
             .usage("[options] [command]")
             .name("imbricate (i7e)")
-            .description("Imbricate CLI");
+            .description(getApplicationDescription());
 
         imbricateProgram
             .configureHelp({
