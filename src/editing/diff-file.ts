@@ -25,7 +25,7 @@ export const diffSavingTarget = async (
     const beforeContent: string | null =
         await getContentWithSavingTarget(savingTarget, globalManager);
 
-    if (!beforeContent) {
+    if (typeof beforeContent !== "string") {
         throw CLIInvalidSavingTarget.withSavingTarget(savingTarget);
     }
 

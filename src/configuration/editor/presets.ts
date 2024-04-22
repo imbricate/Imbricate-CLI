@@ -14,7 +14,7 @@ export type ConfigurationEditorPreset = {
 const getPathPlaceholder = (order?: number): string => {
 
     if (typeof order === "number") {
-        return `"path${order}"`;
+        return `"{path${order}}"`;
     }
 
     return '"{path}"';

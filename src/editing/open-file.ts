@@ -16,6 +16,7 @@ import { hashString } from "../util/hash";
 import { readActiveEditing, writeActiveEditing } from "./controller";
 import { ActiveEditing, SavingTarget } from "./definition";
 import { diffSavingTarget } from "./diff-file";
+import { getActiveEditingReference } from "./reference";
 import { cleanupSavingTarget, hashSavingTarget, performSavingTarget } from "./save-target";
 
 const performEditing = async (
@@ -125,16 +126,27 @@ export const openContentAndDiff = async (
 
     const currentTime: Date = new Date();
 
+    const newActiveEditing: ActiveEditing = {
+        identifier: editingIdentifier,
+        hash: savingTargetHash,
+        path: tempFilePath,
+        startedAt: currentTime,
+        target: savingTarget,
+    };
+
     const updatedActiveEditing: ActiveEditing[] = [
         ...activeEditing,
-        {
-            identifier: editingIdentifier,
-            hash: savingTargetHash,
-            path: tempFilePath,
-            startedAt: currentTime,
-            target: savingTarget,
-        },
+        newActiveEditing,
     ];
+
+    const reference: string = getActiveEditingReference(newActiveEditing);
+
+    terminalController.printInfo("Editing Started...");
+    terminalController.printInfo([
+        `${savingTarget.type} - ${reference}`,
+        `|> ${newActiveEditing.identifier}`,
+        `|- ${tempFilePath}`,
+    ].join("\n"));
 
     await writeActiveEditing(updatedActiveEditing);
 

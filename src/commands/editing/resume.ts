@@ -68,7 +68,7 @@ export const createEditingResumeCommand = (
                 globalManager,
             );
 
-            if (!beforeContent) {
+            if (typeof beforeContent !== "string") {
                 throw CLIInvalidSavingTarget.withSavingTarget(targetEditing.target);
             }
 
