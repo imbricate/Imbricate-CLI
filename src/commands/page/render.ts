@@ -140,8 +140,11 @@ export const createPageRenderCommand = (
 
             if (typeof template === "string") {
 
+                const resolvedTemplatePath: string =
+                    resolvePath(options.template as string);
+
                 if (!options.quiet) {
-                    terminalController.printInfo(`Rendering with template: ${options.template}`);
+                    terminalController.printInfo(`Rendering with template: ${resolvedTemplatePath}`);
                 }
 
                 output = replaceTemplatePlaceholders(
