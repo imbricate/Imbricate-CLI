@@ -64,8 +64,8 @@ export const executeWithConfiguration = async (
 
         imbricateProgram
             .version("<current-version>")
-            .usage("(i7e) [options] [command]")
-            .name("imbricate")
+            .usage("[options] [command]")
+            .name("imbricate (i7e)")
             .description("Imbricate CLI");
 
         imbricateProgram
