@@ -25,6 +25,7 @@ export const createConfigProfileDeleteCommand = (
 ): Command => {
 
     const deleteCommand: Command = createConfiguredCommand("delete");
+    deleteCommand.alias("rm");
 
     deleteCommand
         .description("delete a non-default configuration profile")

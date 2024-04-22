@@ -90,6 +90,7 @@ export const createScriptDeleteCommand = (
 ): Command => {
 
     const deleteCommand: Command = createConfiguredCommand("delete");
+    deleteCommand.alias("rm");
 
     deleteCommand
         .description("delete a existing standalone script")

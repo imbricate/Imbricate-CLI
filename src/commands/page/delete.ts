@@ -93,6 +93,7 @@ export const createPageDeleteCommand = (
 ): Command => {
 
     const deleteCommand: Command = createConfiguredCommand("delete");
+    deleteCommand.alias("rm");
 
     deleteCommand
         .description("delete a existing page in the collection")

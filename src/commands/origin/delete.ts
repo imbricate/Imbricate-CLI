@@ -26,6 +26,7 @@ export const createOriginDeleteCommand = (
 ): Command => {
 
     const deleteCommand: Command = createConfiguredCommand("delete");
+    deleteCommand.alias("rm");
 
     deleteCommand
         .description("delete an existing origin")
