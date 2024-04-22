@@ -17,12 +17,14 @@ import { formatJSON } from "../../util/format-json";
 type ScriptListCommandOptions = {
 
     readonly json?: boolean;
+    readonly fullIdentifier?: boolean;
     readonly pointer?: boolean;
 };
 
 const generateRawPrint = (
     scripts: ImbricateScriptSnapshot[],
     pointer: boolean,
+    fullIdentifier: boolean,
 ): string => {
 
     if (!pointer) {
@@ -42,9 +44,18 @@ const generateRawPrint = (
         }));
 
     return scripts
-        .map((script: ImbricateScriptSnapshot) => script.scriptName)
-        .map((scriptName: string) => {
-            return `[${mappedLeastCommonIdentifier[scriptName]}] -> ${scriptName}`;
+        .map((script: ImbricateScriptSnapshot) => {
+
+            const scriptName: string = script.scriptName;
+
+            const pointer: string = mappedLeastCommonIdentifier[scriptName];
+            let output: string = `[${pointer}]`;
+
+            if (fullIdentifier) {
+                output += script.identifier.substring(pointer.length);
+            }
+
+            return `${output} -> ${scriptName}`;
         })
         .join("\n");
 };
@@ -87,10 +98,12 @@ export const createScriptListCommand = (
 ): Command => {
 
     const listCommand: Command = createConfiguredCommand("list");
+    listCommand.alias("ls");
 
     listCommand
         .description("list standalone scripts")
         .option("-j, --json", "print result as JSON")
+        .option("-f, --full-identifier", "print full identifier")
         .option("--no-pointer", "not to map pointer")
         .action(createActionRunner(terminalController, async (
             options: ScriptListCommandOptions,
@@ -115,7 +128,11 @@ export const createScriptListCommand = (
                 return;
             }
 
-            terminalController.printInfo(generateRawPrint(scripts, !!options.pointer));
+            terminalController.printInfo(generateRawPrint(
+                scripts,
+                !!options.pointer,
+                !!options.fullIdentifier,
+            ));
         }));
 
     return listCommand;

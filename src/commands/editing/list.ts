@@ -27,6 +27,7 @@ export const createEditingListCommand = (
 ): Command => {
 
     const listCommand: Command = createConfiguredCommand("list");
+    listCommand.alias("ls");
 
     listCommand
         .description("list editing pages and scripts")

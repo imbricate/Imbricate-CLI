@@ -22,6 +22,7 @@ export const createOriginListCommand = (
 ): Command => {
 
     const listCommand: Command = createConfiguredCommand("list");
+    listCommand.alias("ls");
 
     listCommand
         .description("list available origins")

@@ -23,6 +23,7 @@ export const createConfigProfileListCommand = (
 ): Command => {
 
     const listCommand: Command = createConfiguredCommand("list");
+    listCommand.alias("ls");
 
     listCommand
         .description("list all configuration profiles")

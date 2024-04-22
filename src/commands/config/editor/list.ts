@@ -24,6 +24,7 @@ export const createConfigEditorListCommand = (
 ): Command => {
 
     const listCommand: Command = createConfiguredCommand("list");
+    listCommand.alias("ls");
 
     listCommand
         .description("list preset configuration for editor commands")

@@ -18,13 +18,16 @@ import { formatJSON } from "../../util/format-json";
 type PageListCommandOptions = {
 
     readonly collection: string;
+
     readonly json?: boolean;
+    readonly fullIdentifier?: boolean;
     readonly pointer?: boolean;
 };
 
 const generateRawPrint = (
     pages: ImbricatePageSnapshot[],
     pointer: boolean,
+    fullIdentifier: boolean,
 ): string => {
 
     if (!pointer) {
@@ -44,9 +47,18 @@ const generateRawPrint = (
         }));
 
     return pages
-        .map((page: ImbricatePageSnapshot) => page.title)
-        .map((title: string) => {
-            return `[${mappedLeastCommonIdentifier[title]}] -> ${title}`;
+        .map((page: ImbricatePageSnapshot) => {
+
+            const title: string = page.title;
+
+            const pointer: string = mappedLeastCommonIdentifier[title];
+            let output: string = `[${pointer}]`;
+
+            if (fullIdentifier) {
+                output += page.identifier.substring(pointer.length);
+            }
+
+            return `${output} -> ${title}`;
         })
         .join("\n");
 };
@@ -89,6 +101,7 @@ export const createPageListCommand = (
 ): Command => {
 
     const listCommand: Command = createConfiguredCommand("list");
+    listCommand.alias("ls");
 
     listCommand
         .description("list available pages")
@@ -97,6 +110,7 @@ export const createPageListCommand = (
             "specify the collection of the page (required)",
         )
         .option("-j, --json", "print result as JSON")
+        .option("-f, --full-identifier", "print full identifier")
         .option("--no-pointer", "not to map pointer")
         .action(createActionRunner(terminalController, async (
             options: PageListCommandOptions,
@@ -139,7 +153,11 @@ export const createPageListCommand = (
                 return;
             }
 
-            terminalController.printInfo(generateRawPrint(pages, !!options.pointer));
+            terminalController.printInfo(generateRawPrint(
+                pages,
+                !!options.pointer,
+                !!options.fullIdentifier,
+            ));
         }));
 
     return listCommand;
