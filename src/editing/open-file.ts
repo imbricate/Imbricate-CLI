@@ -7,6 +7,7 @@
 import { attemptMarkDir, directoryFiles, readTextFile, removeDirectory, removeFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
+import { CLIAlreadyEditing } from "../error/editing/already-editing";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
@@ -14,6 +15,7 @@ import { fixImbricateTempDirectory, getFolderPath } from "../util/fix-directory"
 import { hashString } from "../util/hash";
 import { readActiveEditing, writeActiveEditing } from "./controller";
 import { ActiveEditing, SavingTarget } from "./definition";
+import { diffSavingTarget } from "./diff-file";
 import { cleanupSavingTarget, hashSavingTarget, performSavingTarget } from "./save-target";
 
 const performEditing = async (
@@ -89,6 +91,62 @@ export const performSaveAndCleanup = async (
     if (remainingFiles.length === 0) {
         await removeDirectory(outerTempFolderPath);
     }
+};
+
+export const openContentAndDiff = async (
+    content: string,
+    fileName: string,
+    savingTarget: SavingTarget<any>,
+    globalManager: GlobalManager,
+    terminalController: ITerminalController,
+    profile: ConfigurationProfileManager,
+): Promise<void> => {
+
+    const activeEditing = await readActiveEditing();
+
+    const savingTargetHash = hashSavingTarget(savingTarget);
+
+    for (const editing of activeEditing) {
+        if (editing.hash === savingTargetHash) {
+
+            throw CLIAlreadyEditing.withSavingTarget(savingTarget);
+        }
+    }
+
+    const editingIdentifier: string = UUIDVersion1.generateString();
+
+    const tempFolderPath: string = fixImbricateTempDirectory();
+    await attemptMarkDir(tempFolderPath);
+
+    const outerTempFolderPath: string = fixImbricateTempDirectory(editingIdentifier);
+    await attemptMarkDir(outerTempFolderPath);
+
+    const tempFilePath: string = fixImbricateTempDirectory(editingIdentifier, fileName);
+
+    const currentTime: Date = new Date();
+
+    const updatedActiveEditing: ActiveEditing[] = [
+        ...activeEditing,
+        {
+            identifier: editingIdentifier,
+            hash: savingTargetHash,
+            path: tempFilePath,
+            startedAt: currentTime,
+            target: savingTarget,
+        },
+    ];
+
+    await writeActiveEditing(updatedActiveEditing);
+
+    await writeTextFile(tempFilePath, content);
+
+    await diffSavingTarget(
+        tempFilePath,
+        savingTarget,
+        globalManager,
+        profile,
+        terminalController,
+    );
 };
 
 export const openContentAndMonitor = async (

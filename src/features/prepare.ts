@@ -14,6 +14,7 @@ import { createOpenScriptFeature } from "./open-script";
 import { createRunCommandFeature } from "./run-command";
 import { createSendHttpRequestFeature } from "./send-http-request";
 import { createStartPageEditingFeature } from "./start-page-editing";
+import { createStartPageImprovementFeature } from "./start-page-improvement";
 
 export const prepareInterfaceFeatures = (
     currentOrigin: IImbricateOrigin,
@@ -49,6 +50,12 @@ export const prepareInterfaceFeatures = (
             configurationManager,
         ),
         createStartPageEditingFeature(
+            currentOrigin,
+            globalManager,
+            terminalController,
+            configurationManager,
+        ),
+        createStartPageImprovementFeature(
             currentOrigin,
             globalManager,
             terminalController,

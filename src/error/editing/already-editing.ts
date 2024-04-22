@@ -1,21 +1,21 @@
 /**
  * @author WMXPY
  * @namespace Error_Page
- * @description Invalid Saving Target
+ * @description Already Editing
  */
 
 import { SavingTarget } from "../../editing/definition";
 import { formatLog } from "../../util/format-log";
 import { CLIEditingError } from "./editing-error";
 
-export class CLIInvalidSavingTarget extends CLIEditingError {
+export class CLIAlreadyEditing extends CLIEditingError {
 
     public static withSavingTarget(
         savingTarget: SavingTarget<any>,
-    ): CLIInvalidSavingTarget {
+    ): CLIAlreadyEditing {
 
-        return new CLIInvalidSavingTarget(
-            `Invalid Saving Target: ${formatLog(savingTarget)}`,
+        return new CLIAlreadyEditing(
+            `Already Editing: ${formatLog(savingTarget)}`,
         );
     }
 
@@ -24,8 +24,8 @@ export class CLIInvalidSavingTarget extends CLIEditingError {
         reason?: any,
     ) {
 
-        super(message, "CLIInvalidSavingTarget", reason);
+        super(message, "CLIAlreadyEditing", reason);
 
-        Object.setPrototypeOf(this, CLIInvalidSavingTarget.prototype);
+        Object.setPrototypeOf(this, CLIAlreadyEditing.prototype);
     }
 }
