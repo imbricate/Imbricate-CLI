@@ -4,7 +4,7 @@
  * @description Open File
  */
 
-import { readActiveEditing, writeActiveEditing } from "@imbricate/local-fundamental";
+import { cleanupSavingTarget, hashSavingTarget, performImbricateSavingTarget, readActiveEditing, writeActiveEditing } from "@imbricate/local-fundamental";
 import { attemptMarkDir, directoryFiles, readTextFile, removeDirectory, removeFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
@@ -17,7 +17,6 @@ import { hashString } from "../util/hash";
 import { ActiveEditing, SavingTarget } from "./definition";
 import { diffSavingTarget } from "./diff-file";
 import { getActiveEditingReference } from "./reference";
-import { cleanupSavingTarget, hashSavingTarget, performSavingTarget } from "./save-target";
 
 const performEditing = async (
     filePath: string,
@@ -80,7 +79,7 @@ export const performSaveAndCleanup = async (
     } else {
 
         terminalController.printInfo("Saving...");
-        await performSavingTarget(savingTarget, updatedContent, globalManager);
+        await performImbricateSavingTarget(savingTarget, updatedContent, globalManager.originManager);
         terminalController.printInfo("Edit Saved");
     }
 

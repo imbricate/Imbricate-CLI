@@ -23,7 +23,7 @@ export const addOriginExtension = (
     program.addOption(originOption);
     program.on("option:origin", (origin: string) => {
 
-        for (const existingOrigin of globalManager.origins) {
+        for (const existingOrigin of globalManager.originManager.origins) {
 
             if (existingOrigin.originName === origin) {
 

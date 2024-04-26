@@ -5,10 +5,10 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot } from "@imbricate/core";
+import { checkSavingTargetActive, cleanupSavingTarget } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
-import { cleanupSavingTarget, isSavingTargetActive } from "../../editing/save-target";
 import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -51,7 +51,7 @@ const performPageDelete = async (
         page.identifier,
     );
 
-    const isActive: boolean = await isSavingTargetActive(savingTarget);
+    const isActive: boolean = await checkSavingTargetActive(savingTarget);
 
     if (isActive) {
 

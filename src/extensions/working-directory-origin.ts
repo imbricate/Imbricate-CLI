@@ -31,7 +31,7 @@ export const addWorkingDirectoryOriginExtension = (
             terminalController.printInfo(`Using PWD origin with origin name: ${fixedOriginName}`);
         }
 
-        globalManager.putOrigin(
+        globalManager.originManager.putOrigin(
             fixedOriginName,
             FileSystemImbricateOrigin.withPayloads({
                 basePath: globalManager.workingDirectory,

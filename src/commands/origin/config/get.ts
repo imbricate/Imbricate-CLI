@@ -38,7 +38,7 @@ export const createOriginConfigGetCommand = (
         ): Promise<void> => {
 
             const origin: IImbricateOrigin | null =
-                globalManager.getOrigin(originName);
+                globalManager.originManager.getOrigin(originName);
 
             if (!origin) {
                 throw CLIOriginNotFound.withOriginName(originName);

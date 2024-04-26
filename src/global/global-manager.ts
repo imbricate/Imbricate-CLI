@@ -5,8 +5,8 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
+import { ImbricateOriginManager } from "@imbricate/local-fundamental";
 import { fixCurrentWorkingDirectory } from "../util/fix-directory";
-import { GlobalManagerOriginResponse } from "./definition";
 
 export class GlobalManager {
 
@@ -16,7 +16,7 @@ export class GlobalManager {
     }
 
     private _activeOrigin: string | null;
-    private _origins: Map<string, IImbricateOrigin>;
+    private _originManager: ImbricateOriginManager;
 
     private _profileName: string | null;
 
@@ -26,7 +26,7 @@ export class GlobalManager {
     private constructor() {
 
         this._activeOrigin = null;
-        this._origins = new Map<string, IImbricateOrigin>();
+        this._originManager = ImbricateOriginManager.fromScratch();
 
         this._profileName = null;
 
@@ -43,6 +43,10 @@ export class GlobalManager {
         return this;
     }
 
+    public get originManager(): ImbricateOriginManager {
+        return this._originManager;
+    }
+
     public get profileName(): string | null {
         return this._profileName;
     }
@@ -52,41 +56,13 @@ export class GlobalManager {
         return this;
     }
 
-    public get origins(): GlobalManagerOriginResponse[] {
-
-        const response: GlobalManagerOriginResponse[] = [];
-        for (const [key, value] of this._origins) {
-            response.push({
-                active: this._activeOrigin === key,
-                originName: key,
-                origin: value,
-            });
-        }
-        return response;
-    }
-
-    public getOrigin(originName: string): IImbricateOrigin | null {
-
-        const origin: IImbricateOrigin | undefined = this._origins.get(originName);
-        if (!origin) {
-            return null;
-        }
-        return origin;
-    }
-
-    public putOrigin(originName: string, origin: IImbricateOrigin): this {
-
-        this._origins.set(originName, origin);
-        return this;
-    }
-
     public findCurrentOrigin(): IImbricateOrigin | null {
 
         if (!this._activeOrigin) {
             return null;
         }
 
-        const origin: IImbricateOrigin | undefined = this._origins.get(this._activeOrigin);
+        const origin: IImbricateOrigin | null = this._originManager.getOrigin(this._activeOrigin);
         if (!origin) {
             return null;
         }

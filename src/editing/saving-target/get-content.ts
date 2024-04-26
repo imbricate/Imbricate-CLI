@@ -19,7 +19,7 @@ export const getContentWithSavingTarget = async (
             const fixedTarget: SavingTarget<SAVING_TARGET_TYPE.PAGE> =
                 savingTarget as SavingTarget<SAVING_TARGET_TYPE.PAGE>;
 
-            const origin = globalManager.getOrigin(fixedTarget.payload.origin);
+            const origin = globalManager.originManager.getOrigin(fixedTarget.payload.origin);
             if (!origin) {
                 throw CLIEditingSaveTargetFiled.originNotFound(fixedTarget.payload.origin);
             }
@@ -38,7 +38,7 @@ export const getContentWithSavingTarget = async (
         }
         case SAVING_TARGET_TYPE.SCRIPT: {
 
-            const origin = globalManager.getOrigin(savingTarget.payload.origin);
+            const origin = globalManager.originManager.getOrigin(savingTarget.payload.origin);
             if (!origin) {
                 throw CLIEditingSaveTargetFiled.originNotFound(savingTarget.payload.origin);
             }

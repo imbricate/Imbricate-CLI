@@ -4,10 +4,10 @@
  * @description Use
  */
 
+import { ImbricateOriginManagerOriginResponse } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIOriginNotFound } from "../../error/origin/origin-not-found";
-import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
@@ -35,9 +35,9 @@ export const createOriginUseCommand = (
             _options: OriginUseCommandOptions,
         ): Promise<void> => {
 
-            const origins: GlobalManagerOriginResponse[] = globalManager.origins;
+            const origins: ImbricateOriginManagerOriginResponse[] = globalManager.originManager.origins;
 
-            let targetOrigin: GlobalManagerOriginResponse | null = null;
+            let targetOrigin: ImbricateOriginManagerOriginResponse | null = null;
 
             for (const origin of origins) {
                 if (origin.originName === originName) {

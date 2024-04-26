@@ -4,8 +4,8 @@
  * @description List
  */
 
+import { ImbricateOriginManagerOriginResponse } from "@imbricate/local-fundamental";
 import { Command } from "commander";
-import { GlobalManagerOriginResponse } from "../../global/definition";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
@@ -34,9 +34,12 @@ export const createOriginListCommand = (
             if (options.json) {
 
                 terminalController.printJsonInfo(
-                    globalManager.origins.map((originResponse: GlobalManagerOriginResponse) => {
+                    globalManager.originManager.origins.map((originResponse: ImbricateOriginManagerOriginResponse) => {
+
+                        const active: boolean = globalManager.activeOrigin === originResponse.originName;
+
                         return {
-                            active: originResponse.active,
+                            active,
                             originName: originResponse.originName,
                             type: originResponse.origin.metadata.type,
                             payloads: originResponse.origin.payloads,
@@ -46,15 +49,17 @@ export const createOriginListCommand = (
                 return;
             }
 
-            if (globalManager.origins.length === 0) {
+            if (globalManager.originManager.origins.length === 0) {
                 terminalController.printInfo("No origins found");
                 return;
             }
 
-            terminalController.printInfo(globalManager.origins
-                .map((originResponse: GlobalManagerOriginResponse) => {
+            terminalController.printInfo(globalManager.originManager.origins
+                .map((originResponse: ImbricateOriginManagerOriginResponse) => {
 
-                    if (originResponse.active) {
+                    const active: boolean = globalManager.activeOrigin === originResponse.originName;
+
+                    if (active) {
                         return `${originResponse.originName} [Active]`;
                     }
 

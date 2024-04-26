@@ -5,10 +5,11 @@
  */
 
 import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
+import { checkSavingTargetActive, cleanupSavingTarget } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
-import { cleanupSavingTarget, isSavingTargetActive } from "../../editing/save-target";
+import { createScriptSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIScriptEditing } from "../../error/script/script-editing";
 import { CLIScriptInvalidInput } from "../../error/script/script-invalid-input";
@@ -17,7 +18,6 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { createScriptSavingTarget } from "../../editing/saving-target/create-saving.target";
 
 type ScriptDeleteCommandOptions = {
 
@@ -47,7 +47,7 @@ const performScriptDelete = async (
         script.identifier,
     );
 
-    const isActive: boolean = await isSavingTargetActive(savingTarget);
+    const isActive: boolean = await checkSavingTargetActive(savingTarget);
 
     if (isActive) {
 

@@ -24,7 +24,7 @@ export const initializeOrigin = async (
             originConfig,
         );
 
-        globalManager.putOrigin(originConfig.originName, origin);
+        globalManager.originManager.putOrigin(originConfig.originName, origin);
     });
 
     globalManager.setActiveOrigin(configurationManager.activeOrigin);
