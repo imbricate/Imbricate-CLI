@@ -3,6 +3,7 @@
  * @description CLI
  */
 
+import { IImbricateConfigurationOrigin } from "@imbricate/local-fundamental";
 import { FileSystemImbricateOrigin, FileSystemOriginPayload } from "@imbricate/origin-file-system";
 import { Command } from "commander";
 import { createCollectionCommand } from "./commands/collection";
@@ -15,7 +16,6 @@ import { createSearchCommand } from "./commands/search";
 import { ConfigurationManager } from "./configuration/configuration-manager";
 import { initializeOrigin } from "./configuration/initialize-origin";
 import { IConfigurationManager } from "./configuration/interface";
-import { IImbricateConfigurationOrigin } from "./configuration/raw-definition";
 import { addDirectoryExtension } from "./extensions/directory";
 import { addOriginExtension } from "./extensions/origin";
 import { addProfileExtension } from "./extensions/profile";

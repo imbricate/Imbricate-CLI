@@ -4,9 +4,9 @@
  * @description Delete
  */
 
+import { IImbricateConfigurationOrigin } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { IImbricateConfigurationOrigin } from "../../configuration/raw-definition";
 import { CLIOriginIsActive } from "../../error/origin/origin-is-active";
 import { CLIOriginNotFound } from "../../error/origin/origin-not-found";
 import { GlobalManager } from "../../global/global-manager";

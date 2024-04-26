@@ -4,9 +4,9 @@
  * @description Open
  */
 
+import { concatConfigurationPath } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { resolveCLIConfigurationPath } from "../../configuration/io";
 import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { openFileAndMonitor } from "../../editing/open-file";
@@ -38,7 +38,7 @@ export const createConfigOpenCommand = (
         ): Promise<void> => {
 
             const configurationPath: string = configurationManager.configurationPath;
-            const configurationFilePath: string = resolveCLIConfigurationPath(configurationPath);
+            const configurationFilePath: string = concatConfigurationPath(configurationPath);
 
             const profile: ConfigurationProfileManager = getProfileFromConfiguration(
                 globalManager,

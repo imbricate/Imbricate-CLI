@@ -4,9 +4,9 @@
  * @description Show
  */
 
+import { IRawImbricateConfiguration } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { IRawImbricateConfiguration } from "../../configuration/raw-definition";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
