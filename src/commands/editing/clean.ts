@@ -4,10 +4,10 @@
  * @description Clean
  */
 
+import { readActiveEditing } from "@imbricate/local-fundamental";
 import { directoryFiles, isFolder, removeDirectory, removeFile } from "@sudoo/io";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { readActiveEditing } from "../../editing/controller";
 import { ActiveEditing } from "../../editing/definition";
 import { readEditingDraftFolders, resolveDraftFolderPath } from "../../editing/draft";
 import { CLIEditingTooManyFiles } from "../../error/editing/too-many-files";

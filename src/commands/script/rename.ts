@@ -5,16 +5,16 @@
  */
 
 import { IImbricateOrigin, IImbricateScript } from "@imbricate/core";
+import { readActiveEditing } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { cliGetScript } from "../../script/get-script";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { readActiveEditing } from "../../editing/controller";
-import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 
 type ScriptRenameCommandOptions = {
 

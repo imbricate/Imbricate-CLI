@@ -4,6 +4,7 @@
  * @description Open File
  */
 
+import { readActiveEditing, writeActiveEditing } from "@imbricate/local-fundamental";
 import { attemptMarkDir, directoryFiles, readTextFile, removeDirectory, removeFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
@@ -13,7 +14,6 @@ import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
 import { fixImbricateTempDirectory, getFolderPath } from "../util/fix-directory";
 import { hashString } from "../util/hash";
-import { readActiveEditing, writeActiveEditing } from "./controller";
 import { ActiveEditing, SavingTarget } from "./definition";
 import { diffSavingTarget } from "./diff-file";
 import { getActiveEditingReference } from "./reference";

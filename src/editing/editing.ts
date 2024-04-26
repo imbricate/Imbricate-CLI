@@ -4,7 +4,7 @@
  * @description Editing
  */
 
-import { readActiveEditing } from "./controller";
+import { readActiveEditing } from "@imbricate/local-fundamental";
 import { SavingTarget } from "./definition";
 import { hashSavingTarget } from "./save-target";
 

@@ -5,9 +5,9 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { readActiveEditing } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { readActiveEditing } from "../../editing/controller";
 import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";

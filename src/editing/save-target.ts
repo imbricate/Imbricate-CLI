@@ -4,9 +4,9 @@
  * @description Save Target
  */
 
+import { readActiveEditing, writeActiveEditing } from "@imbricate/local-fundamental";
 import { CLIEditingSaveTargetFiled } from "../error/editing/save-target-failed";
 import { GlobalManager } from "../global/global-manager";
-import { readActiveEditing, writeActiveEditing } from "./controller";
 import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "./definition";
 
 export const hashSavingTarget = (
