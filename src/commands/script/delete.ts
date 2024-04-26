@@ -5,7 +5,7 @@
  */
 
 import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
-import { checkSavingTargetActive, cleanupSavingTarget } from "@imbricate/local-fundamental";
+import { checkSavingTargetActive, cleanupImbricateSavingTarget } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
@@ -67,7 +67,7 @@ const performScriptDelete = async (
             terminalController.printInfo(`Script [${script.identifier}] -> "${script.scriptName}" is currently being edited, resolving the editing...`);
         }
 
-        await cleanupSavingTarget(savingTarget);
+        await cleanupImbricateSavingTarget(savingTarget);
 
         if (!options.quiet) {
 

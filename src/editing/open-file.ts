@@ -4,7 +4,7 @@
  * @description Open File
  */
 
-import { cleanupSavingTarget, hashSavingTarget, performImbricateSavingTarget, readActiveEditing, writeActiveEditing } from "@imbricate/local-fundamental";
+import { cleanupImbricateSavingTarget, hashImbricateSavingTarget, performImbricateSavingTarget, readActiveEditing, writeActiveEditing } from "@imbricate/local-fundamental";
 import { attemptMarkDir, readTextFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
@@ -74,7 +74,7 @@ export const performSaveAndCleanup = async (
     if (beforeChecksum === afterChecksum) {
 
         terminalController.printInfo("No Change Detected...");
-        await cleanupSavingTarget(savingTarget);
+        await cleanupImbricateSavingTarget(savingTarget);
         terminalController.printInfo("Edit Cancelled");
     } else {
 
@@ -93,9 +93,9 @@ export const openContentAndDiff = async (
     profile: ConfigurationProfileManager,
 ): Promise<void> => {
 
-    const activeEditing = await readActiveEditing();
+    const activeEditing: ActiveEditing[] = await readActiveEditing();
 
-    const savingTargetHash = hashSavingTarget(savingTarget);
+    const savingTargetHash: string = hashImbricateSavingTarget(savingTarget);
 
     for (const editing of activeEditing) {
         if (editing.hash === savingTargetHash) {
@@ -169,9 +169,9 @@ export const openContentAndMonitor = async (
         terminalController.printInfo("Automatically Switched to Hands Free Mode due to duplicated editing and hands free editing command configured");
     }
 
-    const activeEditing = await readActiveEditing();
+    const activeEditing: ActiveEditing[] = await readActiveEditing();
 
-    const savingTargetHash = hashSavingTarget(savingTarget);
+    const savingTargetHash: string = hashImbricateSavingTarget(savingTarget);
 
     for (const editing of activeEditing) {
         if (editing.hash === savingTargetHash) {

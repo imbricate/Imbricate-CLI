@@ -5,7 +5,7 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot } from "@imbricate/core";
-import { checkSavingTargetActive, cleanupSavingTarget } from "@imbricate/local-fundamental";
+import { checkSavingTargetActive, cleanupImbricateSavingTarget } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
@@ -71,7 +71,7 @@ const performPageDelete = async (
             terminalController.printInfo(`Page [${page.identifier}] -> "${page.title}" is currently being edited, resolving the editing...`);
         }
 
-        await cleanupSavingTarget(savingTarget);
+        await cleanupImbricateSavingTarget(savingTarget);
 
         if (!options.quiet) {
 
