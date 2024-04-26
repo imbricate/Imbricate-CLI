@@ -5,9 +5,8 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
-import { IImbricateConfigurationProfile } from "./definition";
+import { IImbricateConfigurationOrigin, IImbricateConfigurationProfile, IRawImbricateConfiguration } from "@imbricate/local-fundamental";
 import { ConfigurationProfileManager } from "./profile/profile-manager";
-import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
 
 export interface IConfigurationManager {
 

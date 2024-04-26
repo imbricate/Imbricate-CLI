@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
+import { IImbricateConfiguration, IImbricateConfigurationOrigin, IImbricateConfigurationProfile, IRawImbricateConfiguration, ImbricateConfigurationProfilePersistFunction } from "@imbricate/local-fundamental";
 import { writeTextFile } from "@sudoo/io";
 import { CLIOriginIsActive } from "../error/origin/origin-is-active";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
@@ -15,12 +16,10 @@ import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
 import { fixImbricateHomeDirectory, resolveDirectory } from "../util/fix-directory";
 import { formatJSON } from "../util/format-json";
-import { IImbricateConfiguration, IImbricateConfigurationProfile, ImbricateConfigurationProfilePersistFunction } from "./definition";
 import { configurationEditorEchoPreset } from "./editor/presets";
 import { IConfigurationManager } from "./interface";
 import { readCLIConfiguration } from "./io";
 import { ConfigurationProfileManager } from "./profile/profile-manager";
-import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "./raw-definition";
 
 export class ConfigurationManager implements IConfigurationManager {
 

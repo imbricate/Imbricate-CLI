@@ -4,7 +4,7 @@
  * @description Profile Manager
  */
 
-import { IImbricateConfigurationProfile, ImbricateConfigurationProfilePersistFunction } from "../definition";
+import { IImbricateConfigurationProfile, ImbricateConfigurationProfilePersistFunction } from "@imbricate/local-fundamental";
 import { ConfigurationEditorPreset } from "../editor/presets";
 
 export class ConfigurationProfileManager {

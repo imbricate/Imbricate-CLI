@@ -4,14 +4,11 @@
  * @description IO
  */
 
+import { IImbricateConfiguration, IRawImbricateConfiguration, concatConfigurationPath, getDefaultRawImbricateConfiguration, parseRawImbricateConfiguration } from "@imbricate/local-fundamental";
 import { attemptMarkDir, pathExists, readTextFile, writeTextFile } from "@sudoo/io";
 import * as Path from "path";
 import { debugLog } from "../util/debug";
-import { resolveDirectory } from "../util/fix-directory";
 import { formatJSON } from "../util/format-json";
-import { IImbricateConfiguration } from "./definition";
-import { parseRawImbricateConfiguration } from "./parse";
-import { IRawImbricateConfiguration, getDefaultRawImbricateConfiguration } from "./raw-definition";
 
 const createOrGetFile = async (
     path: string,
@@ -34,17 +31,9 @@ const createOrGetFile = async (
     return defaultValue;
 };
 
-export const resolveCLIConfigurationPath = (configurationPath: string): string => {
-
-    return resolveDirectory(
-        configurationPath,
-        "imbricate.config.json",
-    );
-};
-
 export const readCLIConfiguration = async (configurationPath: string): Promise<IImbricateConfiguration> => {
 
-    const configurationFilePath: string = resolveCLIConfigurationPath(
+    const configurationFilePath: string = concatConfigurationPath(
         configurationPath,
     );
 

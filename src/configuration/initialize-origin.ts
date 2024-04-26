@@ -5,10 +5,10 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
+import { IImbricateConfigurationOrigin } from "@imbricate/local-fundamental";
 import { GlobalManager } from "../global/global-manager";
 import { debugLog } from "../util/debug";
 import { IConfigurationManager } from "./interface";
-import { IImbricateConfigurationOrigin } from "./raw-definition";
 
 export const initializeOrigin = async (
     globalManager: GlobalManager,
