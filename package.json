@@ -39,7 +39,7 @@
   "dependencies": {
     "@imbricate/core": "^1.10.0",
     "@imbricate/markdown-render": "^1.1.2",
-    "@imbricate/origin-file-system": "^1.8.0",
+    "@imbricate/origin-file-system": "^1.9.0",
     "@sudoo/io": "^1.8.0",
     "@sudoo/uuid": "^1.1.0",
     "axios": "^1.6.8",
