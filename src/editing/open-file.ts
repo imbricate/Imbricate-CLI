@@ -79,7 +79,11 @@ export const performSaveAndCleanup = async (
     } else {
 
         terminalController.printInfo("Saving...");
-        await performImbricateSavingTarget(savingTarget, updatedContent, globalManager.originManager);
+        const result: boolean = await performImbricateSavingTarget(savingTarget, updatedContent, globalManager.originManager, false);
+
+        if (!result) {
+            terminalController.printErrorMessage("Save target returns false, please check the error.");
+        }
         terminalController.printInfo("Edit Saved");
     }
 };
