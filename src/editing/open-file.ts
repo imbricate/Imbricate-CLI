@@ -5,14 +5,14 @@
  */
 
 import { cleanupSavingTarget, hashSavingTarget, performImbricateSavingTarget, readActiveEditing, writeActiveEditing } from "@imbricate/local-fundamental";
-import { attemptMarkDir, directoryFiles, readTextFile, removeDirectory, removeFile, writeTextFile } from "@sudoo/io";
+import { attemptMarkDir, readTextFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
 import { CLIAlreadyEditing } from "../error/editing/already-editing";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
-import { fixImbricateTempDirectory, getFolderPath } from "../util/fix-directory";
+import { fixImbricateTempDirectory } from "../util/fix-directory";
 import { hashString } from "../util/hash";
 import { ActiveEditing, SavingTarget } from "./definition";
 import { diffSavingTarget } from "./diff-file";
@@ -81,15 +81,6 @@ export const performSaveAndCleanup = async (
         terminalController.printInfo("Saving...");
         await performImbricateSavingTarget(savingTarget, updatedContent, globalManager.originManager);
         terminalController.printInfo("Edit Saved");
-    }
-
-    const outerTempFolderPath: string = getFolderPath(filePath);
-
-    await removeFile(filePath);
-
-    const remainingFiles: string[] = await directoryFiles(outerTempFolderPath);
-    if (remainingFiles.length === 0) {
-        await removeDirectory(outerTempFolderPath);
     }
 };
 
