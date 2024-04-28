@@ -56,7 +56,7 @@ export const createCollectionDeleteCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const pages: ImbricatePageSnapshot[] = await collection.listPages();
+            const pages: ImbricatePageSnapshot[] = await collection.listPages([]); // TODO
 
             if (pages.length !== 0) {
 

@@ -82,13 +82,13 @@ export const createPageCreateCommand = (
                 options.quiet,
             );
 
-            const pageExists: boolean = await collection.hasPage(pageTitle);
+            const pageExists: boolean = await collection.hasPage([], pageTitle); // TODO
 
             if (pageExists) {
                 throw CLIPageAlreadyExists.withPageName(pageTitle);
             }
 
-            const item = await collection.createPage(pageTitle);
+            const item = await collection.createPage([], pageTitle); // TODO
 
             if (!options.quiet) {
                 terminalController.printInfo(`Page "${pageTitle}" created`);

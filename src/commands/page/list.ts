@@ -138,7 +138,7 @@ export const createPageListCommand = (
             }
 
             const pages: ImbricatePageSnapshot[] =
-                await collection.listPages();
+                await collection.listPages([]); // TODO
 
             if (options.json) {
 

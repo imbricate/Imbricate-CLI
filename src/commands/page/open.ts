@@ -90,7 +90,7 @@ export const createPageOpenCommand = (
             );
 
             const pages: ImbricatePageSnapshot[] =
-                await collection.listPages();
+                await collection.listPages([]); // TODO
 
             if (typeof options.title === "string" && options.title.length > 0) {
 
