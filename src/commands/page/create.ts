@@ -100,7 +100,7 @@ export const createPageCreateCommand = (
                 throw CLIPageAlreadyExists.withPageNameAndDirectories(pageTitle, directories);
             }
 
-            const item = await collection.createPage(directories, pageTitle);
+            const item = await collection.createPage(directories, pageTitle, "");
 
             if (!options.quiet) {
                 terminalController.printInfo(`Page "${pageTitle}" created`);

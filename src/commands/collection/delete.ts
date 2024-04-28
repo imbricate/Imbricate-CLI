@@ -56,12 +56,13 @@ export const createCollectionDeleteCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const pages: ImbricatePageSnapshot[] = await collection.listPages([]); // TODO
+            const pages: ImbricatePageSnapshot[] = await collection.listPages([], false);
+            const directories: string[] = await collection.listDirectories([]);
 
-            if (pages.length !== 0) {
+            if (pages.length !== 0 || directories.length !== 0) {
 
                 if (!options.quiet) {
-                    terminalController.printErrorMessage(`Collection ${collectionName} has ${pages.length} pages, a collection with pages cannot be deleted`);
+                    terminalController.printErrorMessage(`Collection ${collectionName} has pages or directories, a collection with pages or directories cannot be deleted`);
                 }
 
                 throw CLICollectionNotEmpty.withCollectionName(collectionName);

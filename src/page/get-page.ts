@@ -34,7 +34,7 @@ export const cliGetPage = async (
     }
 
     const pages: ImbricatePageSnapshot[] =
-        await collection.listPages([]); // TODO
+        await collection.listPages([], false); // TODO
 
     if (typeof title === "string" && title.length > 0) {
 

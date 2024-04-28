@@ -141,7 +141,7 @@ export const createPageDeleteCommand = (
             }
 
             const pages: ImbricatePageSnapshot[] =
-                await collection.listPages([]); // TODO
+                await collection.listPages([], false); // TODO
 
             if (typeof options.title === "string" && options.title.length > 0) {
 

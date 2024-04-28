@@ -23,6 +23,7 @@ type PageListCommandOptions = {
     readonly directories?: string[];
 
     readonly json?: boolean;
+    readonly recursive?: boolean;
     readonly fullIdentifier?: boolean;
     readonly pointer?: boolean;
 };
@@ -32,6 +33,7 @@ const generateRawPrint = (
     directories: string[],
     pointer: boolean,
     fullIdentifier: boolean,
+    recursive: boolean,
 ): string => {
 
     if (!pointer) {
@@ -44,8 +46,15 @@ const generateRawPrint = (
 
     const mappedLeastCommonIdentifier: Record<string, string> =
         mapLeastCommonIdentifier(pages.map((item) => {
+
+            let title: string = item.title;
+
+            if (recursive) {
+                title = [...item.directories, title].join("/");
+            }
+
             return {
-                key: item.title,
+                key: title,
                 identifier: item.identifier,
             };
         }));
@@ -53,7 +62,11 @@ const generateRawPrint = (
     return pages
         .map((page: ImbricatePageSnapshot) => {
 
-            const title: string = page.title;
+            let title: string = page.title;
+
+            if (recursive) {
+                title = [...page.directories, title].join("/");
+            }
 
             const pointer: string = mappedLeastCommonIdentifier[title];
             let output: string = `[${pointer}]`;
@@ -65,7 +78,7 @@ const generateRawPrint = (
             return `${output} -> ${title}`;
         })
         .concat(...directories.map((directory) => {
-            return `|> ${directory}/`;
+            return `${directory}/`;
         }))
         .join("\n");
 };
@@ -127,6 +140,7 @@ export const createPageListCommand = (
             inputParseDirectories,
         )
         .option("-j, --json", "print result as JSON")
+        .option("-r, --recursive", "find pages recursively in directories")
         .option("-f, --full-identifier", "print full identifier")
         .option("--no-pointer", "not to map pointer")
         .action(createActionRunner(terminalController, async (
@@ -156,7 +170,7 @@ export const createPageListCommand = (
             }
 
             const pages: ImbricatePageSnapshot[] =
-                await collection.listPages(directories);
+                await collection.listPages(directories, !!options.recursive);
 
             const listedDirectories: string[] =
                 await collection.listDirectories(directories);
@@ -179,6 +193,7 @@ export const createPageListCommand = (
                 listedDirectories,
                 !!options.pointer,
                 !!options.fullIdentifier,
+                !!options.recursive,
             ));
         }));
 
