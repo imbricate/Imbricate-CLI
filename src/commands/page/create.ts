@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { validateFilename } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
@@ -14,6 +15,7 @@ import { openContentAndMonitor } from "../../editing/open-file";
 import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIInvalidPageTitle } from "../../error/page/invalid-page-title";
 import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
 import { CLIPageNotFound } from "../../error/page/page-not-found";
 import { GlobalManager } from "../../global/global-manager";
@@ -69,6 +71,10 @@ export const createPageCreateCommand = (
 
             if (!currentOrigin) {
                 throw CLIActiveOriginNotFound.create();
+            }
+
+            if (validateFilename(pageTitle)) {
+                throw CLIInvalidPageTitle.withPageTitle(pageTitle);
             }
 
             const hasCollection: boolean = await currentOrigin.hasCollection(collectionName);

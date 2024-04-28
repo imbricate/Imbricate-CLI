@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin, IImbricateScript, ImbricateScriptSnapshot } from "@imbricate/core";
+import { validateFilename } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
@@ -13,6 +14,7 @@ import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
 import { createScriptSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIInvalidScriptName } from "../../error/script/invalid-script-name";
 import { CLIScriptAlreadyExists } from "../../error/script/script-already-exists";
 import { CLIScriptNotFound } from "../../error/script/script-not-found";
 import { GlobalManager } from "../../global/global-manager";
@@ -51,6 +53,10 @@ export const createScriptCreateCommand = (
 
             if (!currentOrigin) {
                 throw CLIActiveOriginNotFound.create();
+            }
+
+            if (!validateFilename(scriptName)) {
+                throw CLIInvalidScriptName.withScriptName(scriptName);
             }
 
             const hasScript: boolean = await currentOrigin.hasScript(scriptName);
