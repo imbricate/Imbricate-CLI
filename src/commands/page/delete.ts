@@ -19,10 +19,13 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { inputParseDirectories } from "../../util/input-parse";
 
 type PageDeleteCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly quiet?: boolean;
     readonly force?: boolean;
@@ -102,6 +105,11 @@ export const createPageDeleteCommand = (
             "specify the collection of the page (required)",
         )
         .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
+        .option(
             "-t, --title <page-title>",
             "delete page by page title (one-of)",
         )
@@ -119,6 +127,11 @@ export const createPageDeleteCommand = (
                 throw CLIPageInvalidInput.withMessage("One of --title or --identifier is required");
             }
 
+            if (typeof options.directories === "undefined" && !options.quiet) {
+                terminalController.printInfo("No directories specified, using root directory");
+            }
+
+            const directories: string[] = options.directories ?? [];
             const collectionName: string = options.collection;
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -141,7 +154,7 @@ export const createPageDeleteCommand = (
             }
 
             const pages: ImbricatePageSnapshot[] =
-                await collection.listPages([], false); // TODO
+                await collection.listPages(directories, false);
 
             if (typeof options.title === "string" && options.title.length > 0) {
 
