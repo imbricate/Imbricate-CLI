@@ -14,10 +14,13 @@ import { cliGetPage } from "../../../page/get-page";
 import { ITerminalController } from "../../../terminal/definition";
 import { createActionRunner } from "../../../util/action-runner";
 import { createConfiguredCommand } from "../../../util/command";
+import { inputParseDirectories } from "../../../util/input-parse";
 
 type PageAttributeSetCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly title?: string;
     readonly identifier?: string;
@@ -42,6 +45,11 @@ export const createPageAttributeSetCommand = (
             "specify the collection of the page (required)",
         )
         .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
+        .option(
             "-t, --title <page-title>",
             "set attribute by page title (one-of)",
         )
@@ -55,6 +63,11 @@ export const createPageAttributeSetCommand = (
             attributeValue: string,
             options: PageAttributeSetCommandOptions,
         ): Promise<void> => {
+
+            if (typeof options.directories === "undefined" && !options.quiet) {
+                terminalController.printInfo("No directories specified, using root directory");
+            }
+            const directories: string[] = options.directories ?? [];
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
@@ -72,6 +85,7 @@ export const createPageAttributeSetCommand = (
             const page: IImbricatePage = await cliGetPage(
                 currentOrigin,
                 options.collection,
+                directories,
                 options.title,
                 options.identifier,
             );

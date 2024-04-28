@@ -12,6 +12,7 @@ import { CLIPageNotFound } from "../error/page/page-not-found";
 export const cliGetPage = async (
     currentOrigin: IImbricateOrigin,
     collectionName: string,
+    directories: string[],
     title?: string,
     identifier?: string,
 ): Promise<IImbricatePage> => {
@@ -34,7 +35,7 @@ export const cliGetPage = async (
     }
 
     const pages: ImbricatePageSnapshot[] =
-        await collection.listPages([], false); // TODO
+        await collection.listPages(directories, false);
 
     if (typeof title === "string" && title.length > 0) {
 
