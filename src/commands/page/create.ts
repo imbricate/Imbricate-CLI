@@ -11,6 +11,7 @@ import { getProfileFromConfiguration } from "../../configuration/profile/get-pro
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
+import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIPageAlreadyExists } from "../../error/page/page-already-exists";
@@ -19,11 +20,13 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
+import { inputParseDirectories } from "../../util/input-parse";
 
 type PageCreateCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly open?: boolean;
     readonly quiet?: boolean;
@@ -45,6 +48,11 @@ export const createPageCreateCommand = (
             "-c, --collection <description>",
             "specify the collection of the page (required)",
         )
+        .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
         .option("-q, --quiet", "quite mode")
         .option("-no, --no-open", "do not open the page after creation")
         .option("-h, --hands-free", "open the created page without monitoring the file changes")
@@ -54,6 +62,7 @@ export const createPageCreateCommand = (
             options: PageCreateCommandOptions,
         ): Promise<void> => {
 
+            const directories: string[] = options.directories ?? [];
             const collectionName: string = options.collection;
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -82,13 +91,16 @@ export const createPageCreateCommand = (
                 options.quiet,
             );
 
-            const pageExists: boolean = await collection.hasPage([], pageTitle); // TODO
+            const pageExists: boolean = await collection.hasPage(
+                directories,
+                pageTitle,
+            );
 
             if (pageExists) {
-                throw CLIPageAlreadyExists.withPageName(pageTitle);
+                throw CLIPageAlreadyExists.withPageNameAndDirectories(pageTitle, directories);
             }
 
-            const item = await collection.createPage([], pageTitle); // TODO
+            const item = await collection.createPage(directories, pageTitle);
 
             if (!options.quiet) {
                 terminalController.printInfo(`Page "${pageTitle}" created`);

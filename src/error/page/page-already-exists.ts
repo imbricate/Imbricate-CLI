@@ -8,10 +8,15 @@ import { CLIPageError } from "./page-error";
 
 export class CLIPageAlreadyExists extends CLIPageError {
 
-    public static withPageName(pageName: string): CLIPageAlreadyExists {
+    public static withPageNameAndDirectories(
+        pageName: string,
+        directories: string[],
+    ): CLIPageAlreadyExists {
+
+        const fixedPath: string = [...directories, pageName].join("/");
 
         return new CLIPageAlreadyExists(
-            `Page named '${pageName}' already exists`,
+            `Page '${fixedPath}' already exists`,
         );
     }
 

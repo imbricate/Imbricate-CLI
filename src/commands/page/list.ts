@@ -14,10 +14,13 @@ import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 import { formatJSON } from "../../util/format-json";
+import { inputParseDirectories } from "../../util/input-parse";
 
 type PageListCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly json?: boolean;
     readonly fullIdentifier?: boolean;
@@ -26,6 +29,7 @@ type PageListCommandOptions = {
 
 const generateRawPrint = (
     pages: ImbricatePageSnapshot[],
+    directories: string[],
     pointer: boolean,
     fullIdentifier: boolean,
 ): string => {
@@ -60,11 +64,15 @@ const generateRawPrint = (
 
             return `${output} -> ${title}`;
         })
+        .concat(...directories.map((directory) => {
+            return `|> ${directory}/`;
+        }))
         .join("\n");
 };
 
 const generateJSONPrint = (
     pages: ImbricatePageSnapshot[],
+    directories: string[],
     pointer: boolean,
 ): string => {
 
@@ -85,13 +93,17 @@ const generateJSONPrint = (
             };
         }));
 
-    return formatJSON(pages.map((page) => {
-        return {
-            title: page.title,
-            pointer: mappedLeastCommonIdentifier[page.title],
-            identifier: page.identifier,
-        };
-    }));
+    return formatJSON({
+        pages: pages.map((page) => {
+            return {
+                title: page.title,
+                directories: page.directories,
+                pointer: mappedLeastCommonIdentifier[page.title],
+                identifier: page.identifier,
+            };
+        }),
+        directories,
+    });
 };
 
 export const createPageListCommand = (
@@ -109,6 +121,11 @@ export const createPageListCommand = (
             "-c, --collection <description>",
             "specify the collection of the page (required)",
         )
+        .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
         .option("-j, --json", "print result as JSON")
         .option("-f, --full-identifier", "print full identifier")
         .option("--no-pointer", "not to map pointer")
@@ -116,6 +133,7 @@ export const createPageListCommand = (
             options: PageListCommandOptions,
         ): Promise<void> => {
 
+            const directories: string[] = options.directories ?? [];
             const collectionName: string = options.collection;
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -138,23 +156,27 @@ export const createPageListCommand = (
             }
 
             const pages: ImbricatePageSnapshot[] =
-                await collection.listPages([]); // TODO
+                await collection.listPages(directories);
+
+            const listedDirectories: string[] =
+                await collection.listDirectories(directories);
 
             if (options.json) {
 
                 terminalController.printInfo(
-                    generateJSONPrint(pages, !!options.pointer),
+                    generateJSONPrint(pages, listedDirectories, !!options.pointer),
                 );
                 return;
             }
 
-            if (pages.length === 0) {
-                terminalController.printInfo("No pages found");
+            if (pages.length === 0 && listedDirectories.length === 0) {
+                terminalController.printInfo("No pages or directories found");
                 return;
             }
 
             terminalController.printInfo(generateRawPrint(
                 pages,
+                listedDirectories,
                 !!options.pointer,
                 !!options.fullIdentifier,
             ));

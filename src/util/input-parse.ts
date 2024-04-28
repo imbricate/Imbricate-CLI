@@ -23,3 +23,15 @@ export const inputParsePositiveInteger = (value: string): number => {
 
     return parsed;
 };
+
+export const inputParseDirectories = (value: string): string[] => {
+
+    return value
+        .split("/")
+        .map((item: string) => {
+            return item.trim();
+        })
+        .filter((item: string) => {
+            return item.length > 0;
+        });
+};

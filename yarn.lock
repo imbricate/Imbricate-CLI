@@ -1672,14 +1672,14 @@ __metadata:
 
 "@imbricate/origin-file-system@file:../Imbricate-Origin-File-System/app::locator=imbricate%40workspace%3A.":
   version: 1.10.1
-  resolution: "@imbricate/origin-file-system@file:../Imbricate-Origin-File-System/app#../Imbricate-Origin-File-System/app::hash=75e4ad&locator=imbricate%40workspace%3A."
+  resolution: "@imbricate/origin-file-system@file:../Imbricate-Origin-File-System/app#../Imbricate-Origin-File-System/app::hash=e00da7&locator=imbricate%40workspace%3A."
   dependencies:
     "@sudoo/asynchronous": "npm:^2.4.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/73fdb06e229d52585b0c69d2948b3c6ed770335846b0d35e9c1390460eaf805dba416830b30dd62ca4ac4112584b5c223ce68edbee6e18ebfda9db5206119319
+  checksum: 10c0/42d7f8613c2843532473a2c5e9d79b81c953aa175b208a011eb1304a241086568bbb73b50070a8df8c72fe871b70e595c72c793bbe6139c18f0a0ae64886e237
   languageName: node
   linkType: hard
 
