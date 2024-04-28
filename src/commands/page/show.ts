@@ -14,10 +14,13 @@ import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
 import { formatLog } from "../../util/format-log";
+import { inputParseDirectories } from "../../util/input-parse";
 
 type PageShowCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly json?: boolean;
 
@@ -39,6 +42,11 @@ export const createPageShowCommand = (
             "-c, --collection <description>",
             "specify the collection of the page (required)",
         )
+        .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
         .option("-j, --json", "print result as JSON")
         .option(
             "-t, --title <page-title>",
@@ -52,6 +60,11 @@ export const createPageShowCommand = (
             options: PageShowCommandOptions,
         ): Promise<void> => {
 
+            if (typeof options.directories === "undefined") {
+                terminalController.printInfo("No directories specified, using root directory");
+            }
+            const directories: string[] = options.directories ?? [];
+
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
             if (!currentOrigin) {
@@ -61,6 +74,7 @@ export const createPageShowCommand = (
             const page: IImbricatePage = await cliGetPage(
                 currentOrigin,
                 options.collection,
+                directories,
                 options.title,
                 options.identifier,
             );
@@ -72,6 +86,7 @@ export const createPageShowCommand = (
 
                 terminalController.printJsonInfo({
                     title: page.title,
+                    directories,
                     identifier: page.identifier,
                     attributes: pageAttributes,
                     createdAt: page.createdAt.toISOString(),
@@ -82,6 +97,7 @@ export const createPageShowCommand = (
 
             const textOutput: string = [
                 `Title: ${page.title}`,
+                `Directories: ${directories.join("/")}`,
                 `Identifier: ${page.identifier}`,
                 `Attributes: ${formatLog(pageAttributes)}`,
                 `Created At: ${page.createdAt.toLocaleString()}`,

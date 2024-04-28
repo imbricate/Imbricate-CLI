@@ -24,11 +24,14 @@ import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { recursiveCheckDirectory } from "../../util/check-directory";
 import { createConfiguredCommand } from "../../util/command";
+import { inputParseDirectories } from "../../util/input-parse";
 import { resolvePath } from "../../util/resolve-path";
 
 type PageRenderCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly quiet?: boolean;
     readonly force?: boolean;
@@ -84,6 +87,11 @@ export const createPageRenderCommand = (
             "specify the collection of the page (required)",
         )
         .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
+        .option(
             "-t, --title <page-title>",
             "render page by page title (one-of)",
         )
@@ -109,6 +117,11 @@ export const createPageRenderCommand = (
             options: PageRenderCommandOptions,
         ): Promise<void> => {
 
+            if (typeof options.directories === "undefined" && !options.quiet) {
+                terminalController.printInfo("No directories specified, using root directory");
+            }
+            const directories: string[] = options.directories ?? [];
+
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
             if (!currentOrigin) {
@@ -125,6 +138,7 @@ export const createPageRenderCommand = (
             const page: IImbricatePage = await cliGetPage(
                 currentOrigin,
                 options.collection,
+                directories,
                 options.title,
                 options.identifier,
             );

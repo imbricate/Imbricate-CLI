@@ -14,11 +14,13 @@ import { cliGetPage } from "../../page/get-page";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { inputParsePositiveInteger } from "../../util/input-parse";
+import { inputParseDirectories, inputParsePositiveInteger } from "../../util/input-parse";
 
 type PageCatenateCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly title?: string;
     readonly identifier?: string;
@@ -43,6 +45,11 @@ export const createPageCatenateCommand = (
             "specify the collection of the page (required)",
         )
         .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
+        .option(
             "-t, --title <page-title>",
             "catenate page by page title (one-of)",
         )
@@ -64,6 +71,11 @@ export const createPageCatenateCommand = (
             options: PageCatenateCommandOptions,
         ): Promise<void> => {
 
+            if (typeof options.directories === "undefined") {
+                terminalController.printInfo("No directories specified, using root directory");
+            }
+            const directories: string[] = options.directories ?? [];
+
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
             if (!currentOrigin) {
@@ -80,6 +92,7 @@ export const createPageCatenateCommand = (
             const page: IImbricatePage = await cliGetPage(
                 currentOrigin,
                 options.collection,
+                directories,
                 options.title,
                 options.identifier,
             );

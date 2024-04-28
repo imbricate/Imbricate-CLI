@@ -16,10 +16,13 @@ import { cliGetPage } from "../../page/get-page";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
+import { inputParseDirectories } from "../../util/input-parse";
 
 type PageRetitleCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly quiet?: boolean;
 
@@ -41,7 +44,11 @@ export const createPageRetitleCommand = (
             "-c, --collection <description>",
             "specify the collection of the page (required)",
         )
-        .option("-q, --quiet", "quite mode")
+        .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
         .option(
             "-t, --title <page-title>",
             "retitle page by page title (one-of)",
@@ -50,11 +57,17 @@ export const createPageRetitleCommand = (
             "-i, --identifier <page-identifier>",
             "retitle page by page identifier or pointer (one-of)",
         )
+        .option("-q, --quiet", "quite mode")
         .argument("<new-page-title>", "new title of the page")
         .action(createActionRunner(terminalController, async (
             newPageTitle: string,
             options: PageRetitleCommandOptions,
         ): Promise<void> => {
+
+            if (typeof options.directories === "undefined" && !options.quiet) {
+                terminalController.printInfo("No directories specified, using root directory");
+            }
+            const directories: string[] = options.directories ?? [];
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
@@ -72,6 +85,7 @@ export const createPageRetitleCommand = (
             const page: IImbricatePage = await cliGetPage(
                 currentOrigin,
                 options.collection,
+                directories,
                 options.title,
                 options.identifier,
             );

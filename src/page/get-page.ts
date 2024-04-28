@@ -64,7 +64,6 @@ export const cliGetPage = async (
 
             if (pageSnapshot.identifier.startsWith(identifier)) {
 
-
                 const page = await collection.getPage(pageSnapshot.identifier);
 
                 if (!page) {
@@ -74,6 +73,8 @@ export const cliGetPage = async (
                 return page;
             }
         }
+
+        throw CLIPageNotFound.withPageIdentifier(identifier);
     }
 
     throw CLIPageNotFound.withUnknownIssue();
