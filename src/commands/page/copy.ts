@@ -4,11 +4,13 @@
  * @description Copy
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, ImbricatePageMetadata } from "@imbricate/core";
+import { UUIDVersion1 } from "@sudoo/uuid";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
+import { CLIOriginNotFound } from "../../error/origin/origin-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { cliGetPage } from "../../page/get-page";
 import { ITerminalController } from "../../terminal/definition";
@@ -26,6 +28,10 @@ type PageCopyCommandOptions = {
 
     readonly title?: string;
     readonly identifier?: string;
+
+    readonly targetOrigin?: string;
+    readonly targetCollection?: string;
+    readonly targetDirectories?: string[];
 };
 
 export const createPageCopyCommand = (
@@ -35,6 +41,7 @@ export const createPageCopyCommand = (
 ): Command => {
 
     const copyCommand: Command = createConfiguredCommand("copy");
+    copyCommand.alias("cp");
 
     copyCommand
         .description("render a page from a collection")
@@ -54,6 +61,19 @@ export const createPageCopyCommand = (
         .option(
             "-i, --identifier <page-identifier>",
             "render page by page identifier or pointer (one-of)",
+        )
+        .option(
+            "->o, --target-origin <origin>",
+            "specify the target origin",
+        )
+        .option(
+            "->c, --target-collection <collection>",
+            "specify the target collection",
+        )
+        .option(
+            "->d, --target-directories <directories>",
+            "specify the target directories, nested with slash (/)",
+            inputParseDirectories,
         )
         .option("-q, --quiet", "quite mode")
         .action(createActionRunner(terminalController, async (
@@ -86,7 +106,47 @@ export const createPageCopyCommand = (
                 options.identifier,
             );
 
+            const targetOrigin: IImbricateOrigin | null =
+                options.targetOrigin
+                    ? globalManager.originManager.getOrigin(options.targetOrigin)
+                    : currentOrigin;
 
+            if (!targetOrigin) {
+                throw CLIOriginNotFound.withOriginName(options.targetOrigin ?? "current");
+            }
+
+            const targetCollection: IImbricateOriginCollection | null
+                = options.targetCollection
+                    ? await targetOrigin.getCollection(options.targetCollection)
+                    : await targetOrigin.getCollection(options.collection);
+
+            if (!targetCollection) {
+                throw CLICollectionNotFound.withCollectionName(options.targetCollection ?? "unknown");
+            }
+
+            const targetDirectories: string[] = options.targetDirectories ?? directories;
+
+            const targetIdentifier: string =
+                typeof options.targetOrigin !== "undefined"
+                    && options.targetOrigin !== globalManager.activeOrigin
+                    ? page.identifier
+                    : UUIDVersion1.generateString();
+
+            const newPageMetadata: ImbricatePageMetadata = {
+
+                title: page.title,
+                directories: targetDirectories,
+                identifier: targetIdentifier,
+                createdAt: page.createdAt,
+                updatedAt: page.updatedAt,
+                digest: page.digest,
+                historyRecords: page.historyRecords,
+                description: page.description,
+            };
+
+            const content: string = await page.readContent();
+
+            await targetCollection.putPage(newPageMetadata, content);
         }));
 
     return copyCommand;

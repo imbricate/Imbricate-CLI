@@ -11,6 +11,7 @@ import { ITerminalController } from "../terminal/definition";
 import { createConfiguredCommand } from "../util/command";
 import { createPageAttributeCommand } from "./page/attribute";
 import { createPageCatenateCommand } from "./page/catenate";
+import { createPageCopyCommand } from "./page/copy";
 import { createPageCreateCommand } from "./page/create";
 import { createPageDeleteCommand } from "./page/delete";
 import { createPageListCommand } from "./page/list";
@@ -36,6 +37,11 @@ export const createPageCommand = (
         configurationManager,
     ));
     pageCommand.addCommand(createPageCatenateCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    pageCommand.addCommand(createPageCopyCommand(
         globalManager,
         terminalController,
         configurationManager,
