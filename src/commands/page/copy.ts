@@ -83,7 +83,18 @@ const getTargetCollection = async (
         return targetCollection;
     }
 
-    return currentCollection;
+    const targetCollection: IImbricateOriginCollection | null = await targetOrigin.getCollection(currentCollection.collectionName);
+
+    if (!targetCollection) {
+
+        if (!options.quiet) {
+            terminalController.printInfo(`Target collection: ${currentCollection.collectionName} in target origin not found.`);
+        }
+
+        throw CLICollectionNotFound.withCollectionName(currentCollection.collectionName);
+    }
+
+    return targetCollection;
 };
 
 const getTargetDirectories = (
@@ -125,6 +136,10 @@ const getTargetIdentifier = async (
         }
 
         return page.identifier;
+    }
+
+    if (!options.quiet) {
+        terminalController.printInfo("Copying page under same origin, generating new page identifier");
     }
 
     return UUIDVersion1.generateString();
@@ -241,11 +256,11 @@ export const createPageCopyCommand = (
                 description: page.description,
             };
 
-            // const content: string = await page.readContent();
+            const content: string = await page.readContent();
 
-            console.log(newPageMetadata, targetCollection);
+            console.log(newPageMetadata);
 
-            // await targetCollection.putPage(newPageMetadata, content);
+            await targetCollection.putPage(newPageMetadata, content);
         }));
 
     return copyCommand;
