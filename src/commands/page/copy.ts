@@ -34,6 +34,102 @@ type PageCopyCommandOptions = {
     readonly targetDirectories?: string[];
 };
 
+const getTargetOrigin = (
+    options: PageCopyCommandOptions,
+    currentOrigin: IImbricateOrigin,
+    globalManager: GlobalManager,
+    terminalController: ITerminalController,
+): IImbricateOrigin => {
+
+    if (typeof options.targetOrigin === "string") {
+
+        const targetOrigin: IImbricateOrigin | null =
+            globalManager.originManager.getOrigin(options.targetOrigin);
+
+        if (!targetOrigin) {
+            throw CLIOriginNotFound.withOriginName(options.targetOrigin);
+        }
+
+        if (!options.quiet) {
+            terminalController.printInfo(`Target origin: ${options.targetOrigin}`);
+        }
+
+        return targetOrigin;
+    }
+
+    return currentOrigin;
+};
+
+const getTargetCollection = async (
+    options: PageCopyCommandOptions,
+    currentCollection: IImbricateOriginCollection,
+    targetOrigin: IImbricateOrigin,
+    terminalController: ITerminalController,
+): Promise<IImbricateOriginCollection> => {
+
+    if (typeof options.targetCollection === "string") {
+
+        const targetCollection: IImbricateOriginCollection | null
+            = await targetOrigin.getCollection(options.targetCollection);
+
+        if (!targetCollection) {
+            throw CLICollectionNotFound.withCollectionName(options.targetCollection);
+        }
+
+        if (!options.quiet) {
+            terminalController.printInfo(`Target collection: ${options.targetCollection}`);
+        }
+
+        return targetCollection;
+    }
+
+    return currentCollection;
+};
+
+const getTargetDirectories = (
+    options: PageCopyCommandOptions,
+    currentDirectories: string[],
+): string[] => {
+
+    if (typeof options.targetDirectories !== "undefined") {
+        return options.targetDirectories;
+    }
+
+    return currentDirectories;
+};
+
+const getTargetIdentifier = async (
+    options: PageCopyCommandOptions,
+    targetCollection: IImbricateOriginCollection,
+    page: IImbricatePage,
+    globalManager: GlobalManager,
+    terminalController: ITerminalController,
+): Promise<string> => {
+
+    if (typeof options.targetOrigin !== "undefined"
+        && options.targetOrigin !== globalManager.activeOrigin) {
+
+        const targetPage: IImbricatePage | null = await targetCollection.getPage(page.identifier);
+
+        if (targetPage) {
+
+            if (!options.quiet) {
+                terminalController.printInfo(`Target origin is specified, but page identifier: ${page.identifier}, already exist in target collection.`);
+            }
+
+            return UUIDVersion1.generateString();
+        }
+
+        if (!options.quiet) {
+            terminalController.printInfo(`Target origin is specified, reusing same page identifier: ${page.identifier}`);
+        }
+
+        return page.identifier;
+    }
+
+    return UUIDVersion1.generateString();
+};
+
 export const createPageCopyCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
@@ -106,31 +202,32 @@ export const createPageCopyCommand = (
                 options.identifier,
             );
 
-            const targetOrigin: IImbricateOrigin | null =
-                options.targetOrigin
-                    ? globalManager.originManager.getOrigin(options.targetOrigin)
-                    : currentOrigin;
+            const targetOrigin: IImbricateOrigin = getTargetOrigin(
+                options,
+                currentOrigin,
+                globalManager,
+                terminalController,
+            );
 
-            if (!targetOrigin) {
-                throw CLIOriginNotFound.withOriginName(options.targetOrigin ?? "current");
-            }
+            const targetCollection: IImbricateOriginCollection = await getTargetCollection(
+                options,
+                collection,
+                targetOrigin,
+                terminalController,
+            );
 
-            const targetCollection: IImbricateOriginCollection | null
-                = options.targetCollection
-                    ? await targetOrigin.getCollection(options.targetCollection)
-                    : await targetOrigin.getCollection(options.collection);
+            const targetDirectories: string[] = getTargetDirectories(
+                options,
+                directories,
+            );
 
-            if (!targetCollection) {
-                throw CLICollectionNotFound.withCollectionName(options.targetCollection ?? "unknown");
-            }
-
-            const targetDirectories: string[] = options.targetDirectories ?? directories;
-
-            const targetIdentifier: string =
-                typeof options.targetOrigin !== "undefined"
-                    && options.targetOrigin !== globalManager.activeOrigin
-                    ? page.identifier
-                    : UUIDVersion1.generateString();
+            const targetIdentifier: string = await getTargetIdentifier(
+                options,
+                targetCollection,
+                page,
+                globalManager,
+                terminalController,
+            );
 
             const newPageMetadata: ImbricatePageMetadata = {
 
@@ -144,9 +241,11 @@ export const createPageCopyCommand = (
                 description: page.description,
             };
 
-            const content: string = await page.readContent();
+            // const content: string = await page.readContent();
 
-            await targetCollection.putPage(newPageMetadata, content);
+            console.log(newPageMetadata, targetCollection);
+
+            // await targetCollection.putPage(newPageMetadata, content);
         }));
 
     return copyCommand;
