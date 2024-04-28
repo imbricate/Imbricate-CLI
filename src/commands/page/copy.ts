@@ -212,15 +212,15 @@ export const createPageCopyCommand = (
             "render page by page identifier or pointer (one-of)",
         )
         .option(
-            "->o, --target-origin <origin>",
+            "-@o, --target-origin <origin>",
             "specify the target origin",
         )
         .option(
-            "->c, --target-collection <collection>",
+            "-@c, --target-collection <collection>",
             "specify the target collection",
         )
         .option(
-            "->d, --target-directories <directories>",
+            "-@d, --target-directories <directories>",
             "specify the target directories, nested with slash (/)",
             inputParseDirectories,
         )
@@ -303,8 +303,6 @@ export const createPageCopyCommand = (
             };
 
             const content: string = await page.readContent();
-
-            console.log(newPageMetadata);
 
             await targetCollection.putPage(newPageMetadata, content);
         }));
