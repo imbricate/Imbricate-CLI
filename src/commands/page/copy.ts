@@ -145,6 +145,44 @@ const getTargetIdentifier = async (
     return UUIDVersion1.generateString();
 };
 
+const getTargetTitle = async (
+    options: PageCopyCommandOptions,
+    targetDirectories: string[],
+    targetCollection: IImbricateOriginCollection,
+    page: IImbricatePage,
+    terminalController: ITerminalController,
+    currentDeterminedOrder: number = 0,
+): Promise<string> => {
+
+    let currentDeterminingTitle: string = page.title;
+
+    if (currentDeterminedOrder === 1) {
+        currentDeterminingTitle = `${currentDeterminingTitle} - Copy`;
+    } else if (currentDeterminedOrder > 1) {
+        currentDeterminingTitle = `${currentDeterminingTitle} - Copy (${currentDeterminedOrder})`;
+    }
+
+    const hasPage: boolean = await targetCollection.hasPage(targetDirectories, currentDeterminingTitle);
+
+    if (hasPage) {
+
+        return getTargetTitle(
+            options,
+            targetDirectories,
+            targetCollection,
+            page,
+            terminalController,
+            currentDeterminedOrder + 1,
+        );
+    }
+
+    if (!options.quiet && currentDeterminedOrder > 0) {
+        terminalController.printInfo(`Target title already exist, using: ${currentDeterminingTitle}`);
+    }
+
+    return currentDeterminingTitle;
+};
+
 export const createPageCopyCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
@@ -244,9 +282,17 @@ export const createPageCopyCommand = (
                 terminalController,
             );
 
+            const targetTitle: string = await getTargetTitle(
+                options,
+                targetDirectories,
+                targetCollection,
+                page,
+                terminalController,
+            );
+
             const newPageMetadata: ImbricatePageMetadata = {
 
-                title: page.title,
+                title: targetTitle,
                 directories: targetDirectories,
                 identifier: targetIdentifier,
                 createdAt: page.createdAt,
