@@ -11,6 +11,7 @@ import { getProfileFromConfiguration } from "../../configuration/profile/get-pro
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
 import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
+import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIPageInvalidInput } from "../../error/page/page-invalid-input";
@@ -19,11 +20,13 @@ import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
-import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
+import { inputParseDirectories } from "../../util/input-parse";
 
 type PageOpenCommandOptions = {
 
     readonly collection: string;
+
+    readonly directories?: string[];
 
     readonly title?: string;
     readonly identifier?: string;
@@ -46,6 +49,11 @@ export const createPageOpenCommand = (
             "specify the collection of the page (required)",
         )
         .option(
+            "-d, --directories <directories>",
+            "page directories, nested with slash (/)",
+            inputParseDirectories,
+        )
+        .option(
             "-t, --title <page-title>",
             "open page by page title (one-of)",
         )
@@ -62,6 +70,11 @@ export const createPageOpenCommand = (
                 throw CLIPageInvalidInput.withMessage("One of --title or --identifier is required");
             }
 
+            if (typeof options.directories === "undefined") {
+                terminalController.printInfo("No directories specified, using root directory");
+            }
+
+            const directories: string[] = options.directories ?? [];
             const collectionName: string = options.collection;
 
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
@@ -90,7 +103,7 @@ export const createPageOpenCommand = (
             );
 
             const pages: ImbricatePageSnapshot[] =
-                await collection.listPages([], false); // TODO
+                await collection.listPages(directories, false);
 
             if (typeof options.title === "string" && options.title.length > 0) {
 
