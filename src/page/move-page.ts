@@ -179,9 +179,9 @@ type MoveCLIPageOptions = {
 };
 
 export const moveCLIPage = async (
+    options: MoveCLIPageOptions,
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    options: MoveCLIPageOptions,
 ): Promise<void> => {
 
     if (typeof options.directories === "undefined" && !options.quiet) {
