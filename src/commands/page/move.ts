@@ -7,7 +7,7 @@
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManager } from "../../global/global-manager";
-import { moveCLIPage } from "../../page/move-page";
+import { cliCopyMovePage } from "../../page/copy-move-page";
 import { ITerminalController } from "../../terminal/definition";
 import { createActionRunner } from "../../util/action-runner";
 import { createConfiguredCommand } from "../../util/command";
@@ -75,8 +75,9 @@ export const createPageMoveCommand = (
             options: PageMoveCommandOptions,
         ): Promise<void> => {
 
-            return await moveCLIPage(
+            await cliCopyMovePage(
                 {
+                    deleteOriginal: true,
                     collection: options.collection,
                     directories: options.directories,
                     quiet: options.quiet,
@@ -89,6 +90,8 @@ export const createPageMoveCommand = (
                 globalManager,
                 terminalController,
             );
+
+
         }));
 
     return moveCommand;

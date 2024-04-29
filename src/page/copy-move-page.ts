@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace Page
- * @description Move Page
+ * @description Copy Move Page
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, ImbricatePageMetadata } from "@imbricate/core";
@@ -10,11 +10,11 @@ import { CLICollectionNotFound } from "../error/collection/collection-not-found"
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
 import { GlobalManager } from "../global/global-manager";
-import { cliGetPage } from "../page/get-page";
+import { cliGetPage } from "./get-page";
 import { ITerminalController } from "../terminal/definition";
 
 const getTargetOrigin = (
-    options: MoveCLIPageOptions,
+    options: CLICopyMovePageOptions,
     currentOrigin: IImbricateOrigin,
     globalManager: GlobalManager,
     terminalController: ITerminalController,
@@ -40,7 +40,7 @@ const getTargetOrigin = (
 };
 
 const getTargetCollection = async (
-    options: MoveCLIPageOptions,
+    options: CLICopyMovePageOptions,
     currentCollection: IImbricateOriginCollection,
     targetOrigin: IImbricateOrigin,
     terminalController: ITerminalController,
@@ -77,7 +77,7 @@ const getTargetCollection = async (
 };
 
 const getTargetDirectories = (
-    options: MoveCLIPageOptions,
+    options: CLICopyMovePageOptions,
     currentDirectories: string[],
 ): string[] => {
 
@@ -89,7 +89,7 @@ const getTargetDirectories = (
 };
 
 const getTargetIdentifier = async (
-    options: MoveCLIPageOptions,
+    options: CLICopyMovePageOptions,
     targetCollection: IImbricateOriginCollection,
     page: IImbricatePage,
     globalManager: GlobalManager,
@@ -125,7 +125,7 @@ const getTargetIdentifier = async (
 };
 
 const getTargetTitle = async (
-    options: MoveCLIPageOptions,
+    options: CLICopyMovePageOptions,
     targetDirectories: string[],
     targetCollection: IImbricateOriginCollection,
     page: IImbricatePage,
@@ -162,7 +162,9 @@ const getTargetTitle = async (
     return currentDeterminingTitle;
 };
 
-type MoveCLIPageOptions = {
+type CLICopyMovePageOptions = {
+
+    readonly deleteOriginal: boolean;
 
     readonly collection: string;
 
@@ -178,8 +180,8 @@ type MoveCLIPageOptions = {
     readonly targetDirectories?: string[];
 };
 
-export const moveCLIPage = async (
-    options: MoveCLIPageOptions,
+export const cliCopyMovePage = async (
+    options: CLICopyMovePageOptions,
     globalManager: GlobalManager,
     terminalController: ITerminalController,
 ): Promise<void> => {
@@ -260,4 +262,8 @@ export const moveCLIPage = async (
     const content: string = await page.readContent();
 
     await targetCollection.putPage(newPageMetadata, content);
+
+    if (options.deleteOriginal) {
+        await collection.deletePage(page.identifier);
+    }
 };
