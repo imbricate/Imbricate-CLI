@@ -39,7 +39,7 @@ export const createPageCopyCommand = (
     copyCommand.alias("cp");
 
     copyCommand
-        .description("render a page from a collection")
+        .description("copy a page from a collection to another origin/collection/directories")
         .requiredOption(
             "-c, --collection <description>",
             "specify the collection of the page (required)",

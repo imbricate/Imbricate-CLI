@@ -39,7 +39,7 @@ export const createPageMoveCommand = (
     moveCommand.alias("mv");
 
     moveCommand
-        .description("render a page from a collection")
+        .description("move a page from a collection to another origin/collection/directories")
         .requiredOption(
             "-c, --collection <description>",
             "specify the collection of the page (required)",
