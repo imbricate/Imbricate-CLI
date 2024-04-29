@@ -75,7 +75,7 @@ export const createPageMoveCommand = (
             options: PageMoveCommandOptions,
         ): Promise<void> => {
 
-            await cliCopyMovePage(
+            return await cliCopyMovePage(
                 {
                     deleteOriginal: true,
                     collection: options.collection,
@@ -90,8 +90,6 @@ export const createPageMoveCommand = (
                 globalManager,
                 terminalController,
             );
-
-
         }));
 
     return moveCommand;
