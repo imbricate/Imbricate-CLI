@@ -97,7 +97,7 @@ const getTargetIdentifier = async (
 ): Promise<string> => {
 
     if (options.deleteOriginal) {
-        page.identifier;
+        return page.identifier;
     }
 
     if (typeof options.targetOrigin !== "undefined"
