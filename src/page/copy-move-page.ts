@@ -10,8 +10,8 @@ import { CLICollectionNotFound } from "../error/collection/collection-not-found"
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
 import { GlobalManager } from "../global/global-manager";
-import { cliGetPage } from "./get-page";
 import { ITerminalController } from "../terminal/definition";
+import { cliGetPage } from "./get-page";
 
 const getTargetOrigin = (
     options: CLICopyMovePageOptions,
@@ -95,6 +95,10 @@ const getTargetIdentifier = async (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
 ): Promise<string> => {
+
+    if (options.deleteOriginal) {
+        page.identifier;
+    }
 
     if (typeof options.targetOrigin !== "undefined"
         && options.targetOrigin !== globalManager.activeOrigin) {
@@ -261,9 +265,22 @@ export const cliCopyMovePage = async (
 
     const content: string = await page.readContent();
 
-    await targetCollection.putPage(newPageMetadata, content);
+    try {
 
-    if (options.deleteOriginal) {
-        await collection.deletePage(page.identifier);
+        if (options.deleteOriginal) {
+            await collection.deletePage(page.identifier);
+        }
+
+        await targetCollection.putPage(newPageMetadata, content);
+    } catch (error) {
+
+        terminalController.printErrorMessage("Error occurred while copying/moving page");
+        terminalController.printErrorMessage(String(error));
+
+        terminalController.printInfo(page.identifier);
+        terminalController.printInfo(page.title);
+        terminalController.printInfo(content);
+
+        throw error;
     }
 };

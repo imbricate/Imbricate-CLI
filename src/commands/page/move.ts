@@ -75,6 +75,17 @@ export const createPageMoveCommand = (
             options: PageMoveCommandOptions,
         ): Promise<void> => {
 
+            if (typeof options.targetOrigin !== "string"
+                && typeof options.targetCollection !== "string"
+                && typeof options.targetDirectories === "undefined") {
+
+                if (!options.quiet) {
+                    terminalController.printInfo("No target specified, not moving the page");
+                }
+
+                return;
+            }
+
             return await cliCopyMovePage(
                 {
                     deleteOriginal: true,
