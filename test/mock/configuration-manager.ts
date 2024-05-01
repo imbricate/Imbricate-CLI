@@ -6,10 +6,9 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
-import { IImbricateConfiguration } from "../../src/configuration/definition";
+import { IImbricateConfiguration, IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "@imbricate/local-fundamental";
 import { IConfigurationManager } from "../../src/configuration/interface";
 import { ConfigurationProfileManager } from "../../src/configuration/profile/profile-manager";
-import { IImbricateConfigurationOrigin, IRawImbricateConfiguration } from "../../src/configuration/raw-definition";
 
 export class MockConfigurationManager implements IConfigurationManager {
 

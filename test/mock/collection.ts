@@ -5,7 +5,7 @@
  * @override Mock 
  */
 
-import { IImbricateOriginCollection, IImbricatePage, IMBRICATE_SEARCH_SNIPPET_TYPE, ImbricatePageSnapshot, ImbricateSearchSnippet, PromiseOr } from "@imbricate/core";
+import { IImbricateOriginCollection, IImbricatePage, ImbricatePageMetadata, ImbricatePageQuery, ImbricatePageQueryConfig, ImbricatePageSearchResult, ImbricatePageSnapshot, ImbricateSearchPageConfig } from "@imbricate/core";
 
 export class MockCollection implements IImbricateOriginCollection {
 
@@ -23,6 +23,14 @@ export class MockCollection implements IImbricateOriginCollection {
         this.description = "mock";
     }
 
+    public queryPages(
+        _query: ImbricatePageQuery,
+        _config: ImbricatePageQueryConfig,
+    ): Promise<IImbricatePage[]> {
+
+        throw new Error("Method not implemented.");
+    }
+
     public findScripts(..._onActivities: string[]): Promise<void> {
 
         throw new Error("Method not implemented.");
@@ -33,7 +41,15 @@ export class MockCollection implements IImbricateOriginCollection {
         throw new Error("Method not implemented.");
     }
 
+    public listDirectories(
+        _directories: string[],
+    ): Promise<string[]> {
+
+        throw new Error("Method not implemented.");
+    }
+
     public createPage(
+        _directories: string[],
         _title: string,
     ): Promise<IImbricatePage> {
 
@@ -42,7 +58,6 @@ export class MockCollection implements IImbricateOriginCollection {
 
     public deletePage(
         _identifier: string,
-        _title: string,
     ): Promise<void> {
 
         throw new Error("Method not implemented.");
@@ -57,21 +72,38 @@ export class MockCollection implements IImbricateOriginCollection {
 
     public getPage(
         _identifier: string,
-    ): PromiseOr<IImbricatePage | null> {
+    ): Promise<IImbricatePage | null> {
 
         throw new Error("Method not implemented.");
     }
 
     public hasPage(
+        _directories: string[],
         _title: string,
     ): Promise<boolean> {
+
+        throw new Error("Method not implemented.");
+    }
+    public putPage(
+        _pageMetadata: ImbricatePageMetadata,
+        _content: string,
+    ): Promise<IImbricatePage> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public retitlePage(
+        _identifier: string,
+        _newTitle: string,
+    ): Promise<void> {
 
         throw new Error("Method not implemented.");
     }
 
     public searchPages(
         _keyword: string,
-    ): Promise<Array<ImbricateSearchSnippet<IMBRICATE_SEARCH_SNIPPET_TYPE.PAGE>>> {
+        _config: ImbricateSearchPageConfig,
+    ): Promise<ImbricatePageSearchResult[]> {
 
         throw new Error("Method not implemented.");
     }
