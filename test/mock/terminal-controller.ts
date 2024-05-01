@@ -23,24 +23,27 @@ export class MockTerminalController implements ITerminalController {
         this._errorLogs = [];
     }
 
-
     public get infoLogs(): string[][] {
         return this._infoLogs;
     }
-    printInfo(...args: string[]): void {
+
+    public printInfo(...args: string[]): void {
         this._infoLogs.push(args);
     }
-    printJsonInfo(input: any): void {
+
+    public printJsonInfo(input: any): void {
         this.printInfo(JSON.stringify(input));
     }
 
     public get errorLogs(): string[][] {
         return this._errorLogs;
     }
-    printErrorMessage(...args: string[]): void {
+
+    public printErrorMessage(...args: string[]): void {
         this._errorLogs.push(args);
     }
-    printJsonErrorMessage(input: any): void {
+
+    public printJsonErrorMessage(input: any): void {
         this.printErrorMessage(JSON.stringify(input));
     }
 }
