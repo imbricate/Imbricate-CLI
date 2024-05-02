@@ -5,7 +5,7 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
-import { IImbricateConfiguration, IImbricateConfigurationOrigin, IImbricateConfigurationProfile, IRawImbricateConfiguration, ImbricateConfigurationProfilePersistFunction } from "@imbricate/local-fundamental";
+import { IImbricateConfiguration, IImbricateConfigurationOrigin, IImbricateConfigurationProfile, IRawImbricateConfiguration, ImbricateConfigurationProfilePersistFunction, resolveImbricateHomeDirectory } from "@imbricate/local-fundamental";
 import { writeTextFile } from "@sudoo/io";
 import { CLIOriginIsActive } from "../error/origin/origin-is-active";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
@@ -14,7 +14,7 @@ import { CLIProfileAlreadyExists } from "../error/profile/profile-already-exists
 import { CLIProfileNotFound } from "../error/profile/profile-not-found";
 import { ITerminalController } from "../terminal/definition";
 import { debugLog } from "../util/debug";
-import { fixImbricateHomeDirectory, resolveDirectory } from "../util/fix-directory";
+import { resolveDirectory } from "../util/fix-directory";
 import { formatJSON } from "../util/format-json";
 import { configurationEditorEchoPreset } from "./editor/presets";
 import { IConfigurationManager } from "./interface";
@@ -27,7 +27,7 @@ export class ConfigurationManager implements IConfigurationManager {
         terminalController: ITerminalController,
     ): Promise<ConfigurationManager> {
 
-        const configurationPath: string = fixImbricateHomeDirectory();
+        const configurationPath: string = resolveImbricateHomeDirectory();
 
         debugLog("Home Configuration Path", configurationPath);
 
