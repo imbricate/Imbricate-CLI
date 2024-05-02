@@ -56,7 +56,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3":
+"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.24.5":
   version: 7.24.5
   resolution: "@babel/core@npm:7.24.5"
   dependencies:
@@ -1436,7 +1436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7":
+"@babel/preset-env@npm:^7.24.5":
   version: 7.24.5
   resolution: "@babel/preset-env@npm:7.24.5"
   dependencies:
@@ -1540,7 +1540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7":
+"@babel/preset-typescript@npm:^7.24.1":
   version: 7.24.1
   resolution: "@babel/preset-typescript@npm:7.24.1"
   dependencies:
@@ -1741,15 +1741,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/local-fundamental@npm:1.4.4":
-  version: 1.4.4
-  resolution: "@imbricate/local-fundamental@npm:1.4.4"
+"@imbricate/local-fundamental@npm:1.5.1":
+  version: 1.5.1
+  resolution: "@imbricate/local-fundamental@npm:1.5.1"
   dependencies:
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/9e0808d138152824b13ae21920442228acd976438bdab55086a2259199a46cb079bae991193c936a993e4f1946c20c3c540f8acead60d987be58daccf4f89d1e
+  checksum: 10c0/376eef19d842deca3dadb49c2dc26c0a84b174a9cc52177f795b874ded5fa33f652affa52a4e9cc4563270ffe021b2f07435dd45de05d4a9e8f1c13293f49af3
   languageName: node
   linkType: hard
 
@@ -2419,7 +2419,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29":
+"@types/jest@npm:^29.5.12":
   version: 29.5.12
   resolution: "@types/jest@npm:29.5.12"
   dependencies:
@@ -2436,12 +2436,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20":
+"@types/node@npm:*":
   version: 20.12.7
   resolution: "@types/node@npm:20.12.7"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 10c0/dce80d63a3b91892b321af823d624995c61e39c6a223cc0ac481a44d337640cc46931d33efb3beeed75f5c85c3bda1d97cef4c5cd4ec333caf5dee59cff6eca0
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.12.8":
+  version: 20.12.8
+  resolution: "@types/node@npm:20.12.8"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 10c0/840002d20654e38a9af8cdffa215598fdb28ac4f96c5701ed672ec365ed6ccc66da299edddaa409baf13cd71bbf1128901f633b5e44e070fc236e26415805b78
   languageName: node
   linkType: hard
 
@@ -2475,7 +2484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^7":
+"@typescript-eslint/eslint-plugin@npm:^7.8.0":
   version: 7.8.0
   resolution: "@typescript-eslint/eslint-plugin@npm:7.8.0"
   dependencies:
@@ -2500,7 +2509,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^7":
+"@typescript-eslint/parser@npm:^7.8.0":
   version: 7.8.0
   resolution: "@typescript-eslint/parser@npm:7.8.0"
   dependencies:
@@ -2839,7 +2848,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-jest@npm:^29, babel-jest@npm:^29.7.0":
+"babel-jest@npm:^29.7.0":
   version: 29.7.0
   resolution: "babel-jest@npm:29.7.0"
   dependencies:
@@ -3580,7 +3589,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8":
+"eslint@npm:^8.57.0":
   version: 8.57.0
   resolution: "eslint@npm:8.57.0"
   dependencies:
@@ -4175,26 +4184,26 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "imbricate@workspace:."
   dependencies:
-    "@babel/core": "npm:^7"
-    "@babel/preset-env": "npm:^7"
-    "@babel/preset-typescript": "npm:^7"
+    "@babel/core": "npm:^7.24.5"
+    "@babel/preset-env": "npm:^7.24.5"
+    "@babel/preset-typescript": "npm:^7.24.1"
     "@imbricate/core": "npm:1.15.0"
-    "@imbricate/local-fundamental": "npm:1.4.4"
+    "@imbricate/local-fundamental": "npm:1.5.1"
     "@imbricate/markdown-render": "npm:1.1.2"
     "@imbricate/origin-file-system": "npm:1.12.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
-    "@types/jest": "npm:^29"
-    "@types/node": "npm:^20"
-    "@typescript-eslint/eslint-plugin": "npm:^7"
-    "@typescript-eslint/parser": "npm:^7"
+    "@types/jest": "npm:^29.5.12"
+    "@types/node": "npm:^20.12.8"
+    "@typescript-eslint/eslint-plugin": "npm:^7.8.0"
+    "@typescript-eslint/parser": "npm:^7.8.0"
     axios: "npm:^1.6.8"
-    babel-jest: "npm:^29"
+    babel-jest: "npm:^29.7.0"
     commander: "npm:^12.0.0"
-    eslint: "npm:^8"
-    jest: "npm:^29"
-    ts-node: "npm:^10"
-    typescript: "npm:^5"
+    eslint: "npm:^8.57.0"
+    jest: "npm:^29.7.0"
+    ts-node: "npm:^10.9.2"
+    typescript: "npm:^5.4.5"
   bin:
     i7e: cli
     imbricate: cli
@@ -4854,7 +4863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29":
+"jest@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest@npm:29.7.0"
   dependencies:
@@ -6243,7 +6252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10":
+"ts-node@npm:^10.9.2":
   version: 10.9.2
   resolution: "ts-node@npm:10.9.2"
   dependencies:
@@ -6321,7 +6330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5":
+"typescript@npm:^5.4.5":
   version: 5.4.5
   resolution: "typescript@npm:5.4.5"
   bin:
@@ -6341,7 +6350,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.4.5#optional!builtin<compat/typescript>":
   version: 5.4.5
   resolution: "typescript@patch:typescript@npm%3A5.4.5#optional!builtin<compat/typescript>::version=5.4.5&hash=5adc0c"
   bin:
