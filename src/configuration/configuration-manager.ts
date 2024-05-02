@@ -5,7 +5,7 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
-import { IImbricateConfiguration, IImbricateConfigurationOrigin, IImbricateConfigurationProfile, IRawImbricateConfiguration, ImbricateConfigurationProfilePersistFunction, resolveImbricateHomeDirectory } from "@imbricate/local-fundamental";
+import { IImbricateConfiguration, IImbricateConfigurationOrigin, IImbricateConfigurationProfile, IRawImbricateConfiguration, ImbricateConfigurationProfilePersistFunction, readOrCreateImbricateConfiguration, resolveImbricateHomeDirectory } from "@imbricate/local-fundamental";
 import { writeTextFile } from "@sudoo/io";
 import { CLIOriginIsActive } from "../error/origin/origin-is-active";
 import { CLIOriginNotFound } from "../error/origin/origin-not-found";
@@ -18,7 +18,6 @@ import { resolveDirectory } from "../util/fix-directory";
 import { formatJSON } from "../util/format-json";
 import { configurationEditorEchoPreset } from "./editor/presets";
 import { IConfigurationManager } from "./interface";
-import { readCLIConfiguration } from "./io";
 import { ConfigurationProfileManager } from "./profile/profile-manager";
 
 export class ConfigurationManager implements IConfigurationManager {
@@ -42,7 +41,7 @@ export class ConfigurationManager implements IConfigurationManager {
         terminalController: ITerminalController,
     ): Promise<ConfigurationManager> {
 
-        const parsedConfiguration: IImbricateConfiguration = await readCLIConfiguration(configurationPath);
+        const parsedConfiguration: IImbricateConfiguration = await readOrCreateImbricateConfiguration(configurationPath);
 
         return new ConfigurationManager(
             configurationPath,
