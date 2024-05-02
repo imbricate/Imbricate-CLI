@@ -4,13 +4,13 @@
  * @description Diff File
  */
 
+import { resolveImbricateTempDirectory } from "@imbricate/local-fundamental";
 import { attemptMarkDir, writeTextFile } from "@sudoo/io";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
 import { CLIInvalidSavingTarget } from "../error/editing/invalid-saving-target";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
-import { fixImbricateTempDirectory } from "../util/fix-directory";
 import { SavingTarget } from "./definition";
 import { getContentWithSavingTarget } from "./saving-target/get-content";
 
@@ -29,10 +29,10 @@ export const diffSavingTarget = async (
         throw CLIInvalidSavingTarget.withSavingTarget(savingTarget);
     }
 
-    const tempPath: string = fixImbricateTempDirectory();
+    const tempPath: string = resolveImbricateTempDirectory();
     await attemptMarkDir(tempPath);
 
-    const tempDiffPath: string = fixImbricateTempDirectory("diff");
+    const tempDiffPath: string = resolveImbricateTempDirectory("diff");
     await writeTextFile(tempDiffPath, beforeContent);
 
     const fixedCommands: string[] = profile.getActiveDiffCommand()

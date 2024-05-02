@@ -4,12 +4,12 @@
  * @description Draft
  */
 
+import { resolveImbricateTempDirectory } from "@imbricate/local-fundamental";
 import { directoryFiles } from "@sudoo/io";
-import { fixImbricateTempDirectory } from "../util/fix-directory";
 
 export const readEditingDraftFolders = async (): Promise<string[]> => {
 
-    const tempDirectory = fixImbricateTempDirectory();
+    const tempDirectory = resolveImbricateTempDirectory();
     const tempFolders: string[] = await directoryFiles(tempDirectory);
 
     return tempFolders;
@@ -17,6 +17,6 @@ export const readEditingDraftFolders = async (): Promise<string[]> => {
 
 export const resolveDraftFolderPath = (identifier: string): string => {
 
-    const tempDirectory = fixImbricateTempDirectory(identifier);
+    const tempDirectory = resolveImbricateTempDirectory(identifier);
     return tempDirectory;
 };

@@ -4,7 +4,7 @@
  * @description Open File
  */
 
-import { cleanupImbricateSavingTarget, hashImbricateSavingTarget, performImbricateSavingTarget, readActiveEditing, writeActiveEditing } from "@imbricate/local-fundamental";
+import { cleanupImbricateSavingTarget, hashImbricateSavingTarget, performImbricateSavingTarget, readActiveEditing, resolveImbricateTempDirectory, writeActiveEditing } from "@imbricate/local-fundamental";
 import { attemptMarkDir, readTextFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
@@ -12,7 +12,6 @@ import { CLIAlreadyEditing } from "../error/editing/already-editing";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
-import { fixImbricateTempDirectory } from "../util/fix-directory";
 import { hashString } from "../util/hash";
 import { ActiveEditing, SavingTarget } from "./definition";
 import { diffSavingTarget } from "./diff-file";
@@ -28,7 +27,7 @@ const performEditing = async (
     handsFree: boolean,
 ) => {
 
-    const tempFolderPath: string = fixImbricateTempDirectory();
+    const tempFolderPath: string = resolveImbricateTempDirectory();
     await attemptMarkDir(tempFolderPath);
 
     if (handsFree) {
@@ -110,13 +109,13 @@ export const openContentAndDiff = async (
 
     const editingIdentifier: string = UUIDVersion1.generateString();
 
-    const tempFolderPath: string = fixImbricateTempDirectory();
+    const tempFolderPath: string = resolveImbricateTempDirectory();
     await attemptMarkDir(tempFolderPath);
 
-    const outerTempFolderPath: string = fixImbricateTempDirectory(editingIdentifier);
+    const outerTempFolderPath: string = resolveImbricateTempDirectory(editingIdentifier);
     await attemptMarkDir(outerTempFolderPath);
 
-    const tempFilePath: string = fixImbricateTempDirectory(editingIdentifier, fileName);
+    const tempFilePath: string = resolveImbricateTempDirectory(editingIdentifier, fileName);
 
     const currentTime: Date = new Date();
 
@@ -198,13 +197,13 @@ export const openContentAndMonitor = async (
 
     const editingIdentifier: string = UUIDVersion1.generateString();
 
-    const tempFolderPath: string = fixImbricateTempDirectory();
+    const tempFolderPath: string = resolveImbricateTempDirectory();
     await attemptMarkDir(tempFolderPath);
 
-    const outerTempFolderPath: string = fixImbricateTempDirectory(editingIdentifier);
+    const outerTempFolderPath: string = resolveImbricateTempDirectory(editingIdentifier);
     await attemptMarkDir(outerTempFolderPath);
 
-    const tempFilePath: string = fixImbricateTempDirectory(editingIdentifier, fileName);
+    const tempFilePath: string = resolveImbricateTempDirectory(editingIdentifier, fileName);
 
     const currentTime: Date = new Date();
 
