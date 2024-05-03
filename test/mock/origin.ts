@@ -74,6 +74,20 @@ export class MockOrigin implements IImbricateOrigin {
         throw new Error("Method not implemented.");
     }
 
+    public includeCollectionInSearch(
+        _collectionName: string,
+    ): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public excludeCollectionInSearch(
+        _collectionName: string,
+    ): Promise<void> {
+
+        throw new Error("Method not implemented.");
+    }
+
     public async listCollections(): Promise<IImbricateOriginCollection[]> {
 
         return this.collections;

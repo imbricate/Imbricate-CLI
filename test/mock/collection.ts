@@ -17,10 +17,14 @@ export class MockCollection implements IImbricateOriginCollection {
     public collectionName: string;
     public description?: string | undefined;
 
+    public includeInSearch: boolean;
+
     private constructor() {
 
         this.collectionName = "mock";
         this.description = "mock";
+
+        this.includeInSearch = true;
     }
 
     public queryPages(
