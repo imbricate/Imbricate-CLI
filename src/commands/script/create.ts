@@ -73,7 +73,7 @@ export const createScriptCreateCommand = (
             );
 
             const scriptMetadata: ImbricateScriptSnapshot =
-                await currentOrigin.createScript(scriptName);
+                await currentOrigin.createScript(scriptName, "");
 
             if (!options.quiet) {
                 terminalController.printInfo(`Script "${scriptMetadata.scriptName}" created`);

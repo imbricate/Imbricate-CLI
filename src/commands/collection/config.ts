@@ -9,6 +9,7 @@ import { IConfigurationManager } from "../../configuration/interface";
 import { GlobalManager } from "../../global/global-manager";
 import { ITerminalController } from "../../terminal/definition";
 import { createConfiguredCommand } from "../../util/command";
+import { createCollectionConfigSetCommand } from "./config/set";
 import { createCollectionConfigShowCommand } from "./config/show";
 
 export const createCollectionConfigCommand = (
@@ -17,16 +18,21 @@ export const createCollectionConfigCommand = (
     configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("config");
+    const configCommand: Command = createConfiguredCommand("config");
 
-    createCommand
+    configCommand
         .description("manage config of collections");
 
-    createCommand.addCommand(createCollectionConfigShowCommand(
+    configCommand.addCommand(createCollectionConfigSetCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    configCommand.addCommand(createCollectionConfigShowCommand(
         globalManager,
         terminalController,
         configurationManager,
     ));
 
-    return createCommand;
+    return configCommand;
 };

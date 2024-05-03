@@ -58,7 +58,11 @@ export const createSearchCommand = (
 
             const results: Array<ImbricateSearchResult<IMBRICATE_SEARCH_RESULT_TYPE>> = [];
 
-            for (const collection of collections) {
+            collections: for (const collection of collections) {
+
+                if (!collection.includeInSearch) {
+                    continue collections;
+                }
 
                 const pageResults: ImbricatePageSearchResult[] =
                     await collection.searchPages(prompt, {

@@ -25,9 +25,9 @@ export const createCollectionConfigShowCommand = (
     _configurationManager: IConfigurationManager,
 ): Command => {
 
-    const createCommand: Command = createConfiguredCommand("show");
+    const showCommand: Command = createConfiguredCommand("show");
 
-    createCommand
+    showCommand
         .description("show config of a collection")
         .option("-j, --json", "print result as JSON")
         .argument("<collection>", "collection name")
@@ -55,6 +55,7 @@ export const createCollectionConfigShowCommand = (
                 terminalController.printJsonInfo({
                     collectionName: collection.collectionName,
                     description: collection.description,
+                    includeInSearch: collection.includeInSearch,
                 });
                 return;
             }
@@ -63,8 +64,9 @@ export const createCollectionConfigShowCommand = (
             if (collection.description) {
                 terminalController.printInfo(`Description: ${collection.description}`);
             }
+            terminalController.printInfo(`Include in Search: ${collection.includeInSearch ? "Yes" : "No"}`);
             return;
         }));
 
-    return createCommand;
+    return showCommand;
 };

@@ -6,6 +6,11 @@
 
 import { CLIInputNumberError } from "../error/input/number-input";
 
+export const inputParseBoolean = (value: string): boolean => {
+
+    return value === "true";
+};
+
 export const inputParsePositiveInteger = (value: string): number => {
 
     const parsed: number = Number(value);
