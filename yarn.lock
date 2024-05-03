@@ -1727,9 +1727,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/core@npm:1.15.0":
-  version: 1.15.0
-  resolution: "@imbricate/core@npm:1.15.0"
+"@imbricate/core@npm:1.15.1":
+  version: 1.15.1
+  resolution: "@imbricate/core@npm:1.15.1"
   dependencies:
     "@sudoo/marked": "npm:^3.21.4"
     "@sudoo/marked-mixin-date": "npm:^1.0.0"
@@ -1737,19 +1737,19 @@ __metadata:
     "@sudoo/marked-mixin-math": "npm:^1.4.0"
     "@sudoo/marked-mixin-object": "npm:^1.3.0"
     "@sudoo/marked-mixin-parse": "npm:^1.0.0"
-  checksum: 10c0/4c35ae7c3638f36cc2b69061bde5f79330ff6b96e5b4e52190998bef91b094b12233b47e216e6cff8998a65e398310bf0d0f33ba98907228a17ae09c0e5bdb76
+  checksum: 10c0/d78d0e9a7dc8a68ca452a567864a48321e18ee074a19e7cbc5649c0f44cc9b8bee52bac3d8ea5c5a212104af4d142f911ad75d61af8208713c30390d3cc16116
   languageName: node
   linkType: hard
 
-"@imbricate/local-fundamental@npm:1.5.1":
-  version: 1.5.1
-  resolution: "@imbricate/local-fundamental@npm:1.5.1"
+"@imbricate/local-fundamental@npm:1.5.2":
+  version: 1.5.2
+  resolution: "@imbricate/local-fundamental@npm:1.5.2"
   dependencies:
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/376eef19d842deca3dadb49c2dc26c0a84b174a9cc52177f795b874ded5fa33f652affa52a4e9cc4563270ffe021b2f07435dd45de05d4a9e8f1c13293f49af3
+  checksum: 10c0/a6e3180917d188b304697e66154460c3017672844531c601181afcdc36c2731564adc74fe720b12c26c058e977ccd3bd73c49a3961b3e02bb461dca4b3fbe5b9
   languageName: node
   linkType: hard
 
@@ -1764,16 +1764,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/origin-file-system@npm:1.12.0":
-  version: 1.12.0
-  resolution: "@imbricate/origin-file-system@npm:1.12.0"
+"@imbricate/origin-file-system@npm:1.12.1":
+  version: 1.12.1
+  resolution: "@imbricate/origin-file-system@npm:1.12.1"
   dependencies:
     "@sudoo/asynchronous": "npm:^2.4.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/43e9907c9cee34a488cc5508d49c5db432075187d94fdcf315005ca87d04792be2adc6088709ee5b3b8bbb57d463ee70fcc3306f60e6f8b26e6f8a93c284f696
+  checksum: 10c0/61577ff849ca3e6f9b819641e24c831e07402a84de84b4e90d9aae52e3e1099f9acbc0fe7d843340b4b3be7b616170eed2a8e09a9b6dc35d62e408fea4b1f8f9
   languageName: node
   linkType: hard
 
@@ -4187,10 +4187,10 @@ __metadata:
     "@babel/core": "npm:^7.24.5"
     "@babel/preset-env": "npm:^7.24.5"
     "@babel/preset-typescript": "npm:^7.24.1"
-    "@imbricate/core": "npm:1.15.0"
-    "@imbricate/local-fundamental": "npm:1.5.1"
+    "@imbricate/core": "npm:1.15.1"
+    "@imbricate/local-fundamental": "npm:1.5.2"
     "@imbricate/markdown-render": "npm:1.1.2"
-    "@imbricate/origin-file-system": "npm:1.12.0"
+    "@imbricate/origin-file-system": "npm:1.12.1"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29.5.12"
