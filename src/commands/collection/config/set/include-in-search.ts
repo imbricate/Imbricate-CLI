@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
+import { excludeCollectionInSearch, includeCollectionInSearch } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../../../configuration/interface";
 import { CLICollectionNotFound } from "../../../../error/collection/collection-not-found";
@@ -23,7 +24,7 @@ type CollectionConfigSetIncludeInSearchCommandOptions = {
 export const createCollectionConfigSetIncludeInSearchCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const includeInSearchCommand: Command = createConfiguredCommand("include-in-search");
@@ -42,6 +43,12 @@ export const createCollectionConfigSetIncludeInSearchCommand = (
             _options: CollectionConfigSetIncludeInSearchCommandOptions,
         ): Promise<void> => {
 
+            const activeOrigin: string | null = globalManager.activeOrigin;
+
+            if (!activeOrigin) {
+                throw CLIActiveOriginNotFound.create();
+            }
+
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
             if (!currentOrigin) {
@@ -59,11 +66,19 @@ export const createCollectionConfigSetIncludeInSearchCommand = (
             if (value) {
 
                 terminalController.printInfo(`Including collection ${collectionName} in search`);
-                await currentOrigin.includeCollectionInSearch(collectionName);
+                await includeCollectionInSearch(
+                    configurationManager.configurationPath,
+                    activeOrigin,
+                    collectionName,
+                );
             } else {
 
                 terminalController.printInfo(`Excluding collection ${collectionName} in search`);
-                await currentOrigin.excludeCollectionInSearch(collectionName);
+                await excludeCollectionInSearch(
+                    configurationManager.configurationPath,
+                    activeOrigin,
+                    collectionName,
+                );
             }
 
             return;

@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IMBRICATE_SEARCH_RESULT_TYPE, ImbricatePageSearchResult, ImbricateScriptSearchResult, ImbricateSearchResult } from "@imbricate/core";
+import { ImbricateSearchPreference, IncludedSearchPreference, readOrCreateSearchPreferenceConfiguration } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../configuration/interface";
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
@@ -26,7 +27,7 @@ type SearchCommandOptions = {
 export const createSearchCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const searchCommand: Command = createConfiguredCommand("search");
@@ -48,6 +49,12 @@ export const createSearchCommand = (
 
             const usingExact: boolean = Boolean(options.exact);
 
+            const activeOrigin: string | null = globalManager.activeOrigin;
+
+            if (!activeOrigin) {
+                throw CLIActiveOriginNotFound.create();
+            }
+
             const currentOrigin: IImbricateOrigin | null = globalManager.findCurrentOrigin();
 
             if (!currentOrigin) {
@@ -58,9 +65,19 @@ export const createSearchCommand = (
 
             const results: Array<ImbricateSearchResult<IMBRICATE_SEARCH_RESULT_TYPE>> = [];
 
+            const searchPreference: ImbricateSearchPreference =
+                await readOrCreateSearchPreferenceConfiguration(
+                    configurationManager.configurationPath,
+                );
+
             collections: for (const collection of collections) {
 
-                if (!collection.includeInSearch) {
+                const includedInSearch = searchPreference.included.some((item: IncludedSearchPreference) => {
+                    return item.originName === activeOrigin &&
+                        item.collectionName === collection.collectionName;
+                });
+
+                if (!includedInSearch) {
                     continue collections;
                 }
 
