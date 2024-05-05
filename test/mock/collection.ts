@@ -5,7 +5,7 @@
  * @override Mock 
  */
 
-import { IImbricateOriginCollection, IImbricatePage, ImbricatePageMetadata, ImbricatePageQuery, ImbricatePageQueryConfig, ImbricatePageSearchResult, ImbricatePageSnapshot, ImbricateSearchPageConfig } from "@imbricate/core";
+import { IImbricateOriginCollection, IImbricatePage, ImbricateCollectionCapability, ImbricatePageMetadata, ImbricatePageQuery, ImbricatePageQueryConfig, ImbricatePageSearchResult, ImbricatePageSnapshot, ImbricateSearchPageConfig, createAllAllowImbricateCollectionCapability } from "@imbricate/core";
 
 export class MockCollection implements IImbricateOriginCollection {
 
@@ -17,14 +17,14 @@ export class MockCollection implements IImbricateOriginCollection {
     public collectionName: string;
     public description?: string | undefined;
 
-    public includeInSearch: boolean;
-
     private constructor() {
 
         this.collectionName = "mock";
         this.description = "mock";
+    }
 
-        this.includeInSearch = true;
+    public get capabilities(): ImbricateCollectionCapability {
+        return createAllAllowImbricateCollectionCapability();
     }
 
     public queryPages(
