@@ -1741,15 +1741,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/local-fundamental@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@imbricate/local-fundamental@npm:1.7.1"
+"@imbricate/local-fundamental@npm:^1.7.2":
+  version: 1.7.2
+  resolution: "@imbricate/local-fundamental@npm:1.7.2"
   dependencies:
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/300ae29200eb5400181d509d4e09cedf3622c062dbfdbbf7bad450524c619ebb2d4d4611239b6228551880058fd5f15a095e1a88d9a3fd69560987372c4f4489
+  checksum: 10c0/734a64f5566b01813d2094bc4ddc860385632fb09253c5b6d7b27e36d2db84d07f09f459f1d718abb5c4d3330027766eed6f33273d89e9119718b8e7cf7be8dc
   languageName: node
   linkType: hard
 
@@ -1764,16 +1764,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/origin-file-system@npm:^1.14.1":
-  version: 1.14.1
-  resolution: "@imbricate/origin-file-system@npm:1.14.1"
+"@imbricate/origin-file-system@npm:^1.14.2":
+  version: 1.14.2
+  resolution: "@imbricate/origin-file-system@npm:1.14.2"
   dependencies:
     "@sudoo/asynchronous": "npm:^2.4.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/c408234d47b93c9c79d21b58b9fed302d81b6b1208f0d18fcbb7423e322dbee45067a5e449df353b571795eff1d15d06a8467596b70087fe5c98e0b2e2213efe
+  checksum: 10c0/0b8ec767a4b7027ed645b5444f6acb624781a294721705d23b8cd31870bcc47fb72119e8bbc918d371f10097f7d3871c4e5cbb92e6d6de760f033417c3bb0827
   languageName: node
   linkType: hard
 
@@ -4188,9 +4188,9 @@ __metadata:
     "@babel/preset-env": "npm:^7.24.5"
     "@babel/preset-typescript": "npm:^7.24.1"
     "@imbricate/core": "npm:1.18.2"
-    "@imbricate/local-fundamental": "npm:^1.7.1"
+    "@imbricate/local-fundamental": "npm:^1.7.2"
     "@imbricate/markdown-render": "npm:1.1.2"
-    "@imbricate/origin-file-system": "npm:^1.14.1"
+    "@imbricate/origin-file-system": "npm:^1.14.2"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29.5.12"
