@@ -95,9 +95,12 @@ export const createPageShowCommand = (
                 return;
             }
 
+            const directoriesText: string = directories.length > 0
+                ? directories.join("/")
+                : "/";
             const textOutput: string = [
                 `Title: ${page.title}`,
-                `Directories: ${directories.join("/")}`,
+                `Directories: ${directoriesText}`,
                 `Identifier: ${page.identifier}`,
                 `Attributes: ${formatLog(pageAttributes)}`,
                 `Created At: ${page.createdAt.toLocaleString()}`,

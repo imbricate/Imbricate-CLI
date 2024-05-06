@@ -13,6 +13,7 @@ import { createOriginAddCommand } from "./origin/add";
 import { createOriginConfigCommand } from "./origin/config";
 import { createOriginDeleteCommand } from "./origin/delete";
 import { createOriginListCommand } from "./origin/list";
+import { createOriginShowCommand } from "./origin/show";
 import { createOriginUseCommand } from "./origin/use";
 
 export const createOriginCommand = (
@@ -44,6 +45,11 @@ export const createOriginCommand = (
     originCommand.addCommand(createOriginListCommand(
         globalManager,
         terminalController,
+    ));
+    originCommand.addCommand(createOriginShowCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
     ));
     originCommand.addCommand(createOriginUseCommand(
         globalManager,
