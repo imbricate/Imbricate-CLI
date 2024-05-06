@@ -15,6 +15,7 @@ import { createConfiguredCommand } from "../../util/command";
 
 type CollectionListCommandOptions = {
 
+    readonly uniqueIdentifier?: string;
     readonly json?: boolean;
 };
 
@@ -29,6 +30,7 @@ export const createCollectionListCommand = (
 
     listCommand
         .description("list collections")
+        .option("-u, --unique-identifier", "include unique identifier in the list")
         .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
             options: CollectionListCommandOptions,
@@ -48,6 +50,7 @@ export const createCollectionListCommand = (
                     collections.map((collection) => {
                         return {
                             collectionName: collection.collectionName,
+                            uniqueIdentifier: collection.uniqueIdentifier,
                             description: collection.description,
                         };
                     }),
@@ -61,6 +64,10 @@ export const createCollectionListCommand = (
             }
 
             terminalController.printInfo(collections.map((collection: IImbricateOriginCollection) => {
+
+                if (options.uniqueIdentifier) {
+                    return `${collection.collectionName} (${collection.uniqueIdentifier})`;
+                }
                 return collection.collectionName;
             }).join("\n"));
 

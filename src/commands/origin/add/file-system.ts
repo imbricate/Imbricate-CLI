@@ -4,6 +4,7 @@
  * @description File System
  */
 
+import { digestString } from "@imbricate/local-fundamental";
 import { FileSystemOriginPayload } from "@imbricate/origin-file-system";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../../configuration/interface";
@@ -82,8 +83,12 @@ export const createOriginAddFileSystemCommand = (
                 asynchronousPoolLimit: numberedLimit,
             };
 
+            const hashedPath = digestString(fixedBasePath);
+            const uniqueIdentifier: string = `file-system-${hashedPath}`;
+
             configurationManager.addOrigin({
-                type: "file-system",
+                originType: "file-system",
+                uniqueIdentifier,
                 originName: originName,
                 payloads,
             });

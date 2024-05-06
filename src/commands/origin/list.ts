@@ -41,7 +41,7 @@ export const createOriginListCommand = (
                         return {
                             active,
                             originName: originResponse.originName,
-                            type: originResponse.origin.metadata.type,
+                            type: originResponse.origin.originType,
                             payloads: originResponse.origin.payloads,
                         };
                     }),

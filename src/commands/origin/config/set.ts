@@ -48,7 +48,8 @@ export const createOriginConfigSetCommand = (
 
             configurationManager.updateOrigin(originName, {
                 originName,
-                type: origin.metadata.type,
+                originType: origin.originType,
+                uniqueIdentifier: origin.uniqueIdentifier,
                 payloads: {
                     ...origin.payloads,
                     [key]: value,
