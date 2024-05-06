@@ -83,14 +83,8 @@ export const createPageOpenCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const hasCollection: boolean = await currentOrigin.hasCollection(collectionName);
-
-            if (!hasCollection) {
-                throw CLICollectionNotFound.withCollectionName(collectionName);
-            }
-
             const collection: IImbricateOriginCollection | null
-                = await currentOrigin.getCollection(collectionName);
+                = await currentOrigin.findCollection(collectionName);
 
             if (!collection) {
                 throw CLICollectionNotFound.withCollectionName(collectionName);
@@ -127,6 +121,7 @@ export const createPageOpenCommand = (
                 const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = createPageSavingTarget(
                     globalManager,
                     collectionName,
+                    collection.uniqueIdentifier,
                     page.identifier,
                 );
 
@@ -160,6 +155,7 @@ export const createPageOpenCommand = (
                         const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = createPageSavingTarget(
                             globalManager,
                             collectionName,
+                            collection.uniqueIdentifier,
                             page.identifier,
                         );
 

@@ -51,6 +51,7 @@ const performPageDelete = async (
     const savingTarget: SavingTarget<SAVING_TARGET_TYPE.PAGE> = createPageSavingTarget(
         globalManager,
         collection.collectionName,
+        collection.uniqueIdentifier,
         page.identifier,
     );
 

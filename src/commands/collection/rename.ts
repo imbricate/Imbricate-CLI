@@ -4,7 +4,7 @@
  * @description Rename
  */
 
-import { IImbricateOrigin } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionAlreadyExists } from "../../error/collection/collection-already-exists";
@@ -47,9 +47,10 @@ export const createCollectionRenameCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const hasCollection: boolean = await currentOrigin.hasCollection(collectionName);
+            const currentCollection: IImbricateOriginCollection | null =
+                await currentOrigin.findCollection(collectionName);
 
-            if (!hasCollection) {
+            if (!currentCollection) {
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
@@ -59,7 +60,10 @@ export const createCollectionRenameCommand = (
                 throw CLICollectionAlreadyExists.withCollectionName(newCollectionName);
             }
 
-            await currentOrigin.renameCollection(collectionName, newCollectionName);
+            await currentOrigin.renameCollection(
+                currentCollection.uniqueIdentifier,
+                newCollectionName,
+            );
 
             if (!options.quiet) {
                 terminalController.printInfo(`Collection renamed from '${collectionName}' to '${newCollectionName}'`);

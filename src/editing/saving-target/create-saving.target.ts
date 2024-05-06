@@ -10,6 +10,7 @@ import { SAVING_TARGET_TYPE, SavingTarget } from "./../definition";
 export const createPageSavingTarget = (
     globalManager: GlobalManager,
     collection: string,
+    collectionUniqueIdentifier: string,
     pageIdentifier: string,
 ): SavingTarget<SAVING_TARGET_TYPE.PAGE> => {
 
@@ -18,7 +19,7 @@ export const createPageSavingTarget = (
         type: SAVING_TARGET_TYPE.PAGE,
         payload: {
             origin: globalManager.activeOrigin!,
-            collection,
+            collection: collectionUniqueIdentifier,
             identifier: pageIdentifier,
         },
     };

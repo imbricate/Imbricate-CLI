@@ -62,6 +62,7 @@ const createImplementation = (
         const target: SavingTarget<SAVING_TARGET_TYPE.PAGE> = createPageSavingTarget(
             globalManager,
             collection.collectionName,
+            collection.uniqueIdentifier,
             page.identifier,
         );
 

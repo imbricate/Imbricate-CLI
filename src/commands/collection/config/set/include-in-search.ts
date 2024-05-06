@@ -4,7 +4,7 @@
  * @description Include In Search
  */
 
-import { IImbricateOrigin } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection } from "@imbricate/core";
 import { excludeCollectionInSearch, includeCollectionInSearch } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../../../configuration/interface";
@@ -55,11 +55,10 @@ export const createCollectionConfigSetIncludeInSearchCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: boolean = await currentOrigin.hasCollection(
-                collectionName,
-            );
+            const currentCollection: IImbricateOriginCollection | null =
+                await currentOrigin.findCollection(collectionName);
 
-            if (!collection) {
+            if (!currentCollection) {
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
@@ -70,6 +69,7 @@ export const createCollectionConfigSetIncludeInSearchCommand = (
                     configurationManager.configurationPath,
                     activeOrigin,
                     collectionName,
+                    currentCollection.uniqueIdentifier,
                 );
             } else {
 
@@ -78,6 +78,7 @@ export const createCollectionConfigSetIncludeInSearchCommand = (
                     configurationManager.configurationPath,
                     activeOrigin,
                     collectionName,
+                    currentCollection.uniqueIdentifier,
                 );
             }
 
