@@ -24,10 +24,13 @@ describe("Given CLI (Collection List) Operation", (): void => {
                 {
                     origins: [{
                         originName: "test-origin",
-                        type: "mock",
+                        originType: "mock",
+                        uniqueIdentifier: "test-unique",
                         payloads: {},
                     }],
                     activeOrigin: "test-origin",
+                    profiles: {},
+                    defaultProfile: "default",
                 },
             );
 
@@ -55,10 +58,13 @@ describe("Given CLI (Collection List) Operation", (): void => {
                 {
                     origins: [{
                         originName: "test-origin",
-                        type: "mock",
+                        originType: "mock",
+                        uniqueIdentifier: "test-unique",
                         payloads: {},
                     }],
                     activeOrigin: "test-origin",
+                    profiles: {},
+                    defaultProfile: "default",
                 },
             );
 

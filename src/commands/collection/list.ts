@@ -17,6 +17,7 @@ import { createConfiguredCommand } from "../../util/command";
 type CollectionListCommandOptions = {
 
     readonly uniqueIdentifier?: string;
+    readonly search?: string;
     readonly json?: boolean;
 };
 
@@ -32,6 +33,7 @@ export const createCollectionListCommand = (
     listCommand
         .description("list collections")
         .option("-u, --unique-identifier", "include unique identifier in the list")
+        .option("-s, --search", "include if collection is included in search")
         .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
             options: CollectionListCommandOptions,
@@ -45,22 +47,61 @@ export const createCollectionListCommand = (
 
             const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
 
-            const searchPreference = await readOrCreateSearchPreferenceConfiguration(
-                configurationManager.configurationPath,
-            );
+            if (options.search) {
+
+                const searchPreference = await readOrCreateSearchPreferenceConfiguration(
+                    configurationManager.configurationPath,
+                );
+
+                if (options.json) {
+
+                    terminalController.printJsonInfo(
+                        collections.map((collection) => {
+
+                            const includedInSearch: boolean = searchPreference.included.some((item) => {
+                                return item.collectionUniqueIdentifier === collection.uniqueIdentifier;
+                            });
+
+                            return {
+                                collectionName: collection.collectionName,
+                                includedInSearch,
+                                uniqueIdentifier: collection.uniqueIdentifier,
+                                description: collection.description,
+                            };
+                        }),
+                    );
+                    return;
+                }
+
+                if (collections.length === 0) {
+                    terminalController.printInfo("No collection found");
+                    return;
+                }
+
+                terminalController.printInfo(collections.map((collection: IImbricateOriginCollection) => {
+
+                    const includedInSearch: boolean = searchPreference.included.some((item) => {
+                        return item.collectionUniqueIdentifier === collection.uniqueIdentifier;
+                    });
+
+                    const prefix: string = includedInSearch ? "[*]" : "[ ]";
+
+                    if (options.uniqueIdentifier) {
+                        return `${prefix} ${collection.collectionName} (${collection.uniqueIdentifier})`;
+                    }
+                    return `${prefix} ${collection.collectionName}`;
+                }).join("\n"));
+
+                return;
+            }
 
             if (options.json) {
 
                 terminalController.printJsonInfo(
                     collections.map((collection) => {
 
-                        const includedInSearch: boolean = searchPreference.included.some((item) => {
-                            return item.collectionUniqueIdentifier === collection.uniqueIdentifier;
-                        });
-
                         return {
                             collectionName: collection.collectionName,
-                            includedInSearch,
                             uniqueIdentifier: collection.uniqueIdentifier,
                             description: collection.description,
                         };
@@ -76,16 +117,10 @@ export const createCollectionListCommand = (
 
             terminalController.printInfo(collections.map((collection: IImbricateOriginCollection) => {
 
-                const includedInSearch: boolean = searchPreference.included.some((item) => {
-                    return item.collectionUniqueIdentifier === collection.uniqueIdentifier;
-                });
-
-                const prefix: string = includedInSearch ? "[*]" : "[ ]";
-
                 if (options.uniqueIdentifier) {
-                    return `${prefix} ${collection.collectionName} (${collection.uniqueIdentifier})`;
+                    return `${collection.collectionName} (${collection.uniqueIdentifier})`;
                 }
-                return `${prefix} ${collection.collectionName}`;
+                return collection.collectionName;
             }).join("\n"));
 
             return;
