@@ -1,7 +1,7 @@
 {
   "name": "imbricate",
   "packageManager": "yarn@4.1.1",
-  "version": "1.16.2",
+  "version": "1.16.3",
   "description": "Yes to accountable notes, no to external hosting. Free, for everyone.",
   "bin": {
     "i7e": "cli",
@@ -40,7 +40,7 @@
     "@imbricate/core": "1.18.2",
     "@imbricate/local-fundamental": "^1.7.2",
     "@imbricate/markdown-render": "1.1.2",
-    "@imbricate/origin-file-system": "^1.14.3",
+    "@imbricate/origin-file-system": "^1.14.4",
     "@sudoo/io": "^1.8.0",
     "@sudoo/uuid": "^1.1.0",
     "axios": "^1.6.8",
