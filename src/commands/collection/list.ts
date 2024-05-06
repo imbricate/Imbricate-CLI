@@ -5,6 +5,7 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection } from "@imbricate/core";
+import { readOrCreateSearchPreferenceConfiguration } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
@@ -22,7 +23,7 @@ type CollectionListCommandOptions = {
 export const createCollectionListCommand = (
     globalManager: GlobalManager,
     terminalController: ITerminalController,
-    _configurationManager: IConfigurationManager,
+    configurationManager: IConfigurationManager,
 ): Command => {
 
     const listCommand: Command = createConfiguredCommand("list");
@@ -44,12 +45,22 @@ export const createCollectionListCommand = (
 
             const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
 
+            const searchPreference = await readOrCreateSearchPreferenceConfiguration(
+                configurationManager.configurationPath,
+            );
+
             if (options.json) {
 
                 terminalController.printJsonInfo(
                     collections.map((collection) => {
+
+                        const includedInSearch: boolean = searchPreference.included.some((item) => {
+                            return item.collectionUniqueIdentifier === collection.uniqueIdentifier;
+                        });
+
                         return {
                             collectionName: collection.collectionName,
+                            includedInSearch,
                             uniqueIdentifier: collection.uniqueIdentifier,
                             description: collection.description,
                         };
@@ -65,10 +76,16 @@ export const createCollectionListCommand = (
 
             terminalController.printInfo(collections.map((collection: IImbricateOriginCollection) => {
 
+                const includedInSearch: boolean = searchPreference.included.some((item) => {
+                    return item.collectionUniqueIdentifier === collection.uniqueIdentifier;
+                });
+
+                const prefix: string = includedInSearch ? "[*]" : "[ ]";
+
                 if (options.uniqueIdentifier) {
-                    return `${collection.collectionName} (${collection.uniqueIdentifier})`;
+                    return `${prefix} ${collection.collectionName} (${collection.uniqueIdentifier})`;
                 }
-                return collection.collectionName;
+                return `${prefix} ${collection.collectionName}`;
             }).join("\n"));
 
             return;

@@ -24,7 +24,6 @@ export class MockOrigin implements IImbricateOrigin {
     private constructor() {
 
         this.metadata = {
-            type: "mock",
             digestAlgorithm: IMBRICATE_DIGEST_ALGORITHM.SHA1,
         };
         this.payloads = {};
@@ -35,6 +34,13 @@ export class MockOrigin implements IImbricateOrigin {
     public getFunctionManger(): IImbricateFunctionManager {
 
         return new MockFunctionManager();
+    }
+
+    public get originType(): string {
+        return "mock";
+    }
+    public get uniqueIdentifier(): string {
+        return "mock";
     }
 
     public get capabilities(): ImbricateOriginCapability {
@@ -50,7 +56,7 @@ export class MockOrigin implements IImbricateOrigin {
     }
 
     public renameCollection(
-        _collectionName: string,
+        _collectionUniqueIdentifier: string,
         _newCollectionName: string,
     ): Promise<void> {
 
@@ -58,7 +64,7 @@ export class MockOrigin implements IImbricateOrigin {
     }
 
     public deleteCollection(
-        _collectionName: string,
+        _collectionUniqueIdentifier: string,
     ): Promise<void> {
 
         throw new Error("Method not implemented.");
@@ -72,6 +78,13 @@ export class MockOrigin implements IImbricateOrigin {
     }
 
     public getCollection(
+        _collectionUniqueIdentifier: string,
+    ): Promise<IImbricateOriginCollection | null> {
+
+        throw new Error("Method not implemented.");
+    }
+
+    public findCollection(
         _collectionName: string,
     ): Promise<IImbricateOriginCollection | null> {
 

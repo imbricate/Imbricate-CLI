@@ -68,7 +68,6 @@ export const createCollectionConfigSetIncludeInSearchCommand = (
                 await includeCollectionInSearch(
                     configurationManager.configurationPath,
                     activeOrigin,
-                    collectionName,
                     currentCollection.uniqueIdentifier,
                 );
             } else {
@@ -77,7 +76,6 @@ export const createCollectionConfigSetIncludeInSearchCommand = (
                 await excludeCollectionInSearch(
                     configurationManager.configurationPath,
                     activeOrigin,
-                    collectionName,
                     currentCollection.uniqueIdentifier,
                 );
             }

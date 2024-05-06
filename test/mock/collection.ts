@@ -23,6 +23,9 @@ export class MockCollection implements IImbricateOriginCollection {
         this.description = "mock";
     }
 
+    public get uniqueIdentifier(): string {
+        return "mock";
+    }
     public get capabilities(): ImbricateCollectionCapability {
         return createAllAllowImbricateCollectionCapability();
     }

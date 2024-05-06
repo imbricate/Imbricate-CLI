@@ -74,7 +74,7 @@ export const createSearchCommand = (
 
                 const includedInSearch = searchPreference.included.some((item: IncludedSearchPreference) => {
                     return item.originName === activeOrigin &&
-                        item.collectionName === collection.collectionName;
+                        item.collectionUniqueIdentifier === collection.uniqueIdentifier;
                 });
 
                 if (!includedInSearch) {

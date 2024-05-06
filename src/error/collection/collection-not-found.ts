@@ -8,7 +8,9 @@ import { CLICollectionError } from "./collection-error";
 
 export class CLICollectionNotFound extends CLICollectionError {
 
-    public static withCollectionName(collectionName: string): CLICollectionNotFound {
+    public static withCollectionName(
+        collectionName: string,
+    ): CLICollectionNotFound {
 
         return new CLICollectionNotFound(
             `Collection named '${collectionName}' not found`,

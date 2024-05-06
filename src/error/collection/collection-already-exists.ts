@@ -8,7 +8,9 @@ import { CLICollectionError } from "./collection-error";
 
 export class CLICollectionAlreadyExists extends CLICollectionError {
 
-    public static withCollectionName(collectionName: string): CLICollectionAlreadyExists {
+    public static withCollectionName(
+        collectionName: string,
+    ): CLICollectionAlreadyExists {
 
         return new CLICollectionAlreadyExists(
             `Collection named '${collectionName}' already exists`,
