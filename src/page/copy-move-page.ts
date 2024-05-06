@@ -49,7 +49,7 @@ const getTargetCollection = async (
     if (typeof options.targetCollection === "string") {
 
         const targetCollection: IImbricateOriginCollection | null
-            = await targetOrigin.getCollection(options.targetCollection);
+            = await targetOrigin.findCollection(options.targetCollection);
 
         if (!targetCollection) {
             throw CLICollectionNotFound.withCollectionName(options.targetCollection);
@@ -62,7 +62,8 @@ const getTargetCollection = async (
         return targetCollection;
     }
 
-    const targetCollection: IImbricateOriginCollection | null = await targetOrigin.getCollection(currentCollection.collectionName);
+    const targetCollection: IImbricateOriginCollection | null =
+        await targetOrigin.findCollection(currentCollection.collectionName);
 
     if (!targetCollection) {
 
@@ -202,7 +203,7 @@ export const cliCopyMovePage = async (
     }
 
     const collection: IImbricateOriginCollection | null
-        = await currentOrigin.getCollection(options.collection);
+        = await currentOrigin.findCollection(options.collection);
 
     if (!collection) {
         throw CLICollectionNotFound.withCollectionName(options.collection);

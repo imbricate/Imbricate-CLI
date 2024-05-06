@@ -51,14 +51,10 @@ export const createCollectionDeleteCommand = (
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const collection: IImbricateOriginCollection | null = await currentOrigin.getCollection(collectionName);
-
-            if (!collection) {
-                throw CLICollectionNotFound.withCollectionName(collectionName);
-            }
-
-            const pages: ImbricatePageSnapshot[] = await collection.listPages([], false);
-            const directories: string[] = await collection.listDirectories([]);
+            const pages: ImbricatePageSnapshot[] =
+                await currentCollection.listPages([], false);
+            const directories: string[] =
+                await currentCollection.listDirectories([]);
 
             if (pages.length !== 0 || directories.length !== 0) {
 
@@ -70,7 +66,7 @@ export const createCollectionDeleteCommand = (
             }
 
             await currentOrigin.deleteCollection(
-                collection.uniqueIdentifier,
+                currentCollection.uniqueIdentifier,
             );
 
             if (!options.quiet) {

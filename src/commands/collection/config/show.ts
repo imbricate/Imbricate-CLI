@@ -49,9 +49,8 @@ export const createCollectionConfigShowCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null = await currentOrigin.getCollection(
-                collectionName,
-            );
+            const collection: IImbricateOriginCollection | null =
+                await currentOrigin.findCollection(collectionName);
 
             if (!collection) {
                 throw CLICollectionNotFound.withCollectionName(collectionName);
@@ -64,13 +63,14 @@ export const createCollectionConfigShowCommand = (
 
             const includedInSearch = searchPreference.included.some((item: IncludedSearchPreference) => {
                 return item.originName === activeOrigin &&
-                    item.collectionName === collection.collectionName;
+                    item.collectionUniqueIdentifier === collection.uniqueIdentifier;
             });
 
             if (options.json) {
 
                 terminalController.printJsonInfo({
                     collectionName: collection.collectionName,
+                    collectionUniqueIdentifier: collection.uniqueIdentifier,
                     description: collection.description,
                     includeInSearch: includedInSearch,
                 });
@@ -78,9 +78,12 @@ export const createCollectionConfigShowCommand = (
             }
 
             terminalController.printInfo(`Collection: ${collection.collectionName}`);
+            terminalController.printInfo(`Unique Identifier: ${collection.uniqueIdentifier}`);
+
             if (collection.description) {
                 terminalController.printInfo(`Description: ${collection.description}`);
             }
+
             terminalController.printInfo(`Include in Search: ${includedInSearch ? "Yes" : "No"}`);
             return;
         }));

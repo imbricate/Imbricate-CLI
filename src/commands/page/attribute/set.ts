@@ -76,7 +76,7 @@ export const createPageAttributeSetCommand = (
             }
 
             const collection: IImbricateOriginCollection | null
-                = await currentOrigin.getCollection(options.collection);
+                = await currentOrigin.findCollection(options.collection);
 
             if (!collection) {
                 throw CLICollectionNotFound.withCollectionName(options.collection);

@@ -73,8 +73,9 @@ export const createPageCreateCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            if (validateFilename(pageTitle)) {
-                throw CLIInvalidPageTitle.withPageTitle(pageTitle);
+            const validateResult: string | null = validateFilename(pageTitle);
+            if (validateResult !== null) {
+                throw CLIInvalidPageTitle.withPageTitle(pageTitle, validateResult);
             }
 
             const collection: IImbricateOriginCollection | null

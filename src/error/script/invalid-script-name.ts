@@ -8,10 +8,13 @@ import { CLIScriptError } from "./script-error";
 
 export class CLIInvalidScriptName extends CLIScriptError {
 
-    public static withScriptName(scriptName: string): CLIInvalidScriptName {
+    public static withScriptName(
+        scriptName: string,
+        reason: string,
+    ): CLIInvalidScriptName {
 
         return new CLIInvalidScriptName(
-            `Invalid script name: ${scriptName}`,
+            `Invalid script name: ${scriptName}, reason: ${reason}`,
         );
     }
 

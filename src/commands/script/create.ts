@@ -55,8 +55,9 @@ export const createScriptCreateCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            if (!validateFilename(scriptName)) {
-                throw CLIInvalidScriptName.withScriptName(scriptName);
+            const validateResult: string | null = validateFilename(scriptName);
+            if (validateResult !== null) {
+                throw CLIInvalidScriptName.withScriptName(scriptName, validateResult);
             }
 
             const hasScript: boolean = await currentOrigin.hasScript(scriptName);
