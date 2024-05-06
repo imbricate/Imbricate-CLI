@@ -37,10 +37,10 @@
   },
   "homepage": "https://imbricate.io",
   "dependencies": {
-    "@imbricate/core": "1.18.0",
+    "@imbricate/core": "1.18.1",
     "@imbricate/local-fundamental": "1.7.0",
     "@imbricate/markdown-render": "1.1.2",
-    "@imbricate/origin-file-system": "1.14.0",
+    "@imbricate/origin-file-system": "../Imbricate-Origin-File-System/app",
     "@sudoo/io": "^1.8.0",
     "@sudoo/uuid": "^1.1.0",
     "axios": "^1.6.8",
