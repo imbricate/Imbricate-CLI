@@ -38,7 +38,7 @@
   "homepage": "https://imbricate.io",
   "dependencies": {
     "@imbricate/core": "1.18.2",
-    "@imbricate/local-fundamental": "^1.7.2",
+    "@imbricate/local-fundamental": "^1.7.3",
     "@imbricate/markdown-render": "1.1.2",
     "@imbricate/origin-file-system": "^1.14.4",
     "@sudoo/io": "^1.8.0",
@@ -51,7 +51,7 @@
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-typescript": "^7.24.1",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.9",
+    "@types/node": "^20.12.10",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "babel-jest": "^29.7.0",

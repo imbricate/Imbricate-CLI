@@ -1741,15 +1741,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/local-fundamental@npm:^1.7.2":
-  version: 1.7.2
-  resolution: "@imbricate/local-fundamental@npm:1.7.2"
+"@imbricate/local-fundamental@npm:^1.7.3":
+  version: 1.7.3
+  resolution: "@imbricate/local-fundamental@npm:1.7.3"
   dependencies:
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/734a64f5566b01813d2094bc4ddc860385632fb09253c5b6d7b27e36d2db84d07f09f459f1d718abb5c4d3330027766eed6f33273d89e9119718b8e7cf7be8dc
+  checksum: 10c0/e31943c17f40b1b9d243b87825ae0148e5a9c4a26041ddbb85b136f77584065e86e98d38c1d0edf345291774c491909f06e4aac12eb9d5b2fb0fb4a80a504f79
   languageName: node
   linkType: hard
 
@@ -2445,12 +2445,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.12.9":
-  version: 20.12.9
-  resolution: "@types/node@npm:20.12.9"
+"@types/node@npm:^20.12.10":
+  version: 20.12.10
+  resolution: "@types/node@npm:20.12.10"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/410da89226b425fa24fe497fbffb90a79ce63461ff0e0361414de567dc80b8c9b5a0e5803983bb62e2c7757b0769bf49498d3578e61f677590124491cdaf1d7a
+  checksum: 10c0/2cc3b6ea09894ed1a3cf39f6491ec539281580f4ff83216e7d26ce85c83237fe0543c0ca49e25b2515ccdb6c8814b488d17a64a05f536dcaea94f9d32a60c7d7
   languageName: node
   linkType: hard
 
@@ -4188,13 +4188,13 @@ __metadata:
     "@babel/preset-env": "npm:^7.24.5"
     "@babel/preset-typescript": "npm:^7.24.1"
     "@imbricate/core": "npm:1.18.2"
-    "@imbricate/local-fundamental": "npm:^1.7.2"
+    "@imbricate/local-fundamental": "npm:^1.7.3"
     "@imbricate/markdown-render": "npm:1.1.2"
     "@imbricate/origin-file-system": "npm:^1.14.4"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29.5.12"
-    "@types/node": "npm:^20.12.9"
+    "@types/node": "npm:^20.12.10"
     "@typescript-eslint/eslint-plugin": "npm:^7.8.0"
     "@typescript-eslint/parser": "npm:^7.8.0"
     axios: "npm:^1.6.8"
