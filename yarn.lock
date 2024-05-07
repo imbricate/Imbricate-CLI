@@ -1753,14 +1753,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/markdown-render@npm:1.1.2":
-  version: 1.1.2
-  resolution: "@imbricate/markdown-render@npm:1.1.2"
+"@imbricate/markdown-render@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@imbricate/markdown-render@npm:1.2.0"
   dependencies:
     highlight.js: "npm:^11.9.0"
     showdown: "npm:^2.1.0"
     showdown-katex: "npm:^0.8.0"
-  checksum: 10c0/569ea78fb4a5291fe7b31a0ca19c1c9d88ac38edd42fb334bc8b6914889bd4de1d54ec239692088fdf04f748d561f6981e89b9e9bb4ffe7e7d18f7527cc4287a
+  checksum: 10c0/6e4e11c8640dd7e628e064b17ba64cd488044dc472dc5e2d5b91b140894b3e22569be51d6f75df602e2894ace6a61867eb450af06c9dac0452bce8147af914d5
   languageName: node
   linkType: hard
 
@@ -4189,7 +4189,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.24.1"
     "@imbricate/core": "npm:1.18.2"
     "@imbricate/local-fundamental": "npm:^1.7.3"
-    "@imbricate/markdown-render": "npm:1.1.2"
+    "@imbricate/markdown-render": "npm:1.2.0"
     "@imbricate/origin-file-system": "npm:^1.14.4"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
