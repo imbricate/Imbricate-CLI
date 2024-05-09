@@ -24,6 +24,8 @@ type PageHistoryShowCommandOptions = {
 
     readonly title?: string;
     readonly identifier?: string;
+
+    readonly json?: boolean;
 };
 
 export const createPageHistoryShowCommand = (
@@ -53,13 +55,12 @@ export const createPageHistoryShowCommand = (
             "-i, --identifier <page-identifier>",
             "set attribute by page identifier or pointer (one-of)",
         )
+        .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
-            attributeKey: string,
-            attributeValue: string,
             options: PageHistoryShowCommandOptions,
         ): Promise<void> => {
 
-            if (typeof options.directories === "undefined" && !options.quiet) {
+            if (typeof options.directories === "undefined") {
                 terminalController.printInfo("No directories specified, using root directory");
             }
             const directories: string[] = options.directories ?? [];
@@ -85,7 +86,12 @@ export const createPageHistoryShowCommand = (
                 options.identifier,
             );
 
-            await page.writeAttribute(attributeKey, attributeValue);
+            if (options.json) {
+
+                terminalController.printJsonInfo(
+                    page.historyRecords,
+                );
+            }
         }));
 
     return historyCommand;

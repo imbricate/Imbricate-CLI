@@ -22,10 +22,10 @@ type PageShowCommandOptions = {
 
     readonly directories?: string[];
 
-    readonly json?: boolean;
-
     readonly title?: string;
     readonly identifier?: string;
+
+    readonly json?: boolean;
 };
 
 export const createPageShowCommand = (
@@ -47,7 +47,6 @@ export const createPageShowCommand = (
             "page directories, nested with slash (/)",
             inputParseDirectories,
         )
-        .option("-j, --json", "print result as JSON")
         .option(
             "-t, --title <page-title>",
             "show page by page title (one-of)",
@@ -56,6 +55,7 @@ export const createPageShowCommand = (
             "-i, --identifier <page-identifier>",
             "show page by page identifier or pointer (one-of)",
         )
+        .option("-j, --json", "print result as JSON")
         .action(createActionRunner(terminalController, async (
             options: PageShowCommandOptions,
         ): Promise<void> => {
