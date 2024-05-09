@@ -14,12 +14,13 @@ import { createPageCatenateCommand } from "./page/catenate";
 import { createPageCopyCommand } from "./page/copy";
 import { createPageCreateCommand } from "./page/create";
 import { createPageDeleteCommand } from "./page/delete";
+import { createPageHistoryCommand } from "./page/history";
 import { createPageListCommand } from "./page/list";
+import { createPageMoveCommand } from "./page/move";
 import { createPageOpenCommand } from "./page/open";
 import { createPageRenderCommand } from "./page/render";
 import { createPageRetitleCommand } from "./page/retitle";
 import { createPageShowCommand } from "./page/show";
-import { createPageMoveCommand } from "./page/move";
 
 export const createPageCommand = (
     globalManager: GlobalManager,
@@ -53,6 +54,11 @@ export const createPageCommand = (
         configurationManager,
     ));
     pageCommand.addCommand(createPageDeleteCommand(
+        globalManager,
+        terminalController,
+        configurationManager,
+    ));
+    pageCommand.addCommand(createPageHistoryCommand(
         globalManager,
         terminalController,
         configurationManager,
