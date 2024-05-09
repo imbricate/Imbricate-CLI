@@ -99,14 +99,17 @@ export const createPageHistoryShowCommand = (
             terminalController.printInfo(`|- ${page.digest}`);
             terminalController.printInfo("|");
 
-            terminalController.printInfo(page.historyRecords.flatMap(
-                (record: ImbricatePageHistoryRecord) => {
-                    return [
-                        `| ${record.updatedAt.toLocaleString()}`,
-                        `|- ${record.digest}`,
-                    ];
-                },
-            ).join("\n"));
+            terminalController.printInfo(page.historyRecords
+                .reverse()
+                .flatMap(
+                    (record: ImbricatePageHistoryRecord) => {
+                        return [
+                            `| ${record.updatedAt.toLocaleString()}`,
+                            `|- ${record.digest}`,
+                        ];
+                    },
+                ).join("\n"),
+            );
         }));
 
     return historyCommand;
