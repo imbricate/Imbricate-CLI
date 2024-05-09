@@ -94,6 +94,11 @@ export const createPageHistoryShowCommand = (
                 return;
             }
 
+            terminalController.printInfo("| Latest Version");
+            terminalController.printInfo(`| ${page.updatedAt.toLocaleString()}`);
+            terminalController.printInfo(`|- ${page.digest}`);
+            terminalController.printInfo("|");
+
             terminalController.printInfo(page.historyRecords.flatMap(
                 (record: ImbricatePageHistoryRecord) => {
                     return [
