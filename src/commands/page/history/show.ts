@@ -4,7 +4,7 @@
  * @description Show
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, ImbricatePageHistoryRecord } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../../configuration/interface";
 import { CLICollectionNotFound } from "../../../error/collection/collection-not-found";
@@ -91,7 +91,17 @@ export const createPageHistoryShowCommand = (
                 terminalController.printJsonInfo(
                     page.historyRecords,
                 );
+                return;
             }
+
+            terminalController.printInfo(page.historyRecords.flatMap(
+                (record: ImbricatePageHistoryRecord) => {
+                    return [
+                        `| ${record.updatedAt.toLocaleString()}`,
+                        `|- ${record.digest}`,
+                    ];
+                },
+            ).join("\n"));
         }));
 
     return historyCommand;
