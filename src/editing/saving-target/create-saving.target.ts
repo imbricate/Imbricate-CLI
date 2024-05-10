@@ -4,12 +4,12 @@
  * @description Create Saving Target
  */
 
+import { SAVING_TARGET_TYPE, SavingTarget } from "@imbricate/local-fundamental";
 import { GlobalManager } from "../../global/global-manager";
-import { SAVING_TARGET_TYPE, SavingTarget } from "./../definition";
 
 export const createPageSavingTarget = (
     globalManager: GlobalManager,
-    collection: string,
+    _collection: string,
     collectionUniqueIdentifier: string,
     pageIdentifier: string,
 ): SavingTarget<SAVING_TARGET_TYPE.PAGE> => {

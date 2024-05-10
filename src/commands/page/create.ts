@@ -5,12 +5,11 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
-import { validateFilename } from "@imbricate/local-fundamental";
+import { SAVING_TARGET_TYPE, SavingTarget, validateFilename } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { getProfileFromConfiguration } from "../../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../../configuration/profile/profile-manager";
-import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { openContentAndMonitor } from "../../editing/open-file";
 import { createPageSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";

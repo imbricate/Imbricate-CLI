@@ -4,7 +4,7 @@
  * @description Reference
  */
 
-import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "./definition";
+import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "@imbricate/local-fundamental";
 
 export const getActiveEditingReference = (
     activeEditing: ActiveEditing,

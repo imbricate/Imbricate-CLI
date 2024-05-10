@@ -5,7 +5,7 @@
  */
 
 import { mapLeastCommonIdentifier } from "@imbricate/core";
-import { ActiveEditing } from "./definition";
+import { ActiveEditing } from "@imbricate/local-fundamental";
 
 export const mapEditingLeastCommonIdentifier = (
     activeEditingList: ActiveEditing[],

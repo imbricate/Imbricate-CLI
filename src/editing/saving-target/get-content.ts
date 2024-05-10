@@ -4,9 +4,9 @@
  * @description Get Content
  */
 
+import { SAVING_TARGET_TYPE, SavingTarget } from "@imbricate/local-fundamental";
 import { CLIEditingSaveTargetFiled } from "../../error/editing/save-target-failed";
 import { GlobalManager } from "../../global/global-manager";
-import { SAVING_TARGET_TYPE, SavingTarget } from "./../definition";
 
 export const getContentWithSavingTarget = async (
     savingTarget: SavingTarget<SAVING_TARGET_TYPE>,

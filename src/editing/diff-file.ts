@@ -4,14 +4,13 @@
  * @description Diff File
  */
 
-import { resolveImbricateTempDirectory } from "@imbricate/local-fundamental";
+import { SavingTarget, resolveImbricateTempDirectory } from "@imbricate/local-fundamental";
 import { attemptMarkDir, writeTextFile } from "@sudoo/io";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
 import { CLIInvalidSavingTarget } from "../error/editing/invalid-saving-target";
 import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
-import { SavingTarget } from "./definition";
 import { getContentWithSavingTarget } from "./saving-target/get-content";
 
 export const diffSavingTarget = async (

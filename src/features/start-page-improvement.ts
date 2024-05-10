@@ -5,11 +5,10 @@
  */
 
 import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
-import { checkSavingTargetActive } from "@imbricate/local-fundamental";
+import { SAVING_TARGET_TYPE, SavingTarget, checkSavingTargetActive } from "@imbricate/local-fundamental";
 import { IConfigurationManager } from "../configuration/interface";
 import { getProfileFromConfiguration } from "../configuration/profile/get-profile";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
-import { SAVING_TARGET_TYPE, SavingTarget } from "../editing/definition";
 import { openContentAndDiff } from "../editing/open-file";
 import { createPageSavingTarget } from "../editing/saving-target/create-saving.target";
 import { GlobalManager } from "../global/global-manager";

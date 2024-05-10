@@ -5,10 +5,9 @@
  */
 
 import { IImbricateOrigin, ImbricateScriptSnapshot } from "@imbricate/core";
-import { checkSavingTargetActive, cleanupImbricateSavingTarget } from "@imbricate/local-fundamental";
+import { SAVING_TARGET_TYPE, SavingTarget, checkSavingTargetActive, cleanupImbricateSavingTarget } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { createScriptSavingTarget } from "../../editing/saving-target/create-saving.target";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { CLIScriptEditing } from "../../error/script/script-editing";

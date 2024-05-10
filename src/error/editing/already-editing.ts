@@ -4,7 +4,7 @@
  * @description Already Editing
  */
 
-import { SavingTarget } from "../../editing/definition";
+import { SavingTarget } from "@imbricate/local-fundamental";
 import { formatLog } from "../../util/format-log";
 import { CLIEditingError } from "./editing-error";
 

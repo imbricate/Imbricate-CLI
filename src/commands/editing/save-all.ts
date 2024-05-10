@@ -4,10 +4,9 @@
  * @description Save All
  */
 
-import { readActiveEditing } from "@imbricate/local-fundamental";
+import { ActiveEditing, readActiveEditing } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { ActiveEditing } from "../../editing/definition";
 import { performSaveAndCleanup } from "../../editing/open-file";
 import { getActiveEditingReference } from "../../editing/reference";
 import { getContentWithSavingTarget } from "../../editing/saving-target/get-content";

@@ -4,7 +4,7 @@
  * @description Open File
  */
 
-import { cleanupImbricateSavingTarget, hashImbricateSavingTarget, performImbricateSavingTarget, readActiveEditing, resolveImbricateTempDirectory, writeActiveEditing } from "@imbricate/local-fundamental";
+import { ActiveEditing, SavingTarget, cleanupImbricateSavingTarget, digestString, hashImbricateSavingTarget, performImbricateSavingTarget, readActiveEditing, resolveImbricateTempDirectory, writeActiveEditing } from "@imbricate/local-fundamental";
 import { attemptMarkDir, readTextFile, writeTextFile } from "@sudoo/io";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { ConfigurationProfileManager } from "../configuration/profile/profile-manager";
@@ -13,7 +13,6 @@ import { GlobalManager } from "../global/global-manager";
 import { ITerminalController } from "../terminal/definition";
 import { executeCommand } from "../util/execute-command";
 import { hashString } from "../util/hash";
-import { ActiveEditing, SavingTarget } from "./definition";
 import { diffSavingTarget } from "./diff-file";
 import { getActiveEditingReference } from "./reference";
 
@@ -78,7 +77,15 @@ export const performSaveAndCleanup = async (
     } else {
 
         terminalController.printInfo("Saving...");
-        const result: boolean = await performImbricateSavingTarget(savingTarget, updatedContent, globalManager.originManager, false);
+        const result: boolean = await performImbricateSavingTarget(
+            savingTarget,
+            content,
+            updatedContent,
+            globalManager.originManager,
+            {
+                cancelIfNoChange: false,
+            },
+        );
 
         if (!result) {
             terminalController.printErrorMessage("Save target returns false, please check the error.");
@@ -119,9 +126,12 @@ export const openContentAndDiff = async (
 
     const currentTime: Date = new Date();
 
+    const digest: string = digestString(content);
     const newActiveEditing: ActiveEditing = {
+
         identifier: editingIdentifier,
         hash: savingTargetHash,
+        digest,
         path: tempFilePath,
         startedAt: currentTime,
         target: savingTarget,
@@ -207,11 +217,13 @@ export const openContentAndMonitor = async (
 
     const currentTime: Date = new Date();
 
+    const digest: string = digestString(content);
     const updatedActiveEditing: ActiveEditing[] = [
         ...activeEditing,
         {
             identifier: editingIdentifier,
             hash: savingTargetHash,
+            digest,
             path: tempFilePath,
             startedAt: currentTime,
             target: savingTarget,

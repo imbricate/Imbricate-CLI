@@ -5,10 +5,9 @@
  */
 
 import { IImbricateOrigin, IImbricateScript } from "@imbricate/core";
-import { readActiveEditing } from "@imbricate/local-fundamental";
+import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget, readActiveEditing } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
-import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget } from "../../editing/definition";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";
 import { cliGetScript } from "../../script/get-script";
