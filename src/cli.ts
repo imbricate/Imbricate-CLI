@@ -6,6 +6,7 @@
 import { IImbricateConfigurationOrigin } from "@imbricate/local-fundamental";
 import { FileSystemImbricateOrigin, FileSystemOriginPayload } from "@imbricate/origin-file-system";
 import { Command } from "commander";
+import { createBinaryCommand } from "./commands/binary";
 import { createCollectionCommand } from "./commands/collection";
 import { createConfigCommand } from "./commands/config";
 import { createEditingCommand } from "./commands/editing";
@@ -100,6 +101,11 @@ export const executeWithConfiguration = async (
             terminalController,
         );
 
+        imbricateProgram.addCommand(createBinaryCommand(
+            globalManager,
+            terminalController,
+            configurationManager,
+        ));
         imbricateProgram.addCommand(createCollectionCommand(
             globalManager,
             terminalController,
