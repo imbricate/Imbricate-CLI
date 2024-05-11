@@ -28,6 +28,12 @@ export const getFileName = (filePath: string): string => {
     return parsedPath.name;
 };
 
+export const getFileNameAndExtension = (filePath: string): string => {
+
+    const parsedPath: Path.ParsedPath = Path.parse(filePath);
+    return parsedPath.base;
+};
+
 export const getFolderPath = (filePath: string): string => {
 
     const parsedPath: Path.ParsedPath = Path.parse(filePath);
