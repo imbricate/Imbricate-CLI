@@ -1764,16 +1764,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/origin-file-system@file:../Imbricate-Origin-File-System/app::locator=imbricate%40workspace%3A.":
-  version: 1.14.4
-  resolution: "@imbricate/origin-file-system@file:../Imbricate-Origin-File-System/app#../Imbricate-Origin-File-System/app::hash=348269&locator=imbricate%40workspace%3A."
+"@imbricate/origin-file-system@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@imbricate/origin-file-system@npm:1.15.0"
   dependencies:
     "@sudoo/asynchronous": "npm:^2.4.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/a745a1e6be2c3ce4a4d701772d8b5945b221eddfc84e07919c5b29f1c5ecd44815c9d51f7e70ef991c4116de080a1b5433378350b950c5e5fdc1a217f25df451
+  checksum: 10c0/65388389d159469e97c7bf5e81b354a16b2e3eff3a12bb62179c3be37e189cf1ab14bef8a45c1a27b650a92604c679dc8814827f00fe6c56ddf284db27aed43b
   languageName: node
   linkType: hard
 
@@ -4190,7 +4190,7 @@ __metadata:
     "@imbricate/core": "npm:1.19.2"
     "@imbricate/local-fundamental": "npm:1.8.0"
     "@imbricate/markdown-render": "npm:1.2.0"
-    "@imbricate/origin-file-system": ../Imbricate-Origin-File-System/app
+    "@imbricate/origin-file-system": "npm:1.15.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29.5.12"
