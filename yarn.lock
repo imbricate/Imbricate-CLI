@@ -1727,9 +1727,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/core@npm:1.19.2":
-  version: 1.19.2
-  resolution: "@imbricate/core@npm:1.19.2"
+"@imbricate/core@npm:1.20.1":
+  version: 1.20.1
+  resolution: "@imbricate/core@npm:1.20.1"
   dependencies:
     "@sudoo/marked": "npm:^3.21.4"
     "@sudoo/marked-mixin-date": "npm:^1.0.0"
@@ -1737,7 +1737,7 @@ __metadata:
     "@sudoo/marked-mixin-math": "npm:^1.4.0"
     "@sudoo/marked-mixin-object": "npm:^1.3.0"
     "@sudoo/marked-mixin-parse": "npm:^1.0.0"
-  checksum: 10c0/e0cb23fa0adbb2755208fd34ed708ebd8e300f626b3072d7ef12267dd2a3930a2b52b8246dff4c7ccda9feacd73d296611a2f032f4bda01947243a6c4ee6f955
+  checksum: 10c0/4e5bd18a0a48f5e348fc2fc1e614f4616d4fe106b67f3a06056b7800a40be5262a15df3b92fb09f3e55de38cfc5b1e36b7031969edb85d72592b4496d54227a1
   languageName: node
   linkType: hard
 
@@ -1764,16 +1764,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/origin-file-system@npm:1.15.0":
-  version: 1.15.0
-  resolution: "@imbricate/origin-file-system@npm:1.15.0"
+"@imbricate/origin-file-system@npm:1.16.0":
+  version: 1.16.0
+  resolution: "@imbricate/origin-file-system@npm:1.16.0"
   dependencies:
     "@sudoo/asynchronous": "npm:^2.4.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/65388389d159469e97c7bf5e81b354a16b2e3eff3a12bb62179c3be37e189cf1ab14bef8a45c1a27b650a92604c679dc8814827f00fe6c56ddf284db27aed43b
+  checksum: 10c0/e3d7f6e362dfe31e5855801b90e10b6cc075eb815bea841a9221b863921abcb3067de93e3ceb42f67f695fef8ef11920bdfd6dc97ea8c0089f3c9e9d0e62ec60
   languageName: node
   linkType: hard
 
@@ -4187,10 +4187,10 @@ __metadata:
     "@babel/core": "npm:^7.24.5"
     "@babel/preset-env": "npm:^7.24.5"
     "@babel/preset-typescript": "npm:^7.24.1"
-    "@imbricate/core": "npm:1.19.2"
+    "@imbricate/core": "npm:1.20.1"
     "@imbricate/local-fundamental": "npm:1.8.0"
     "@imbricate/markdown-render": "npm:1.2.0"
-    "@imbricate/origin-file-system": "npm:1.15.0"
+    "@imbricate/origin-file-system": "npm:1.16.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29.5.12"
