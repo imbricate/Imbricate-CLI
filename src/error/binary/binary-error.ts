@@ -1,12 +1,12 @@
 /**
  * @author WMXPY
- * @namespace Error_Capability
- * @description Capability Error
+ * @namespace Error_Binary
+ * @description Binary Error
  */
 
 import { CLIError } from "../cli-error";
 
-export class CLICapabilityError extends CLIError {
+export class CLIBinaryError extends CLIError {
 
     protected constructor(
         message: string,
@@ -16,6 +16,6 @@ export class CLICapabilityError extends CLIError {
 
         super(message, type, reason);
 
-        Object.setPrototypeOf(this, CLICapabilityError.prototype);
+        Object.setPrototypeOf(this, CLIBinaryError.prototype);
     }
 }

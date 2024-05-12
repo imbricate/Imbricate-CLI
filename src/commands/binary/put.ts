@@ -8,6 +8,7 @@ import { IImbricateOrigin } from "@imbricate/core";
 import { isFile, pathExists, readBufferFile } from "@sudoo/io";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
+import { CLIBinaryInvalidBinary } from "../../error/binary/invalid-binary";
 import { CLIFileDoesNotExistError } from "../../error/input/file-does-not-exist";
 import { CLIActiveOriginNotFound } from "../../error/origin/active-origin-not-found";
 import { GlobalManager } from "../../global/global-manager";
@@ -62,6 +63,12 @@ export const createBinaryPutCommand = (
             const fileName: string = getFileNameAndExtension(filePath);
 
             const binaryStorage = currentOrigin.getBinaryStorage();
+
+            const validationResult: boolean = await binaryStorage.validateBinaryBase64(fileBase64);
+
+            if (!validationResult) {
+                throw CLIBinaryInvalidBinary.withFileName(fileName);
+            }
 
             const url: string = await binaryStorage.putBinaryBase64(
                 fileBase64,
