@@ -4,7 +4,7 @@
  * @description Delete
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, ImbricatePageSnapshot } from "@imbricate/core";
 import { SAVING_TARGET_TYPE, SavingTarget, checkSavingTargetActive, cleanupImbricateSavingTarget } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -34,7 +34,7 @@ type PageDeleteCommandOptions = {
 };
 
 const performPageDelete = async (
-    collection: IImbricateOriginCollection,
+    collection: IImbricateCollection,
     page: ImbricatePageSnapshot,
     options: PageDeleteCommandOptions,
     globalManager: GlobalManager,
@@ -140,7 +140,7 @@ export const createPageDeleteCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null
+            const collection: IImbricateCollection | null
                 = await currentOrigin.findCollection(collectionName);
 
             if (!collection) {

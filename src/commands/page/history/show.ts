@@ -4,7 +4,7 @@
  * @description Show
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, ImbricatePageHistoryRecord } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage, ImbricatePageHistoryRecord } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../../configuration/interface";
 import { CLICollectionNotFound } from "../../../error/collection/collection-not-found";
@@ -71,7 +71,7 @@ export const createPageHistoryShowCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null
+            const collection: IImbricateCollection | null
                 = await currentOrigin.findCollection(options.collection);
 
             if (!collection) {

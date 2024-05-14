@@ -4,7 +4,7 @@
  * @description Retitle
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage } from "@imbricate/core";
 import { ActiveEditing, SAVING_TARGET_TYPE, SavingTarget, readActiveEditing } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -74,7 +74,7 @@ export const createPageRetitleCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null
+            const collection: IImbricateCollection | null
                 = await currentOrigin.findCollection(options.collection);
 
             if (!collection) {

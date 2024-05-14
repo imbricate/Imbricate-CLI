@@ -4,7 +4,7 @@
  * @description Open
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, ImbricatePageSnapshot } from "@imbricate/core";
 import { SAVING_TARGET_TYPE, SavingTarget } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -83,7 +83,7 @@ export const createPageOpenCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null
+            const collection: IImbricateCollection | null
                 = await currentOrigin.findCollection(collectionName);
 
             if (!collection) {

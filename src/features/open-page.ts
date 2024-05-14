@@ -4,7 +4,7 @@
  * @description Open Page
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage, SandboxFeature, SandboxFeatureBuilder } from "@imbricate/core";
 import { SAVING_TARGET_TYPE, SavingTarget } from "@imbricate/local-fundamental";
 import { IConfigurationManager } from "../configuration/interface";
 import { getProfileFromConfiguration } from "../configuration/profile/get-profile";
@@ -41,7 +41,7 @@ const createImplementation = (
             throw new Error("Identifier is required");
         }
 
-        const collection: IImbricateOriginCollection | null =
+        const collection: IImbricateCollection | null =
             await origin.findCollection(input.collection);
 
         if (!collection) {

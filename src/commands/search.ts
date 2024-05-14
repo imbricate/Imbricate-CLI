@@ -4,7 +4,7 @@
  * @description Search
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IMBRICATE_SEARCH_RESULT_TYPE, ImbricatePageSearchResult, ImbricateScriptSearchResult, ImbricateSearchResult } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IMBRICATE_SEARCH_RESULT_TYPE, ImbricatePageSearchResult, ImbricateScriptSearchResult, ImbricateSearchResult } from "@imbricate/core";
 import { ImbricateSearchPreference, IncludedSearchPreference, readOrCreateSearchPreferenceConfiguration } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../configuration/interface";
@@ -61,7 +61,7 @@ export const createSearchCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
+            const collections: IImbricateCollection[] = await currentOrigin.listCollections();
 
             const results: Array<ImbricateSearchResult<IMBRICATE_SEARCH_RESULT_TYPE>> = [];
 

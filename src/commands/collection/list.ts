@@ -4,7 +4,7 @@
  * @description List
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin } from "@imbricate/core";
 import { readOrCreateSearchPreferenceConfiguration } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -45,7 +45,7 @@ export const createCollectionListCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collections: IImbricateOriginCollection[] = await currentOrigin.listCollections();
+            const collections: IImbricateCollection[] = await currentOrigin.listCollections();
 
             if (options.search) {
 
@@ -78,7 +78,7 @@ export const createCollectionListCommand = (
                     return;
                 }
 
-                terminalController.printInfo(collections.map((collection: IImbricateOriginCollection) => {
+                terminalController.printInfo(collections.map((collection: IImbricateCollection) => {
 
                     const includedInSearch: boolean = searchPreference.included.some((item) => {
                         return item.collectionUniqueIdentifier === collection.uniqueIdentifier;
@@ -115,7 +115,7 @@ export const createCollectionListCommand = (
                 return;
             }
 
-            terminalController.printInfo(collections.map((collection: IImbricateOriginCollection) => {
+            terminalController.printInfo(collections.map((collection: IImbricateCollection) => {
 
                 if (options.uniqueIdentifier) {
                     return `${collection.collectionName} (${collection.uniqueIdentifier})`;

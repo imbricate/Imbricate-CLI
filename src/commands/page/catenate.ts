@@ -4,7 +4,7 @@
  * @description Catenate
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
@@ -82,7 +82,7 @@ export const createPageCatenateCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null
+            const collection: IImbricateCollection | null
                 = await currentOrigin.findCollection(options.collection);
 
             if (!collection) {

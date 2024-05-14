@@ -5,7 +5,7 @@
  * @override Mock 
  */
 
-import { IImbricateFunctionManager, IImbricateOrigin, IImbricateOriginCollection, IImbricateScript, IMBRICATE_DIGEST_ALGORITHM, ImbricateOriginCapability, ImbricateOriginMetadata, ImbricateScriptMetadata, ImbricateScriptQuery, ImbricateScriptQueryConfig, ImbricateScriptSearchResult, ImbricateScriptSnapshot, ImbricateSearchScriptConfig, SandboxExecuteConfig, createAllAllowImbricateOriginCapability } from "@imbricate/core";
+import { IImbricateFunctionManager, IImbricateOrigin, IImbricateCollection, IImbricateScript, IMBRICATE_DIGEST_ALGORITHM, ImbricateOriginCapability, ImbricateOriginMetadata, ImbricateScriptMetadata, ImbricateScriptQuery, ImbricateScriptQueryConfig, ImbricateScriptSearchResult, ImbricateScriptSnapshot, ImbricateSearchScriptConfig, SandboxExecuteConfig, createAllAllowImbricateOriginCapability } from "@imbricate/core";
 import { MarkedResult } from "@sudoo/marked";
 import { MockFunctionManager } from "./function-manager";
 
@@ -19,7 +19,7 @@ export class MockOrigin implements IImbricateOrigin {
     public metadata: ImbricateOriginMetadata;
     public payloads: Record<string, any>;
 
-    public collections: IImbricateOriginCollection[];
+    public collections: IImbricateCollection[];
 
     private constructor() {
 
@@ -79,19 +79,19 @@ export class MockOrigin implements IImbricateOrigin {
 
     public getCollection(
         _collectionUniqueIdentifier: string,
-    ): Promise<IImbricateOriginCollection | null> {
+    ): Promise<IImbricateCollection | null> {
 
         throw new Error("Method not implemented.");
     }
 
     public findCollection(
         _collectionName: string,
-    ): Promise<IImbricateOriginCollection | null> {
+    ): Promise<IImbricateCollection | null> {
 
         throw new Error("Method not implemented.");
     }
 
-    public async listCollections(): Promise<IImbricateOriginCollection[]> {
+    public async listCollections(): Promise<IImbricateCollection[]> {
 
         return this.collections;
     }

@@ -4,7 +4,7 @@
  * @description Render
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage } from "@imbricate/core";
 import { renderMarkdownToHtml } from "@imbricate/markdown-render";
 import { isFile, pathExists, readTextFile, writeTextFile } from "@sudoo/io";
 import { Command } from "commander";
@@ -128,7 +128,7 @@ export const createPageRenderCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null
+            const collection: IImbricateCollection | null
                 = await currentOrigin.findCollection(options.collection);
 
             if (!collection) {

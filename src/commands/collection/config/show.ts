@@ -4,7 +4,7 @@
  * @description Show
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin } from "@imbricate/core";
 import { ImbricateSearchPreference, IncludedSearchPreference, readOrCreateSearchPreferenceConfiguration } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../../configuration/interface";
@@ -49,7 +49,7 @@ export const createCollectionConfigShowCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null =
+            const collection: IImbricateCollection | null =
                 await currentOrigin.findCollection(collectionName);
 
             if (!collection) {

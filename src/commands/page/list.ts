@@ -4,7 +4,7 @@
  * @description List
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot, mapLeastCommonIdentifier } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, ImbricatePageSnapshot, mapLeastCommonIdentifier } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotFound } from "../../error/collection/collection-not-found";
@@ -156,7 +156,7 @@ export const createPageListCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collection: IImbricateOriginCollection | null
+            const collection: IImbricateCollection | null
                 = await currentOrigin.findCollection(collectionName);
 
             if (!collection) {

@@ -4,7 +4,7 @@
  * @description Delete
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, ImbricatePageSnapshot } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, ImbricatePageSnapshot } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionNotEmpty } from "../../error/collection/collection-not-empty";
@@ -44,7 +44,7 @@ export const createCollectionDeleteCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const currentCollection: IImbricateOriginCollection | null =
+            const currentCollection: IImbricateCollection | null =
                 await currentOrigin.findCollection(collectionName);
 
             if (!currentCollection) {

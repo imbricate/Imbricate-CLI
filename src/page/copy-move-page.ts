@@ -4,7 +4,7 @@
  * @description Copy Move Page
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, ImbricatePageMetadata } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage, ImbricatePageMetadata } from "@imbricate/core";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { CLICollectionNotFound } from "../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
@@ -41,14 +41,14 @@ const getTargetOrigin = (
 
 const getTargetCollection = async (
     options: CLICopyMovePageOptions,
-    currentCollection: IImbricateOriginCollection,
+    currentCollection: IImbricateCollection,
     targetOrigin: IImbricateOrigin,
     terminalController: ITerminalController,
-): Promise<IImbricateOriginCollection> => {
+): Promise<IImbricateCollection> => {
 
     if (typeof options.targetCollection === "string") {
 
-        const targetCollection: IImbricateOriginCollection | null
+        const targetCollection: IImbricateCollection | null
             = await targetOrigin.findCollection(options.targetCollection);
 
         if (!targetCollection) {
@@ -62,7 +62,7 @@ const getTargetCollection = async (
         return targetCollection;
     }
 
-    const targetCollection: IImbricateOriginCollection | null =
+    const targetCollection: IImbricateCollection | null =
         await targetOrigin.findCollection(currentCollection.collectionName);
 
     if (!targetCollection) {
@@ -91,7 +91,7 @@ const getTargetDirectories = (
 
 const getTargetIdentifier = async (
     options: CLICopyMovePageOptions,
-    targetCollection: IImbricateOriginCollection,
+    targetCollection: IImbricateCollection,
     page: IImbricatePage,
     globalManager: GlobalManager,
     terminalController: ITerminalController,
@@ -132,7 +132,7 @@ const getTargetIdentifier = async (
 const getTargetTitle = async (
     options: CLICopyMovePageOptions,
     targetDirectories: string[],
-    targetCollection: IImbricateOriginCollection,
+    targetCollection: IImbricateCollection,
     page: IImbricatePage,
     terminalController: ITerminalController,
     currentDeterminedOrder: number = 0,
@@ -202,7 +202,7 @@ export const cliCopyMovePage = async (
         throw CLIActiveOriginNotFound.create();
     }
 
-    const collection: IImbricateOriginCollection | null
+    const collection: IImbricateCollection | null
         = await currentOrigin.findCollection(options.collection);
 
     if (!collection) {
@@ -224,7 +224,7 @@ export const cliCopyMovePage = async (
         terminalController,
     );
 
-    const targetCollection: IImbricateOriginCollection = await getTargetCollection(
+    const targetCollection: IImbricateCollection = await getTargetCollection(
         options,
         collection,
         targetOrigin,

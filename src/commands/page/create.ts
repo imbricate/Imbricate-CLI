@@ -4,7 +4,7 @@
  * @description Create
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage } from "@imbricate/core";
 import { SAVING_TARGET_TYPE, SavingTarget, validateFilename } from "@imbricate/local-fundamental";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
@@ -77,7 +77,7 @@ export const createPageCreateCommand = (
                 throw CLIInvalidPageTitle.withPageTitle(pageTitle, validateResult);
             }
 
-            const collection: IImbricateOriginCollection | null
+            const collection: IImbricateCollection | null
                 = await currentOrigin.findCollection(collectionName);
 
             if (!collection) {

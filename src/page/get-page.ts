@@ -4,7 +4,7 @@
  * @description Get Page
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection, IImbricatePage, ImbricatePageSnapshot } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage, ImbricatePageSnapshot } from "@imbricate/core";
 import { CLICollectionNotFound } from "../error/collection/collection-not-found";
 import { CLIPageInvalidInput } from "../error/page/page-invalid-input";
 import { CLIPageNotFound } from "../error/page/page-not-found";
@@ -21,7 +21,7 @@ export const cliGetPage = async (
         throw CLIPageInvalidInput.withMessage("One of --title or --identifier is required");
     }
 
-    const collection: IImbricateOriginCollection | null
+    const collection: IImbricateCollection | null
         = await currentOrigin.findCollection(collectionName);
 
     if (!collection) {

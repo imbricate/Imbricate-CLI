@@ -4,7 +4,7 @@
  * @description Rename
  */
 
-import { IImbricateOrigin, IImbricateOriginCollection } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin } from "@imbricate/core";
 import { Command } from "commander";
 import { IConfigurationManager } from "../../configuration/interface";
 import { CLICollectionAlreadyExists } from "../../error/collection/collection-already-exists";
@@ -47,7 +47,7 @@ export const createCollectionRenameCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const currentCollection: IImbricateOriginCollection | null =
+            const currentCollection: IImbricateCollection | null =
                 await currentOrigin.findCollection(collectionName);
 
             if (!currentCollection) {
