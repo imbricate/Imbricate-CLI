@@ -4,7 +4,7 @@
  * @description Copy Move Page
  */
 
-import { IImbricateCollection, IImbricateOrigin, IImbricatePage, ImbricatePageMetadata } from "@imbricate/core";
+import { IImbricateCollection, IImbricateOrigin, IImbricatePage, ImbricatePageAttributes, ImbricatePageMetadata } from "@imbricate/core";
 import { UUIDVersion1 } from "@sudoo/uuid";
 import { CLICollectionNotFound } from "../error/collection/collection-not-found";
 import { CLIActiveOriginNotFound } from "../error/origin/active-origin-not-found";
@@ -252,6 +252,8 @@ export const cliCopyMovePage = async (
         terminalController,
     );
 
+    const attributes: ImbricatePageAttributes = await page.readAttributes();
+
     const newPageMetadata: ImbricatePageMetadata = {
 
         title: targetTitle,
@@ -260,6 +262,7 @@ export const cliCopyMovePage = async (
         createdAt: page.createdAt,
         updatedAt: page.updatedAt,
         digest: page.digest,
+        attributes,
         historyRecords: page.historyRecords,
         description: page.description,
     };
