@@ -11,6 +11,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint src --ext .ts",
+    "clean": "rm -rf app",
     "build": "tsc --project typescript/tsconfig.build.json",
     "license": "sdb license",
     "replace-version": "ts-node --project typescript/tsconfig.script.json scripts/replace-version.ts",
