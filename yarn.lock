@@ -1741,15 +1741,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/local-fundamental@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@imbricate/local-fundamental@npm:1.10.0"
+"@imbricate/local-fundamental@npm:1.11.0":
+  version: 1.11.0
+  resolution: "@imbricate/local-fundamental@npm:1.11.0"
   dependencies:
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/5f37a2f7f529c5521d254800e70f59a076f731a1944122d5bcf0fe84ab8281067ccf67b8d0fa3724beb3b19ce81d8ac241868ebdb57098d53e63fdfdc4e7067f
+  checksum: 10c0/229b586f3a6621f65afe91dd9f6a3b7b78c5daaf9f0c8f94689fa406dd3a6f877a92f0a7c4a1f8db75cd4c314f368fb1c00077d2a4451d05b1a9581c384ad9b2
   languageName: node
   linkType: hard
 
@@ -4169,7 +4169,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.24.5"
     "@babel/preset-typescript": "npm:^7.24.1"
     "@imbricate/core": "npm:1.26.0"
-    "@imbricate/local-fundamental": "npm:1.10.0"
+    "@imbricate/local-fundamental": "npm:1.11.0"
     "@imbricate/markdown-render": "npm:1.2.0"
     "@imbricate/origin-file-system": "npm:1.19.0"
     "@sudoo/io": "npm:^1.8.0"

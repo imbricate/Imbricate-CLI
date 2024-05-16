@@ -39,7 +39,7 @@
   "homepage": "https://imbricate.io",
   "dependencies": {
     "@imbricate/core": "1.26.0",
-    "@imbricate/local-fundamental": "1.10.0",
+    "@imbricate/local-fundamental": "1.11.0",
     "@imbricate/markdown-render": "1.2.0",
     "@imbricate/origin-file-system": "1.19.0",
     "@sudoo/io": "^1.8.0",
