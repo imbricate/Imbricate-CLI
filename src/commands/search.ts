@@ -84,7 +84,7 @@ export const createSearchCommand = (
                 const pageResults: ImbricatePageSearchResult[] =
                     await collection.searchPages(prompt, {
                         exact: usingExact,
-                        limit: options.limit,
+                        snippetLimit: options.limit,
                     });
 
                 results.push(...pageResults);
@@ -93,7 +93,7 @@ export const createSearchCommand = (
             const scriptResults: ImbricateScriptSearchResult[] =
                 await currentOrigin.searchScripts(prompt, {
                     exact: usingExact,
-                    limit: options.limit,
+                    snippetLimit: options.limit,
                 });
 
             results.push(...scriptResults);
