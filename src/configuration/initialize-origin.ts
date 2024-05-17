@@ -16,6 +16,10 @@ export const initializeOrigin = async (
 
     debugLog("Configuration Loaded", configurationManager.configurationPath);
 
+    for (const origin of configurationManager.origins) {
+        debugLog("Found Origin", origin.originName);
+    }
+
     for (const originConfig of configurationManager.origins) {
 
         const origin: IImbricateOrigin =

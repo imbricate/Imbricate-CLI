@@ -67,9 +67,9 @@ export const executeWithConfiguration = async (
     commands: string[],
 ): Promise<void> => {
 
-    try {
+    const globalManager = GlobalManager.fromScratch();
 
-        const globalManager = GlobalManager.fromScratch();
+    try {
 
         const imbricateProgram = new Command();
 
@@ -161,5 +161,15 @@ export const executeWithConfiguration = async (
     } catch (error) {
 
         handleError(terminalController, error);
+    } finally {
+
+        for (const origin of globalManager.originManager.origins) {
+
+            if (typeof origin.origin.dispose === "function") {
+
+                debugLog("Dispose Origin", origin.originName);
+                await origin.origin.dispose();
+            }
+        }
     }
 };
