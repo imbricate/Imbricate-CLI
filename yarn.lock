@@ -1777,15 +1777,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/origin-mongo@file:../Imbricate-Origin-Mongo/app::locator=imbricate%40workspace%3A.":
-  version: 1.0.0
-  resolution: "@imbricate/origin-mongo@file:../Imbricate-Origin-Mongo/app#../Imbricate-Origin-Mongo/app::hash=d660b6&locator=imbricate%40workspace%3A."
+"@imbricate/origin-mongo@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@imbricate/origin-mongo@npm:1.2.0"
   dependencies:
     "@sudoo/uuid": "npm:^1.1.0"
     mongoose: "npm:^8.3.5"
   peerDependencies:
     "@imbricate/core": "*"
-  checksum: 10c0/2bcd85d7643018b917687b4f9557f6d86c34290a10f4487dc1f9d377b119051924b1f4bd7cc533e96675e26fd2e05bb5ba6fd1302f3e3bfd564f5a91f2d3842c
+  checksum: 10c0/96f6853e51bf61165e286015a45b736dd46cdebc10490b96e99697dc2f8082f77e8b8f0ceea3daa6486e82d08c2f7cdf8282ef29baebab85d9a0fcd059d5d4c7
   languageName: node
   linkType: hard
 
@@ -4216,7 +4216,7 @@ __metadata:
     "@imbricate/local-fundamental": "npm:1.11.0"
     "@imbricate/markdown-render": "npm:1.2.0"
     "@imbricate/origin-file-system": "npm:1.19.0"
-    "@imbricate/origin-mongo": ../Imbricate-Origin-Mongo/app
+    "@imbricate/origin-mongo": "npm:1.2.0"
     "@sudoo/io": "npm:^1.8.0"
     "@sudoo/uuid": "npm:^1.1.0"
     "@types/jest": "npm:^29.5.12"

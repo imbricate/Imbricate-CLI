@@ -68,10 +68,9 @@ export const executeWithConfiguration = async (
 ): Promise<void> => {
 
     const globalManager = GlobalManager.fromScratch();
+    const imbricateProgram = new Command();
 
     try {
-
-        const imbricateProgram = new Command();
 
         imbricateProgram
             .version("<current-version>")
@@ -157,7 +156,7 @@ export const executeWithConfiguration = async (
 
         debugLog("Origin Initialized");
 
-        imbricateProgram.parse(commands);
+        await imbricateProgram.parseAsync(commands);
     } catch (error) {
 
         handleError(terminalController, error);

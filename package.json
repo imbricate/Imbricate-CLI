@@ -42,7 +42,7 @@
     "@imbricate/local-fundamental": "1.11.0",
     "@imbricate/markdown-render": "1.2.0",
     "@imbricate/origin-file-system": "1.19.0",
-    "@imbricate/origin-mongo": "../Imbricate-Origin-Mongo/app",
+    "@imbricate/origin-mongo": "1.2.0",
     "@sudoo/io": "^1.8.0",
     "@sudoo/uuid": "^1.1.0",
     "axios": "^1.6.8",

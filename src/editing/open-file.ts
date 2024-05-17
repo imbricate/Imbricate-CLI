@@ -77,9 +77,11 @@ export const performSaveAndCleanup = async (
     } else {
 
         terminalController.printInfo("Saving...");
+        const originalDigest = digestString(content);
+
         const result: boolean = await performImbricateSavingTarget(
             savingTarget,
-            content,
+            originalDigest,
             updatedContent,
             globalManager.originManager,
             {
