@@ -73,7 +73,7 @@ export class ConfigurationManager implements IConfigurationManager {
 
     private _originConstructors: Map<
         string,
-        (origin: IImbricateConfigurationOrigin) => IImbricateOrigin
+        (origin: IImbricateConfigurationOrigin) => Promise<IImbricateOrigin>
     >;
 
     private readonly _terminalController: ITerminalController;
@@ -164,19 +164,19 @@ export class ConfigurationManager implements IConfigurationManager {
 
     public registerOriginConstructor(
         type: string,
-        constructor: (origin: IImbricateConfigurationOrigin) => IImbricateOrigin,
+        constructor: (origin: IImbricateConfigurationOrigin) => Promise<IImbricateOrigin>,
     ): this {
 
         this._originConstructors.set(type, constructor);
         return this;
     }
 
-    public reconstructOrigin(
+    public async reconstructOrigin(
         type: string,
         origin: IImbricateConfigurationOrigin,
-    ): IImbricateOrigin {
+    ): Promise<IImbricateOrigin> {
 
-        const constructor: ((origin: IImbricateConfigurationOrigin) => IImbricateOrigin)
+        const constructor: ((origin: IImbricateConfigurationOrigin) => Promise<IImbricateOrigin>)
             | undefined = this._originConstructors.get(type);
 
         if (!constructor) {

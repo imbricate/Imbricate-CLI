@@ -5,6 +5,7 @@
 
 import { IImbricateConfigurationOrigin } from "@imbricate/local-fundamental";
 import { FileSystemImbricateOrigin, FileSystemOriginPayload } from "@imbricate/origin-file-system";
+import { MongoImbricateOrigin } from "@imbricate/origin-mongo";
 import { Command } from "commander";
 import { createBinaryCommand } from "./commands/binary";
 import { createCollectionCommand } from "./commands/collection";
@@ -37,11 +38,19 @@ export const execute = async (): Promise<void> => {
     const configurationManager: IConfigurationManager =
         await ConfigurationManager.fromHomeConfigurationPath(ttyTerminalController);
 
-    configurationManager.registerOriginConstructor("file-system", (
+    configurationManager.registerOriginConstructor("file-system", async (
         origin: IImbricateConfigurationOrigin,
     ) => {
         return FileSystemImbricateOrigin.withPayloads(
             origin.payloads as FileSystemOriginPayload,
+        );
+    });
+
+    configurationManager.registerOriginConstructor("mongo", async (
+        origin: IImbricateConfigurationOrigin,
+    ) => {
+        return MongoImbricateOrigin.create(
+            origin.payloads.connectionString as string,
         );
     });
 

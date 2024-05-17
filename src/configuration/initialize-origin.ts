@@ -5,7 +5,6 @@
  */
 
 import { IImbricateOrigin } from "@imbricate/core";
-import { IImbricateConfigurationOrigin } from "@imbricate/local-fundamental";
 import { GlobalManager } from "../global/global-manager";
 import { debugLog } from "../util/debug";
 import { IConfigurationManager } from "./interface";
@@ -17,15 +16,16 @@ export const initializeOrigin = async (
 
     debugLog("Configuration Loaded", configurationManager.configurationPath);
 
-    configurationManager.origins.forEach((originConfig: IImbricateConfigurationOrigin) => {
+    for (const originConfig of configurationManager.origins) {
 
-        const origin: IImbricateOrigin = configurationManager.reconstructOrigin(
-            originConfig.originType,
-            originConfig,
-        );
+        const origin: IImbricateOrigin =
+            await configurationManager.reconstructOrigin(
+                originConfig.originType,
+                originConfig,
+            );
 
         globalManager.originManager.putOrigin(originConfig.originName, origin);
-    });
+    }
 
     globalManager.setActiveOrigin(configurationManager.activeOrigin);
     return;
