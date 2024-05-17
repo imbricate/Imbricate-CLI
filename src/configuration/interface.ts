@@ -27,12 +27,12 @@ export interface IConfigurationManager {
 
     registerOriginConstructor(
         type: string,
-        constructor: (origin: IImbricateConfigurationOrigin) => Promise<IImbricateOrigin>,
+        constructor: (origin: IImbricateConfigurationOrigin) => IImbricateOrigin,
     ): this;
     reconstructOrigin(
         type: string,
         origin: IImbricateConfigurationOrigin,
-    ): Promise<IImbricateOrigin>;
+    ): IImbricateOrigin;
 
     getDefaultProfile(): ConfigurationProfileManager | null;
     setDefaultProfile(profileName: string): Promise<void>;

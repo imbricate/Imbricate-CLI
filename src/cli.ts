@@ -38,7 +38,7 @@ export const execute = async (): Promise<void> => {
     const configurationManager: IConfigurationManager =
         await ConfigurationManager.fromHomeConfigurationPath(ttyTerminalController);
 
-    configurationManager.registerOriginConstructor("file-system", async (
+    configurationManager.registerOriginConstructor("file-system", (
         origin: IImbricateConfigurationOrigin,
     ) => {
         return FileSystemImbricateOrigin.withPayloads(
@@ -46,7 +46,7 @@ export const execute = async (): Promise<void> => {
         );
     });
 
-    configurationManager.registerOriginConstructor("mongo", async (
+    configurationManager.registerOriginConstructor("mongo", (
         origin: IImbricateConfigurationOrigin,
     ) => {
         return MongoImbricateOrigin.create(

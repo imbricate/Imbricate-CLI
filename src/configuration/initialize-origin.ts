@@ -23,7 +23,7 @@ export const initializeOrigin = async (
     for (const originConfig of configurationManager.origins) {
 
         const origin: IImbricateOrigin =
-            await configurationManager.reconstructOrigin(
+            configurationManager.reconstructOrigin(
                 originConfig.originType,
                 originConfig,
             );
