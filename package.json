@@ -45,8 +45,8 @@
     "@imbricate/origin-mongo": "1.2.0",
     "@sudoo/io": "^1.8.0",
     "@sudoo/uuid": "^1.1.0",
-    "axios": "^1.7.0",
-    "commander": "^12.0.0"
+    "axios": "^1.7.1",
+    "commander": "^12.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
