@@ -1484,9 +1484,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/core@npm:1.26.0":
-  version: 1.26.0
-  resolution: "@imbricate/core@npm:1.26.0"
+"@imbricate/core@npm:1.27.0":
+  version: 1.27.0
+  resolution: "@imbricate/core@npm:1.27.0"
   dependencies:
     "@sudoo/marked": "npm:^3.21.4"
     "@sudoo/marked-mixin-date": "npm:^1.0.0"
@@ -1494,7 +1494,7 @@ __metadata:
     "@sudoo/marked-mixin-math": "npm:^1.4.0"
     "@sudoo/marked-mixin-object": "npm:^1.3.0"
     "@sudoo/marked-mixin-parse": "npm:^1.0.0"
-  checksum: 10c0/995425fc34b365f97afce9c2cfd20c727f7caa6cfaf749fddd857ff0b3474141abde9a5b592a41803495caeb9f0e89c282fee8808a9c5319cb28aa1f164c8e3f
+  checksum: 10c0/69dca8db317d580905fd41334c660043326fb947249ca23c131333e3e9facf6e966b2006fbc89cb41361c2d92f87591eec7a0af2e4b0eea51c5d1cda54dbec3b
   languageName: node
   linkType: hard
 
@@ -3895,7 +3895,7 @@ __metadata:
     "@babel/core": "npm:^7.24.7"
     "@babel/preset-env": "npm:^7.24.7"
     "@babel/preset-typescript": "npm:^7.24.7"
-    "@imbricate/core": "npm:1.26.0"
+    "@imbricate/core": "npm:1.27.0"
     "@imbricate/local-fundamental": "npm:1.13.0"
     "@imbricate/markdown-render": "npm:1.2.0"
     "@imbricate/origin-file-system": "npm:1.19.0"
