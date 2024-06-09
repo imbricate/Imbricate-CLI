@@ -24,7 +24,10 @@ export const getContentWithSavingTarget = async (
                 throw CLIEditingSaveTargetFiled.originNotFound(fixedTarget.payload.origin);
             }
 
-            const collection = await origin.getCollection(fixedTarget.payload.collection);
+            const collection = await origin
+                .getCollectionManager()
+                .getCollection(fixedTarget.payload.collection);
+
             if (!collection) {
                 throw CLIEditingSaveTargetFiled.collectionNotFound(fixedTarget.payload.collection);
             }
@@ -43,7 +46,10 @@ export const getContentWithSavingTarget = async (
                 throw CLIEditingSaveTargetFiled.originNotFound(savingTarget.payload.origin);
             }
 
-            const script = await origin.getScript(savingTarget.payload.identifier);
+            const script = await origin
+                .getScriptManager()
+                .getScript(savingTarget.payload.identifier);
+
             if (!script) {
                 throw CLIEditingSaveTargetFiled.scriptNotFound(savingTarget.payload.identifier);
             }

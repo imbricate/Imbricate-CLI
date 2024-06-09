@@ -85,7 +85,9 @@ export const createScriptRunCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
+            const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin
+                .getScriptManager()
+                .listScripts();
 
             const interfaceFeatures: SandboxFeature[] = prepareInterfaceFeatures(
                 currentOrigin,
@@ -105,7 +107,9 @@ export const createScriptRunCommand = (
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                const script: IImbricateScript | null = await currentOrigin.getScript(scriptSnapshot.identifier);
+                const script: IImbricateScript | null = await currentOrigin
+                    .getScriptManager()
+                    .getScript(scriptSnapshot.identifier);
 
                 if (!script) {
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
@@ -140,7 +144,9 @@ export const createScriptRunCommand = (
 
                     if (each.identifier.startsWith(options.identifier)) {
 
-                        const script: IImbricateScript | null = await currentOrigin.getScript(each.identifier);
+                        const script: IImbricateScript | null = await currentOrigin
+                            .getScriptManager()
+                            .getScript(each.identifier);
 
                         if (!script) {
                             throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);

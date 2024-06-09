@@ -61,7 +61,9 @@ export const createSearchCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collections: IImbricateCollection[] = await currentOrigin.listCollections();
+            const collections: IImbricateCollection[] = await currentOrigin
+                .getCollectionManager()
+                .listCollections();
 
             const results: Array<ImbricateSearchResult<IMBRICATE_SEARCH_RESULT_TYPE>> = [];
 
@@ -91,10 +93,12 @@ export const createSearchCommand = (
             }
 
             const scriptResults: ImbricateScriptSearchResult[] =
-                await currentOrigin.searchScripts(prompt, {
-                    exact: usingExact,
-                    snippetLimit: options.limit,
-                });
+                await currentOrigin
+                    .getScriptManager()
+                    .searchScripts(prompt, {
+                        exact: usingExact,
+                        snippetLimit: options.limit,
+                    });
 
             results.push(...scriptResults);
 

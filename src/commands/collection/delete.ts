@@ -45,7 +45,9 @@ export const createCollectionDeleteCommand = (
             }
 
             const currentCollection: IImbricateCollection | null =
-                await currentOrigin.findCollection(collectionName);
+                await currentOrigin
+                    .getCollectionManager()
+                    .findCollection(collectionName);
 
             if (!currentCollection) {
                 throw CLICollectionNotFound.withCollectionName(collectionName);
@@ -65,9 +67,11 @@ export const createCollectionDeleteCommand = (
                 throw CLICollectionNotEmpty.withCollectionName(collectionName);
             }
 
-            await currentOrigin.deleteCollection(
-                currentCollection.uniqueIdentifier,
-            );
+            await currentOrigin
+                .getCollectionManager()
+                .deleteCollection(
+                    currentCollection.uniqueIdentifier,
+                );
 
             if (!options.quiet) {
                 terminalController.printInfo(`Collection ${collectionName} deleted`);

@@ -18,7 +18,9 @@ export const cliGetScript = async (
         throw CLIScriptInvalidInput.withMessage("One of --script-name or --identifier is required");
     }
 
-    const scriptSnapshots: ImbricateScriptSnapshot[] = await origin.listScripts();
+    const scriptSnapshots: ImbricateScriptSnapshot[] = await origin
+        .getScriptManager()
+        .listScripts();
 
     if (typeof scriptName === "string") {
 
@@ -31,7 +33,9 @@ export const cliGetScript = async (
             throw CLIScriptNotFound.withScriptName(`Script "${scriptName}" not found`);
         }
 
-        const script = await origin.getScript(scriptSnapshot.identifier);
+        const script = await origin
+            .getScriptManager()
+            .getScript(scriptSnapshot.identifier);
 
         if (!script) {
             throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier "${scriptSnapshot.identifier}" not found`);
@@ -46,7 +50,9 @@ export const cliGetScript = async (
 
             if (each.identifier.startsWith(identifier)) {
 
-                const script = await origin.getScript(each.identifier);
+                const script = await origin
+                    .getScriptManager()
+                    .getScript(each.identifier);
 
                 if (!script) {
                     throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier "${each.identifier}" not found`);

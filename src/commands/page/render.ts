@@ -129,7 +129,9 @@ export const createPageRenderCommand = (
             }
 
             const collection: IImbricateCollection | null
-                = await currentOrigin.findCollection(options.collection);
+                = await currentOrigin
+                    .getCollectionManager()
+                    .findCollection(options.collection);
 
             if (!collection) {
                 throw CLICollectionNotFound.withCollectionName(options.collection);

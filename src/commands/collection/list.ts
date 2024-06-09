@@ -45,7 +45,9 @@ export const createCollectionListCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const collections: IImbricateCollection[] = await currentOrigin.listCollections();
+            const collections: IImbricateCollection[] = await currentOrigin
+                .getCollectionManager()
+                .listCollections();
 
             if (options.search) {
 

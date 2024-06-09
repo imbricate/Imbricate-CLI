@@ -59,7 +59,9 @@ export const createScriptCreateCommand = (
                 throw CLIInvalidScriptName.withScriptName(scriptName, validateResult);
             }
 
-            const hasScript: boolean = await currentOrigin.hasScript(scriptName);
+            const hasScript: boolean = await currentOrigin
+                .getScriptManager()
+                .hasScript(scriptName);
 
             if (hasScript) {
                 throw CLIScriptAlreadyExists.withScriptName(scriptName);
@@ -73,7 +75,9 @@ export const createScriptCreateCommand = (
             );
 
             const scriptMetadata: ImbricateScriptSnapshot =
-                await currentOrigin.createScript(scriptName, "");
+                await currentOrigin
+                    .getScriptManager()
+                    .createScript(scriptName, "");
 
             if (!options.quiet) {
                 terminalController.printInfo(`Script "${scriptMetadata.scriptName}" created`);
@@ -87,7 +91,9 @@ export const createScriptCreateCommand = (
                 }
 
                 const script: IImbricateScript | null =
-                    await currentOrigin.getScript(scriptMetadata.identifier);
+                    await currentOrigin
+                        .getScriptManager()
+                        .getScript(scriptMetadata.identifier);
 
                 if (!script) {
                     throw CLIScriptNotFound.withScriptIdentifier(scriptMetadata.identifier);

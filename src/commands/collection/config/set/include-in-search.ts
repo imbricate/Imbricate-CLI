@@ -56,7 +56,9 @@ export const createCollectionConfigSetIncludeInSearchCommand = (
             }
 
             const currentCollection: IImbricateCollection | null =
-                await currentOrigin.findCollection(collectionName);
+                await currentOrigin
+                    .getCollectionManager()
+                    .findCollection(collectionName);
 
             if (!currentCollection) {
                 throw CLICollectionNotFound.withCollectionName(collectionName);

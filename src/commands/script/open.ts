@@ -67,7 +67,9 @@ export const createScriptOpenCommand = (
                 configurationManager,
             );
 
-            const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
+            const scriptSnapshots: ImbricateScriptSnapshot[] = await currentOrigin
+                .getScriptManager()
+                .listScripts();
 
             if (typeof options.scriptName === "string") {
 
@@ -80,7 +82,9 @@ export const createScriptOpenCommand = (
                     throw CLIScriptNotFound.withScriptName(`Script "${options.scriptName}" not found`);
                 }
 
-                const script = await currentOrigin.getScript(scriptSnapshot.identifier);
+                const script = await currentOrigin
+                    .getScriptManager()
+                    .getScript(scriptSnapshot.identifier);
 
                 if (!script) {
                     throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier "${scriptSnapshot.identifier}" not found`);
@@ -111,7 +115,9 @@ export const createScriptOpenCommand = (
 
                     if (each.identifier.startsWith(options.identifier)) {
 
-                        const script = await currentOrigin.getScript(each.identifier);
+                        const script = await currentOrigin
+                            .getScriptManager()
+                            .getScript(each.identifier);
 
                         if (!script) {
                             throw CLIScriptNotFound.withScriptIdentifier(`Script with identifier "${each.identifier}" not found`);

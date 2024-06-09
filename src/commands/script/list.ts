@@ -115,7 +115,9 @@ export const createScriptListCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const scripts: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
+            const scripts: ImbricateScriptSnapshot[] = await currentOrigin
+                .getScriptManager()
+                .listScripts();
 
             if (options.json) {
 

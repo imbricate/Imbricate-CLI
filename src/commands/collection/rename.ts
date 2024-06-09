@@ -48,22 +48,28 @@ export const createCollectionRenameCommand = (
             }
 
             const currentCollection: IImbricateCollection | null =
-                await currentOrigin.findCollection(collectionName);
+                await currentOrigin
+                    .getCollectionManager()
+                    .findCollection(collectionName);
 
             if (!currentCollection) {
                 throw CLICollectionNotFound.withCollectionName(collectionName);
             }
 
-            const hasNewCollection: boolean = await currentOrigin.hasCollection(newCollectionName);
+            const hasNewCollection: boolean = await currentOrigin
+                .getCollectionManager()
+                .hasCollection(newCollectionName);
 
             if (hasNewCollection) {
                 throw CLICollectionAlreadyExists.withCollectionName(newCollectionName);
             }
 
-            await currentOrigin.renameCollection(
-                currentCollection.uniqueIdentifier,
-                newCollectionName,
-            );
+            await currentOrigin
+                .getCollectionManager()
+                .renameCollection(
+                    currentCollection.uniqueIdentifier,
+                    newCollectionName,
+                );
 
             if (!options.quiet) {
                 terminalController.printInfo(`Collection renamed from '${collectionName}' to '${newCollectionName}'`);

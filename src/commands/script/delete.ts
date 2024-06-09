@@ -74,7 +74,9 @@ const performScriptDelete = async (
         }
     }
 
-    await origin.deleteScript(script.identifier);
+    await origin
+        .getScriptManager()
+        .deleteScript(script.identifier);
 
     if (!options.quiet) {
 
@@ -117,7 +119,9 @@ export const createScriptDeleteCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const scripts: ImbricateScriptSnapshot[] = await currentOrigin.listScripts();
+            const scripts: ImbricateScriptSnapshot[] = await currentOrigin
+                .getScriptManager()
+                .listScripts();
 
             if (typeof options.scriptName === "string") {
 

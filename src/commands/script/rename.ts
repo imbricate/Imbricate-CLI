@@ -78,7 +78,9 @@ export const createScriptRenameCommand = (
                 terminalController.printInfo(`Found script "${script.scriptName}" with identifier "${script.identifier}"`);
             }
 
-            await currentOrigin.renameScript(script.identifier, newScriptName);
+            await currentOrigin
+                .getScriptManager()
+                .renameScript(script.identifier, newScriptName);
 
             if (!options.quiet) {
 

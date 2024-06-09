@@ -46,7 +46,9 @@ const createImplementation = (
         }
 
         const collection: IImbricateCollection | null =
-            await origin.findCollection(input.collection);
+            await origin
+                .getCollectionManager()
+                .findCollection(input.collection);
 
         if (!collection) {
             throw new Error(`Collection [${input.collection}] not found`);

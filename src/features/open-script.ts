@@ -36,7 +36,9 @@ const createImplementation = (
             throw new Error("Identifier is required");
         }
 
-        const script: IImbricateScript | null = await origin.getScript(input.identifier);
+        const script: IImbricateScript | null = await origin
+            .getScriptManager()
+            .getScript(input.identifier);
 
         if (!script) {
             throw new Error(`Script [${input.identifier}] not found`);

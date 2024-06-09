@@ -84,7 +84,9 @@ export const createPageOpenCommand = (
             }
 
             const collection: IImbricateCollection | null
-                = await currentOrigin.findCollection(collectionName);
+                = await currentOrigin
+                    .getCollectionManager()
+                    .findCollection(collectionName);
 
             if (!collection) {
                 throw CLICollectionNotFound.withCollectionName(collectionName);

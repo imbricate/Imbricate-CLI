@@ -44,13 +44,17 @@ export const createCollectionCreateCommand = (
                 throw CLIActiveOriginNotFound.create();
             }
 
-            const hasCollection: boolean = await currentOrigin.hasCollection(collectionName);
+            const hasCollection: boolean = await currentOrigin
+                .getCollectionManager()
+                .hasCollection(collectionName);
 
             if (hasCollection) {
                 throw CLICollectionAlreadyExists.withCollectionName(collectionName);
             }
 
-            await currentOrigin.createCollection(collectionName, options.description);
+            await currentOrigin
+                .getCollectionManager()
+                .createCollection(collectionName, options.description);
 
             if (!options.quiet) {
                 terminalController.printInfo(`Collection ${collectionName} created`);
