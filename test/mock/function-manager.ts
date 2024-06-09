@@ -5,9 +5,14 @@
  * @override Mock 
  */
 
-import { IImbricateFunctionManager, IImbricateOrigin, ImbricateFunction } from "@imbricate/core";
+import { IImbricateFunctionManager, IImbricateOrigin, ImbricateFunction, ImbricateFunctionCapability, ImbricateFunctionManagerBase } from "@imbricate/core";
 
 export class MockFunctionManager implements IImbricateFunctionManager {
+
+    public get capabilities(): ImbricateFunctionCapability {
+
+        return ImbricateFunctionManagerBase.allAllowCapability();
+    }
 
     public findSynchronousOriginFunctions(): ImbricateFunction<IImbricateOrigin>[] {
 

@@ -72,7 +72,7 @@ describe("Given CLI (Collection List) Operation", (): void => {
         configurationManager.assignMockOrigin(mockOrigin);
 
         const mockCollection = MockCollection.create();
-        mockOrigin.collections.push(mockCollection);
+        mockOrigin.getCollectionManager().collections.push(mockCollection);
 
         await executeWithConfiguration(
             terminalController,
