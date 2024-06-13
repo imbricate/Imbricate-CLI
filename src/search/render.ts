@@ -20,7 +20,7 @@ export const renderSearchResult = (
                 result as ImbricatePageSearchResult;
 
             const lines: string[] = [
-                `${fixedResult.type} - ${fixedResult.scope}:${fixedResult.identifier}`,
+                `${fixedResult.type} - ${fixedResult.collectionName}:${fixedResult.identifier}`,
                 `* | ${fixedResult.headline}`,
             ];
 
