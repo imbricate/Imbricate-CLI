@@ -1,7 +1,7 @@
 {
   "name": "imbricate",
   "packageManager": "yarn@4.1.1",
-  "version": "1.20.1",
+  "version": "1.20.2",
   "description": "Yes to accountable notes, no to external hosting. Free, for everyone.",
   "bin": {
     "i7e": "cli",
@@ -38,7 +38,7 @@
   },
   "homepage": "https://imbricate.io",
   "dependencies": {
-    "@imbricate/core": "1.30.0",
+    "@imbricate/core": "1.31.0",
     "@imbricate/local-fundamental": "1.17.0",
     "@imbricate/markdown-render": "1.2.0",
     "@imbricate/origin-file-system": "1.23.0",
