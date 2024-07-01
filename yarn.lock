@@ -1484,18 +1484,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@imbricate/core@npm:1.31.0":
-  version: 1.31.0
-  resolution: "@imbricate/core@npm:1.31.0"
-  dependencies:
-    "@sudoo/marked-mixin-date": "npm:1.0.0"
-    "@sudoo/marked-mixin-json": "npm:1.0.0"
-    "@sudoo/marked-mixin-math": "npm:1.4.0"
-    "@sudoo/marked-mixin-object": "npm:1.3.0"
-    "@sudoo/marked-mixin-parse": "npm:1.0.0"
-  peerDependencies:
-    "@sudoo/marked": "*"
-  checksum: 10c0/33d2dfb5a0963b38d12d3a5419223195ec43cea6ee4d5249f5e9c6d31bcb57b592a88d856f6c739fc569540dd15f48b0bac3322290338f6dab29c920f20971a9
+"@imbricate/core@npm:1.34.2":
+  version: 1.34.2
+  resolution: "@imbricate/core@npm:1.34.2"
+  checksum: 10c0/29665f18e117c8eb147985150c574c17e5e67ca4d9b4d2d9c3f8391fe8add0424b1249bc4251f53d1f499b080f7278668f5493ed9c1ed8541ea36c952cd33cfa
   languageName: node
   linkType: hard
 
@@ -1974,70 +1966,6 @@ __metadata:
     "@sudoo/bark": "npm:^2.7.2"
     connor: "npm:^2.7.0"
   checksum: 10c0/c268c1abf09734af64ec51954367f4a7328297b980bc99c4d795c0d86f6ca6c82c9bd25bfeb178f37cfe2d39d3a3116c783ac14472c07d6aa6893796b4285d7c
-  languageName: node
-  linkType: hard
-
-"@sudoo/marked-mixin-date@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@sudoo/marked-mixin-date@npm:1.0.0"
-  dependencies:
-    "@sudoo/marked-mixin": "npm:^1.4.0"
-  peerDependencies:
-    "@sudoo/marked": "*"
-  checksum: 10c0/51c32737526bbd15df9a2a29a8511064d33f31ce77bec45fb69a1bc7def58636af0859219e63b3aa585f703a78f7dd358ab6cdbaec30324ab752a09d5ff60024
-  languageName: node
-  linkType: hard
-
-"@sudoo/marked-mixin-json@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@sudoo/marked-mixin-json@npm:1.0.0"
-  dependencies:
-    "@sudoo/marked-mixin": "npm:^1.4.0"
-  peerDependencies:
-    "@sudoo/marked": "*"
-  checksum: 10c0/a1226c130f37f7d111109bcee721a52b7e75a25185c9c43757244c0175c38b820dff8251d13cf210e8bc600be9da1e2616d594b04a9d46e8d28becf4b46bbab0
-  languageName: node
-  linkType: hard
-
-"@sudoo/marked-mixin-math@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@sudoo/marked-mixin-math@npm:1.4.0"
-  dependencies:
-    "@sudoo/marked-mixin": "npm:^1.2.0"
-  peerDependencies:
-    "@sudoo/marked": "*"
-  checksum: 10c0/69b4ff5e069f04e18d6e125883e0c5483974efb6b8286d3604cb461ffbcaf096336883049e063fae6e0935ade5ecf6295698d6905650f7aa64e17f31acbe7fd5
-  languageName: node
-  linkType: hard
-
-"@sudoo/marked-mixin-object@npm:1.3.0":
-  version: 1.3.0
-  resolution: "@sudoo/marked-mixin-object@npm:1.3.0"
-  dependencies:
-    "@sudoo/marked-mixin": "npm:^1.2.0"
-  peerDependencies:
-    "@sudoo/marked": "*"
-  checksum: 10c0/66bed2f2c606279300d8ee38552699e0c79ba85df3214278e3debc0af79cfddf7e6f9b9bb678a52357670452b7c7792c56882fec90c75352a9ef98477981fcbd
-  languageName: node
-  linkType: hard
-
-"@sudoo/marked-mixin-parse@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@sudoo/marked-mixin-parse@npm:1.0.0"
-  dependencies:
-    "@sudoo/marked-mixin": "npm:^1.4.0"
-  peerDependencies:
-    "@sudoo/marked": "*"
-  checksum: 10c0/b08840f7a6ab46167d9ab488eae078e3da43b34dd577ef2cb2118bd71f315bfb3e522a6261bad42435955be304a086fc18d3156cdcae4410a5c0288dcc9e9714
-  languageName: node
-  linkType: hard
-
-"@sudoo/marked-mixin@npm:^1.2.0, @sudoo/marked-mixin@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@sudoo/marked-mixin@npm:1.4.0"
-  peerDependencies:
-    "@sudoo/marked": "*"
-  checksum: 10c0/17f52678c2ebb5927a8c3530c7abb0ec399a7e094ac41710448e629d78dce3ba51f88b1fc262815155ac165ef4ffd4f1499b2358ba834d208c589ed237442e84
   languageName: node
   linkType: hard
 
@@ -3905,7 +3833,7 @@ __metadata:
     "@babel/core": "npm:^7.24.7"
     "@babel/preset-env": "npm:^7.24.7"
     "@babel/preset-typescript": "npm:^7.24.7"
-    "@imbricate/core": "npm:1.31.0"
+    "@imbricate/core": "npm:1.34.2"
     "@imbricate/local-fundamental": "npm:1.17.0"
     "@imbricate/markdown-render": "npm:1.2.0"
     "@imbricate/origin-file-system": "npm:1.24.0"

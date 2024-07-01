@@ -38,7 +38,7 @@
   },
   "homepage": "https://imbricate.io",
   "dependencies": {
-    "@imbricate/core": "1.31.0",
+    "@imbricate/core": "1.34.2",
     "@imbricate/local-fundamental": "1.17.0",
     "@imbricate/markdown-render": "1.2.0",
     "@imbricate/origin-file-system": "1.24.0",
